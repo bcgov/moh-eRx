@@ -13,7 +13,7 @@ About ... TBD
   Date: Thu, 16 Jul 2020 08:12:31 GMT
   Content-Type: application/hl7-v2+er7; charset=utf-8
   ```
-- Protect resource endpoints with OAuth2 using Bearer tokens (access tokens; aka JWT)
+- Protect resource endpoints with OAuth2 using Bearer tokens (OAuth2 access tokens; aka JWT)
 - Keep HL7v2 payload *opaque* to the resource server:  pass-thru; all access policy enforcement is determined from Bearer token.
 - Use microservice design pattern for maximum elasticity and scale; one interaction per microservice.
 - APIs are self-documented using OpenAPI (fka Swagger) and will include ability to pass Bearer Token as Authorization.
