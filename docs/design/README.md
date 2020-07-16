@@ -4,12 +4,17 @@ About ... TBD
 
 ## API Design Guiding Principles & Constraints
 
-- Use RESTful approach: HTTPS request/response with POST for media-type for HL7v2 payload.
-- Use URIs to represent resources; Adopt HL7 FHIR resource naming conventions.
-- Use Default media-type from HAPI (HL7v2 over HTTP); accept mime_type parameter as per FHIR.
-- Keep routes private; only expose routes to Kong API Management
+- Use RESTful approach.
+- Use URIs to represent resources.
+- Adopt HL7 FHIR resource naming conventions.
+- Use HTTPS POST for HL7v2 request/response interactions.
+- For HL7v2 interactions, set Content-Type and other HTTP-Headers from  <a href="https://hapifhir.github.io/hapi-hl7v2/hapi-hl7overhttp/">HAPI HL7v2 over HTTPS</a>:
+  ```
+  Date: Thu, 16 Jul 2020 08:12:31 GMT
+  Content-Type: application/hl7-v2+er7; charset=utf-8
+  ```
 - Protect resource endpoints with OAuth2 using Bearer tokens (access tokens; aka JWT)
-- Keep HL7v2 payload opaque to the resource server:  pass-thru; all access policy enforcement is determined from Bearer token.
+- Keep HL7v2 payload *opaque* to the resource server:  pass-thru; all access policy enforcement is determined from Bearer token.
 - Use microservice design pattern for maximum elasticity and scale; one interaction per microservice.
 - APIs are self-documented using OpenAPI (fka Swagger) and will include ability to pass Bearer Token as Authorization.
 - APIs will be testable/trialed using TEST environment, a base domain similar to production but using fictitious data.
@@ -47,7 +52,9 @@ About ... TBD
 
  The plan is to make these APIs publicly available (with authorization required) through the <a href="https://developer.gov.bc.ca/Developer-Tools/API-Gateway-(powered-by-Kong-CE)">BC Government API Gateway.</a>
 
-## HL7v2 Electronic Prescribing Interaction Scope
+## HL7v2 Electronic Prescribing Messaging Specifications
+
+### Scope
 
 An interation is a request/response pairing, consisting of two HL7v2 messages. The RESTful microservice implements a single Interaction, with its URI naming based on FHIR resource models.
 
@@ -56,3 +63,32 @@ The following PharmaNet eRx Interactionsa are in scope:
 | Interaction |  Description | Request Message | Response Message |
 | ------ | ------- | ------ | ------ |
 
+### Use of HTTP
+
+Transmitting HL7v2 over HTTTPs uses the standard HTTP/1.1 protocol (RFC 2616) as a transport mechanism that can transfer the raw (pipe and carrot) structured HL7 message stream, with a response as either a HL7v2 or an error as JSON or plain text.
+
+### Transport Flow
+
+Submitting an HL7v2 request is sent using HTTP POST. For 200 OK response the payload, if any, wil be the HL7v2 response returned from the PharmaNet service. The payload is opaque to the HTTPS transport - i.e. the microservice does not examine the payload.
+
+### Content-Type
+
+For HL7v2 Payload with "|^" vertical bar delmiting, the Content-Type HTTP Header must be:
+
+```
+Content-Type: application/hl7-v2+er7; charset=utf-8
+```
+
+The default character set, if not specified is ASCII a valid subset of UTF-8.
+
+### Date
+
+The Request and Response payload must provide a Date in the HTTP Header in UTC (GMT).
+
+Syntax:
+
+ ```
+ Date: <day-name>, <day> <month> <year> <hour>:<minute>:<second> GMT
+ ```
+
+### HTTP Response Codes
