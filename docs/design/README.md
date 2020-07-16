@@ -1,4 +1,4 @@
-# BC Ministry of Health - Electronic Prescribing (eRx) API Development Project
+# BC Ministry of Health - Electronic Prescribing (eRx) API Architecture/Design
 
 About ... TBD
 
@@ -11,6 +11,7 @@ About ... TBD
 - Protect resource endpoints with OAuth2 using Bearer tokens (access tokens; aka JWT)
 - Keep HL7v2 payload opaque to the resource server:  pass-thru; all access policy enforcement is determined from Bearer token.
 - Use microservice design pattern for maximum elasticity and scale; one interaction per microservice.
+
 
 ## HL7v2 Electronic Prescribing Interaction Scope
 
@@ -30,3 +31,6 @@ The following PharmaNet eRx Interactionsa are in scope:
     ```javascript
     Authorization = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI0YTEyNDUyZS1mNTMzLTQyOWEtYjg1Yi01YWU1YjIxMDg1ZTQiLCJleHAiOjE1ODkzMjE3MDgsIm5iZiI6MCwiaWF0IjoxNTg5MzIxNDA4LCJpc3MiOiJodHRwczovL3Nzby1kZXYucGF0aGZpbmRlci5nb3YuYmMuY2EvYXV0aC9yZWFsbXMvZmYwOXFuM2YiLCJhdWQiOiJoZWFsdGhnYXRld2F5Iiwic3ViIjoiOTA1ZjczM2EtYzFlZi00NTY0LWEzMjYtYzAyMTUxZTllNzcwIiwidHlwIjoiSUQiLCJhenAiOiJoZWFsdGhnYXRld2F5Iiwibm9uY2UiOiJjY2ZmNzI4Yi1hMzcyLTRhNGEtODczZC0wMzM2YjQzN2M1YzgiLCJhdXRoX3RpbWUiOjE1ODkzMjE0MDIsInNlc3Npb25fc3RhdGUiOiI1YTI2ZmYwOC01ZmZmLTQzNDMtODIyYi0yNTNlM2VlZjNlM2EiLCJhY3IiOiIxIiwiaGRpZCI6IkVYVFJJT1lGUE5YMzVUV0VCVUFKM0RORkRGWFNZVEJDNko0TTc2R1lFM0hDNUVSMk5LV1EifQ.qlBkGHsmcN0Y32gTyuaUPV0yZZSROrzlpXmDdwpbDR8"
     ```
+
+ - Do not include Personally Identifiable Information in the resource URI. This is becaause URLs can often be logged in network traffice monitoring tooling, and or cached in browsers.  This means that the BC Personal Health number cannot be the resource identifier, since the PHN is considered PI. Use the HDID or other surrogate key.
+  
