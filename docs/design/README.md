@@ -68,7 +68,7 @@ The following PharmaNet eRx Interactionsa are in scope:
 
 ### Use of HTTP
 
-Transmitting HL7v2 over HTTPs uses the standard HTTP/1.1 protocol (RFC 2616) as a transport mechanism that can transfer the raw (pipe and carrot) structured HL7 message stream, with a response as either a Base64 encoded HL7v2 for HTTP Response code of 2xx, or an error as JSON or plain text.  When HL7v2 response is returned for any HTTP 2xx code even if there is an HL7v2 response containing an error (AE, AR, etc.) since the transport is considered to be successful. For transport and authorization errors, HTTP Error codes will be returned with plain/text Content-Type and any error information as JSON structure. 
+Transmitting HL7v2 over HTTPs uses the standard HTTP/1.1 protocol (RFC 2616) as a transport mechanism that can transfer the raw (pipe and carrot) structured HL7 message stream, with a response as either a Base64 encoded HL7v2 for HTTP Response code of 2xx, or an error as JSON or plain text.  When HL7v2 response is returned for any HTTP 2xx code even if there is an HL7v2 response containing an error (AE, AR, etc.) since the transport is considered to be successful. For transport and authorization errors, HTTP Error codes will be returned with plain/text Content-Type and any error information as JSON structure.
 
 Example OAuth2 error:
 
