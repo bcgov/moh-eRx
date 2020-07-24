@@ -27,11 +27,59 @@ The first edition of the access type will allow for permissions to be granted di
 
 Application permissions granted do not rely on signed-in user to be present; but are system-based authorization grants.  In Oauth2 standards parlance, this type of grant is referred to as "client credentials grant".
 
-In future, the permissions determined to be granted to your application will be based on the availabel permissions of an authenticated user. For example, a physician creating a prescription would be directly authenticated with the Pharmanet Identity Platform from within their EMR, using OAuth2 OIDC and SSO, and then the EMR application would obtain an access token containing permissions derived from the capabilities of the physician, to effectively act on behalf of the physician to perform the prescription create request.
+In future, the permissions determined to be granted to your application will be based on the available permissions of an authenticated user. For example, a physician creating a prescription would be directly authenticated with the Pharmanet Identity Platform from within their EMR, using OAuth2 OIDC and SSO, and then the EMR application would obtain an access token containing permissions derived from the capabilities of the physician, to effectively act on behalf of the physician to perform the prescription create request.
 
 ## Getting an access token
 
-Our recommendation is to use existing authentication and authorization software libraries that adher to the OAuth2 standards and support OIDC, and can process access tokens and automatically inject them into HTTP request headers for you. Learn more about OAuth2 here.
+Our recommendation is to use existing authentication and authorization software libraries that adhere to the OAuth2 standards and support OIDC, and can process access tokens and automatically add them into HTTP request headers for you with directives. Learn more about OAuth2.
+
+## Access Scopes
+
+Accessing the resources and services requires that the access token supplied in the request include the necessary OAuth2 acces scopes. These correspond directly to the FHIR resource types adopted in this specification. The goal is to, in future, add, FHIR R4 JSON as an accepted content-type to the resource endpoints without needing to modify the authorization controls.
+
+### Resource Context
+
+Simply providing an access token in the HTTP Header is not sufficient for your app to gain acess to the resource endpoints and services. Your app must be assigned the appropriate access scope(s) for the given interaction. The available scopes will be determined by the nature of the authentication. For system  authentication using client credentials, your app will be pre-assigned 'system' scopes in the PharmaNet identity platform. These will align to the PharmaNet access profiles assigned to your app.
+
+| Context | Definition |
+| ----- | ------ | ------ |
+| user | "User" access allows your application to access any individual resource instance that the authenticated end-user is authorized to access. This means that your application has obtained an access token representing a user login to the OAuth2 OIDC compliant PharmaNet identity platform |
+| patient | "Patient" access restricts your application access to only access those individual resource instances that are associated witht he patient that is directly or indirectly in context. This may precede a launch request (SMART on FHIR app launch flow), or imply that the patient has authenticated and is accessing their own records. |
+| system | "System" allows an application to access a resource directly, without an authenticated user present (the access token is not supplied due to a user authenticating). This can only be utilized with the client credentials grant flow, and MUST NOT be combined with any other context. |
+
+For the initial release of PharmaNet API with HL7-v2 over HTTP, 'system' context will be used.
+
+The pattern for scopes is based on the <a href="">SMART on FHIR specification</a>, and the EBNF notation of the scope syntax is:
+
+```code
+clinical-scope ::= ( 'patient' | 'user' | 'system' ) '/' ( resource-name | '*' ) '.' ( 'read' | 'write\ | '*')
+```
+
+The following illustrates an example access_token with system access scope for submitting a prescription to PharmaNet:
+
+```javascript
+{
+  "jti": "ae58ed64-9bcf-4712-a4d2-75b15480c4a3",
+  "exp": 1595613198,
+  "nbf": 0,
+  "iat": 1595612898,
+  "iss": "https://sso.pathfinder.gov.bc.ca/auth/realms/aa33ab78",
+  "aud": [
+    "pharmanet"
+  ],
+  "typ": "Bearer",
+  "azp": "emr",
+  "auth_time": 0,
+  "session_state": "4d4e00ee-0003-4361-a953-0412c3255606",
+  "acr": "1",
+  "allowed-origins": [
+    "https://your.emr.app/"
+  ],
+  "scope": "openid audience system/MedicationRequest.write",
+  "clientId": "your.emr",
+  "clientHost": "192.0.172.199",
+}
+```
 
 ## Next Steps
 

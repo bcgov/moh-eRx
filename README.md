@@ -4,6 +4,4 @@ This repository will be used to develop the strategic architecture and component
 
 ## Objectives
 
-## Code of Conduct
 
-See 
