@@ -11,7 +11,7 @@ Unlike a pure RESTful interface, all HL7-v2 interactions are submitted with HTTP
 | Retrieve patient prescription record | | TRX_X0.X5 | TRX_X0.X5_RESPONSE |  POST |
 | Retrieve prescriber prescription record | | TRX_X4.X9 | TRX_X4.X9_RESPONSE | POST |
 | Record Prescription | | TRX_X1.X6_RESPONSE | TRX_X1.X6_RESPONSE | POST |
-| Change Prescription Status | | TRX_X2.X7 | TRX_X2.X7_RESPONSE | PUT |
+| Change Prescription Status | | TRX_X2.X7 | TRX_X2.X7_RESPONSE | POST |
 
 ## Permissions
 

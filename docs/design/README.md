@@ -1,4 +1,4 @@
-# BC Ministry of Health - Electronic Prescribing (eRx) API Architecture/Design
+# BC Ministry of Health - PharmaNet Electronic Prescribing (eRx) API Architecture/Design
 
 About ... TBD
 
@@ -57,14 +57,25 @@ About ... TBD
 
 ## HL7v2 Electronic Prescribing Messaging Specifications
 
-### Scope
+### Interactions
 
-An interation is a request/response pairing, consisting of two HL7v2 messages. The RESTful microservice implements a single Interaction, with its URI naming based on FHIR resource models.
+An interaction is a request/response pairing, with two HL7-v2 messages contained in the Body of the HTTP request/response. The RESTful microservice implements a single Interaction, with its URI naming based on FHIR resource models.
 
-The following PharmaNet eRx Interactionsa are in scope:
+The structure of the endpoint Resource URI is:
 
-| Interaction |  Description | Request Message | Response Message |
-| ------ | ------- | ------ | ------ |
+``` 
+endpoint-uri  ::= 'https://' + domain-name  + '/PharmaNet/' + api-version + '/' + resource-type
+```
+
+The following PharmaNet eRx Interactions are in scope:
+
+| Interaction | HL7-v2 Request Message | Hl7-v2 Response Message |  Resource-Type |
+| ------ | ------- | ------ | ------ | ---- |
+| Location Inquiry | TIL_00.50 | TIL_00.50_RESPONSE | TBD |
+| Retrieve Patient Prescription | TRX_X0.X5 | TRX_X0.X5_RESPONSE | MedicationRequest |
+| Retrieve Prescriber Prescription Record | TRX_X4.X9 | TRX_X4.X9_RESPONSE | MedicationRequest |
+| Record Prescription | TRX_X1.X6 |TRX_X1.X6_RESPONSE | MedicationRequest |
+| 
 
 ### Use of HTTP
 
