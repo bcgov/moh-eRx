@@ -1,6 +1,6 @@
 # Authentication and Authorization Basics for eRx Pharmanet API
 
-To call Pharmanet in support of electronic prescribing, your application must acquire an access token from the PharmaNet identity platform, an OAuth2 compliant identity and authorization server.  The access token contains information about your application and the permissions it has been granted to access the resources and APIs available.  To get an access token, your application must be registered with the Pharmanet identity platform. 
+To call Pharmanet in support of electronic prescribing, your application must acquire an access token from the PharmaNet identity platform, an [OAuth2](https://oauth.net/2/) compliant identity and authorization server.  The access token contains information about your application and the permissions it has been granted to access the resources and APIs available.  To get an access token, your application must be registered with the Pharmanet identity platform. 
 
 ## Access Tokens
 
@@ -31,7 +31,7 @@ In future, the permissions determined to be granted to your application will be 
 
 ## Getting an access token
 
-Our recommendation is to use existing authentication and authorization software libraries that adhere to the OAuth2 standards and support OIDC, and can process access tokens and automatically add them into HTTP request headers for you with directives. Learn more about OAuth2.
+Our recommendation is to use existing authentication and authorization software libraries that adhere to the OAuth2 standards and support [Open ID Connect](https://openid.net/connect/), and can process access tokens and automatically add them into HTTP request headers for you with directives.
 
 ## Access Scopes
 
@@ -49,11 +49,28 @@ Simply providing an access token in the HTTP Header is not sufficient for your a
 
 For the initial release of PharmaNet API with HL7-v2 over HTTP, 'system' context will be used.
 
-The pattern for scopes is based on the <a href="">SMART on FHIR specification</a>, and the EBNF notation of the scope syntax is:
+### Resource Type
+
+The resource type of a resource scope must conform to a valid resource type as defined in the [FHIR Resource Index](http://www.hl7.org/implement/standards/FHIR/resourcelist.html)
+
+### Modification Rights
+
+Three modification rights are defined for a resource:
+
+| Right | Description |
+| ------ | ------ |
+| read | Corresponds to "read" or "vread" and "history" for interactions as defined by [FHIR Resource Index](http://www.hl7.org/implement/standards/FHIR/resourcelist.html). For the context is "user" this includes "search". |
+| write | Corresponds to "create", "update" and "delete". | 
+| * | Corresponds to both write and read. |
+
+
+The pattern for scopes is based on the [SMART](https://openid.net/specs/openid-heart-fhir-oauth2-1_0.html) scopes, and the [EBNF](https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form) notation of the scope syntax is:
 
 ```code
-clinical-scope ::= ( 'patient' | 'user' | 'system' ) '/' ( resource-name | '*' ) '.' ( 'read' | 'write\ | '*')
+clinical-scope ::= ( 'patient' | 'user' | 'system' ) '/' ( resource-type | '*' ) '.' ( 'read' | 'write\ | '*')
 ```
+
+
 
 The following illustrates an example access_token with system access scope for submitting a prescription to PharmaNet:
 
