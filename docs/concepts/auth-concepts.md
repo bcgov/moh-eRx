@@ -42,7 +42,7 @@ Accessing the resources and services requires that the access token supplied in 
 Simply providing an access token in the HTTP Header is not sufficient for your app to gain acess to the resource endpoints and services. Your app must be assigned the appropriate access scope(s) for the given interaction. The available scopes will be determined by the nature of the authentication. For system  authentication using client credentials, your app will be pre-assigned 'system' scopes in the PharmaNet identity platform. These will align to the PharmaNet access profiles assigned to your app.
 
 | Context | Definition |
-| ----- | ------ | ------ |
+| ----- | ------ |
 | user | "User" access allows your application to access any individual resource instance that the authenticated end-user is authorized to access. This means that your application has obtained an access token representing a user login to the OAuth2 OIDC compliant PharmaNet identity platform |
 | patient | "Patient" access restricts your application access to only access those individual resource instances that are associated witht he patient that is directly or indirectly in context. This may precede a launch request (SMART on FHIR app launch flow), or imply that the patient has authenticated and is accessing their own records. |
 | system | "System" allows an application to access a resource directly, without an authenticated user present (the access token is not supplied due to a user authenticating). This can only be utilized with the client credentials grant flow, and MUST NOT be combined with any other context. |
@@ -67,7 +67,7 @@ Three modification rights are defined for a resource:
 The pattern for scopes is based on the [SMART](https://openid.net/specs/openid-heart-fhir-oauth2-1_0.html) scopes, and the [EBNF](https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form) notation of the scope syntax is:
 
 ```code
-clinical-scope ::= ( 'patient' | 'user' | 'system' ) '/' ( resource-type | '*' ) '.' ( 'read' | 'write\ | '*')
+clinical-scope ::= ( 'patient' | 'user' | 'system' ) '/' ( resource-type | '*' ) '.' ( 'read' | 'write' | '*')
 ```
 
 

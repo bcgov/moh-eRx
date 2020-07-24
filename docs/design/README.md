@@ -8,7 +8,7 @@ About ... TBD
 - Use URIs to represent resources.
 - Adopt HL7 FHIR resource naming conventions.
 - Use HTTPS POST for HL7v2 request/response interactions.
-- For HL7v2 interactions, set Content-Type and other HTTP-Headers from  <a href="https://hapifhir.github.io/hapi-hl7v2/hapi-hl7overhttp/">HAPI HL7v2 over HTTPS</a> with the HL7v2 Base64 encoded, as a content type extension:
+- For HL7v2 interactions, set Content-Type and other HTTP-Headers from [HAPI HL7 over HTTP]("https://hapifhir.github.io/hapi-hl7v2/hapi-hl7overhttp/") with the HL7v2 Base64 encoded, as a content type extension:
 
 ```bash
   Date: Thu, 16 Jul 2020 08:12:31 GMT
@@ -41,7 +41,7 @@ About ... TBD
 
 ### API Publishing
 
- The plan is to publish these APIs to PharmaNet vendors. To make them more broadly available the recommendation is to publish these APIs through the <a href="https://catalogue.data.gov.bc.ca/group/bc-government-api-registry">BC Government API Registry</a>.
+ The plan is to publish these APIs to PharmaNet vendors. To make them more broadly available the recommendation is to publish these APIs through the [BC Governmebt API Registry]("https://catalogue.data.gov.bc.ca/group/bc-government-api-registry").
 
 ### API Management
 
@@ -53,7 +53,7 @@ About ... TBD
 - API Rate Throttling
 - API Perfomance monitoring
 
- The plan is to make these APIs publicly available (with authorization required) through the <a href="https://developer.gov.bc.ca/Developer-Tools/API-Gateway-(powered-by-Kong-CE)">BC Government API Gateway.</a>
+ The plan is to make these APIs publicly available (with authorization required) through the [BC Government API Gateway]("https://developer.gov.bc.ca/Developer-Tools/API-Gateway-(powered-by-Kong-CE").
 
 ## HL7v2 Electronic Prescribing Messaging Specifications
 
@@ -61,10 +61,10 @@ About ... TBD
 
 An interaction is a request/response pairing, with two HL7-v2 messages contained in the Body of the HTTP request/response. The RESTful microservice implements a single Interaction, with its URI naming based on FHIR resource models.
 
-The structure of the endpoint Resource URI is:
+The structure [EBNF]("https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form") of the endpoint Resource URI is:
 
 ``` 
-endpoint-uri  ::= 'https://' + domain-name  + '/PharmaNet/' + api-version + '/' + resource-type
+endpoint-uri  ::= 'https://', domain-name, '/PharmaNet/', api-version, '/', resource-type
 ```
 
 The following PharmaNet eRx Interactions are in scope:
@@ -79,7 +79,9 @@ The following PharmaNet eRx Interactions are in scope:
 
 ### Use of HTTP
 
-Transmitting HL7v2 over HTTPs uses the standard HTTP/1.1 protocol (RFC 2616) as a transport mechanism that can transfer the raw (pipe and carrot) structured HL7 message stream, with a response as either a Base64 encoded HL7v2 for HTTP Response code of 2xx, or an error as JSON or plain text.  When HL7v2 response is returned for any HTTP 2xx code even if there is an HL7v2 response containing an error (AE, AR, etc.) since the transport is considered to be successful. For transport and authorization errors, HTTP Error codes will be returned with plain/text Content-Type and any error information as JSON structure.
+Transmitting HL7v2 over HTTPs uses the standard HTTP/1.1 protocol (RFC 2616) as a transport mechanism that can transfer the Base 64 encoded (pipe and carrot: '|^') structured HL7 message stream as the body of the HTTP request, with a response as either a Base 64 encoded HL7v2 in the response body for HTTP response codes of 2xx, or an HTTP Error with the body as JSON or plain text.  
+
+When HL7v2 response is returned for any HTTP 2xx code even if there is an HL7v2 response containing an error (AE, AR, etc.) since the transport is considered to be successful. For transport and authorization errors, HTTP Error codes will be returned with plain/text Content-Type and any error information as JSON structure.
 
 Example OAuth2 error:
 
