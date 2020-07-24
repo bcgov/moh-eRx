@@ -1,4 +1,4 @@
-# Authentication and Authorization Basics for eRx Pharmanet API
+# Authentication and Authorization Basics for eRx PharmaNet API
 
 To call Pharmanet in support of electronic prescribing, your application must acquire an access token from the PharmaNet identity platform, an [OAuth2](https://oauth.net/2/) compliant identity and authorization server.  The access token contains information about your application and the permissions it has been granted to access the resources and APIs available.  To get an access token, your application must be registered with the Pharmanet identity platform. 
 
