@@ -41,7 +41,7 @@ About ... TBD
 
 ### API Publishing
 
- The plan is to publish these APIs to PharmaNet vendors. To make them more broadly available the recommendation is to publish these APIs through the [BC Governmebt API Registry]("https://catalogue.data.gov.bc.ca/group/bc-government-api-registry").
+ The plan is to publish these APIs to PharmaNet vendors. To make them more broadly available the recommendation is to publish these APIs through the [BC Government API Registry]("https://catalogue.data.gov.bc.ca/group/bc-government-api-registry").
 
 ### API Management
 
@@ -53,7 +53,7 @@ About ... TBD
 - API Rate Throttling
 - API Perfomance monitoring
 
- The plan is to make these APIs publicly available (with authorization required) through the [BC Government API Gateway]("https://developer.gov.bc.ca/Developer-Tools/API-Gateway-(powered-by-Kong-CE").
+ The plan is to make these APIs publicly available, with authorization required, through the [BC Government API Gateway]("https://developer.gov.bc.ca/Developer-Tools/API-Gateway-\(powered-by-Kong-CE\)").
 
 ## HL7v2 Electronic Prescribing Messaging Specifications
 
