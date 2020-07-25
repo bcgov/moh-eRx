@@ -63,13 +63,13 @@ An interaction is a request/response pairing, with two HL7-v2 messages contained
 
 The structure [EBNF]("https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form") of the endpoint Resource URI is:
 
-``` 
-endpoint-uri  ::= 'https://', domain-name, '/PharmaNet/', api-version, '/', resource-type ;
+```code
+endpoint-uri  ::= 'https://' domain-name '/PharmaNet/' api-version '/' resource-type ;
 ```
 
 Example:
 
-```
+```code
 https://moh.api.gov.bc.ca/PharmaNet/v1/MedicationStatement
 ```
 
