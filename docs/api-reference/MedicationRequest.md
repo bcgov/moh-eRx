@@ -10,7 +10,7 @@ Unlike a pure RESTful interface, all HL7-v2 interactions are submitted with HTTP
 | ------ | ------ | ------ | ------ | ---- |
 | Retrieve patient prescription record | | TRX_X0.X5 | TRX_X0.X5_RESPONSE |  POST |
 | Retrieve prescriber prescription record | | TRX_X4.X9 | TRX_X4.X9_RESPONSE | POST |
-| Record Prescription | | TRX_X1.X6_RESPONSE | TRX_X1.X6_RESPONSE | POST |
+| Record Prescription | | TRX_X1.X6 | TRX_X1.X6_RESPONSE | POST |
 | Change Prescription Status | | TRX_X2.X7 | TRX_X2.X7_RESPONSE | POST |
 
 ## Permissions
@@ -20,5 +20,6 @@ The resource endpoint examines the HL7-v2 transaction type submitted and then ap
 | PharmaNet Interaction |  Hl7-v2 Request | Required System Scope |
 | ------ | ------ | ------ |
 | Retrieve patient prescription record | TRX_X0.X5 | system/MedicationRequest.read, or user/MedicationRequest.read, or patient/MedicationRequest.read |
-| Retrieve prescriber prescription record | |
-
+| Retrieve prescriber prescription record | TRX_X4.X9 |  system/MedicationRequest.read, or user/MedicationRequest.read, or patient/MedicationRequest.read |
+| Record Prescription | TRX_X1.X6 | system/MedicationRequest.write, or user/MedicationRequest.write |
+| Change Prescription Status | TRX_X2.X7 | system/MedicationRequest.write, or user/MedicationRequest.write |

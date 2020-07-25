@@ -44,7 +44,7 @@ Simply providing an access token in the HTTP Header is not sufficient for your a
 | Context | Definition |
 | ----- | ------ |
 | user | "User" access allows your application to access any individual resource instance that the authenticated end-user is authorized to access. This means that your application has obtained an access token representing a user login to the OAuth2 OIDC compliant PharmaNet identity platform |
-| patient | "Patient" access restricts your application access to only access those individual resource instances that are associated witht he patient that is directly or indirectly in context. This may precede a launch request (SMART on FHIR app launch flow), or imply that the patient has authenticated and is accessing their own records. |
+| patient | "Patient" access restricts your application access to only access those individual resource instances that are associated with the patient that is directly or indirectly in context. This may precede a launch request (SMART on FHIR app launch flow), or imply that the patient has authenticated and is accessing their own records. |
 | system | "System" allows an application to access a resource directly, without an authenticated user present (the access token is not supplied due to a user authenticating). This can only be utilized with the client credentials grant flow, and MUST NOT be combined with any other context. |
 
 For the initial release of PharmaNet API with HL7-v2 over HTTP, 'system' context will be used.
