@@ -45,13 +45,16 @@ About ... TBD
 
 ### API Management
 
- The design includes standing up a developer's portal using API managmenet software, which includes the following features:
+ The design includes standing up a developer's portal using API managmenet software [(Kong)]("https://konghq.com/community/?itm_source=website&itm_medium=nav"), which includes the following features:
 
 - Documentation via OpenAPI (Swagger)
 - Self-service dev and test client application account registration.
 - Self-service API trials via OpenAPI
-- API Rate Throttling
-- API Perfomance monitoring
+- Authentication
+- Traffic Control
+- API traffic Analytics
+- Logging
+- Caching
 
  The plan is to make these APIs publicly available, with authorization required, through the [BC Government API Gateway]("https://developer.gov.bc.ca/Developer-Tools/API-Gateway-\(powered-by-Kong-CE\)").
 
