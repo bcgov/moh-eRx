@@ -1,6 +1,6 @@
 # Invoking the PharmaNet API
 
-To access the PharmaNet interaction resources, you call and specify the resource URL corresponding to the interaction your applciation wishes to invoke using only HTTP POST operations when submitting HL7-v2 over HTTPS. 
+To access the PharmaNet interaction resources, you call and specify the resource URL corresponding to the interaction your application wishes to invoke using only HTTP POST operations when submitting HL7-v2 over HTTPS.
 
 In future, these same resource endpoints will add new HTTP actions (GET, PUT, PATCH, DELETE) when the Content-Type provided is HL7 FHIR.
 
@@ -15,7 +15,7 @@ Where for this URL:
 - ``https://moh.api.gov.bc.ca`` is the base PharmaNet API endpoint (this is an example, actual endpoint may vary).
 - `{version}` is the target service version, for example the initial version will be `v1`.
 - `{resource}` is the resource path, such as:
-- - `MedicationRequest`, or `MedicationStatement`
+    - `MedicationRequest`, or `MedicationStatement`
 
 ## Example Request
 

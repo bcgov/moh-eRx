@@ -1,10 +1,10 @@
 # Authentication and Authorization Basics for eRx PharmaNet API
 
-To call Pharmanet in support of electronic prescribing, your application must acquire an access token from the PharmaNet identity platform, an [OAuth2](https://oauth.net/2/) compliant identity and authorization server.  The access token contains information about your application and the permissions it has been granted to access the resources and APIs available.  To get an access token, your application must be registered with the Pharmanet identity platform. 
+To call PharmaNet in support of electronic prescribing, your application must acquire an access token from the PharmaNet identity platform, an [OAuth2](https://oauth.net/2/) compliant identity and authorization server.  The access token contains information about your application and the permissions it has been granted to access the resources and APIs available.  To get an access token, your application must be registered with the PharmaNet identity platform.
 
 ## Access Tokens
 
-Access tokens issued contain information (claims) that the APIs use to validate that the calling application has the prooper permissions to perform the operation it is requesting.  Your application must always transmit an access token as an HTTP Header entry, as in:
+Access tokens issued contain information (claims) that the APIs use to validate that the calling application has the proper permissions to perform the operation it is requesting.  Your application must always transmit an access token as an HTTP Header entry, as in:
 
 ```code
 POST https://moh.api.gov.bc.ca/PharmaNet/v1/MedicationRequest/ HTTP/1.1
@@ -27,7 +27,7 @@ The first edition of the access type will allow for permissions to be granted di
 
 Application permissions granted do not rely on signed-in user to be present; but are system-based authorization grants.  In Oauth2 standards parlance, this type of grant is referred to as "client credentials grant".
 
-In future, the permissions determined to be granted to your application will be based on the available permissions of an authenticated user. For example, a physician creating a prescription would be directly authenticated with the Pharmanet Identity Platform from within their EMR, using OAuth2 OIDC and SSO, and then the EMR application would obtain an access token containing permissions derived from the capabilities of the physician, to effectively act on behalf of the physician to perform the prescription create request.
+In future, the permissions determined to be granted to your application will be based on the available permissions of an authenticated user. For example, a physician creating a prescription would be directly authenticated with the PharmaNet Identity Platform from within their EMR, using OAuth2 OIDC and SSO, and then the EMR application would obtain an access token containing permissions derived from the capabilities of the physician, to effectively act on behalf of the physician to perform the prescription create request.
 
 ## Getting an access token
 
