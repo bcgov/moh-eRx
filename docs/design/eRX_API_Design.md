@@ -2,13 +2,13 @@
 
 ## Introduction
 
-Every prescription that is dispensed in community pharmacies in British Columbia is entered into PharmaNet. The introduction of Electronic Prescribing adds that every prescription written in the community is entered into PharmaNet. Community pharmacies will "pull down" prescriptions for the patient when dispense requests are made. This eliminates the need for prescribing physicians to hand a piece of paper, often printed out and signed to the patient during a patient visit.  Instead, the prescription is sent from the prescriber's electronci medical records system to PharmaNet.
+Every prescription that is dispensed in community pharmacies in British Columbia is entered into PharmaNet. The introduction of Electronic Prescribing adds that every prescription written in the community is entered into PharmaNet. Community pharmacies will "pull down" prescriptions for the patient when dispense requests are made. This eliminates the need for prescribing physicians to hand a piece of paper, often printed out and signed to the patient during a patient visit.  Instead, the prescription is sent from the prescriber's electronic medical records system to PharmaNet.
 
-This modern API work seeks to acheive four goals:
+This modern API work seeks to achieve four goals:
 
 1. To strive towards a solution for the community that allows the Ministry to retire the ageing HN-Secure private network.
-2. To modernize authorization controls and ready an interaction model closer to HL7 FHIR and RESTful API constructs. 
-3. To leverage the PharmaNet identity platform to begin authorizing client applications but hten over time, elevate the authorization to be based on PharmaNet user privilege over trusted system privilege.
+2. To modernize authorization controls and ready an interaction model closer to HL7 FHIR and RESTful API constructs.
+3. To leverage the PharmaNet identity platform to begin authorizing client applications but then over time, elevate the authorization to be based on PharmaNet user privilege over trusted system privilege.
 4. To introduce the HL7-v2 electronic prescription service capabilities developed several years ago but never put into production.
 
 ## Approach
@@ -163,7 +163,7 @@ The Request and Response payload must provide a Date in the HTTP Header in UTC (
 
 Syntax:
 
-```
+```code
  Date: <day-name>, <day> <month> <year> <hour>:<minute>:<second> GMT
 ```
 
