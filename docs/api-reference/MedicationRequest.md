@@ -2,7 +2,7 @@
 
 This resource endpoint is following  HL7 FHIR version 4.0.1 resource naming convention and represents an order for both supply of medication and the instructions for administration of the medicine to the patient. This is commonly referred to as a "prescription".  It replaces the paper-based prescription hand written or printed out and signed by a physician.
 
-Unlike a pure RESTful interface, all HL7-v2 interactions are submitted with HTTP POST, with the Content-Type, or payload being the Base 64 encoded HL7-v2 message. The response will be an HL7-v2 message, again Base 64 encoded. 
+> Unlike a pure RESTful interface, all HL7-v2 interactions are submitted with HTTP POST, with the Content-Type, or payload being the Base 64 encoded HL7-v2 message. The response will be an HL7-v2 message, again Base 64 encoded. 
 
 ## Supported HL7-v2 Interactions
 
