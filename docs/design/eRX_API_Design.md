@@ -13,7 +13,7 @@ This modern API work seeks to achieve four goals:
 
 ## Approach
 
-The approach is a pragmatic one, where we ask the vendor community to go an a journey with us, incrementally heading towards an end state modernized integration model with PharmaNet that is built on:
+The approach is a pragmatic one, where we ask the vendor community to go on a journey with us, incrementally moving towards an end state of a modernized integration model with PharmaNet that is built on:
 
 1. Highly elastic and scalable HL7 FHIR Restful microservices.
 2. Uses standard OAuth2 authorization flows.
