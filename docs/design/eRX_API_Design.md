@@ -21,6 +21,8 @@ The approach is a pragmatic one, where we ask the vendor community to go an a jo
 4. Is managed by security software and API management
 5. Has self-service vendor developer's areas to explore integration and ready for production certifications.
 
+
+
 ## API Design Guiding Principles & Constraints
 
 - Use RESTful approach.
@@ -44,6 +46,8 @@ The approach is a pragmatic one, where we ask the vendor community to go an a jo
 ```bash
     https://moh.api.gov.bc.ca/PharmaNet/v1/
 ```
+
+Some of features of the design are adopted or adapted from the [HL7 FHIR RESTful API specification](https://www.hl7.org/fhir/http.html#3.1.0).
 
 ### API Security
 
@@ -162,5 +166,21 @@ Syntax:
 ```
  Date: <day-name>, <day> <month> <year> <hour>:<minute>:<second> GMT
 ```
+
+### Custom Headers
+
+Additional optional custom headers, adapted from HL7 FHIR recommendations are primarily intended to assist with audit/debugging of interactions.
+
+The request id in X-Request-Id is purely to help connect between requests and logs/audit trails. The client can assign an id to the request, and send that in the X-Request-Id header. The server can either use that id or assign it's own, which it returns as the X-Request-Id header in the response. When the server assigned id is different to the client assigned id, the server SHOULD also return the X-Correlation-Id header with the client's original id in it.
+
+The PharmaNet API endpoints will only respond with these custom headers if the client provides the optional X-Request-Id.
+
+#### X-Request-Id
+
+A unique id (suggest UUID) for the HTTP request/response assigned by the client and server.  Request: assigned by the client. Response: assigned by the PharmaNet API endpoint.
+
+#### X-Correlation-Id
+
+A client assigned request id echoed back to the client from the PharmaNet API endpoint in the Response Header. This allows the client application to correlate the response to the request.
 
 ### HTTP Response Codes
