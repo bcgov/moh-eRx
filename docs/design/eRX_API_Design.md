@@ -68,7 +68,7 @@ Some of features of the design are adopted or adapted from the [HL7 FHIR RESTful
 
 ### API Management
 
- The design includes standing up a developer's portal using API managmenet software [(Kong)]("https://konghq.com/community/?itm_source=website&itm_medium=nav"), which includes the following features:
+ The design includes standing up a developer's portal using API management software [(Kong)]("https://konghq.com/community/?itm_source=website&itm_medium=nav"), which includes the following features:
 
 - Documentation via OpenAPI (Swagger)
 - Self-service dev and test client application account registration.
