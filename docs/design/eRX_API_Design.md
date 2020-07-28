@@ -17,7 +17,7 @@ The approach is a pragmatic one, where we ask the vendor community to go an a jo
 
 1. Highly elastic and scalable HL7 FHIR Restful microservices.
 2. Uses standard OAuth2 authorization flows.
-3. Runs over the Internet.
+3. Is accessible via the Internet.
 4. Is managed by security software and API management gateway software.
 5. Has self-service vendor developer's areas to explore integration and ready for production certifications.
 
