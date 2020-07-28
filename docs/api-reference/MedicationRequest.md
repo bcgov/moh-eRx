@@ -6,8 +6,12 @@ Unlike a pure RESTful interface, all HL7-v2 interactions are submitted with HTTP
 
 ## Supported HL7-v2 Interactions
 
+```code
+ Content-Type: x-application/hl7-v2+er7+b64
+ ```
+
 | PharmaNet Interaction | Description |  Type | HL7-v2 Request | HL7-v2 Response |  HTTP Request Action |
-| ------ | ------ | ------ | ------ | ---- |
+| ------ | ------ | ------ | ------ | ---- | ----- |
 | Retrieve patient prescription record | | read | TRX_X0.X5 | TRX_X0.X5_RESPONSE |  POST |
 | Retrieve prescriber prescription record | | read | TRX_X4.X9 | TRX_X4.X9_RESPONSE | POST |
 | Record Prescription | | create | TRX_X1.X6 | TRX_X1.X6_RESPONSE | POST |
