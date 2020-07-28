@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Every prescription that is dispensed in community pharmacies in British Columbia is entered into PharmaNet. The introduction of Electronic Prescribing adds that every prescription written in the community is entered into PharmaNet. Community pharmacies will "pull down" prescriptions for the patient when dispense requests are made. This eliminates the need for prescribing physicians to hand a piece of paper, often printed out and signed to the patient during a patient visit.  Instead, the prescription is sent from the prescriber's electronic medical records system to PharmaNet.
+Every prescription that is dispensed in community pharmacies in British Columbia is entered into PharmaNet. The introduction of Electronic Prescribing adds that every prescription written in the community is entered into PharmaNet. Community pharmacies will "pull down" prescriptions for the patient when dispense requests are made. This eliminates the need for prescribing physicians to hand a piece of paper, often printed out and signed to the patient during a patient visit.  Instead, the prescription is sent from the prescribing practitioner's electronic medical records system to PharmaNet.
 
 This modern API work seeks to achieve four goals:
 
