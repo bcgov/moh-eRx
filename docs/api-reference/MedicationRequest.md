@@ -25,5 +25,5 @@ The resource endpoint examines the HL7-v2 transaction type submitted and then ap
 | ------ | ------ | ------ |
 | Retrieve patient prescription record | TRX_X0.X5 | system/MedicationRequest.read, or user/MedicationRequest.read, or patient/MedicationRequest.read |
 | Retrieve prescriber prescription record | TRX_X4.X9 |  system/MedicationRequest.read, or user/MedicationRequest.read, or patient/MedicationRequest.read |
-| Record Prescription | TRX_X1.X6 | system/MedicationRequest.write, or user/MedicationRequest.write |
-| Change Prescription Status | TRX_X2.X7 | system/MedicationRequest.write, or user/MedicationRequest.write |
+| Record Prescription | TRX_X1.X6 | system/MedicationRequest.write, or user/MedicationRequest.write, or patient/MedicationRequest.write |
+| Change Prescription Status | TRX_X2.X7 | system/MedicationRequest.write, or user/MedicationRequest.write, or patient/MedicationRequest.write |
