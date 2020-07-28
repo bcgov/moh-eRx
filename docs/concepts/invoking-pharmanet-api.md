@@ -7,7 +7,7 @@ In future, these same resource endpoints will add new HTTP actions (GET, PUT, PA
 All PharmaNet API request use the following basic URL pattern:
 
 ```code
-https://moh.api.gov.bc.ca/{version}/{resource}
+https://moh.api.gov.bc.ca/PharmaNet/{version}/{resource}
 ```
 
 Where for this URL:
@@ -20,7 +20,7 @@ Where for this URL:
 ## Example Request
 
 ```code
-POST https://moh.api.gov.bc.ca/v1/MedicationStatement/ HTTP/1.1
+POST https://moh.api.gov.bc.ca/PharmaNet/v1/MedicationStatement/ HTTP/1.1
 Content-Type: x-application/hl7-v2+er7+b64
 Content-Length: 147
 X-Request-Id: 610a595b-cb68-402d-b509-3d1b83066660
