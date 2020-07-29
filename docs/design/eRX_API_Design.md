@@ -97,14 +97,9 @@ Example:
 https://moh.api.gov.bc.ca/PharmaNet/v1/MedicationStatement
 ```
 
-The following PharmaNet eRx Interactions are in scope:
+#### Interaction Scope
 
-| Interaction | HL7-v2 Request Message | Hl7-v2 Response Message |  Resource-Type |
-| ------ | ------- | ------ | ------ |
-| Location Inquiry | TIL_00.50 | TIL_00.50_RESPONSE | TBD |
-| Retrieve Patient Prescription | TRX_X0.X5 | TRX_X0.X5_RESPONSE | MedicationRequest |
-| Retrieve Prescriber Prescription Record | TRX_X4.X9 | TRX_X4.X9_RESPONSE | MedicationRequest |
-| Record Prescription | TRX_X1.X6 |TRX_X1.X6_RESPONSE | MedicationRequest |
+For a list of interactions in scope for this API set, see [API Reference](../api-reference/README.md)
 
 ### Use of HTTP
 
