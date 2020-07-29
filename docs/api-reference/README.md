@@ -24,10 +24,10 @@ Welcome to the PharmaNet REST API reference.
 | PNet | TPM_00.50_RESPONSE | Patient profile mailing request response | [MedicationStatement](MedicationStatement.md) |
 | PNet | TDU_00.50 | Drug utilization evaluation (DUE) information inquiry | [Medication](#interactions) |
 | PNet | TDU_00.50_RESPONSE | Drug utilization evaluation (DUE) information inquiry response | [Medication](#interactions) |
-| PNet | TDUTRP_00.50 | DUE inquiry with patient profile information (complete) | [Medication](#interactions) |
-| PNet | TDUTRP_00.50_RESPONSE | DUE inquiry with patient profile information (complete) response | [Medication](#interactions) |
-| PNet | TDUTRR_00.50 | DUE inquiry with patient profile information (latest) | TBD |
-| PNet | TDUTRR_00.50_RESPONSE | DUE inquiry with patient profile information (latest) response | TBD |
+| PNet | TDUTRP_00.50 | DUE inquiry with patient profile information (complete) | [MedicationStatement](MedicationStatement.md) |
+| PNet | TDUTRP_00.50_RESPONSE | DUE inquiry with patient profile information (complete) response | [MedicationStatement](MedicationStatement.md) |
+| PNet | TDUTRR_00.50 | DUE inquiry with patient profile information (latest) | [MedicationStatement](MedicationStatement.md) |
+| PNet | TDUTRR_00.50_RESPONSE | DUE inquiry with patient profile information (latest) response | [MedicationStatement](MedicationStatement.md) |
 | PNet | TRX_X1.X6 | Record prescription | [MedicationRequest](MedicationRequest.md) |
 | PNet | TRX_X1.X6_RESPONSE | Record prescription response | [MedicationRequest](MedicationRequest.md) |
 | PNet | TRX_X2.X7 | Change prescription status | [MedicationRequest](MedicationRequest.md) |
@@ -39,7 +39,9 @@ Welcome to the PharmaNet REST API reference.
 | PNet | TPI_00.50 | Patient profile information update | [MedicationStatement](MedicationStatement.md) |
 | PNet | TPI_00.50_RESPONSE | Patient profile information update response | [MedicationStatement](MedicationStatement.md) |
 
-## Additional Domains: HL7v3 Interactions
+## Additional Domains: HL7-v3 Interactions
+
+The following interactions are also needed by the private practice (e.g. EMR) profile. These interactions are not included in this API set, and may require differing integration requirements including system authorizations.
 
 | Domain | Interaction Message | Description | Resource Type |
 | ----- | ----- | ----- | ----- |
@@ -49,25 +51,19 @@ Welcome to the PharmaNet REST API reference.
 | CR | HCIM_IN_GetDemographicsResponse | Get Client Demographics Response | Patient |
 | CR | HCIM_IN_PersonRevised | Revise Person | Patient |
 | CR | HCIM_IN_PersonRevisedResult | Revise Person Result | Patient |
-| HIAL | MCCI_IN000002 | Accept Ack | TBD |
-| HIAL | MCCI_IN000002UV01 | Accept Ack | TBD |
-| PR | PRPM_IN306010 | Provider Details Query | Practitioner |
-| PR | PRPM_IN306011UV01 | Provider Details Query Response | Practitioner |
-| PR | PRPM_IN303010 | Update Provider Request | Practitioner |
-| PR | PRPM_IN303011 | Provider update response | Practitioner |
-| PLIS | POLB_IN374000CA | Lab Result Summary Query Request | Observation |
-| PLIS | POLB_IN384000CA | Lab Result Summary Query Response | Observation |
-| PLIS | POLB_IN354000CA | Request Query Results | Observation |
-| PLIS | POLB_IN364000CA | Results Query Response | Observation |
+| PLR | PRPM_IN306010 | Provider Details Query | Practitioner |
+| PLR | PRPM_IN306011UV01 | Provider Details Query Response | Practitioner |
+| PLR | PRPM_IN303010 | Update Provider Request | Practitioner |
+| PLR | PRPM_IN303011 | Provider update response | Practitioner |
 
 ### Domain Legend
 
 * PNet = PharmaNet
 * CR = Healthcare Client Registry
-* HIAL = Health Information Access Layer
-* PLIS = Provincial Laboratory Information System
+* PLR = Provider Location Registry
 
-## Resources
+## Resource Specifications
 
+* [Medication](Medication.md)
 * [MedicationRequest](MedicationRequest.md)
 * [MedicationStatement](MedicationStatement.md)

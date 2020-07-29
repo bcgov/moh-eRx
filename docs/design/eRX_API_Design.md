@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Every prescription that is dispensed in community pharmacies in British Columbia is entered into PharmaNet. The introduction of Electronic Prescribing adds that every prescription written in the community is entered into PharmaNet. Community pharmacies will "pull down" prescriptions for the patient when dispense requests are made. This eliminates the need for prescribing physicians to hand a piece of paper, often printed out and signed to the patient during a patient visit.  Instead, the prescription is sent from the prescriber's electronic medical records system to PharmaNet.
+Every prescription that is dispensed in community pharmacies in British Columbia is entered into PharmaNet. The introduction of Electronic Prescribing adds that every prescription written in the community is entered into PharmaNet. Community pharmacies will "pull down" prescriptions for the patient when dispense requests are made. This eliminates the need for prescribing physicians to hand a piece of paper, often printed out and signed to the patient during a patient visit.  Instead, the prescription is sent from the prescribing practitioner's electronic medical records system to PharmaNet.
 
 This modern API work seeks to achieve four goals:
 
@@ -13,15 +13,13 @@ This modern API work seeks to achieve four goals:
 
 ## Approach
 
-The approach is a pragmatic one, where we ask the vendor community to go an a journey with us, incrementally heading towards an end state modernized integration model with PharmaNet that built on:
+The approach is a pragmatic one, where we ask the vendor community to go on a journey with us, incrementally moving towards an end state of a modernized integration model with PharmaNet that is built on:
 
 1. Highly elastic and scalable HL7 FHIR Restful microservices.
 2. Uses standard OAuth2 authorization flows.
-3. Runs over the Internet
-4. Is managed by security software and API management
+3. Is accessible via the Internet.
+4. Is managed by security software and API management gateway software.
 5. Has self-service vendor developer's areas to explore integration and ready for production certifications.
-
-
 
 ## API Design Guiding Principles & Constraints
 
@@ -36,8 +34,8 @@ The approach is a pragmatic one, where we ask the vendor community to go an a jo
   Content-Type: x-application/hl7-v2+er7+b64; charset=utf-8
 ```
 
-- Protect resource endpoints with OAuth2 using Bearer tokens (OAuth2 access tokens; aka JWT)
-- Keep HL7v2 payload *opaque* to the resource server:  pass-thru; all access policy enforcement is determined from Bearer token.
+- Protect resource endpoints with OAuth2 using Bearer tokens (OAuth2 access tokens; aka JSON Web Token,or JWT)
+- Keep HL7v2 payload *opaque* to the resource server, with one exception: process the HL7-v2 Message Header (MSH) to ensure that the resource and scopes align to the HL7-v2 interaction, which allows access policy enforcement determined from Bearer token claims.
 - Use microservice design pattern for maximum elasticity and scale; one interaction per microservice.
 - APIs are self-documented using OpenAPI (fka Swagger) and will include ability to pass Bearer Token as Authorization.
 - APIs will be testable/trialed using TEST environment, a base domain similar to production but using fictitious data.

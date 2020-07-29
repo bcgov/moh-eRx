@@ -12,7 +12,10 @@ This resource endpoint is following  HL7 FHIR version 4.0.1 specifications. It i
 
 | PharmaNet Interaction | Description |  Type | HL7-v2 Request | HL7-v2 Response |  HTTP Request Action |
 | ------ | ------ | ------ | ------ | ---- | ----- |
-| Patient Profile Information Request | | read | TRP_00.50 | TRP_00.50_RESPONSE |  POST |
+| Patient Profile Information Request (complete) | | read | TRP_00.50 | TRP_00.50_RESPONSE |  POST |
+| Patient Profile Information Request (latest) | | read | TRP_00.50 | TRP_00.50_RESPONSE |  POST |
+| DUE inquiry with patient profile information (complete) | | read | TDUTRP_00.50 |TDUTRP_00.50_RESPONSE | POST |
+| DUE inquiry with patient profile information (latest) | | read | TDUTRR_00.50 | TDUTRR_00.50_RESPONSE | POST |
 
 ## Permissions
 
@@ -20,4 +23,6 @@ The resource endpoint examines the HL7-v2 transaction type submitted and then ap
 
 | PharmaNet Interaction |  Hl7-v2 Request | Required System Scope |
 | ------ | ------ | ------ |
-| Patient Profile Information Request | TRP_00.50 | system/MedicationStatement.read, or user/MedicationStatement.read, or patient/MedicationStatement.read |
+| Patient Profile Information Request (complete or latest) | TRP_00.50 | system/MedicationStatement.read, or user/MedicationStatement.read, or patient/MedicationStatement.read |
+| DUE inquiry with patient profile information (complete) | TDUTRP_00.50 | system/MedicationStatement.read, or user/MedicationStatement.read, or patient/MedicationStatement.read |
+| DUE inquiry with patient profile information (latest) | TDUTRR_00.50 | system/MedicationStatement.read, or user/MedicationStatement.read, or patient/MedicationStatement.read |
