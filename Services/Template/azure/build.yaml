@@ -3,7 +3,7 @@ name: 1.0.0$(Rev:.r) #Build number
 #Build variables
 variables:
     App.Name: Template
-    App.Name.Lower: $[lower($(App.Name)]
+    App.Name.Lower: $[lower(variables['App.Name']]
     App.Home: $(Build.SourcesDirectory)/Apps/$(App.Name)
     App.UnitTests: $(App.Home)/test/unit
     App.FunctionalTests: $(App.Home)/test/functional
