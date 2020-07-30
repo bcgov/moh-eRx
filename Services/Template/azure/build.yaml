@@ -55,12 +55,12 @@ steps:
           arguments: "-o $(Build.BinariesDirectory)"
           zipAfterPublish: false
 
-    # - script: |
-    #       set -e
-    #       cp $(App.Home)/Dockerfile $(Build.BinariesDirectory)
-    #       oc process -f $(Build.SourcesDirectory)/Tools/BaseBuild/build.yaml -p NAME=$(App.Name) | oc apply -f -
-    #       oc start-build $(App.Name) --wait --follow --from-dir $(Build.BinariesDirectory) 
-    #       oc tag $(App.Name):latest $(App.Name):$(Build.BuildNumber)
-    #       echo `date` > $(Build.ArtifactStagingDirectory)/$(Build.BuildNumber).txt
-    #   displayName: "Build OpenShift Image and push to Image Stream"
+    - script: |
+          set -e
+          cp $(App.Home)/Dockerfile $(Build.BinariesDirectory)
+          oc process -f $(Build.SourcesDirectory)/Tools/BaseBuild/build.yaml -p NAME=$(App.Name.Lower) | oc apply -f -
+          oc start-build $(App.Name.Lower) --wait --follow --from-dir $(Build.BinariesDirectory) 
+          oc tag $(App.Name.Lower):latest $(App.Name.Lower):$(Build.BuildNumber)
+          echo `date` > $(Build.ArtifactStagingDirectory)/$(Build.BuildNumber).txt
+      displayName: "Build OpenShift Image and push to Image Stream"
 
