@@ -16,7 +16,7 @@ This modern API work seeks to achieve four goals:
 The approach is a pragmatic one, where we ask the vendor community to go on a journey with us, incrementally moving towards an end state of a modernized integration model with PharmaNet that is built on:
 
 1. Highly elastic and scalable HL7 FHIR Restful microservices.
-2. Uses standard OAuth2 authorization flows.
+2. Uses standard [OAuth2](https://oauth.net/2/) authorization flows.
 3. Is accessible via the Internet.
 4. Is managed by security software and API management gateway software.
 5. Has self-service vendor developer's areas to explore integration and ready for production certifications.
@@ -177,14 +177,25 @@ Connection: Closed
 
 ### Transport Flow
 
-Submitting an HL7v2 request is sent using HTTP POST. For 200 OK response the payload, if any, wil be the HL7v2 response returned from the PharmaNet service. The payload is opaque to the HTTPS transport - i.e. the microservice does not examine the payload.
+Submitting an HL7-v2 request is sent using HTTP POST. For 200 OK response the payload, if any, wil be the HL7-v2 response returned from the PharmaNet service. The payload is opaque to the HTTPS transport - i.e. the microservice does not examine the payload.
 
 ### Content-Type
 
-For HL7v2 Payload with Base64 encoded "|^" vertical bar delimiting, the Content-Type HTTP Header shall be:
+For the APIs the HTTP Content-Type will be application/fhir+json when transmitting HL7 interactions. Second
 
-```javascript
-Content-Type: x-application/hl7-v2+er7+b64; charset=utf-8
+For HL7-v2 Payload contained in the FHIR Bundle, it is Base64 encoded "|^" vertical bar delimiting, the "contentType" set to "x-application/hl7-v2+er7" as adopted from the HL7 over HTTP recommendation:
+
+```code
+...
+Content-Type: application/fhir+json
+...
+{
+    ...
+     "resourceType": "Binary",
+     "contentType": "x-application/hl7-v2+er7",
+     "data": "TVNIfF5+XCZ8QXxBfEF8U0VORF9GQUNJTElUWXwyMDIwMDIxNDIxMjAwNXx8QUNLfDFmMmQ1MjQzLTFhOWEtNGE4My05ZmI5LWNlNTIzMTVmZjk2M3xUfDAuMA1NU0F8QUF8MjAxODAxMDEwMDAwMDA="
+
+     ...
 ```
 
 The default character set, if not specified is ASCII a valid subset of UTF-8.
