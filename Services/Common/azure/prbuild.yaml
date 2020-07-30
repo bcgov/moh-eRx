@@ -1,0 +1,40 @@
+name: PR$(Rev:.r) #Build number
+
+#Build variables
+variables:
+  App.Home: $(Build.SourcesDirectory)/Apps/Common
+  App.Name: common
+  App.UnitTests: $(App.Home)/test/unit
+
+pool:
+  name: 'HealthGateway'
+
+trigger: none
+
+pr: none
+  # branches:
+  #  include:
+  #  - dev  
+  # paths:
+  #  include:
+  #  - Apps/Common/src
+  #  - Apps/Common/test
+  #  - Apps/Common/azure/prbuild.yml
+   
+steps:
+- task: DotNetCoreCLI@2
+  displayName: Run dotnet Tests
+  inputs:
+    command: 'test'
+    projects: '$(App.UnitTests)/CommonTests.csproj'
+    testRunTitle: 'Common Library Tests'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Publish dotnet Code'
+  inputs:
+    modifyOutputPath: false
+    command: 'publish'
+    publishWebProjects: false
+    projects: '$(App.Home)/src'
+    arguments: '-o $(Build.BinariesDirectory)'
+    zipAfterPublish: false
