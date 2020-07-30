@@ -13,7 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
-namespace HealthGateway.Immunization
+namespace Health.ERX.Template
 {
     using Health.ERX.Common.AspNetConfiguration;
     using Microsoft.AspNetCore.Builder;
