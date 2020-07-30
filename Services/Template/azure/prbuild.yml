@@ -9,7 +9,7 @@ variables:
     App.FunctionalTests: $(App.Home)/test/functional
 
 pool:
-    name: "HealthGateway"
+    name: "eRx"
 
 trigger: none
 
