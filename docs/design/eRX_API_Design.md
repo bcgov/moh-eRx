@@ -25,17 +25,43 @@ The approach is a pragmatic one, where we ask the vendor community to go on a jo
 
 - Use RESTful approach.
 - Use URIs to represent resources.
-- Adopt HL7 FHIR resource naming conventions.
-- Use HTTPS POST for HL7v2 request/response interactions.
-- For HL7v2 interactions, set Content-Type and other HTTP-Headers from [HAPI HL7 over HTTP]("https://hapifhir.github.io/hapi-hl7v2/hapi-hl7overhttp/") with the HL7v2 Base64 encoded, as a content type extension:
+- Adopt [HL7 FHIR](https://www.hl7.org/fhir) resource type conventions, resource scopes, and top-level content bundling.
+- Use HTTPS POST for HL7-v2 request/response interactions as [HL7 FHIR Bundle](https://www.hl7.org/fhir/bundle.html) Resource Type
+- Use Content-Type of [HL7 FHIR](https://www.hl7.org/fhir) for bundling the HL7-v2 as a binary using the Mime-Type or Content-Type as defined in [HL7v2 over HTTP](https://hapifhir.github.io/hapi-hl7v2/hapi-hl7overhttp/")
+- When a 'wet' signature is required when a prescriber submits a prescription, the FHIR Bundle will include a second resource for the electronic signature, specifying its mime-type.
 
-```bash
-  Date: Thu, 16 Jul 2020 08:12:31 GMT
-  Content-Type: x-application/hl7-v2+er7+b64; charset=utf-8
+The example request below represents a Record Prescription interaction with PharmaNet by a prescriber's system. The required electronic signature is supplied in the Bundle as a PNG image:
+
+```code
+  POST https://moh.api.gov.bc.ca/PharmaNet/v1/MedicationRequest/ HTTP/1.1
+  Date: Sat, 22 Jul 2020 01:43:30 GMT
+  Content-Length: 553
+  Content-Type: application/fhir+json
+  Authorization: "Bearer {access_token_b64}"
+  
+  {
+      "resourceType": "Bundle",
+      "meta" : {
+          "lastUpdated": "2020-07022T01:43:30Z",
+      },
+      "type": "transaction",
+      "entry": [
+          "resource": {
+            "resourceType": "Binary",
+            "contentType": "x-application/hl7-v2+er7",
+            "data": "{hl7-v2-base64 encoded payload}"
+          },
+          "resource": {
+              "resourceType": "Binary",
+              "contentType": "image/png",
+              "data": "{base64 encoded portable network graphics electronic signature image}",
+          }
+      ]
+  }
 ```
 
 - Protect resource endpoints with OAuth2 using Bearer tokens (OAuth2 access tokens; aka JSON Web Token,or JWT)
-- Keep HL7v2 payload *opaque* to the resource server, with one exception: process the HL7-v2 Message Header (MSH) to ensure that the resource and scopes align to the HL7-v2 interaction, which allows access policy enforcement determined from Bearer token claims.
+- Keep HL7-v2 payload *opaque* to the resource server, with one exception: process the HL7-v2 Message Header (MSH) to ensure that the resource and scopes align to the HL7-v2 interaction, which allows access policy enforcement determined from Bearer token claims.
 - Use microservice design pattern for maximum elasticity and scale; one interaction per microservice.
 - APIs are self-documented using OpenAPI (fka Swagger) and will include ability to pass Bearer Token as Authorization.
 - APIs will be testable/trialed using TEST environment, a base domain similar to production but using fictitious data.
@@ -105,7 +131,7 @@ For a list of interactions in scope for this API set, see [API Reference](../api
 
 Transmitting HL7-v2 over HTTPs uses the standard HTTP/1.1 protocol (RFC 2616) as a transport mechanism that can transfer the Base 64 encoded (pipe and carrot: '|^') structured HL7 message stream as the body of the HTTP request, with a response as either a Base 64 encoded HL7v2 in the response body for HTTP response codes of 2xx, or an HTTP Error with the body as JSON or plain text.  
 
-When HL7v2 response is returned for any HTTP 2xx code even if there is an HL7v2 response containing an error (AE, AR, etc.) since the transport is considered to be successful. For transport and authorization errors, HTTP Error codes will be returned with plain/text Content-Type and any error information as JSON structure.
+When HL7-v2 response is returned for any HTTP 2xx code even if there is an HL7v2 response containing an error (AE, AR, etc.) since the transport is considered to be successful. For transport and authorization errors, HTTP Error codes will be returned with plain/text Content-Type and any error information as JSON structure.
 
 Example OAuth2 error:
 
@@ -129,11 +155,24 @@ Example 200 OK Response containing an HL7-v2 ACK:
 HTTP/1.1 200 OK
 Last-Modified: Wed, 22 Jul 2020 11:05:20 GMT
 Date: Wed, 22 Jul 2020 11:12:33 GMT
-Content-Type: x-application/hl7-v2+er7+b64; charset=utf-8
-Content-Length: 152
+Content-Type: application/fhir+json
+Content-Length: 479
 Connection: Closed
 
-TVNIfF5+XCZ8QXxBfEF8U0VORF9GQUNJTElUWXwyMDIwMDIxNDIxMjAwNXx8QUNLfDFmMmQ1MjQzLTFhOWEtNGE4My05ZmI5LWNlNTIzMTVmZjk2M3xUfDAuMA1NU0F8QUF8MjAxODAxMDEwMDAwMDA=
+{
+      "resourceType": "Bundle",
+      "meta" : {
+          "lastUpdated": "2020-07022T01:43:36Z",
+      },
+      "type": "transaction-response",
+      "entry": [
+          "resource": {
+            "resourceType": "Binary",
+            "contentType": "x-application/hl7-v2+er7",
+            "data": "TVNIfF5+XCZ8QXxBfEF8U0VORF9GQUNJTElUWXwyMDIwMDIxNDIxMjAwNXx8QUNLfDFmMmQ1MjQzLTFhOWEtNGE4My05ZmI5LWNlNTIzMTVmZjk2M3xUfDAuMA1NU0F8QUF8MjAxODAxMDEwMDAwMDA="
+          }
+      ]
+  }
 ```
 
 ### Transport Flow
