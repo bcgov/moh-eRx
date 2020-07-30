@@ -210,7 +210,7 @@ parameters:
 - description: The repository branch to build from
   name: SOURCE_REPOSITORY_REF
   required: true
-  value: dev
+  value: master
 - description: The secret to be used for GitHub webhook integration
   name: GIT_WEBHOOK_SECRET
   generate: expression
