@@ -16,7 +16,7 @@ This modern API work seeks to achieve four goals:
 The approach is a pragmatic one, where we ask the vendor community to go on a journey with us, incrementally moving towards an end state of a modernized integration model with PharmaNet that is built on:
 
 1. Highly elastic and scalable HL7 FHIR Restful microservices.
-2. Uses standard OAuth2 authorization flows.
+2. Uses standard [OAuth2](https://oauth.net/2/) authorization flows.
 3. Is accessible via the Internet.
 4. Is managed by security software and API management gateway software.
 5. Has self-service vendor developer's areas to explore integration and ready for production certifications.
@@ -25,17 +25,56 @@ The approach is a pragmatic one, where we ask the vendor community to go on a jo
 
 - Use RESTful approach.
 - Use URIs to represent resources.
-- Adopt HL7 FHIR resource naming conventions.
-- Use HTTPS POST for HL7v2 request/response interactions.
-- For HL7v2 interactions, set Content-Type and other HTTP-Headers from [HAPI HL7 over HTTP]("https://hapifhir.github.io/hapi-hl7v2/hapi-hl7overhttp/") with the HL7v2 Base64 encoded, as a content type extension:
+- Adopt [HL7 FHIR](https://www.hl7.org/fhir) resource type conventions, resource scopes, and top-level content bundling.
+- Use HTTPS POST for HL7-v2 request/response interactions as [HL7 FHIR Bundle](https://www.hl7.org/fhir/bundle.html) Resource Type
+- Use Content-Type of [HL7 FHIR](https://www.hl7.org/fhir) for bundling the HL7-v2 as a binary using the mime type or Content-Type as defined in [HL7v2 over HTTP](https://hapifhir.github.io/hapi-hl7v2/hapi-hl7overhttp/")
+- When a 'wet' signature is required when a prescriber submits a prescription, the FHIR Bundle will include a `signature`  for the electronic signature, specifying its mime-type as an binary image in the `sigFormat` field. 
 
-```bash
-  Date: Thu, 16 Jul 2020 08:12:31 GMT
-  Content-Type: x-application/hl7-v2+er7+b64; charset=utf-8
+In the future, the signature requirement may evolve to that of a digital signature format, such as [W3C XML Digital Signature](https://www.w3.org/Signature/Activity.html)
+
+The example request below represents a Record Prescription interaction with PharmaNet by a prescriber's system. The mandatory electronic signature is supplied as a Portable Network Graphics image:
+
+```code
+  POST https://moh.api.gov.bc.ca/PharmaNet/v1/MedicationRequest/ HTTP/1.1
+  Date: Sat, 30 Jul 2020 01:10:02 GMT
+  Content-Length: 553
+  Content-Type: application/fhir+json
+  Authorization: "Bearer TG9yZW0gaXBzdW0gZG9sb3Igc2l0IGFtZXQsIGNvbnNl..."
+  
+    {
+        "resourceType": "Bundle",
+        "identifier": "9406ccdd-be4e-4a91-95a5-96e8cf33b53a",
+        "type": "message",
+        "timestamp": "2020-07030T01:10:01Z",
+        "entry": [
+            "resource": {
+                "resourceType": "MessageHeader",
+                "eventCoding": {
+                    "system" : "http://api.example.org/PharmaNet/hl7-v2-transactions"
+                    "code" : "TRX_X1.X6",
+                },
+                "source": {
+                    "name": "YourEMR",
+                    "endpoint": "https://www.your.emr.app"
+                }
+            },
+            "resource": {
+                "resourceType": "Binary",
+                "contentType": "x-application/hl7-v2+er7",
+                "data": "Fib3JpcyBuaXNpIHV0IGFsaXF1aXAgZXggZWEgY29tbW9yZSBkb2xvciBpbiB..."
+            }
+        ],
+        "signature": {
+            "type": "authorship",
+            "when": "2020-07030T01:09:57Z",
+            "sigFormat": "image/png",
+            "data": "w6EKGkV4aWYAAE1NACoAAAAIAAsBDwACAAAABgAAAMKS..."
+        }
+    }
 ```
 
 - Protect resource endpoints with OAuth2 using Bearer tokens (OAuth2 access tokens; aka JSON Web Token,or JWT)
-- Keep HL7v2 payload *opaque* to the resource server, with one exception: process the HL7-v2 Message Header (MSH) to ensure that the resource and scopes align to the HL7-v2 interaction, which allows access policy enforcement determined from Bearer token claims.
+- Keep HL7-v2 payload *opaque* to the resource server, with one exception: process the HL7-v2 Message Header (MSH) to ensure that the resource and scopes align to the HL7-v2 interaction, which allows access policy enforcement determined from Bearer token claims.
 - Use microservice design pattern for maximum elasticity and scale; one interaction per microservice.
 - APIs are self-documented using OpenAPI (fka Swagger) and will include ability to pass Bearer Token as Authorization.
 - APIs will be testable/trialed using TEST environment, a base domain similar to production but using fictitious data.
@@ -94,23 +133,18 @@ endpoint-uri  ::= 'https://' domain-name '/PharmaNet/' api-version '/' resource-
 Example:
 
 ```code
-https://moh.api.gov.bc.ca/PharmaNet/v1/MedicationStatement
+https:/api.example.org/PharmaNet/v1/MedicationStatement
 ```
 
-The following PharmaNet eRx Interactions are in scope:
+#### Interaction Scope
 
-| Interaction | HL7-v2 Request Message | Hl7-v2 Response Message |  Resource-Type |
-| ------ | ------- | ------ | ------ |
-| Location Inquiry | TIL_00.50 | TIL_00.50_RESPONSE | TBD |
-| Retrieve Patient Prescription | TRX_X0.X5 | TRX_X0.X5_RESPONSE | MedicationRequest |
-| Retrieve Prescriber Prescription Record | TRX_X4.X9 | TRX_X4.X9_RESPONSE | MedicationRequest |
-| Record Prescription | TRX_X1.X6 |TRX_X1.X6_RESPONSE | MedicationRequest |
+For a list of interactions in scope for this API set, see [API Reference](../api-reference/README.md)
 
 ### Use of HTTP
 
-Transmitting HL7-v2 over HTTPs uses the standard HTTP/1.1 protocol (RFC 2616) as a transport mechanism that can transfer the Base 64 encoded (pipe and carrot: '|^') structured HL7 message stream as the body of the HTTP request, with a response as either a Base 64 encoded HL7v2 in the response body for HTTP response codes of 2xx, or an HTTP Error with the body as JSON or plain text.  
+Transmitting PharmaNet transaction over HTTPs uses the standard HTTP/1.1 protocol (RFC 2616) as a transport mechanism that will transfer the Base 64 encoded (pipe and carrot: '|^') structured HL7 message stream as an HL7 FHIR JSON Bundle entry, with a response as an HL7 FHIR JSON Bundle with the  HL7-v2 response provided in the Bundle for HTTP response codes of 2xx, or an HTTP Error with the body as generic JSON or plain text content type.
 
-When HL7v2 response is returned for any HTTP 2xx code even if there is an HL7v2 response containing an error (AE, AR, etc.) since the transport is considered to be successful. For transport and authorization errors, HTTP Error codes will be returned with plain/text Content-Type and any error information as JSON structure.
+When HL7-v2 response is returned in a FHIR Bundle for any HTTP 2xx code even if there is an HL7v2 response containing an error (AE, AR, etc.) since the transport is considered to be successful. For transport and authorization errors, HTTP Error codes will be returned with `plain/text` Content-Type and any error information as JSON structure.
 
 Example OAuth2 error:
 
@@ -133,24 +167,65 @@ Example 200 OK Response containing an HL7-v2 ACK:
 ```code
 HTTP/1.1 200 OK
 Last-Modified: Wed, 22 Jul 2020 11:05:20 GMT
-Date: Wed, 22 Jul 2020 11:12:33 GMT
-Content-Type: x-application/hl7-v2+er7+b64; charset=utf-8
-Content-Length: 152
+Date: Wed, 22 Jul 2020 01:43:36 GMT
+Content-Type: application/fhir+json
+Content-Length: 479
 Connection: Closed
 
-TVNIfF5+XCZ8QXxBfEF8U0VORF9GQUNJTElUWXwyMDIwMDIxNDIxMjAwNXx8QUNLfDFmMmQ1MjQzLTFhOWEtNGE4My05ZmI5LWNlNTIzMTVmZjk2M3xUfDAuMA1NU0F8QUF8MjAxODAxMDEwMDAwMDA=
+{
+    "resourceType": "Bundle",
+    "identifier": "a3168f60-e709-4a8e-b7ea-fa530e073b24",
+    "type": "message",
+    "timestamp": "2020-07022T01:43:36Z",
+    "entry": [
+        "resource": {
+            "resourceType": "MessageHeader",
+            "eventCoding": {
+                    "code" : "TRX_X1.X6_RESPONSE",
+                    "system" : "https://api.example.org/PharmaNet/hl7-v2-transactions",
+                    "display" : "Record Prescription Response",
+            },
+            "eventUri": "",
+            "source": {
+                "name": "PharmaNet",
+                "endpoint": "https://api.example.org/PharmaNet/v1/MedicationRequest/"
+            },
+            "response": {
+                "identifier": "d5bec364-d2bb-11ea-87d0-0242ac130003",
+                "code": "ok"
+            }
+        },
+        "resource": {
+            "resourceType": "Binary",
+            "contentType": "x-application/hl7-v2+er7",
+            "data": "TVNIfF5+XCZ8QXxBfEF8U0VORF9GQUNJTElUWXwyMDIwMDIxNDIxMjAwNXx8QUNLfDFmMmQ1MjQzLTFhOWEtNGE4My05ZmI5LWNlNTIzMTVmZjk2M3xUfDAuMA1NU0F8QUF8MjAxODAxMDEwMDAwMDA="
+        }
+    ]
+  }
 ```
 
 ### Transport Flow
 
-Submitting an HL7v2 request is sent using HTTP POST. For 200 OK response the payload, if any, wil be the HL7v2 response returned from the PharmaNet service. The payload is opaque to the HTTPS transport - i.e. the microservice does not examine the payload.
+Submitting an HL7-v2 request is sent using HTTP POST. For `200 OK` response the payload, if any, wil be the HL7-v2 response returned from the PharmaNet service. The payload is opaque to the HTTPS transport - i.e. the microservice does not examine the payload.
 
 ### Content-Type
 
-For HL7v2 Payload with Base64 encoded "|^" vertical bar delimiting, the Content-Type HTTP Header shall be:
+For the APIs the HTTP 'Content-Type' will be 'application/fhir+json' when transmitting HL7 interactions. Second
 
-```javascript
-Content-Type: x-application/hl7-v2+er7+b64; charset=utf-8
+For HL7-v2 contained in the FHIR Bundle, it is Base64 encoded `|^` pipe and caret HL7-v2 with `contentType` set to `x-application/hl7-v2+er7` as adopted from the HL7-v2 over HTTP recommendation:
+
+```code
+...
+Content-Type: application/fhir+json
+...
+{
+    ...
+    "resource": {
+        "resourceType": "Binary",
+        "contentType": "x-application/hl7-v2+er7",
+        "data": "TVNIfF5+XCZ8QXxBfEF8U0VORF9GQUNJTElUWXwyMDIwMDIxNDIxMjAwNXx8QUNLfDFmMmQ1MjQzLTFhOWEtNGE4My05ZmI5LWNlNTIzMTVmZjk2M3xUfDAuMA1NU0F8QUF8MjAxODAxMDEwMDAwMDA="
+    },
+     ...
 ```
 
 The default character set, if not specified is ASCII a valid subset of UTF-8.
@@ -164,21 +239,5 @@ Syntax:
 ```code
  Date: <day-name>, <day> <month> <year> <hour>:<minute>:<second> GMT
 ```
-
-### Custom Headers
-
-Additional optional custom headers, adapted from HL7 FHIR recommendations are primarily intended to assist with audit/debugging of interactions.
-
-The request id in X-Request-Id is purely to help connect between requests and logs/audit trails. The client can assign an id to the request, and send that in the X-Request-Id header. The server can either use that id or assign it's own, which it returns as the X-Request-Id header in the response. When the server assigned id is different to the client assigned id, the server SHOULD also return the X-Correlation-Id header with the client's original id in it.
-
-The PharmaNet API endpoints will only respond with these custom headers if the client provides the optional X-Request-Id.
-
-#### X-Request-Id
-
-A unique id (suggest UUID) for the HTTP request/response assigned by the client and server.  Request: assigned by the client. Response: assigned by the PharmaNet API endpoint.
-
-#### X-Correlation-Id
-
-A client assigned request id echoed back to the client from the PharmaNet API endpoint in the Response Header. This allows the client application to correlate the response to the request.
 
 ### HTTP Response Codes
