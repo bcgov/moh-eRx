@@ -210,9 +210,9 @@ Submitting an HL7-v2 request is sent using HTTP POST. For `200 OK` response the 
 
 ### Content-Type
 
-For the APIs the HTTP 'Content-Type' will be 'application/fhir+json' when transmitting HL7 interactions. Second
+For the APIs the HTTP `Content-Type` will be `application/fhir+json` when transmitting HL7 interactions. 
 
-For HL7-v2 contained in the FHIR Bundle, it is Base64 encoded `|^` pipe and caret HL7-v2 with `contentType` set to `x-application/hl7-v2+er7` as adopted from the HL7-v2 over HTTP recommendation:
+For HL7-v2 contained in the FHIR Bundle, it is Base64 encoded `|^` pipe and caret HL7-v2 with `contentType` set to `x-application/hl7-v2+er7` as adopted from the HL7-v2 over HTTP recommendation, as illustrated in this example fragment:
 
 ```code
 ...
