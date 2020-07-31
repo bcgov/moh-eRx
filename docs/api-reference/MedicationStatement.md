@@ -2,9 +2,11 @@
 
 This resource endpoint is following  HL7 FHIR version 4.0.1 specifications. It is a record of medication being taken by a patient, or that the medication has been given to a patient where the record is the result of a report from the patient, or another clinician. A medication statement is not a part of the prescribe->dispense->administer sequence but is a report that such a sequence (or at least a part of it) did take place resulting in a belief that the patient has received a particular medication.
 
-> Unlike a pure RESTful interface, all HL7-v2 interactions are submitted with HTTP POST, with the content type, or mime-type set to `Content-Type: application/fhir+json`, and with top-level resource type a "message" Bundle. The HL7-v2 message is added to the FHIR Binary Message bundle, base64 encoded, with the MessageHeader eventCode set to the Request transaction code, shown in the table below.
-
 ## Supported HL7-v2 Interactions
+
+```javascript
+"contentType": "x-application/hl7-v2+er7"
+```
 
 | PharmaNet Interaction | Description |  Type | HL7-v2 Request | HL7-v2 Response |  HTTP Request Action |
 | ------ | ------ | ------ | ------ | ---- | ----- |
