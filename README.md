@@ -1,12 +1,14 @@
 # moh-eRx
 
+## BC Ministry of Health PharmaNet Electronic Prescribing API
+
 This repository will be used to develop the strategic architecture and components to enable PharmaNet electronic prescribing in British Columbia.
 
-## Goals 
+## Objectives
 
-This project has three primary goals:
+This project has three primary objectives:
 
-1. Migrate off HNSecure private network, removing the need for HNClient software packages to be deployed.
+1. Migrate off HN-Secure private network, removing the need for proprietary HN-Client software packages to be deployed by clients.
 2. Add Electronic Prescribing (eRx) Capabilities using  HTTPS transport and modern OAuth2 authentication and authorization standards.
 3. Longer-term, add support for HL7 FHIR editions of the HL7-v2 PharmaNet Interactions.
 
