@@ -4,7 +4,7 @@
 
 This repository will be used to develop the strategic architecture and components to enable PharmaNet electronic prescribing in British Columbia.
 
-## Objectives 
+## Objectives
 
 This project has three primary objectives:
 
