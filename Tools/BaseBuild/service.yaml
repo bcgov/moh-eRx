@@ -135,7 +135,7 @@ parameters:
   - name: WEB_HOST
     displayName: Web host name used in the built URI
     description: This value defaults to gateway and likely shouldn't be changed
-    value: gateway
+    value: erx
     required: true
   - name: COMMON_CONFIG
     displayName: Common ConfigMap
