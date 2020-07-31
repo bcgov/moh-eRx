@@ -2,6 +2,8 @@
 
 To access the PharmaNet interaction resources, you call and specify the resource URL corresponding to the interaction your application wishes to invoke using only HTTP POST operations when submitting HL7-v2 in a FHIR Bundle over HTTPS.
 
+> Unlike a pure RESTful interface, all HL7-v2 interactions are submitted with HTTP POST, with the content type, or mime-type set to `Content-Type: application/fhir+json`, and with top-level resource type a "message" Bundle. The HL7-v2 message is added to the FHIR Binary Message bundle, base64 encoded, with the MessageHeader eventCode set to the Request transaction code, shown in the table below.
+
 In future, these same resource endpoints will add more HTTP actions (GET, PUT, PATCH, DELETE) when the `Content-Type` provided is HL7 FHIR, and not simply HL7-v2 bundled in a FHIR JSON wrapper.
 
 All PharmaNet API request use the following basic URL pattern:
