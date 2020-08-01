@@ -4,9 +4,8 @@ This resource endpoint is following  HL7 FHIR version 4.0.1 specifications. It i
 
 ## Supported HL7-v2 Interactions
 
-```javascript
-"contentType": "x-application/hl7-v2+er7"
-```
+The payload of a MedicationStatement request contains an HL7 FHIR compliant *message* Bundle, which contains a message header and a Base 64 encoded HL7-v2 messages, as listed in the table below. A successful response will contain the corresponding HL7-v2 message, also wrapped in an HL7 FHIR *message* Bundle.  
+
 
 | PharmaNet Interaction | Description |  Type | HL7-v2 Request | HL7-v2 Response |  HTTP Request Action |
 | ------ | ------ | ------ | ------ | ---- | ----- |
@@ -14,6 +13,14 @@ This resource endpoint is following  HL7 FHIR version 4.0.1 specifications. It i
 | Patient Profile Information Request (latest) | | read | TRP_00.50 | TRP_00.50_RESPONSE |  POST |
 | DUE inquiry with patient profile information (complete) | | read | TDUTRP_00.50 |TDUTRP_00.50_RESPONSE | POST |
 | DUE inquiry with patient profile information (latest) | | read | TDUTRR_00.50 | TDUTRR_00.50_RESPONSE | POST |
+
+### Bundle entry Content-Type
+
+The HL7-v2 is base-64 encoded and must declare the following content-type:
+
+```javascript
+"contentType": "x-application/hl7-v2+er7"
+```
 
 ## Permissions
 
