@@ -29,7 +29,7 @@ The resource endpoint examines the HL7-v2 transaction type submitted and then ap
 
 ## Example Request Message
 
-Record Prescription request and response message example with the following PNET Transaction Request, where the userId would be replaced by the userId of the authenticated prescriber.
+*Record Prescription* request and response message example with the following PNET Transaction Request, where the userId would be replaced by the userId of the authenticated prescriber.
 
 The example contains:
 
@@ -39,7 +39,7 @@ The example contains:
 
 The example contains fully base 64 encoded content as described below:
 
-### Access Token (JWT)
+#### Access Token (JWT)
 
 ```javascript
 {
@@ -63,7 +63,7 @@ The example contains fully base 64 encoded content as described below:
 ```
 
 
-### HL7-v2 Request Message
+#### HL7-v2 TRX_X1.X6 Request Message
 
 ```code
 MSH|^~\&|1234567|1234567|1234567|ERXPP|2015/03/09 10:01:01|userID:192.168.0.1|ZPN|195233|P|2.1||
