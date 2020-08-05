@@ -28,51 +28,7 @@ The approach is a pragmatic one, where we ask the vendor community to go on a jo
 - Adopt [HL7 FHIR](https://www.hl7.org/fhir) resource type conventions, resource scopes, and top-level content bundling.
 - Use HTTPS POST for HL7-v2 request/response interactions as [HL7 FHIR Bundle](https://www.hl7.org/fhir/bundle.html) Resource Type
 - Use Content-Type of [HL7 FHIR](https://www.hl7.org/fhir) for bundling the HL7-v2 as a binary using the mime type or Content-Type as defined in [HL7v2 over HTTP](https://hapifhir.github.io/hapi-hl7v2/hapi-hl7overhttp/")
-- When a 'wet' signature is required when a prescriber submits a prescription, the FHIR Bundle will include a `signature`  for the electronic signature, specifying its mime-type as an binary image in the `sigFormat` field. 
-
-In the future, the signature requirement may evolve to that of a digital signature format, such as [W3C XML Digital Signature](https://www.w3.org/Signature/Activity.html)
-
-The example request below represents a Record Prescription interaction with PharmaNet by a prescriber's system. The mandatory electronic signature is supplied as a Portable Network Graphics image:
-
-```code
-  POST https://moh.api.gov.bc.ca/PharmaNet/v1/MedicationRequest/ HTTP/1.1
-  Date: Sat, 30 Jul 2020 01:10:02 GMT
-  Content-Length: 553
-  Content-Type: application/fhir+json
-  Authorization: "Bearer TG9yZW0gaXBzdW0gZG9sb3Igc2l0IGFtZXQsIGNvbnNl..."
-  
-    {
-        "resourceType": "Bundle",
-        "identifier": "9406ccdd-be4e-4a91-95a5-96e8cf33b53a",
-        "type": "message",
-        "timestamp": "2020-07030T01:10:01Z",
-        "entry": [
-            "resource": {
-                "resourceType": "MessageHeader",
-                "eventCoding": {
-                    "system" : "http://api.example.org/PharmaNet/hl7-v2-transactions"
-                    "code" : "TRX_X1.X6",
-                },
-                "source": {
-                    "name": "YourEMR",
-                    "endpoint": "https://www.your.emr.app"
-                }
-            },
-            "resource": {
-                "resourceType": "Binary",
-                "contentType": "x-application/hl7-v2+er7",
-                "data": "Fib3JpcyBuaXNpIHV0IGFsaXF1aXAgZXggZWEgY29tbW9yZSBkb2xvciBpbiB..."
-            }
-        ],
-        "signature": {
-            "type": "authorship",
-            "when": "2020-07030T01:09:57Z",
-            "sigFormat": "image/png",
-            "data": "w6EKGkV4aWYAAE1NACoAAAAIAAsBDwACAAAABgAAAMKS..."
-        }
-    }
-```
-
+- When a 'wet' signature is required when a prescriber submits a prescription, the FHIR Bundle will include a `signature`  for the electronic signature, specifying its mime-type as an binary image, such as `image/jpeg` in the `sigFormat` field.  In the future, the signature requirement may evolve to that of a digital signature format, such as [W3C XML Digital Signature](https://www.w3.org/Signature/Activity.html)
 - Protect resource endpoints with OAuth2 using Bearer tokens (OAuth2 access tokens; aka JSON Web Token,or JWT)
 - Keep HL7-v2 payload *opaque* to the resource server, with one exception: process the HL7-v2 Message Header (MSH) to ensure that the resource and scopes align to the HL7-v2 interaction, which allows access policy enforcement determined from Bearer token claims.
 - Use microservice design pattern for maximum elasticity and scale; one interaction per microservice.
@@ -86,7 +42,7 @@ The example request below represents a Record Prescription interaction with Phar
 
 Some of features of the design are adopted or adapted from the [HL7 FHIR RESTful API specification](https://www.hl7.org/fhir/http.html#3.1.0).
 
-### API Security
+## API Security
 
 - All interactions must be over TLS 1.2 or higher; i.e. HTTPS.
 - Authorization Header is mandatory with Mandatory OAuth2 access token as "Bearer {token}", e.g.:
@@ -99,11 +55,11 @@ Some of features of the design are adopted or adapted from the [HL7 FHIR RESTful
 - Leverage API Management software over whitelist or blacklist IP to control access to the APIs. 
 - Where possible keep microservice routes private, only exposing to authorized services: make publicly reachable only through the API Management software (Kong).
 
-### API Publishing
+## API Publishing
 
  The plan is to publish these APIs to PharmaNet vendors. To make them more broadly available the recommendation is to publish these APIs through the [BC Government API Registry]("https://catalogue.data.gov.bc.ca/group/bc-government-api-registry").
 
-### API Management
+## API Management
 
  The design includes standing up a developer's portal using API management software [(Kong)]("https://konghq.com/community/?itm_source=website&itm_medium=nav"), which includes the following features:
 
@@ -119,6 +75,7 @@ Some of features of the design are adopted or adapted from the [HL7 FHIR RESTful
  The plan is to make these APIs publicly available, with authorization required, through the [BC Government API Gateway]("https://developer.gov.bc.ca/Developer-Tools/API-Gateway-\(powered-by-Kong-CE\)").
 
 ## Typical PharmaNet API Flow
+
 The services exposed by the PharmaNet API flow through the architecture in a typical manner,as illustrated in the diagram:
 
 ![Typical Flow](../diagrams/out/PNet_API_Flow.png)
@@ -263,4 +220,4 @@ When the HL7-v2 message can be processed, the HTTP response code will be `200 OK
 
 The overall logic for determining the response code is illustrated in this logic diagram:
 
-![Response Code Logi](../diagrams/out/PNet_API_Processing.png)
+![Response Code Logic](../diagrams/out/PNet_API_Processing.png)
