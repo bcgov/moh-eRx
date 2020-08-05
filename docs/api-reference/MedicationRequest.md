@@ -62,7 +62,6 @@ The example contains fully base 64 encoded content as described below:
 }
 ```
 
-
 #### HL7-v2 TRX_X1.X6 Request Message
 
 ```code
