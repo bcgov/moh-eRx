@@ -39,7 +39,7 @@ The example contains:
 
 The example contains fully base 64 encoded content as described below:
 
-#### Access Token (JWT)
+### Access Token (JWT)
 
 ```javascript
 {
@@ -62,7 +62,7 @@ The example contains fully base 64 encoded content as described below:
 }
 ```
 
-#### HL7-v2 TRX_X1.X6 Request Message
+### HL7-v2 TRX_X1.X6 Request Message
 
 ```code
 MSH|^~\&|1234567|1234567|1234567|ERXPP|2015/03/09 10:01:01|userID:192.168.0.1|ZPN|195233|P|2.1||
@@ -73,13 +73,13 @@ ZPX|ZPX1^Y^91^1J7S2QMJJ^^^^^^43542368^^^20150228^^20150228^2063735^4679^PMS-BACL
 ZZZ|TRX||195232|P1|nnnnnnnnnn||THIS IS A TEST|||ZZZ1^
 ```
 
-#### Mandatory Electronic Signature
+### Mandatory Electronic Signature
 
 In accordance with the BC College of Physicians and Surgeons, a prescribing practitioner must supply a "wet" signature, or electronic signature created at the time the prescription was written.  The  example shows how to capture an electronic signature following HL7 FHIR standardized method. While the HL7 FHIR specification also accepts a cryptographic digital signature, it also supports the sharing of a digital image of the signature, as supported in this specification. In this example it is a Base64 encoded version of the Portable Network Graphics image:
 
 ![Signature Sample](images/henry.png)
 
-### The REST HL7 FHIR Bundle request using HTTP POST
+## The REST HL7 FHIR Bundle request using HTTP POST
 
 In this request, the above HL7-v2 Request is Base-64 encoded as a FHIR Bundle entry, along with the electronic signature capture of the prescriber.
 
