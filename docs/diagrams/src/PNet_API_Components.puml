@@ -1,0 +1,37 @@
+@startuml PNet_API_Components
+
+package "PharmaNet APIs" {
+    folder "Resource APIs" {
+    [Medication]
+    [MedicationRequest]
+    [MedicationStatement]
+    [Location]
+    }
+    folder "Common Components" {
+        [Authorization]
+        [Audit Logging]
+        [HL7 Processing]
+        [Signature Delegate]
+        [PharmaNet Delegate]
+    }
+    database "PNet Electronic Signatures" {
+        [Electronic Signatures]
+    }
+}
+newpage 
+
+package "PharmaNet System" {
+    [PharmaNet Proxy]
+    [PharmaNet ODR]
+    [PharmaNet]
+}
+
+package "PharmaNet Authorization Platform" {
+    [Keycloak]
+    database "KeycloakDB" {
+    [Keycloak Datastore] 
+    }
+}
+
+
+@enduml

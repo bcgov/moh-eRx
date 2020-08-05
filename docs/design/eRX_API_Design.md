@@ -123,6 +123,18 @@ The services exposed by the PharmaNet API flow through the architecture in a typ
 
 ![Typical Flow](../diagrams/out/PNet_API_Flow.png)
 
+## API Solution Components
+
+The API is organized into a set of microservices, based upon the HL7 FHIR Resources model. Each resource supports one or more interactions or transactions, and each of those transactions is a HL7 message Bundle containing the HL7-v2 request or response.
+
+Each API Resource component interacts with the PharmaNet Authorization platform (Keycloak) to verify the access_token presented. The API components then communicate to the PharmaNet via a private channel to a proxy.
+
+The electronic signatures captured for each prescription recorded, are stored in a high-available database and returned during a prescription retrieval interaction. 
+
+![API Components](../diagrams/out/PNet_API_Components-page1.png)
+![Other Components](../diagrams/out/PNet_API_Components-page2.png)
+
+
 ## HL7v2 Electronic Prescribing Messaging Specifications
 
 ### Interactions
