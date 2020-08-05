@@ -76,9 +76,9 @@ ZZZ|TRX||195232|P1|nnnnnnnnnn||THIS IS A TEST|||ZZZ1^
 
 #### Mandatory Electronic Signature
 
-The above example attaches an electronic signature, captured at the time the prescription was created. It is a Base64 encoded version of the Portable Network Graphics image:
+In accordance with the BC College of Physicians and Surgeons, a prescribing practitioner must supply a "wet" signature, or electronic signature created at the time the prescription was written.  The  example shows how to capture an electronic signature following HL7 FHIR standardized method. While the HL7 FHIR specification also accepts a cryptographic digital signature, it also supports the sharing of a digital image of the signature, as supported in this specification. In this example it is a Base64 encoded version of the Portable Network Graphics image:
 
-<img src="images/henry.png"/>
+![Signature Sample](images/henry.png)
 
 ### The REST HL7 FHIR Bundle request using HTTP POST
 
