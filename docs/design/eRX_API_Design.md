@@ -118,6 +118,23 @@ Some of features of the design are adopted or adapted from the [HL7 FHIR RESTful
 
  The plan is to make these APIs publicly available, with authorization required, through the [BC Government API Gateway]("https://developer.gov.bc.ca/Developer-Tools/API-Gateway-\(powered-by-Kong-CE\)").
 
+## Typical PharmaNet API Flow
+The services exposed by the PharmaNet API flow through the architecture in a typical manner,as illustrated in the diagram:
+
+![Typical Flow](../diagrams/out/PNet_API_Flow.png)
+
+## API Solution Components
+
+The API is organized into a set of microservices, based upon the HL7 FHIR Resources model. Each resource supports one or more interactions or transactions, and each of those transactions is a HL7 message Bundle containing the HL7-v2 request or response.
+
+Each API Resource component interacts with the PharmaNet Authorization platform (Keycloak) to verify the access_token presented. The API components then communicate to the PharmaNet via a private channel to a proxy.
+
+The electronic signatures captured for each prescription recorded, are stored in a high-available database and returned during a prescription retrieval interaction. 
+
+![API Components](../diagrams/out/PNet_API_Components-page1.png)
+![Other Components](../diagrams/out/PNet_API_Components-page2.png)
+
+
 ## HL7v2 Electronic Prescribing Messaging Specifications
 
 ### Interactions
@@ -241,3 +258,9 @@ Syntax:
 ```
 
 ### HTTP Response Codes
+
+When the HL7-v2 message can be processed, the HTTP response code will be `200 OK`. This signifies that a response from PharmaNet was returned and is included in the response Bundle. Otherwise, several HTTP Response codes may be returned, most notably `401 Unauthorized`, `400 Bad Request`, or `404 Not Found` if there was an error in the route.
+
+The overall logic for determining the response code is illustrated in this logic diagram:
+
+![Response Code Logi](../diagrams/out/PNet_API_Processing.png)

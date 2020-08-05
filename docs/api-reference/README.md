@@ -8,8 +8,8 @@ Welcome to the PharmaNet REST API reference.
 
 | Domain | Interaction Message | Description | Resource Type |
 | ----- | ----- | ----- | ----- |
-| PNet | TIL_00.50 | Location inquiry | Location |
-| PNet | TIL_00.50_RESPONSE | Location inquiry response | Location |
+| PNet | TIL_00.50 | Location inquiry | [Location](Location.md) |
+| PNet | TIL_00.50_RESPONSE | Location inquiry response | [Location](Location.md) |
 | PNet | TRX_X0.X5 | Retrieve patient prescription record | [MedicationRequest](MedicationRequest.md) |
 | PNet | TRX_X0.X5_RESPONSE | Retrieve patient prescription record response | [MedicationRequest](MedicationRequest.md) |
 | PNet | TRX_X4.X9 | Retrieve prescriber prescription record | [MedicationRequest](MedicationRequest.md) |

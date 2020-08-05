@@ -91,7 +91,7 @@ The following illustrates an example access_token with system access scope for s
   "allowed-origins": [
     "https://your.emr.app/"
   ],
-  "scope": "openid audience system/MedicationRequest.write",
+  "scope": "audience system/MedicationRequest.write",
   "clientId": "your.emr",
   "clientHost": "192.0.172.199",
 }
@@ -99,4 +99,4 @@ The following illustrates an example access_token with system access scope for s
 
 ## Next Steps
 
-TBD
+[Invoking PharmaNet API](invoking-pharmanet-api.md)
