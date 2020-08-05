@@ -4,6 +4,15 @@ Welcome to the PharmaNet REST API reference.
 
 ## Common Use Cases
 
+## Resources
+
+The PharmaNet APIs are organized by resource type. Each resource type has its own URI, or endpoint. The Resources support one or more transactions related to the resource type and access is managed by OAuth2 scopes.
+
+- [Location](Location.md)
+- [Medication](Medication.md)
+- [MedicationRequest](MedicationRequest.md)
+- [MedicationStatement](MedicationStatement.md)
+
 ## PharmaNet Private Practice Interactions for ePrescribing
 
 | Domain | Interaction Message | Description | Resource Type |
@@ -61,9 +70,3 @@ The following interactions are also needed by the private practice (e.g. EMR) pr
 * PNet = PharmaNet
 * CR = Healthcare Client Registry
 * PLR = Provider Location Registry
-
-## Resource Specifications
-
-* [Medication](Medication.md)
-* [MedicationRequest](MedicationRequest.md)
-* [MedicationStatement](MedicationStatement.md)
