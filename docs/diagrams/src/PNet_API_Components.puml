@@ -32,6 +32,4 @@ package "PharmaNet Authorization Platform" {
     [Keycloak Datastore] 
     }
 }
-
-
 @enduml
