@@ -75,25 +75,22 @@ The following illustrates an example access_token with system access scope for s
 
 ```javascript
 {
-  "jti": "ae58ed64-9bcf-4712-a4d2-75b15480c4a3",
-  "exp": 1595613198,
+  "jti": "b2477faa-8fd8-43b6-b958-af7ab2fb419b",
+  "exp": 1596585622,
   "nbf": 0,
-  "iat": 1595612898,
-  "iss": "https://sso.pathfinder.gov.bc.ca/auth/realms/aa33ab78",
-  "aud": [
-    "pharmanet"
-  ],
+  "iat": 1596585022,
+  "iss": "https://sso-dev.pathfinder.gov.bc.ca/auth/realms/ff09qn3f",
+  "aud": "pharmanet",
+  "sub": "90c61a77-e7dc-4f6b-a01f-0019497d3675",
   "typ": "Bearer",
-  "azp": "emr",
+  "azp": "pnet_sample_client",
   "auth_time": 0,
-  "session_state": "4d4e00ee-0003-4361-a953-0412c3255606",
+  "session_state": "9b58bc19-e1d8-4a46-a8d5-a0cb6b8bf012",
   "acr": "1",
-  "allowed-origins": [
-    "https://your.emr.app/"
-  ],
-  "scope": "audience system/MedicationRequest.write",
-  "clientId": "your.emr",
-  "clientHost": "192.0.172.199",
+  "scope": "system/MedicationRequest.write audience",
+  "clientId": "pnet_sample_client",
+  "clientHost": "70.66.172.199",
+  "clientAddress": "70.66.172.199"
 }
 ```
 
