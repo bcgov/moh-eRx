@@ -22,4 +22,5 @@ PharmaNet users include community pharmacies, hospital pharmacies, emergency dep
 
 For more information about PharmaNet, see [PharmaNet](https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/pharmacare-for-bc-residents/pharmanet)
 
-
+## See Docs
+For more information about this project, see [Documentation](docs/README.md)
