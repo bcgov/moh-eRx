@@ -37,7 +37,7 @@ The approach is a pragmatic one, where we ask the vendor community to go on a jo
 - APIs will be versioned, with previous versions as part of the base URI, for example (not a real endpoint):
 
 ```bash
-    https://moh.api.gov.bc.ca/PharmaNet/v1/
+    https://moh.api.gov.bc.ca/PharmaNet/MedicationService/v1/
 ```
 
 Some of features of the design are adopted or adapted from the [HL7 FHIR RESTful API specification](https://www.hl7.org/fhir/http.html#3.1.0).
@@ -101,13 +101,13 @@ An interaction is a request/response pairing, with two HL7-v2 messages contained
 The structure [EBNF]("https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form") of the endpoint Resource URI is:
 
 ```code
-endpoint-uri  ::= 'https://' domain-name '/PharmaNet/' api-version '/' resource-type ;
+endpoint-uri  ::= 'https://' domain-name '/PharmaNet/' service-name '/' api-version '/' resource-type ;
 ```
 
 Example:
 
 ```code
-https:/api.example.org/PharmaNet/v1/MedicationStatement
+https:/api.example.org/PharmaNet/MedicationService/v1/MedicationStatement
 ```
 
 #### Interaction Scope
@@ -162,7 +162,7 @@ Connection: Closed
             "eventUri": "",
             "source": {
                 "name": "PharmaNet",
-                "endpoint": "https://api.example.org/PharmaNet/v1/MedicationRequest/"
+                "endpoint": "https://api.example.org/PharmaNet/RxService/v1/MedicationRequest/"
             },
             "response": {
                 "identifier": "d5bec364-d2bb-11ea-87d0-0242ac130003",

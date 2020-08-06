@@ -7,7 +7,7 @@ To call PharmaNet in support of electronic prescribing, your application must ac
 [Access tokens](https://tools.ietf.org/html/rfc6750) issued contain information (claims) that the APIs use to validate that the calling application has the proper permissions to perform the operation it is requesting.  Your application must always transmit an access token as an HTTP Header entry, as in:
 
 ```code
-POST https://api.example.org/PharmaNet/v1/MedicationRequest/ HTTP/1.1
+POST https://api.example.org/PharmaNet/v1/RxService/MedicationRequest/ HTTP/1.1
 Content-Type: application/fhir+json
 Content-Length: 152
 Authorization: Bearer EwAoA8l6BAAU7p9QDpi/D7xJLwsTgCg3TskyTaQAAXu71AU9f4aS4rOK5xoO/SU5HZKSXtCsDe0Pj7uSc5Ug008qTI+a9M1tBeKoTs7tHzhJNSKgk7pm5e8d3oGWXX5shyOG3cKSqgfwuNDnmmPDNDivwmi9kmKqWIC9OQRf8InpYXH7NdUYNwN+jljffvNTewdZz42VPrvqoMH7hSxiG7A1h8leOv4F3Ek/oeJX6U8nnL9nJ5pHLVuPWD0aNnTPTJD8Y4oQTp5zLhDIIfaJCaGcQperULVF7K6yX8MhHxIBwek418rKIp11om0SWBXOYSGOM0rNNN59qNiKwLNK+MPUf7ObcRBN5I5vg8jB7IMoz66jrNmT2uiWCyI8MmYDZgAACPoaZ9REyqke+AE1/x1ZX0w7OamUexKF8YGZiw+cDpT/BP1GsONnwI4a8M7HsBtDgZPRd6/Hfqlq3HE2xLuhYX8bAc1MUr0gP9KuH6HDQNlIV4KaRZWxyRo1wmKHOF5G5wTHrtxg8tnXylMc1PKOtaXIU4JJZ1l4x/7FwhPmg9M86PBPWr5zwUj2CVXC7wWlL/6M89Mlh8yXESMO3AIuAmEMKjqauPrgi9hAdI2oqnLZWCRL9gcHBida1y0DTXQhcwMv1ORrk65VFHtVgYAegrxu3NDoJiDyVaPZxDwTYRGjPII3va8GALAMVy5xou2ikzRvJjW7Gm3XoaqJCTCExN4m5i/Dqc81Gr4uT7OaeypYTUjnwCh7aMhsOTDJehefzjXhlkn//2eik+NivKx/BTJBEdT6MR97Wh/ns/VcK7QTmbjwbU2cwLngT7Ylq+uzhx54R9JMaSLhnw+/nIrcVkG77Hi3neShKeZmnl5DC9PuwIbtNvVge3Q+V0ws2zsL3z7ndz4tTMYFdvR/XbrnbEErTDLWrV6Lc3JHQMs0bYUyTBg5dThwCiuZ1evaT6BlMMLuSCVxdBGzXTBcvGwihFzZbyNoX+52DS5x+RbIEvd6KWOpQ6Ni+1GAawHDdNUiQTQFXRxLSHfc9fh7hE4qcD7PqHGsykYj7A0XqHCjbKKgWSkcAg==
@@ -34,7 +34,7 @@ Our recommendation is to use existing authentication and authorization software 
 
 ## Access Scopes
 
-Accessing the resources and services requires that the access token supplied in the request include the necessary OAuth2 acces scopes. These correspond directly to the FHIR resource types adopted in this specification. The goal is to, in future, add, FHIR R4 JSON as an accepted content-type to the resource endpoints without needing to modify the authorization controls.
+Accessing the resources and services requires that the access token supplied in the request include the necessary OAuth2 access scopes. These correspond directly to the FHIR resource types adopted in this specification. The goal is to, in future, add, FHIR R4 JSON as an accepted content-type to the resource endpoints without needing to modify the authorization controls.
 
 ### Resource Context
 
@@ -75,25 +75,22 @@ The following illustrates an example access_token with system access scope for s
 
 ```javascript
 {
-  "jti": "ae58ed64-9bcf-4712-a4d2-75b15480c4a3",
-  "exp": 1595613198,
+  "jti": "b2477faa-8fd8-43b6-b958-af7ab2fb419b",
+  "exp": 1596585622,
   "nbf": 0,
-  "iat": 1595612898,
-  "iss": "https://sso.pathfinder.gov.bc.ca/auth/realms/aa33ab78",
-  "aud": [
-    "pharmanet"
-  ],
+  "iat": 1596585022,
+  "iss": "https://sso-dev.pathfinder.gov.bc.ca/auth/realms/ff09qn3f",
+  "aud": "pharmanet",
+  "sub": "90c61a77-e7dc-4f6b-a01f-0019497d3675",
   "typ": "Bearer",
-  "azp": "emr",
+  "azp": "pnet_sample_client",
   "auth_time": 0,
-  "session_state": "4d4e00ee-0003-4361-a953-0412c3255606",
+  "session_state": "9b58bc19-e1d8-4a46-a8d5-a0cb6b8bf012",
   "acr": "1",
-  "allowed-origins": [
-    "https://your.emr.app/"
-  ],
-  "scope": "audience system/MedicationRequest.write",
-  "clientId": "your.emr",
-  "clientHost": "192.0.172.199",
+  "scope": "system/MedicationRequest.write audience",
+  "clientId": "pnet_sample_client",
+  "clientHost": "70.66.172.199",
+  "clientAddress": "70.66.172.199"
 }
 ```
 
