@@ -2,14 +2,14 @@
 autonumber
     actor EMR
     EMR <-> KeyCloak : Client Credentials Grant Authorization
-    EMR -> Kong_Gateway : Retrieve Prescription Record Request (TRX_X0.X5)
-    Kong_Gateway -> MedicationRequest_API : Retrieve Prescription Record Request (Private Route)
+    EMR -> Kong_Gateway : Prescription Record Request (TRX_X0.X5)
+    Kong_Gateway -> MedicationRequest_API : Prescription Record Request (Private Route)
     MedicationRequest_API <-> KeyCloak : Validate Authorization (JWT)
     MedicationRequest_API <-> MedicationRequest_API : Parse FHIR Bundle, check MSH for proper interaction
     MedicationRequest_API -> PharmaNet_Proxy : TRX_X0.X5 HL7-V2 Interaction  (Private Route)
     PharmaNet_Proxy <-> PharmaNet : Perform transaction
     MedicationRequest_API <-- PharmaNet_Proxy : Return HL7-v2 Response
     MedicationRequest_API <-> MedicationRequest_API : Build Response HL7 FHIR Bundle
-    Kong_Gateway <-- MedicationRequest_API
-    EMR <- Kong_Gateway : Return Response
+    Kong_Gateway <-- MedicationRequest_API : Return Response back thru Gateway
+    EMR <- Kong_Gateway : Return Response to Client
 @enduml

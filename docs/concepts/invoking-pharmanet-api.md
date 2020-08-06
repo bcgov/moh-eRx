@@ -24,7 +24,7 @@ Where for this example URL:
 ## Example Request
 
 ```code
-POST https://api.example.org/PharmaNet/v1/MedicationStatement/ HTTP/1.1
+POST https://api.example.org/PharmaNet/v1/MedicationService/MedicationStatement/ HTTP/1.1
 Content-Type: application/fhir+json
 Content-Length: 147
 Date: Wed, 22 Jul 2020 11:12:32 GMT
