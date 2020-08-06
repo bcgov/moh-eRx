@@ -59,9 +59,17 @@ The example request below represents a Record Prescription interaction with Phar
 
 ## For More Information
 
-* For more information about the requirement for 'wet' signatures, please see [BC College of Physicians and Surgeons](https://www.cpsbc.ca/for-physicians/college-connector/2014-V02-02/05)
+### College of Physicians and Surgeons of British Columbia
 
-* The [Pharmacy Operations and Drug Scheduling Act](http://library.bcpharmacists.org/6_Resources/6-1_Provincial_Legislation/5082-PODSA_Bylaws.pdf) (PODSA) Bylaws provide guidance regarding electronic signatures, with the following definition:
+For more information about the requirement for 'wet' signatures, please see [College of Physicians and Surgeons of British Columbia](https://www.cpsbc.ca/for-physicians/college-connector/2014-V02-02/05)
+  
+  *The key message in this is that the signature must be unique and applied with a human hand—be it pen to paper, or electronic pen to pad.*
+
+### PODSA
+
+- The [Pharmacy Operations and Drug Scheduling Act](http://library.bcpharmacists.org/6_Resources/6-1_Provincial_Legislation/5082-PODSA_Bylaws.pdf) (PODSA) Bylaws provide guidance regarding electronic signatures, with the following definition:
+
+#### What is an acceptable form of electronic signature
 
 **electronic signature** means 
 
@@ -72,4 +80,14 @@ sign a record, other than with respect to a prescription signed by a full pharma
 
 *From* 5082-PODSA_Bylaws v2020.3 Effective 2020-05-07 (Posted 2020-05-07) College of Pharmacists of BC – PODSA Bylaws
 
-* For BC Government guidance on electronic signatures, see [Electronic Signatures](https://www2.gov.bc.ca/assets/gov/british-columbians-our-governments/services-policies-for-government/information-technology/electronic_signatures_guide.pdf)
+### College of Pharmacists of British Columbia
+
+Further guidance from the [College of Pharmacists of British Columbia](https://bcpharmacists.org) elaborate on how uniqueness is achieved in the following article: [*On-Call - Accepting an electronic signature*](https://www.bcpharmacists.org/readlinks/call-accepting-electronic-prescription):
+
+*Electronic prescriptions are only permitted if the electronic prescriber’s signature is unique. Health Canada considers a unique electronic signature to be equivalent to a paper and pen signature. Therefore the signature must be a fresh new signature written on the prescription with an electronic pen pad, similar to signing a pen and paper prescription. Cutting and pasting a signature into an electronic prescription is not permitted.*
+
+*To ensure that that the signature is unique, the pharmacist should compare the signature each time with an old prescription.*
+
+#### BC Government electronic signature guidance
+
+- For BC Government guidance on electronic signatures, see [Electronic Signatures](https://www2.gov.bc.ca/assets/gov/british-columbians-our-governments/services-policies-for-government/information-technology/electronic_signatures_guide.pdf)
