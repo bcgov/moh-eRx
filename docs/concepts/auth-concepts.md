@@ -34,7 +34,7 @@ Our recommendation is to use existing authentication and authorization software 
 
 ## Access Scopes
 
-Accessing the resources and services requires that the access token supplied in the request include the necessary OAuth2 acces scopes. These correspond directly to the FHIR resource types adopted in this specification. The goal is to, in future, add, FHIR R4 JSON as an accepted content-type to the resource endpoints without needing to modify the authorization controls.
+Accessing the resources and services requires that the access token supplied in the request include the necessary OAuth2 access scopes. These correspond directly to the FHIR resource types adopted in this specification. The goal is to, in future, add, FHIR R4 JSON as an accepted content-type to the resource endpoints without needing to modify the authorization controls.
 
 ### Resource Context
 

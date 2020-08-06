@@ -2,11 +2,11 @@
 
 The Immunization project provides Immunization data in the form of a Web API with OpenAPI documentation.
 
-## Immunization Service Configuration
+## Template Service Configuration
 
 ```bash
 cd $GATEWAYHOME/Apps/Immunization/src/
-code appsetttings.local.json
+code appsettings.local.json
 ```
 
 Add the following text:

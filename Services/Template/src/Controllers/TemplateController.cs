@@ -52,11 +52,11 @@ namespace Health.ERX.Controllers
         }
 
         /// <summary>
-        /// Gets a json list of immunization records.
+        /// Gets a json list of records.
         /// </summary>
         /// <param name="id">The ID to lookup.</param>
         /// <returns>The string "Ok".</returns>
-        /// <response code="200">Always retuirns Ok and HTTP Response code of 200.</response>
+        /// <response code="200">Always returns Ok and HTTP Response code of 200.</response>
         [HttpGet]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
