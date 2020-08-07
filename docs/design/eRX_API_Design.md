@@ -31,7 +31,7 @@ The approach is a pragmatic one, where we ask the vendor community to go on a jo
 - When a 'wet' signature is required when a prescriber submits a prescription, the FHIR Bundle will include a `signature`  for the electronic signature, specifying its mime-type as an binary image, such as `image/jpeg` in the `sigFormat` field.  In the future, the signature requirement may evolve to that of a digital signature format, such as [W3C XML Digital Signature](https://www.w3.org/Signature/Activity.html)
 - Protect resource endpoints with OAuth2 using Bearer tokens (OAuth2 access tokens; aka JSON Web Token,or JWT)
 - Keep HL7-v2 payload *opaque* to the resource server, with one exception: process the HL7-v2 Message Header (MSH) to ensure that the resource and scopes align to the HL7-v2 interaction, which allows access policy enforcement determined from Bearer token claims.
-- Use microservice design pattern for maximum elasticity and scale; one interaction per microservice.
+- Use microservice design pattern for maximum elasticity and scale.
 - APIs are self-documented using OpenAPI (fka Swagger) and will include ability to pass Bearer Token as Authorization.
 - APIs will be testable/trialed using TEST environment, a base domain similar to production but using fictitious data.
 - APIs will be versioned, with previous versions as part of the base URI, for example (not a real endpoint):
