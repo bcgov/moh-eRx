@@ -4,12 +4,13 @@ Welcome to the PharmaNet REST API reference.
 
 ## Common Use Cases
 
-## Resources
+## Medication Domain Resources
 
-The PharmaNet APIs are organized by resource type. Each resource type has its own URI, or endpoint. The Resources support one or more transactions related to the resource type and access is managed by OAuth2 scopes.
+The PharmaNet APIs are organized by resource type. Each resource type has its own URI, or endpoint. The Resources support one or more transactions related to the resource type and authorized access is managed by OAuth2 scopes.
 
 - [Location](Location.md)
 - [Medication](Medication.md)
+- [MedicationDispense](MedicationDispense.md)
 - [MedicationRequest](MedicationRequest.md)
 - [MedicationStatement](MedicationStatement.md)
 
