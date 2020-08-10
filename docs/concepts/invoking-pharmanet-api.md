@@ -28,7 +28,18 @@ Content-Length: 147
 Date: Wed, 22 Jul 2020 11:12:32 GMT
 Authorization: Bearer <access_token>
 
-{ ... HL7 FHIR Body with HL7-v2 as document reference entry... }
+{
+    "resourceType": "DocumentReference",
+    "masterIdentifier": "D8DA8971-FC3F-47C3-A96A-2CBC825DEAB5",
+    "status" : "current",
+    "date": ""2020-07030T01:09:57Z",
+    "content": [{
+        "attachment": {
+            "contentType": "x-application/hl7-v2+er7",
+            "data": "Fib3JpcyBuaXNpIHV0IGFsaXF1aXAgZXggZWEgY29tbW9yZSBkb2xvciBpbiB..."
+        }
+    }]
+}
 ```
 
 ## Example Response
@@ -41,7 +52,18 @@ Content-Type: application/fhir+json
 Content-Length: 152
 Connection: Closed
 
-{ ... HL7 FHIR Body with HL7-v2 response as document reference entry ... }
+
+{
+    "resourceType": "DocumentReference",
+    "status" : "current",
+    "date": ""2020-07030T01:09:58Z",
+    "content": [{
+        "attachment": {
+            "contentType": "x-application/hl7-v2+er7",
+            "data": "Fib3JpcyBuaXNpIHV0IGFsaXF1aXAgZXggZWEgY29tbW9yZSBkb2xvciBpbiB..."
+        }
+    }]
+}
 ```
 
 ## Use of "Wet" Electronic Signature
