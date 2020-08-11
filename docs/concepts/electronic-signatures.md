@@ -19,7 +19,7 @@ In the future, the signature requirement may evolve to that of a digital signatu
 The example request below represents a Record Prescription interaction with PharmaNet by a prescriber's system. The mandatory electronic signature is supplied as a Portable Network Graphics image:
 
 ```code
-  POST https://api.example.org/PharmaNet/v1/MedicationRequest/ HTTP/1.1
+  POST https://api.example.org/PharmaNet/MedStatementService/v1/MedicationRequest/ HTTP/1.1
   Date: Sat, 30 Jul 2020 01:10:02 GMT
   Content-Length: 553
   Content-Type: application/fhir+json
