@@ -84,7 +84,7 @@ In accordance with the BC College of Physicians and Surgeons, a prescribing prac
 In this request, the above HL7-v2 Request is Base-64 encoded as a FHIR DocumentReference, along with an extension containing the electronic signature capture of the prescriber.
 
 ```code
-POST https://api.example.org/PharmaNet/v1/MedicationRequest HTTP/1.1
+POST https://api.example.org/PharmaNet/RxService/v1/MedicationRequest HTTP/1.1
 Date: Tue, 04 Aug 2020 21:58:33 GMT
 Content-Type: application/fhir+json
 Content-Length: 34436

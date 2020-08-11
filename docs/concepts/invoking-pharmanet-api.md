@@ -2,27 +2,32 @@
 
 To access the PharmaNet interaction resources, you call and specify the resource URL corresponding to the interaction your application wishes to invoke using only HTTP POST operations when submitting HL7-v2 in a FHIR DocumentReference resource over HTTPS.
 
-> Unlike a pure RESTful interface, all HL7-v2 interactions are submitted with HTTP POST, with the content type, or Mime-Type set as `Content-Type: application/fhir+json`, and with top-level resource type of DocumentReference as per the recommendation by HL7 when submitting HL7-v2 messages. The HL7-v2 message is added to the FHIR DocumentResource as `"data"`, base64 encoded.
+> Unlike a pure RESTful interface, all HL7-v2 interactions are submitted with HTTP POST, with the content type, or Mime-Type set as `Content-Type: application/fhir+json`, and with top-level resource type of DocumentReference as per the recommendation by HL7 when submitting HL7-v2 messages. The HL7-v2 message is added to the FHIR DocumentResource attachement as `"data"`, base64 encoded.
 
 All PharmaNet API request use the following basic URL pattern:
 
 ```code
-https://api.example.org/PharmaNet/{version}/{resource}
+https://api.example.org/PharmaNet/{service-name}/{version}/{resource}
 ```
 
 Where for this example URL:
 
 - ``https://api.example.org`` is the base domain for the PharmaNet API endpoints (this is a fictitious example).
 - `{version}` is the target service version, for example the initial version will be `v1`.
+- `{service-name}` is the name of the microservice endpoint servicing the resource request.
 - `{resource}` is the resource path, such as:
     - `MedicationRequest`, or
     - `MedicationStatement` or
     - `Medication`
 
+## Example Request/Response Flow
+
+![MedicationStatement_Flow](../diagrams/out/PNet_MedicationStatement_Flow.png)
+
 ## Example Request
 
 ```code
-POST https://api.example.org/PharmaNet/v1/MedicationService/MedicationStatement/ HTTP/1.1
+POST https://api.example.org/PharmaNet/MedStatementService/v1/MedicationStatement/ HTTP/1.1
 Content-Type: application/fhir+json
 Content-Length: 147
 Date: Wed, 22 Jul 2020 11:12:32 GMT
