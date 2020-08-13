@@ -4,19 +4,26 @@ Welcome to the PharmaNet REST API reference.
 
 ## Common Use Cases
 
-## Medication Domain Resources
+## PharmaNet Medication Resources
 
-The PharmaNet APIs are organized by resource type. Each resource type has its own URI, or endpoint. The Resources support one or more transactions related to the resource type and authorized access is managed by OAuth2 scopes.
+The PharmaNet APIs are organized by resource type. Each HL7 FHIR Resource type has its own URI, or endpoint. The Resources support one or more transactions related to the resource type and authorized access is managed by OAuth2 scopes.
 
-- [Location](Location.md)
 - [Medication](Medication.md)
 - [MedicationDispense](MedicationDispense.md)
 - [MedicationRequest](MedicationRequest.md)
 - [MedicationStatement](MedicationStatement.md)
 
+## Additional PharmaNet Resources
+
+In addition to the core Medication Resources, PharmaNet supports additional resources and the corresponding HL7-v2 interactions.
+
+- [Claim](Claim.md)
+- [Location](Location.md)
+- [Practitioner](Practitioner.md)
+
 ## PharmaNet Private Practice Interactions for ePrescribing
 
-| Domain | Interaction Message | Description | Resource Type |
+| Domain | Interaction Message | Description | FHIR Resource |
 | ----- | ----- | ----- | ----- |
 | PNet | TIL_00.50 | Location inquiry | [Location](Location.md) |
 | PNet | TIL_00.50_RESPONSE | Location inquiry response | [Location](Location.md) |
@@ -49,11 +56,17 @@ The PharmaNet APIs are organized by resource type. Each resource type has its ow
 | PNet | TPI_00.50 | Patient profile information update | [MedicationStatement](MedicationStatement.md) |
 | PNet | TPI_00.50_RESPONSE | Patient profile information update response | [MedicationStatement](MedicationStatement.md) |
 
+## PharmaNet Pharmacy Point of Service System Interactions
+
+| Domain | Interaction Message | Description | FHIR Resource |
+| ----- | ----- | ----- | ----- |
+
+
 ## Additional Domains: HL7-v3 Interactions
 
 The following interactions are also needed by the private practice (e.g. EMR) profile. These interactions are not included in this API set, and may require differing integration requirements including system authorizations.
 
-| Domain | Interaction Message | Description | Resource Type |
+| Domain | Interaction Message | Description | FHIR Resource |
 | ----- | ----- | ----- | ----- |
 | CR | HCIM_IN_FindCandidates | Find Candidates | Patient |
 | CR | HCIM_IN_FindCandidatesResponse | Find Candidates Response | Patient |
