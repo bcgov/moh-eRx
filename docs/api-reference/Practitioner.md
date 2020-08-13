@@ -25,6 +25,7 @@ The resource endpoint examines the HL7-v2 transaction type submitted and then ap
 ```code
 TBD
 ```
+
 ## The REST HL7 FHIR DocumentReference request using HTTP POST
 
 The following illustrates an example TIP_00 Request message formulated into an HTTP POST containing a body of type HL7 FHIR DocumentReference JavaScript Object Notation (JSON):

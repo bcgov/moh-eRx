@@ -49,10 +49,10 @@ In addition to the core Medication Resources, PharmaNet supports additional reso
 | PNet | TRX_X1.X6_RESPONSE | Record prescription response | [MedicationRequest](MedicationRequest.md) |
 | PNet | TRX_X2.X7 | Change prescription status | [MedicationRequest](MedicationRequest.md) |
 | PNet | TRX_X2.X7_RESPONSE | Change prescription status response | [MedicationRequest](MedicationRequest.md) |
-| PNet | TMU_01.51 | Update medication | TBD |
-| PNet | TMU_01.51_RESPONSE | Update medication response | TBD |
-| PNet | TMU_11.61 | Update medication reversal | TBD |
-| PNet | TMU_11.61_RESPONSE | Update medication reversal response | TBD |
+| PNet | TMU_01.51 | Update medication | [MedicationDispense](MedicationDispense.md) |
+| PNet | TMU_01.51_RESPONSE | Update medication response | [MedicationDispense](MedicationDispense.md) |
+| PNet | TMU_11.61 | Update medication reversal | [MedicationDispense](MedicationDispense.md) |
+| PNet | TMU_11.61_RESPONSE | Update medication reversal response | [MedicationDispense](MedicationDispense.md) |
 | PNet | TPI_00.50 | Patient profile information update | [MedicationStatement](MedicationStatement.md) |
 | PNet | TPI_00.50_RESPONSE | Patient profile information update response | [MedicationStatement](MedicationStatement.md) |
 
@@ -60,7 +60,7 @@ In addition to the core Medication Resources, PharmaNet supports additional reso
 
 | Domain | Interaction Message | Description | FHIR Resource |
 | ----- | ----- | ----- | ----- |
-
+| PNet | | | |
 
 ## Additional Domains: HL7-v3 Interactions
 
@@ -81,6 +81,6 @@ The following interactions are also needed by the private practice (e.g. EMR) pr
 
 ### Domain Legend
 
-* PNet = PharmaNet
-* CR = Healthcare Client Registry
-* PLR = Provider Location Registry
+- PNet = PharmaNet
+- CR = Healthcare Client Registry
+- PLR = Provider Location Registry

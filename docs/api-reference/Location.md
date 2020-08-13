@@ -27,7 +27,7 @@ ZCA||70|00|MA|01|
 ZCB|MDA|120113|1111
 ZPL|QAERXPP||||||||||||||MM
 ZZZ|TIL||1111|P1|nnnnnnnnnn|||||ZZZ1
-å
+
 ## The REST HL7 FHIR DocumentReference request using HTTP POST
 
 The following illustrates an example TIL_00.50 Request message formulated into an HTTP POST containing a body of type HL7 FHIR DocumentReference JavaScript Object Notation (JSON):
@@ -51,5 +51,4 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI4NmRlMD
         }
     }]
 }
-
 ```
