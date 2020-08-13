@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------
-// Copyright © 2019 Province of British Columbia
+// Copyright © 2020 Province of British Columbia
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
-namespace Health.ERX.Common.AspNetConfiguration
+namespace Health.PharmaNet.Common.AspNetConfiguration
 {
     using System.Diagnostics.CodeAnalysis;
     using Microsoft.AspNetCore.Hosting;
@@ -27,7 +27,7 @@ namespace Health.ERX.Common.AspNetConfiguration
     [ExcludeFromCodeCoverage]
     public static class ProgramConfiguration
     {
-        private const string EnvironmentPrefix = "HealthGateway_";
+        private const string EnvironmentPrefix = "PharmaNet_";
 
         /// <summary>
         /// Creates a IHostBuilder with console logging and Configuration prefixing enabled.

@@ -1,5 +1,5 @@
 ﻿//-------------------------------------------------------------------------
-// Copyright © 2019 Province of British Columbia
+// Copyright © 2020 Province of British Columbia
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
-namespace Health.ERX.Controllers
+namespace Health.PharmaNet.Controllers
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -29,7 +29,7 @@ namespace Health.ERX.Controllers
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/api/[controller]")]
     [ApiController]
-    public class TemplateController : ControllerBase
+    public class ServiceControllerBase : ControllerBase
     {
         private readonly ILogger logger;
 
@@ -39,12 +39,12 @@ namespace Health.ERX.Controllers
         private readonly IHttpContextAccessor httpContextAccessor;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TemplateController"/> class.
+        /// Initializes a new instance of the <see cref="ServiceControllerBase"/> class.
         /// </summary>
         /// <param name="logger">Injected Logger Provider.</param>
         /// <param name="httpContextAccessor">The Http Context accessor.</param>
-        public TemplateController(
-            ILogger<TemplateController> logger,
+        public ServiceControllerBase(
+            ILogger<ServiceControllerBase> logger,
             IHttpContextAccessor httpContextAccessor)
         {
             this.logger = logger;

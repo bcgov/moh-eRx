@@ -11,10 +11,18 @@
   "profiles": {
     "HealthGateway.Immunization": {
       "commandName": "Project",
+      "applicationUrl": "http://localhost:3001;",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "applicationUrl": "http://localhost:3001;"
+      }
+    },
+    "Health.ERX.Template": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "applicationUrl": "http://localhost:44764",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
     }
   }
 }

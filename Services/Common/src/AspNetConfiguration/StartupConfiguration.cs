@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------
-// Copyright © 2019 Province of British Columbia
+// Copyright © 2020 Province of British Columbia
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,14 +13,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
-namespace Health.ERX.Common.AspNetConfiguration
+namespace Health.PharmaNet.Common.AspNetConfiguration
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
     using System.Net;
     using System.Net.Http;
     using System.Threading.Tasks;
-    using HealthGateway.Common.Swagger;
+
+    using Health.PharmaNet.Common.Authorization;
+    using Health.PharmaNet.Common.Swagger;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Builder;
@@ -45,6 +47,7 @@ namespace Health.ERX.Common.AspNetConfiguration
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Maintainability", "CA1506:Avoid excessive class coupling", Justification = "Team decision")]
     public class StartupConfiguration
     {
+        private const string OPENIDCONNECT = "OpenIdConnect";
         private readonly IWebHostEnvironment environment;
         private readonly IConfiguration configuration;
 
@@ -136,7 +139,7 @@ namespace Health.ERX.Common.AspNetConfiguration
                 options.SaveToken = true;
                 options.RequireHttpsMetadata = true;
                 options.IncludeErrorDetails = true;
-                this.configuration.GetSection("OpenIdConnect").Bind(options);
+                this.configuration.GetSection(OPENIDCONNECT).Bind(options);
 
                 options.TokenValidationParameters = new TokenValidationParameters()
                 {
@@ -149,6 +152,21 @@ namespace Health.ERX.Common.AspNetConfiguration
                     OnAuthenticationFailed = (ctx) => { return this.OnAuthenticationFailed(ctx); },
                 };
             });
+
+            services.AddAuthorization(options =>
+            {
+                string claimsIssuer = this.configuration.GetSection(OPENIDCONNECT).GetValue<string>("ClaimsIssuer");
+                string scopes = this.configuration.GetSection(OPENIDCONNECT).GetValue<string>("Scope");
+
+                string[] scope = scopes.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+                HasScopesRequirement requirement = new HasScopesRequirement(scope, claimsIssuer);
+
+                options.AddPolicy("scopes", policy => policy.Requirements.Add(requirement));
+            });
+
+            // register the scope authorization handler
+            services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
         }
 
         /// <summary>
