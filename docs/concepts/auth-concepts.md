@@ -18,9 +18,9 @@ Authorization: Bearer EwAoA8l6BAAU7p9QDpi/D7xJLwsTgCg3TskyTaQAAXu71AU9f4aS4rOK5x
 
 Before your app can get an access token from the identity platform, it must be registered. Registration integrates your app with the identity platform and establishes the information that it uses to get tokens:
 
-- <b>Application ID</b>:  A unique identifier assigned by the identity platform to your application.
-- <b>Redirect URI/URL</b>: One or more endpoints at which your app will receive responses from the identity platform.
-- <b>Application Secret</b>: A password or public/private key pair that your application uses to authenticate with the identity platform.
+- **Application ID**:  A unique identifier assigned by the identity platform to your application.
+- **Redirect URI/URL**: One or more endpoints at which your app will receive responses from the identity platform.
+- **Application Secret**: A password or public/private key pair that your application uses to authenticate with the identity platform.
 
 The first edition of the access type will allow for permissions to be granted directly to your application according to the conformance profile fo your app. So, for example, a Pharmacist's application may have a differing set of permissions than, say, a prescribing physician's electronic medical record system might have. This will be determined during registration.
 
@@ -38,7 +38,7 @@ Accessing the resources and services requires that the access token supplied in 
 
 ### Resource Context
 
-Simply providing an access token in the HTTP Header is not sufficient for your app to gain acess to the resource endpoints and services. Your app must be assigned the appropriate access scope(s) for the given interaction. The available scopes will be determined by the nature of the authentication. For system  authentication using client credentials, your app will be pre-assigned 'system' scopes in the PharmaNet identity platform. These will align to the PharmaNet access profiles assigned to your app.
+Simply providing an access token in the HTTP Header is not sufficient for your app to gain access to the resource endpoints and services. Your app must be assigned the appropriate access scope(s) for the given interaction. The available scopes will be determined by the nature of the authentication. For system  authentication using client credentials, your app will be pre-assigned 'system' scopes in the PharmaNet identity platform. These will align to the PharmaNet access profiles assigned to your app.
 
 | Context | Definition |
 | ----- | ------ |
@@ -59,17 +59,14 @@ Three modification rights are defined for a resource:
 | Right | Description |
 | ------ | ------ |
 | read | Corresponds to "read" or "vread" and "history" for interactions as defined by [FHIR Resource Index](http://www.hl7.org/implement/standards/FHIR/resourcelist.html). For the context is "user" this includes "search". |
-| write | Corresponds to "create", "update" and "delete". | 
+| write | Corresponds to "create", "update" and "delete". |
 | * | Corresponds to both write and read. |
-
 
 The pattern for scopes is based on the [SMART](https://openid.net/specs/openid-heart-fhir-oauth2-1_0.html) scopes, and the [EBNF](https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form) notation of the scope syntax is:
 
 ```code
 clinical-scope ::= ( 'patient' | 'user' | 'system' ) '/' ( resource-type | '*' ) '.' ( 'read' | 'write' | '*')
 ```
-
-
 
 The following illustrates an example access_token with system access scope for submitting a prescription to PharmaNet:
 
