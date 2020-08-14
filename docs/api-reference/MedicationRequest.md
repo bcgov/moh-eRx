@@ -2,7 +2,6 @@
 
 This resource endpoint is following  HL7 FHIR version 4.0.1 resource naming convention and represents an order for both supply of medication and the instructions for administration of the medicine to the patient. This is commonly referred to as a "prescription".  It replaces the paper-based prescription hand written or printed out and signed by a physician.
 
-
 ## Supported HL7-v2 Interactions
 
 ```javascript
@@ -89,7 +88,6 @@ Date: Tue, 04 Aug 2020 21:58:33 GMT
 Content-Type: application/fhir+json
 Content-Length: 34436
 Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI4NmRlMDY4OS1iYTdkLTRjZmMtYTFmMC0wM2M0OTZiODNiNTkifQ.eyJqdGkiOiJiMjQ3N2ZhYS04ZmQ4LTQzYjYtYjk1OC1hZjdhYjJmYjQxOWIiLCJleHAiOjE1OTY1ODU2MjIsIm5iZiI6MCwiaWF0IjoxNTk2NTg1MDIyLCJpc3MiOiJodHRwczovL3Nzby1kZXYucGF0aGZpbmRlci5nb3YuYmMuY2EvYXV0aC9yZWFsbXMvZmYwOXFuM2YiLCJhdWQiOiJwaGFybWFuZXQiLCJzdWIiOiI5MGM2MWE3Ny1lN2RjLTRmNmItYTAxZi0wMDE5NDk3ZDM2NzUiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJwbmV0X3NhbXBsZV9jbGllbnQiLCJhdXRoX3RpbWUiOjAsInNlc3Npb25fc3RhdGUiOiI5YjU4YmMxOS1lMWQ4LTRhNDYtYThkNS1hMGNiNmI4YmYwMTIiLCJhY3IiOiIxIiwic2NvcGUiOiJzeXN0ZW0vTWVkaWNhdGlvblJlcXVlc3Qud3JpdGUgYXVkaWVuY2UiLCJjbGllbnRJZCI6InBuZXRfc2FtcGxlX2NsaWVudCIsImNsaWVudEhvc3QiOiI3MC42Ni4xNzIuMTk5IiwiY2xpZW50QWRkcmVzcyI6IjcwLjY2LjE3Mi4xOTkifQ.PvO_qE_FY3TlFWw92SCECY3dcrAObXikejzb1QecSXXtW7URlXsdD_ELg_mtjo8-TJTuJ26L-CpCwrxA_gNNQQ
-
 
 {
     "resourceType": "DocumentReference",
