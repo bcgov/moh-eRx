@@ -10,7 +10,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DocumentationFile>bin\Debug\netcoreapp3.1\ServiceBase.xml</DocumentationFile>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Health.PharmaNet' ">
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Health.PharmaNet.ServiceBase' ">
     <StartAction>Project</StartAction>
     <LaunchBrowser></LaunchBrowser>
     <ApplicationURL>http://localhost:3001;</ApplicationURL>
