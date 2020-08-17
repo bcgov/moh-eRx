@@ -40,13 +40,17 @@ Accessing the resources and services requires that the access token supplied in 
 
 Simply providing an access token in the HTTP Header is not sufficient for your app to gain access to the resource endpoints and services. Your app must be assigned the appropriate access scope(s) for the given interaction. The available scopes will be determined by the nature of the authentication. For system  authentication using client credentials, your app will be pre-assigned 'system' scopes in the PharmaNet identity platform. These will align to the PharmaNet access profiles assigned to your app.
 
-| Context | Definition |
+The permission type, or context component of a scope definition indicates whether the access being requested is for a single patient record or a bulk set of patient records. This specification defines two possible values.
+
+| Context (Permission Type) | Definition |
 | ----- | ------ |
-| user | "User" access allows your application to access any individual resource instance that the authenticated end-user is authorized to access. This means that your application has obtained an access token representing a user login to the OAuth2 OIDC compliant PharmaNet identity platform |
-| patient | "Patient" access restricts your application access to only access those individual resource instances that are associated with the patient that is directly or indirectly in context. This may precede a launch request (SMART on FHIR app launch flow), or imply that the patient has authenticated and is accessing their own records. |
+| user | "User" access allows your application to access any individual resource instance that the authenticated end-user is authorized to access. The scope is for a bulk set of records or for aggregate data not representing a single patient, based on what is available to the current user. |
+| patient | The scope is for a single patient's record, either for the current user or someone else that they have been given access to."Patient" access restricts your application access to only access those individual resource instances that are associated with the patient that is directly or indirectly in context.  |
 | system | "System" allows an application to access a resource directly, without an authenticated user present (the access token is not supplied due to a user authenticating). This can only be utilized with the client credentials grant flow, and MUST NOT be combined with any other context. |
 
 For the initial release of PharmaNet API with HL7-v2 over HTTP, 'system' context will be used.
+
+For further information about Permission types, see [OpenID Smart-on-FIR topic.](https://openid.net/specs/openid-heart-fhir-oauth2-1_0-2017-05-31.html#rfc.section.2.1)
 
 ### Resource Type
 
