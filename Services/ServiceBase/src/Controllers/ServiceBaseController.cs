@@ -13,7 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
-namespace Health.PNET.Controllers
+namespace Health.PharmaNet.Controllers
 {
     using System.Collections.Generic;
     using System.Linq;

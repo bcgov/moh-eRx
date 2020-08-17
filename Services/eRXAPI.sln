@@ -1,7 +1,7 @@
 
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBase", "Template\src\ServiceBase.csproj", "{05E8A3D5-330D-470A-B351-3FA49B9A8DEC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBase", "ServiceBase\src\ServiceBase.csproj", "{05E8A3D5-330D-470A-B351-3FA49B9A8DEC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\src\Common.csproj", "{6FD0CAD2-3B97-4146-9FB1-D5A858666EC7}"
 EndProject
