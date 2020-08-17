@@ -1,5 +1,5 @@
-﻿//-------------------------------------------------------------------------
-// Copyright © 2019 Province of British Columbia
+//-------------------------------------------------------------------------
+// Copyright © 2020 Province of British Columbia
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,9 +13,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
-namespace Health.ERX.Template
+namespace Health.PharmaNet
 {
-    using Health.ERX.Common.AspNetConfiguration;
+    using Health.PharmaNet.Common.AspNetConfiguration;
     using Microsoft.Extensions.Hosting;
 
     /// <summary>

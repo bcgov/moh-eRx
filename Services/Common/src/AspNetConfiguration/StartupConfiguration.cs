@@ -19,8 +19,8 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
     using System.Diagnostics.CodeAnalysis;
     using System.Net;
     using System.Net.Http;
+    using System.Text.Json;
     using System.Threading.Tasks;
-
     using Health.PharmaNet.Common.Authorization;
     using Health.PharmaNet.Common.Swagger;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -37,7 +37,6 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
     using Microsoft.Extensions.Logging;
     using Microsoft.IdentityModel.Logging;
     using Microsoft.IdentityModel.Tokens;
-    using Newtonsoft.Json;
 #pragma warning disable CA1303 // Do not pass literals as localized parameters
 
     /// <summary>
@@ -362,7 +361,7 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
             this.Logger.LogDebug("OnAuthenticationFailed...");
             context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
             context.Response.ContentType = "application/json";
-            return context.Response.WriteAsync(JsonConvert.SerializeObject(new
+            return context.Response.WriteAsync(JsonSerializer.Serialize(new
             {
                 State = "AuthenticationFailed",
                 Message = context.Exception.ToString(),
