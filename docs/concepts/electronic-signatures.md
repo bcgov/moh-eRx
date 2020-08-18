@@ -1,12 +1,12 @@
 # Electronic Signatures
 
-The College of Physicians and Surgeons of British Columbia require that all authorized prescribing practitioners supply a 'wet' electronic signature with each digital electronic prescription written. 
+The College of Physicians and Surgeons of British Columbia require that all authorized prescribing practitioners supply a 'wet' electronic signature with each digital electronic prescription written.
 
 ## When to Use by Prescribing Practitioners
 
 An electronic signature, in the form of a digital image capture of a scribed or keyed in 'wet signature' is required for each prescription written. It must be a 'wet' signature, meaning that it is generated at the time the prescription is written.  
 
-The PNet Transaction where this is supplied is the [Prescription Record Request](../api-reference/MedicationRequest.md) transaction, as submitted to the MedicationRequest microservice endpoint. 
+The PNet Transaction where this is supplied is the [Prescription Record Request](../api-reference/MedicationRequest.md) transaction, as submitted to the MedicationRequest microservice endpoint.
 
 ## Returning the prescribing practitioner's signature
 
