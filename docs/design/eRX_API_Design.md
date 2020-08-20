@@ -27,7 +27,7 @@ The approach is a pragmatic one, where we ask the vendor community to go on a jo
 - Use URIs to represent resources.
 - Adopt [HL7 FHIR](https://www.hl7.org/fhir) resource type conventions, resource scopes, and top-level content-type.
 - Use HTTPS POST for HL7-v2 request/response interactions as [HL7 FHIR DocumentResource](hhttps://www.hl7.org/fhir/documentreference.html) Resource Type
-- Use Content-Type of [HL7 FHIR](https://www.hl7.org/fhir) for bundling the HL7-v2 as a binary using the mime type or Content-Type as defined in [HL7v2 over HTTP](https://hapifhir.github.io/hapi-hl7v2/hapi-hl7overhttp/")
+- Use Content-Type of [HL7 FHIR](https://www.hl7.org/fhir) for DocumentReference resource to transmit the HL7-v2 message as base 64 encoded payload using the mime-type or Content-Type as defined in [HL7v2 over HTTP](https://hapifhir.github.io/hapi-hl7v2/hapi-hl7overhttp/")
 - When a 'wet' signature is required when a prescriber submits a prescription, the FHIR DocumentReference will include a `signature` extension for the electronic signature, specifying its mime-type as a binary image, such as `image/jpeg` in the `sigFormat` field.  In the future, the signature requirement may evolve to that of a digital signature format, such as [W3C XML Digital Signature](https://www.w3.org/Signature/Activity.html)
 - Protect resource endpoints with OAuth2 using Bearer tokens (OAuth2 access tokens; aka JSON Web Token,or JWT)
 - Keep HL7-v2 payload *opaque* to the resource server, with one exception: process the HL7-v2 Message Header (MSH) to ensure that the resource and scopes align to the HL7-v2 interaction, which allows access policy enforcement determined from Bearer token claims.
