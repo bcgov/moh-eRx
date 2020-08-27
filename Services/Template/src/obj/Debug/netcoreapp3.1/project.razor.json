@@ -1,5 +1,5 @@
 {
-  "FilePath": "/Users/brad/Documents/GitHub/moh-eRx/Services/Template/src/Template.csproj",
+  "FilePath": "d:\\Projects\\Health\\moh-eRx\\Services\\Template\\src\\ServiceBase.csproj",
   "Configuration": {
     "ConfigurationName": "MVC-3.0",
     "LanguageVersion": "3.0",
@@ -12422,7 +12422,10 @@
         }
       },
       {
+<<<<<<< HEAD
+=======
         "HashCode": -1442333404,
+>>>>>>> dev
         "Kind": "ITagHelper",
         "Name": "Microsoft.AspNetCore.SpaServices.Prerendering.PrerenderTagHelper",
         "AssemblyName": "Microsoft.AspNetCore.SpaServices",
@@ -12477,7 +12480,10 @@
         }
       },
       {
+<<<<<<< HEAD
+=======
         "HashCode": 899238057,
+>>>>>>> dev
         "Kind": "Components.Bind",
         "Name": "Bind",
         "AssemblyName": "Microsoft.AspNetCore.Components",
@@ -14444,7 +14450,7 @@
     ],
     "CSharpLanguageVersion": 800
   },
-  "RootNamespace": "Health.ERX.Template",
+  "RootNamespace": "Health.PharmaNet",
   "Documents": [],
   "SerializationFormat": "0.2"
 }

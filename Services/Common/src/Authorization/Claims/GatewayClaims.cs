@@ -1,4 +1,4 @@
-﻿//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 // Copyright © 2020 Province of British Columbia
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,26 +13,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
-namespace Health.PharmaNet.Common.Swagger
+namespace Health.PharmaNet.Common.Authorization.Claims
 {
-    using System.Diagnostics.CodeAnalysis;
-    using Microsoft.AspNetCore.Builder;
-
     /// <summary>
-    /// Extending Swagger services.
+    /// Claims specific to Health Gateway.
     /// </summary>
-    [ExcludeFromCodeCoverage]
-    public static class MiddlewareExtensions
+    public static class GatewayClaims
     {
         /// <summary>
-        /// Enabling Swagger UI.
-        /// Excluding from test environment.
+        /// Policy claim representing the scopes the user has.
         /// </summary>
-        /// <param name="app">IApplicationBuilder.</param>
-        public static void UseSwaggerDocuments(this IApplicationBuilder app)
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI();
-        }
+        public const string Scope = "scope";
+
+        /// <summary>
+        /// Policy claims requiring an HDID.
+        /// </summary>
+        public const string HDID = "hdid";
     }
 }
