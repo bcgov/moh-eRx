@@ -154,6 +154,19 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
 
             services.AddAuthorization(options =>
             {
+                // Add policies -
+                // Validate main scope
+                // Validate HL7 V2 MSH
+
+                // Laboratory/Observation Policies
+                //options.AddPolicy(LaboratoryPolicy.Read, policy =>
+                //{
+                //    policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+                //    policy.RequireAuthenticatedUser();
+                //    policy.Requirements.Add(new FhirRequirement(FhirResource.Observation, FhirAccessType.Read, FhirResourceLookup.Parameter));
+                //});
+
+
                 string claimsIssuer = this.configuration.GetSection(OPENIDCONNECT).GetValue<string>("ClaimsIssuer");
                 string scopes = this.configuration.GetSection(OPENIDCONNECT).GetValue<string>("Scope");
 
