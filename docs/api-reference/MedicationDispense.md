@@ -4,19 +4,15 @@ This resource endpoint is following  HL7 FHIR version 4.0.1 specifications. Indi
 
 ## Supported HL7-v2 Interactions
 
-The payload of a MedicationStatement request contains an HL7 FHIR compliant DocumentReference, which contains the HL7-v2 message, Base 64 encoded, as listed in the table below. A successful response will contain the corresponding HL7-v2 message, also wrapped in an HL7 FHIR DocumentReference.  
-
-
-| PharmaNet Interaction | Description |  Type | HL7-v2 Request | HL7-v2 Response |  HTTP Request Action |
-| ------ | ------ | ------ | ------ | ---- | ----- |
-
-### HL7 FHIR DocumentReference entry Content-Type
-
-The HL7-v2 is base-64 encoded and must declare the following content-type:
-
 ```javascript
 "contentType": "x-application/hl7-v2+er7"
 ```
+
+The payload of a MedicationStatement request contains an HL7 FHIR compliant DocumentReference, which contains the HL7-v2 message, Base 64 encoded, as listed in the table below. A successful response will contain the corresponding HL7-v2 message, also wrapped in an HL7 FHIR DocumentReference.  
+
+| PharmaNet Interaction | Description |  Type | HL7-v2 Request | HL7-v2 Response |  HTTP Request Action |
+| ------ | ------ | ------ | ------ | ---- | ----- |
+| Medication Update | This transaction is used to update a PharmaNet medication profile with the dispense of a sample medication or any dispense of medication that the practitioner sees pertinent to the patient’s medical history. | write | TMU_01.51 | TMU_01.51_RESPONSE | POST |
 
 ## Permissions
 
@@ -24,6 +20,7 @@ The resource endpoint examines the HL7-v2 transaction type submitted and then ap
 
 | PharmaNet Interaction |  Hl7-v2 Request | Required System Scope |
 | ------ | ------ | ------ |
+| Medication Update | TMU_01.51 | system/MedicationDispense.write or user/MedicationDispense.write |
 
 ## Example Request Message
 

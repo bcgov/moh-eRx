@@ -16,9 +16,9 @@ Where for this example URL:
 - `{version}` is the target service version, for example the initial version will be `v1`.
 - `{service-name}` is the name of the microservice endpoint servicing the resource request.
 - `{resource}` is the resource path, such as:
-    - `MedicationRequest`, or
-    - `MedicationStatement` or
-    - `Medication`
+  - `MedicationRequest`, or
+  - `MedicationStatement`, or
+  - `Medication`
 
 ## Example Request/Response Flow
 

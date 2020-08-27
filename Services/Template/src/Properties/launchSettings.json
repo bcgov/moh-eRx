@@ -19,7 +19,7 @@
     "Health.ERX.Template": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "http://localhost:44764",
+      "applicationUrl": "http://localhost:31067",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

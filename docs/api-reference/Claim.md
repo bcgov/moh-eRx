@@ -1,6 +1,8 @@
-# Location Resource
+# Claim Resource
 
-This HL7 FHIR-compliant resource endpoint providing details and position information for a physical place where services are provided and resources and participants may be stored, found, contained, or accommodated.
+This HL7 FHIR-compliant resource endpoint providing a provider issued list of professional services and products which have been provided, or are to be provided, to a patient which is sent to an insurer for reimbursement.
+
+The Claim is used by providers and payors, insurers, to exchange the financial information, and supporting clinical information, regarding the provision of health care services with payors and for reporting to regulatory bodies and firms which provide data analytics. The primary uses of this resource is to support eClaims, the exchange of information relating to the proposed or actual provision of healthcare-related goods and services for patients to their benefit payors, insurers and national health programs, for treatment payment planning and reimbursement.
 
 ## Supported HL7-v2 Interactions
 
@@ -10,7 +12,8 @@ This HL7 FHIR-compliant resource endpoint providing details and position informa
 
 | PharmaNet Interaction | Description |  Type | HL7-v2 Request | HL7-v2 Response |  HTTP Request Action |
 | ------ | ------ | ------ | ------ | ---- | ----- |
-| Location inquiry  | This transaction allows the user to retrieve the name, address, and telephone number for a specified POS location identifier or Pharmacy ID from PharmaNet. This transaction will return the name, address and telephone number for a specified POS Location Identifier. | read | TIL_00.50 | TIL_00.50_RESPONSE |  POST |
+| Adjudicate Pharmacare Claim | The TAC (Adjudicate Claim) update transaction is used by Pharmacies to submit a claim for a dispense of a medication, a dispense of a device, or a ‘Refusal to Fill’ to PharmaNet for adjudication. | write | TACTDU_0104_REQUEST | TACTDU_5154_RESPONSE |  POST |
+| Adjudicate Pharmacare Reversal | The TAC Claim Reversal transaction is used by Pharmacies to reverse a claim of a medication, a device, or a ‘Refusal to Fill’. | write | TACTDU_11_REQUEST | TACTDU_61_RESPONSE | POST |
 
 ## Permissions
 
@@ -18,22 +21,19 @@ The resource endpoint examines the HL7-v2 transaction type submitted and then ap
 
 | PharmaNet Interaction |  Hl7-v2 Request | Required System Scope |
 | ------ | ------ | ------ |
-| Location Inquiry | TIL_00.50 | system/Location.read, or user/Location.read |
+| Adjudicate a Dispense Claim TAC/TDU_01_04 - Input| TACTDU_0104_REQUEST | system/Claim.write, or user/Claim.write |
+| Adjudicate a Dispense Claim TAC/TDU_11_61 - Input| TACTDU_11_REQUEST | system/Claim.write, or user/Claim.write |
 
-## Example TIL.00.50 Request
+## Example TAC/TDU_01_04 Request
 
-MSH|^~\&|1234567|1234567||EMRMD|||userID:192.168.0.1|ZPN|1111|P|2.1||
-ZCA||70|00|MA|01|
-ZCB|MDA|120113|1111
-ZPL|QAERXPP||||||||||||||MM
-ZZZ|TIL||1111|P1|nnnnnnnnnn|||||ZZZ1
+TBD...
 
 ## The REST HL7 FHIR DocumentReference request using HTTP POST
 
 The following illustrates an example TIL_00.50 Request message formulated into an HTTP POST containing a body of type HL7 FHIR DocumentReference JavaScript Object Notation (JSON):
 
 ```code
-POST https://api.example.org/PharmaNet/LocationService/v1/Location HTTP/1.1
+POST https://api.example.org/PharmaNet/ClaimService/v1/Claim HTTP/1.1
 Date: Tue, 04 Aug 2020 21:58:33 GMT
 Content-Type: application/fhir+json
 Content-Length: 538
@@ -47,8 +47,9 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI4NmRlMD
     "content": [{
         "attachment": {
             "contentType": "x-application/hl7-v2+er7",
-            "data": "TVNIfF5+XCZ8MTIzNDU2N3wxMjM0NTY3fHxFTVJNRHx8fHVzZXJJRDoxOTIuMTY4LjAuMXxaUE58MTExMXxQfDIuMXx8ClpDQXx8NzB8MDB8TUF8MDF8ClpDQnxNREF8MTIwMTEzfDExMTEKWlBMfFFBRVJYUFB8fHx8fHx8fHx8fHx8fE1NClpaWnxUSUx8fDExMTF8UDF8bm5ubm5ubm5ubnx8fHx8WlpaMQ=="
+            "data": "TBD..."
         }
     }]
 }
+
 ```

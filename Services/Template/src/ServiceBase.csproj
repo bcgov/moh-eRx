@@ -12,6 +12,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'HealthGateway.Immunization' ">
     <StartAction>Project</StartAction>
+    <ExternalConsole>true</ExternalConsole>
     <LaunchBrowser></LaunchBrowser>
     <ApplicationURL>http://localhost:3001;</ApplicationURL>
     <ExternalConsole>true</ExternalConsole>

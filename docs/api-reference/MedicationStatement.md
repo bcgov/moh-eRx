@@ -6,7 +6,6 @@ This resource endpoint is following  HL7 FHIR version 4.0.1 specifications. It i
 
 The payload of a MedicationStatement request contains an HL7 FHIR compliant DocumentReference, which contains the HL7-v2 message, Base 64 encoded, as listed in the table below. A successful response will contain the corresponding HL7-v2 message, also wrapped in an HL7 FHIR DocumentReference.  
 
-
 | PharmaNet Interaction | Description |  Type | HL7-v2 Request | HL7-v2 Response |  HTTP Request Action |
 | ------ | ------ | ------ | ------ | ---- | ----- |
 | Patient Profile Information Request (complete) | | read | TRP_00.50 | TRP_00.50_RESPONSE |  POST |

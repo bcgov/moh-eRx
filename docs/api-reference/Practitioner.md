@@ -1,6 +1,6 @@
-# Location Resource
+# Practitioner Resource
 
-This HL7 FHIR-compliant resource endpoint providing details and position information for a physical place where services are provided and resources and participants may be stored, found, contained, or accommodated.
+This HL7 FHIR-compliant resource representing a person who is directly or indirectly involved in the provisioning of healthcare.
 
 ## Supported HL7-v2 Interactions
 
@@ -10,7 +10,7 @@ This HL7 FHIR-compliant resource endpoint providing details and position informa
 
 | PharmaNet Interaction | Description |  Type | HL7-v2 Request | HL7-v2 Response |  HTTP Request Action |
 | ------ | ------ | ------ | ------ | ---- | ----- |
-| Location inquiry  | This transaction allows the user to retrieve the name, address, and telephone number for a specified POS location identifier or Pharmacy ID from PharmaNet. This transaction will return the name, address and telephone number for a specified POS Location Identifier. | read | TIL_00.50 | TIL_00.50_RESPONSE |  POST |
+| Prescriber inquiry  | This function may be used to obtain information on a provider (e.g., physician, pharmacist, dentist or veterinarian) by either searching a name or by the unique identification number assigned by the appropriate regulatory body. | read | TIP_00_REQUEST | TIP_00.50_RESPONSE |  POST |
 
 ## Permissions
 
@@ -18,22 +18,20 @@ The resource endpoint examines the HL7-v2 transaction type submitted and then ap
 
 | PharmaNet Interaction |  Hl7-v2 Request | Required System Scope |
 | ------ | ------ | ------ |
-| Location Inquiry | TIL_00.50 | system/Location.read, or user/Location.read |
+| Location Inquiry | TIP_00_REQUEST | system/Practitioner.read, or user/Practitioner.read |
 
-## Example TIL.00.50 Request
+## Example TIP.00.50 Request
 
-MSH|^~\&|1234567|1234567||EMRMD|||userID:192.168.0.1|ZPN|1111|P|2.1||
-ZCA||70|00|MA|01|
-ZCB|MDA|120113|1111
-ZPL|QAERXPP||||||||||||||MM
-ZZZ|TIL||1111|P1|nnnnnnnnnn|||||ZZZ1
+```code
+TBD
+```
 
 ## The REST HL7 FHIR DocumentReference request using HTTP POST
 
-The following illustrates an example TIL_00.50 Request message formulated into an HTTP POST containing a body of type HL7 FHIR DocumentReference JavaScript Object Notation (JSON):
+The following illustrates an example TIP_00 Request message formulated into an HTTP POST containing a body of type HL7 FHIR DocumentReference JavaScript Object Notation (JSON):
 
 ```code
-POST https://api.example.org/PharmaNet/LocationService/v1/Location HTTP/1.1
+POST https://api.example.org/PharmaNet/PractitionerService/v1/Practitioner HTTP/1.1
 Date: Tue, 04 Aug 2020 21:58:33 GMT
 Content-Type: application/fhir+json
 Content-Length: 538
@@ -51,4 +49,5 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI4NmRlMD
         }
     }]
 }
+
 ```
