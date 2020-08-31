@@ -29,7 +29,7 @@ namespace Health.PharmaNet.Controllers
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/api/[controller]")]
     [ApiController]
-    public class TemplateController : ControllerBase
+    public class ServiceBaseController : ControllerBase
     {
         private readonly ILogger logger;
 
@@ -39,12 +39,12 @@ namespace Health.PharmaNet.Controllers
         private readonly IHttpContextAccessor httpContextAccessor;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TemplateController"/> class.
+        /// Initializes a new instance of the <see cref="ServiceBaseController"/> class.
         /// </summary>
         /// <param name="logger">Injected Logger Provider.</param>
         /// <param name="httpContextAccessor">The Http Context accessor.</param>
-        public TemplateController(
-            ILogger<TemplateController> logger,
+        public ServiceBaseController(
+            ILogger<ServiceBaseController> logger,
             IHttpContextAccessor httpContextAccessor)
         {
             this.logger = logger;
@@ -66,5 +66,24 @@ namespace Health.PharmaNet.Controllers
             this.logger.LogDebug($"Test... {id}");
             return "Ok";
         }
-    }
+
+
+        /// <summary> 
+        /// Takes HL7 FHIR DocumentReference Object containing HL7v2 payload.
+        /// </summary>
+        /// <returns>The DocumentReference Response, or error JSON</returns>
+        /// <response code="200">Returns Ok when the transaction went through</response>
+        /// <response code="401">Authorization error, returns JSON describing the error</response>
+        /// <response code="503">The service is unavailable for use.</response>
+        [HttpPost]
+        [Produces("application/json+fhir")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [Route("MedicationRequest")]
+        [Authorize(Policy = )]
+        public ActionResult<JsonResult> MedicationRequest() 
+        {
+            this.logger.LogDebug($"MedicationRequest");
+
+            return null;
+        }   
 }

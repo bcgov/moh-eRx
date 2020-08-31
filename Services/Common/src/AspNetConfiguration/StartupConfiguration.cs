@@ -22,6 +22,7 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
     using System.Text.Json;
     using System.Threading.Tasks;
     using Health.PharmaNet.Common.Authorization;
+    using Health.PharmaNet.Common.Authorization.Policy;
     using Health.PharmaNet.Common.Swagger;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Authorization;
@@ -154,31 +155,21 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
 
             services.AddAuthorization(options =>
             {
-                // Add policies -
-                // Validate main scope
-                // Validate HL7 V2 MSH
-
-                // Laboratory/Observation Policies
-                //options.AddPolicy(LaboratoryPolicy.Read, policy =>
-                //{
-                //    policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
-                //    policy.RequireAuthenticatedUser();
-                //    policy.Requirements.Add(new FhirRequirement(FhirResource.Observation, FhirAccessType.Read, FhirResourceLookup.Parameter));
-                //});
-
-
                 string claimsIssuer = this.configuration.GetSection(OPENIDCONNECT).GetValue<string>("ClaimsIssuer");
                 string scopes = this.configuration.GetSection(OPENIDCONNECT).GetValue<string>("Scope");
 
                 string[] scope = scopes.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
-                HasScopesRequirement requirement = new HasScopesRequirement(scope, claimsIssuer);
-
-                options.AddPolicy("scopes", policy => policy.Requirements.Add(requirement));
+                options.AddPolicy(FhirScopesPolicy.Access, policy =>
+                {
+                    policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+                    policy.RequireAuthenticatedUser();
+                    policy.Requirements.Add(new HasScopesRequirement(scope, claimsIssuer));
+                });
             });
 
             // register the scope authorization handler
-            services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
+            IServiceCollection serviceCollections = services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
         }
 
         /// <summary>
