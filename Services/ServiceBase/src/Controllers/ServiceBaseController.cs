@@ -59,12 +59,12 @@ namespace Health.PharmaNet.Controllers
         /// <response code="200">Always returns Ok and HTTP Response code of 200.</response>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [Route("/api/v{version:apiVersion}/[controller]/healthcheck")]
+        [Route("healthcheck")]
         [Produces("application/json")]
         public ActionResult<string> HealthCheck()
         {
             this.logger.LogDebug($"Healthcheck");
-            // TODO: check ODR delegat is alive?
+            // TODO: check ODR delegate is alive?
             return "{'status' : 'available'}";
         }
 
