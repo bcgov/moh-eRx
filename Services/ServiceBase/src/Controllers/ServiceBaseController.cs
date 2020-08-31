@@ -18,6 +18,7 @@ namespace Health.PharmaNet.Controllers
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Health.PharmaNet.Common.Authorization.Policy;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
@@ -27,7 +28,7 @@ namespace Health.PharmaNet.Controllers
     /// The Template controller.
     /// </summary>
     [ApiVersion("1.0")]
-    [Route("v{version:apiVersion}/api/[controller]")]
+    [Route("PharmaNet/api/v{version:apiVersion}/[controller]/")]
     [ApiController]
     public class ServiceBaseController : ControllerBase
     {
@@ -76,14 +77,14 @@ namespace Health.PharmaNet.Controllers
         /// <response code="401">Authorization error, returns JSON describing the error</response>
         /// <response code="503">The service is unavailable for use.</response>
         [HttpPost]
-        [Produces("application/json+fhir")]
+        [Produces("application/fhir+json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [Route("MedicationRequest")]
-        [Authorize(Policy = )]
+        [Authorize(Policy = FhirScopesPolicy.Access)]
         public ActionResult<JsonResult> MedicationRequest() 
         {
             this.logger.LogDebug($"MedicationRequest");
 
-            return null;
+            return new JsonResult("");
         }   
 }
