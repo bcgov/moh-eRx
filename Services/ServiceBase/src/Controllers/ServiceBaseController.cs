@@ -28,7 +28,7 @@ namespace Health.PharmaNet.Controllers
     /// The Template controller.
     /// </summary>
     [ApiVersion("1.0")]
-    [Route("PharmaNet/api/v{version:apiVersion}/[controller]/")]
+    [Route("/api/v{version:apiVersion}/[controller]/")]
     [ApiController]
     public class ServiceBaseController : ControllerBase
     {
@@ -53,19 +53,19 @@ namespace Health.PharmaNet.Controllers
         }
 
         /// <summary>
-        /// Gets a json list of records.
+        /// Healthcheck API implementation.
         /// </summary>
-        /// <param name="id">The ID to lookup.</param>
-        /// <returns>The string "Ok".</returns>
+        /// <returns>JSon status = available.</returns>
         /// <response code="200">Always returns Ok and HTTP Response code of 200.</response>
         [HttpGet]
-        [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [Route("{id}")]
-        public ActionResult<string> Test(string id)
+        [Route("/api/v{version:apiVersion}/[controller]/healthcheck")]
+        [Produces("application/json")]
+        public ActionResult<string> HealthCheck()
         {
-            this.logger.LogDebug($"Test... {id}");
-            return "Ok";
+            this.logger.LogDebug($"Healthcheck");
+            // TODO: check ODR delegat is alive?
+            return "{'status' : 'available'}";
         }
 
         /// <summary> 
