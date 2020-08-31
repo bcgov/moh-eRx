@@ -86,5 +86,6 @@ namespace Health.PharmaNet.Controllers
             this.logger.LogDebug($"MedicationRequest");
 
             return new JsonResult("");
-        }   
+        } 
+    }  
 }
