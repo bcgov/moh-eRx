@@ -68,7 +68,6 @@ namespace Health.PharmaNet.Controllers
             return "Ok";
         }
 
-
         /// <summary> 
         /// Takes HL7 FHIR DocumentReference Object containing HL7v2 payload.
         /// </summary>
