@@ -50,11 +50,15 @@ The permission type, or context component of a scope definition indicates whethe
 
 For the initial release of PharmaNet API with HL7-v2 over HTTP, 'system' context will be used.
 
-For further information about Permission types, see [OpenID Smart-on-FIR topic.](https://openid.net/specs/openid-heart-fhir-oauth2-1_0-2017-05-31.html#rfc.section.2.1)
+### Reference
+
+For further information about Permission types, see [OpenID Smart-on-FHIR topic.](https://openid.net/specs/openid-heart-fhir-oauth2-1_0-2017-05-31.html#rfc.section.2.1)
+
+HL7 FHIR SMART openid documentation generally omits a discussion about "system" permission type. This scope context is defined in the [HL7 FHIR SMART Backend Services Authorization Guide](https://hl7.org/fhir/uv/bulkdata/authorization/index.html).  For information about the addition of "system" context see [7 Scopes](https://hl7.org/fhir/uv/bulkdata/authorization/index.html#scopes).
 
 ### Resource Type
 
-The resource type of a resource scope must conform to a valid resource type as defined in the [FHIR Resource Index](http://www.hl7.org/implement/standards/FHIR/resourcelist.html)
+The resource type of a resource scope must conform to a valid resource type as defined in the [FHIR Resource Index](http://www.hl7.org/implement/standards/FHIR/resourcelist.html).
 
 ### Modification Rights
 

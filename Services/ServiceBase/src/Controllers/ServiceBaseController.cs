@@ -28,7 +28,8 @@ namespace Health.PharmaNet.Controllers
     /// The Template controller.
     /// </summary>
     [ApiVersion("1.0")]
-    [Route("/api/v{version:apiVersion}/[controller]/")]
+    //[Route("/api/v{version:apiVersion}/[controller]/")]
+    [Route("/api/v{version:apiVersion}/MedicationService/")]
     [ApiController]
     public class ServiceBaseController : ControllerBase
     {
