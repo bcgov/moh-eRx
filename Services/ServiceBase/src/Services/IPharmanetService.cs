@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------
-// Copyright © 2020 Province of British Columbia
+// Copyright © 2019 Province of British Columbia
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,11 +13,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
-namespace Health.PharmaNet.Models
+namespace Health.PharmaNet.Services
 {
-    public class MedicationRequestResponse
+    using System.Threading.Tasks;
+    using Hl7.Fhir.Model;
+
+    /// <summary>
+    /// The Pharmanet service.
+    /// </summary>
+    public interface IPharmanetService
     {
-
+        /// <summary>
+        /// Submit request of type DocumentReference containing HL7v2 message to PharmaNet.
+        /// </summary>
+        /// <param name="request">An HL7 FHIR DocumentReference request containing HL7v2 payload.</param>
+        /// <returns>Returns a DocumentReference response.</returns>
+        Task<DocumentReference> SubmitRequest(DocumentReference request);
     }
-
 }

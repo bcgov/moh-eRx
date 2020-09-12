@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------
-// Copyright © 2019 Province of British Columbia
+// Copyright © 2020 Province of British Columbia
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,23 +13,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
-namespace Health.PharmaNet.Services
+namespace Health.PharmaNet.Models
 {
+    using System;
     using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using Health.PharmaNet.Models;
+    using System.Text.Json.Serialization;
+
 
     /// <summary>
-    /// The MedicationRequest  service.
+    /// The Pharmanet proxy message model. This json model is defined in collaboration with the vendor managing PharmaNet.
     /// </summary>
-    public interface IMedicationRequestService
+    public class PharmanetProxyMessage
     {
-        /// <summary>
-        /// Gets a list of immunization records.
-        /// </summary>
-        /// <param name="bearerToken">The security token representing the authenticated user.</param>
-        /// <param name="pageIndex">The page index to return.</param>
-        /// <returns>Returns a list of immunizations.</returns>
-        ///Task<RequestResult<IEnumerable<Immu>>> GetImmunizations(string bearerToken, int pageIndex = 0);
+
     }
+
 }

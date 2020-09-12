@@ -15,14 +15,22 @@
 //-------------------------------------------------------------------------
 namespace Health.PharmaNet.Delegates
 {
-    using Health.PharmaNet.Models;
-    using System.Threading.Tasks;
+  using System.Threading.Tasks;
+  using Hl7.Fhir.Model;
 
-
-
-    public interface IMedicationRequestDelegate
+  /// <summary>
+  /// The Pharmanet Delegate, which communicates directly to the Pharmanet proxy service.
+  /// </summary>  
+  public class PharmanetDelegate : IPharmanetDelegate
+  {
+    public async Task<DocumentReference> SubmitRequest(DocumentReference request)
     {
-         Task<MedicationRequestResponse> SubmitMedicationRequest();
+            DocumentReference response = new DocumentReference();
+            // 1. Build a PharmanetProxyMessage from the request.
+            // --- use injected proxy and configuration for authorization controls.
+            // 2. Submit the request to the Pharmanet HL7v2 protected endpoint.
+            // 3. Build document response from proxy message returned.
+            return response;
     }
-
+  }
 }

@@ -18,7 +18,17 @@ namespace Health.PharmaNet.Controllers
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using System.Security.Claims;
+
+
     using Health.PharmaNet.Common.Authorization.Policy;
+    using Health.PharmaNet.Models;
+    using Health.PharmaNet.Services;
+    using Hl7.Fhir.Model;
+    using Hl7.Fhir.Serialization;
+
+
+    using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
@@ -36,6 +46,11 @@ namespace Health.PharmaNet.Controllers
         private readonly ILogger logger;
 
         /// <summary>
+        /// Gets or sets the MedicationRequest Service
+        /// </summary>
+        private readonly IPharmanetService service;
+
+        /// <summary>
         /// Gets or sets the http context accessor.
         /// </summary>
         private readonly IHttpContextAccessor httpContextAccessor;
@@ -44,13 +59,23 @@ namespace Health.PharmaNet.Controllers
         /// Initializes a new instance of the <see cref="ServiceBaseController"/> class.
         /// </summary>
         /// <param name="logger">Injected Logger Provider.</param>
+        /// <param name="service">Injected service.</param>
         /// <param name="httpContextAccessor">The Http Context accessor.</param>
         public ServiceBaseController(
             ILogger<ServiceBaseController> logger,
+            IPharmanetService service,
             IHttpContextAccessor httpContextAccessor)
         {
+            this.service = service;
             this.logger = logger;
             this.httpContextAccessor = httpContextAccessor;
+        }
+
+        private DocumentReference parseJsonBody(string json)
+        {
+            FhirJsonParser parser = new FhirJsonParser( new ParserSettings { AcceptUnknownMembers = true, AllowUnrecognizedEnums = true});
+            DocumentReference request = parser.Parse<DocumentReference>(json);
+            return request;
         }
 
         /// <summary>
@@ -81,11 +106,15 @@ namespace Health.PharmaNet.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [Route("MedicationRequest")]
         [Authorize(Policy = FhirScopesPolicy.Access)]
-        public ActionResult<JsonResult> MedicationRequest() 
+        public async Task<ActionResult<JsonResult>> PharmanetRequest([FromBody] string json)
         {
-            this.logger.LogDebug($"MedicationRequest");
+            ClaimsPrincipal user = this.httpContextAccessor.HttpContext.User;
+            string accessToken = await this.httpContextAccessor.HttpContext.GetTokenAsync("access_token").ConfigureAwait(true);
 
-            return new JsonResult("");
-        } 
-    }  
+            DocumentReference request = this.parseJsonBody(json);
+            DocumentReference response = await this.service.SubmitRequest(request);
+
+            return new JsonResult(response.ToJson());
+        }
+    }
 }

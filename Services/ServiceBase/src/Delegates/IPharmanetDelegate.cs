@@ -13,14 +13,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
-namespace Health.PharmaNet.Models
+namespace Health.PharmaNet.Delegates
 {
-    using Hl7.Fhir.Model;
+  using System.Threading.Tasks;
 
-    
-    public class MedicationRequest : Hl7.Fhir.Model.DocumentReference
-    {
-        
-    }
+  using Hl7.Fhir.Model;
+
+  /// <summary>
+  /// The Pharmanet Delegate, which communicates directly to the Pharmanet proxy service.
+  /// </summary>  
+  public interface IPharmanetDelegate
+  {
+    public Task<DocumentReference> SubmitRequest(DocumentReference request);
+  }
 
 }
