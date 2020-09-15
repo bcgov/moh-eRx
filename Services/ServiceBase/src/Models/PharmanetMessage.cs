@@ -16,7 +16,6 @@
 namespace Health.PharmaNet.Models
 {
     using System.Text.Json.Serialization;
-    using System;
 
     /// <summary>
     /// The Pharmanet proxy message model. This json model is defined in collaboration with the vendor managing PharmaNet.
@@ -31,7 +30,7 @@ namespace Health.PharmaNet.Models
 
         /// <summary>
         /// Gets or sets the Base 64 encoded HL7v2 Message.
-        /// </summary>        
+        /// </summary>
         [JsonPropertyName("hl7Message")]
         public string Hl7Message { get; set; } = string.Empty;
     }

@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------
-// Copyright © 2019 Province of British Columbia
+// Copyright © 2020 Province of British Columbia
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,9 +15,7 @@
 //-------------------------------------------------------------------------
 namespace Health.PharmaNet.Services
 {
-    using System.Collections.Generic;
     using System.Threading.Tasks;
-    using System;
 
     using Health.PharmaNet.Delegates;
     using Health.PharmaNet.Models;
@@ -49,7 +47,9 @@ namespace Health.PharmaNet.Services
 
         /// <summary>
         /// Submit Request to Pharmanet.
-        ///</summary>
+        /// </summary>
+        /// <param name="request">The DocumentReference to be submitted.</param>
+        /// <returns>Returns a DocumentReference containing the response from PharmaNet.</returns>
         public async Task<DocumentReference> SubmitRequest(DocumentReference request)
         {
             PharmanetMessage requestMessage = PharmanetAdapter.FromDocumentReference(request);

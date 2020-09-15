@@ -15,9 +15,9 @@
 //-------------------------------------------------------------------------
 namespace Health.PharmaNet.Models
 {
+    using System;
     using System.Text;
     using System.Text.RegularExpressions;
-    using System;
 
     using Hl7.Fhir.Model;
 
@@ -26,17 +26,28 @@ namespace Health.PharmaNet.Models
     /// </summary>
     public static class PharmanetAdapter
     {
-        private static readonly string HL7v2ContentType = @"x-application/hl7-v2+er7";
-        private static readonly string MasterIdentifierUrnPrefix = @"urn:uuid:";
-        private static readonly string MasterIdentifierPattern = @"urn:uuid:(\s+)";
+        /// <summary>
+        /// The standard ContentType ("Mime Type") for HL7-v2 payload.
+        /// </summary>
+        public const string HL7v2ContentType = @"x-application/hl7-v2+er7";
+
+        /// <summary>
+        /// The standard urn prefix when using UUID/GUID for identifiers in HL7 FHIR.
+        /// </summary>
+        public const string MasterIdentifierUrnPrefix = @"urn:uuid:";
+
+        /// <summary>
+        /// The regular expression pattern to use to extract just the UUID from the master identifier.
+        /// </summary>
+        private const string MasterIdentifierPattern = @"urn:uuid:(\s+)";
 
         /// <summary>
         /// Converts a PharmanetMessage to an HL7 FHIR DocumentReference model.
         /// </summary>
         /// <param name="messageModel">The PharmanetMessage to convert from.</param>
         /// <param name="related">The optional ResourceReference representing a reference to the request message.</param>
-        /// <returns>Returns a new DocumentReference from the PharmanetMessage. 
-        /// If the requestDocumentReference is provided, it used that to fill out cross-referenced data/
+        /// <returns>Returns a new DocumentReference from the PharmanetMessage.
+        /// If the requestDocumentReference is provided, it used that to fill out cross-referenced data.
         /// </returns>
         public static DocumentReference FromPharmanetMessage(PharmanetMessage messageModel, ResourceReference? related = null)
         {
@@ -62,13 +73,12 @@ namespace Health.PharmaNet.Models
         /// </summary>
         /// <param name="documentReference">The DocumentReference to convert from.</param>
         /// <returns>Returns a new PharmanetMessage mapped from the provided DocumentReference.</returns>
-
         public static PharmanetMessage FromDocumentReference(DocumentReference documentReference)
         {
             PharmanetMessage messageModel = new PharmanetMessage();
 
             // HL7 FHIR spec for GUID/UUID has this mandatory prefix in the value field.
-            foreach(Match? m in Regex.Matches(documentReference.MasterIdentifier.Value, MasterIdentifierPattern))
+            foreach (Match? m in Regex.Matches(documentReference.MasterIdentifier.Value, MasterIdentifierPattern))
             {
                 GroupCollection groups = m!.Groups;
                 string value = groups[0].Value;
@@ -81,8 +91,8 @@ namespace Health.PharmaNet.Models
             byte[] data = content[0].Attachment.Data;
             string contentType = content[0].Attachment.ContentType;
 
-            bool good = (data.Length>0) && contentType.Equals(HL7v2ContentType, System.StringComparison.Ordinal);
-            messageModel.Hl7Message = (good) ? Encoding.UTF8.GetString(data) : string.Empty;
+            bool good = (data.Length > 0) && contentType.Equals(HL7v2ContentType, System.StringComparison.Ordinal);
+            messageModel.Hl7Message = good ? Encoding.UTF8.GetString(data) : string.Empty;
 
             return messageModel;
         }

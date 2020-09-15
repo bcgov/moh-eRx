@@ -19,8 +19,6 @@ namespace Health.PharmaNet.Delegates
 
   using Health.PharmaNet.Models;
 
-  using Hl7.Fhir.Model;
-
   /// <summary>
   /// The Pharmanet Delegate, which communicates directly to the Pharmanet proxy service.
   /// </summary>
@@ -32,7 +30,5 @@ namespace Health.PharmaNet.Delegates
     /// <param name="request">A PharmanetMessageModel instance containing the HL7v2 request message.</param>
     /// <returns>A PharmanetMessageModel as response.</returns>
     public Task<PharmanetMessage> SubmitRequest(PharmanetMessage request);
-
   }
-  
 }

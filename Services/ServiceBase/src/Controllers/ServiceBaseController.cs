@@ -16,11 +16,12 @@
 namespace Health.PharmaNet.Controllers
 {
     using System.Linq;
-    using System.Threading.Tasks;
     using System.Security.Claims;
+    using System.Threading.Tasks;
 
     using Health.PharmaNet.Common.Authorization.Policy;
     using Health.PharmaNet.Services;
+
     using Hl7.Fhir.Model;
     using Hl7.Fhir.Serialization;
 
@@ -38,10 +39,13 @@ namespace Health.PharmaNet.Controllers
     [ApiController]
     public class ServiceBaseController : ControllerBase
     {
+        /// <summary>
+        /// Gets or sets the Logger Service.
+        /// </summary>
         private readonly ILogger logger;
 
         /// <summary>
-        /// Gets or sets the MedicationRequest Service
+        /// Gets or sets the MedicationRequest Service.
         /// </summary>
         private readonly IPharmanetService service;
 
@@ -66,16 +70,10 @@ namespace Health.PharmaNet.Controllers
             this.httpContextAccessor = httpContextAccessor;
         }
 
-        private static DocumentReference parseJsonBody(string json)
-        {
-            FhirJsonParser parser = new FhirJsonParser(new ParserSettings { AcceptUnknownMembers = true, AllowUnrecognizedEnums = true });
-            DocumentReference request = parser.Parse<DocumentReference>(json);
-            return request;
-        }
-
-        /// <summary> 
+        /// <summary>
         /// Takes HL7 FHIR DocumentReference Object containing HL7v2 payload.
         /// </summary>
+        /// <param name="json">The Json payload taken from body of HTTP message.</param>
         /// <returns>The DocumentReference Response, or error JSON.</returns>
         /// <response code="200">Returns Ok when the transaction went through.</response>
         /// <response code="401">Authorization error, returns JSON describing the error.</response>
@@ -90,10 +88,22 @@ namespace Health.PharmaNet.Controllers
             ClaimsPrincipal user = this.httpContextAccessor.HttpContext.User;
             string accessToken = await this.httpContextAccessor.HttpContext.GetTokenAsync("access_token").ConfigureAwait(true);
 
-            DocumentReference request = parseJsonBody(json);
+            DocumentReference request = ParseJsonBody(json);
             DocumentReference response = await this.service.SubmitRequest(request);
 
             return new JsonResult(response.ToJson());
+        }
+
+        /// <summary>
+        /// Parses the Json into an HL7 FHIR DocumentReference object.
+        /// </summary>
+        /// <param name="json">The JSON to parse.</param>
+        /// <returns>DocumentReference instance or throws an error.</returns>
+        private static DocumentReference ParseJsonBody(string json)
+        {
+            FhirJsonParser parser = new FhirJsonParser(new ParserSettings { AcceptUnknownMembers = true, AllowUnrecognizedEnums = true });
+            DocumentReference request = parser.Parse<DocumentReference>(json);
+            return request;
         }
     }
 }
