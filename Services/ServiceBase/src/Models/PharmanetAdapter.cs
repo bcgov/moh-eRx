@@ -17,6 +17,7 @@ namespace Health.PharmaNet.Models
 {
     using System.Text;
     using System.Text.RegularExpressions;
+    using System;
 
     using Hl7.Fhir.Model;
 
@@ -31,20 +32,28 @@ namespace Health.PharmaNet.Models
         /// Converts a PharmanetMessage to an HL7 FHIR DocumentReference model.
         /// </summary>
         /// <param name="messageModel">The PharmanetMessage to convert from.</param>
-        /// <param name="requestDocumentReference">The optional DocumentReference this message is in response to.</param>
+        /// <param name="related">The optional ResourceReference representing a reference to the request message.</param>
         /// <returns>Returns a new DocumentReference from the PharmanetMessage. 
         /// If the requestDocumentReference is provided, it used that to fill out cross-referenced data/
         /// </returns>
 
-        public static DocumentReference FromPharmanetMessage(PharmanetMessage messageModel, DocumentReference? requestDocumentReference = null)
+        public static DocumentReference FromPharmanetMessage(PharmanetMessage messageModel, ResourceReference? related = null)
         {
             DocumentReference documentReference = new DocumentReference();
+
+            documentReference.Status = DocumentReferenceStatus.Current;
+            documentReference.Date = DateTime.UtcNow;
 
             DocumentReference.ContentComponent item = new DocumentReference.ContentComponent();
             item.Attachment.Data = Encoding.UTF8.GetBytes(messageModel.Hl7Message);
             item.Attachment.ContentType = HL7v2ContentType;
 
             documentReference.Content.Add(item);
+
+            if ( related != null)
+            {
+                documentReference.Context.Related.Add(related);
+            }
 
             return documentReference;
         }
@@ -73,10 +82,23 @@ namespace Health.PharmaNet.Models
             byte[] data = content[0].Attachment.Data;
             string contentType = content[0].Attachment.ContentType;
 
-            bool good = ((data.Length>0) && contentType.Equals(HL7v2ContentType));
+            bool good = (data.Length>0) && contentType.Equals(HL7v2ContentType, System.StringComparison.Ordinal);
             messageModel.Hl7Message = (good) ? Encoding.UTF8.GetString(data) : string.Empty;
 
             return messageModel;
+        }
+
+        /// <summary>
+        /// Builds a ResourceReference from a DocumentReference to add to related field in the response.
+        /// </summary>
+        /// <param name="documentReference">The DocumentReference to relate to.</param>
+        /// <returns>Returns a new ResourceReference mapped from the provided DocumentReference.</returns>
+        public static ResourceReference RelatedToDocumentReference(DocumentReference documentReference)
+        {
+            string transactionId = documentReference!.MasterIdentifier.Value;
+            ResourceReference reference = new ResourceReference(transactionId);
+            reference.Type = documentReference.GetType().Name;
+            return reference;
         }
     }
 }
