@@ -47,7 +47,6 @@ namespace Health.PharmaNet.Services
             this.logger = logger;
         }
 
-
         /// <summary>
         /// Submit Request to Pharmanet.
         ///</summary>
@@ -55,7 +54,9 @@ namespace Health.PharmaNet.Services
         {
             PharmanetMessage requestMessage = PharmanetAdapter.FromDocumentReference(request);
             PharmanetMessage responseMessage = await this.pharmanetDelegate.SubmitRequest(requestMessage);
-            DocumentReference response = PharmanetAdapter.FromPharmanetMessage(responseMessage, request);
+
+            ResourceReference reference = PharmanetAdapter.RelatedToDocumentReference(request);
+            DocumentReference response = PharmanetAdapter.FromPharmanetMessage(responseMessage, reference);
             return response;
         }
     }

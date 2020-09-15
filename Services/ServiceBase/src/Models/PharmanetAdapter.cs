@@ -26,7 +26,9 @@ namespace Health.PharmaNet.Models
     /// </summary>
     public static class PharmanetAdapter
     {
-        private static readonly string HL7v2ContentType = "x-application/hl7-v2+er7";
+        private static readonly string HL7v2ContentType = @"x-application/hl7-v2+er7";
+        private static readonly string MasterIdentifierUrnPrefix = @"urn:uuid:";
+        private static readonly string MasterIdentifierPattern = @"urn:uuid:(\s+)";
 
         /// <summary>
         /// Converts a PharmanetMessage to an HL7 FHIR DocumentReference model.
@@ -36,24 +38,21 @@ namespace Health.PharmaNet.Models
         /// <returns>Returns a new DocumentReference from the PharmanetMessage. 
         /// If the requestDocumentReference is provided, it used that to fill out cross-referenced data/
         /// </returns>
-
         public static DocumentReference FromPharmanetMessage(PharmanetMessage messageModel, ResourceReference? related = null)
         {
             DocumentReference documentReference = new DocumentReference();
 
             documentReference.Status = DocumentReferenceStatus.Current;
             documentReference.Date = DateTime.UtcNow;
+            documentReference.Id = messageModel.TransactionId; // set the GUID as the base artefact ID.
+            documentReference.MasterIdentifier.Value = MasterIdentifierUrnPrefix + messageModel.TransactionId;
 
             DocumentReference.ContentComponent item = new DocumentReference.ContentComponent();
             item.Attachment.Data = Encoding.UTF8.GetBytes(messageModel.Hl7Message);
             item.Attachment.ContentType = HL7v2ContentType;
 
             documentReference.Content.Add(item);
-
-            if (related != null)
-            {
-                documentReference.Context.Related.Add(related);
-            }
+            documentReference.Context.Related.Add(related);
 
             return documentReference;
         }
@@ -69,7 +68,7 @@ namespace Health.PharmaNet.Models
             PharmanetMessage messageModel = new PharmanetMessage();
 
             // HL7 FHIR spec for GUID/UUID has this mandatory prefix in the value field.
-            foreach(Match? m in Regex.Matches(documentReference.MasterIdentifier.Value, @"urn:uuid:(\s+)"))
+            foreach(Match? m in Regex.Matches(documentReference.MasterIdentifier.Value, MasterIdentifierPattern))
             {
                 GroupCollection groups = m!.Groups;
                 string value = groups[0].Value;
