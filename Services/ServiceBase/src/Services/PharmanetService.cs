@@ -16,8 +16,12 @@
 namespace Health.PharmaNet.Services
 {
     using System.Threading.Tasks;
-    using Hl7.Fhir.Model;
+
     using Health.PharmaNet.Delegates;
+    using Health.PharmaNet.Models;
+
+    using Hl7.Fhir.Model;
+
     using Microsoft.Extensions.Logging;
 
     /// <summary>
@@ -27,22 +31,34 @@ namespace Health.PharmaNet.Services
     {
         private readonly IPharmanetDelegate pharmanetDelegate;
 
-       /// <summary>
+        private static PharmanetMessageModel convertFromFhir(DocumentReference documentReference)
+        {
+            return new PharmanetMessageModel(); // temp
+        }
+        private static DocumentReference convertToFhir(PharmanetMessageModel pharmanetMessageModel)
+        {
+            return new DocumentReference(); // temp
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="PharmanetService"/> class.
         /// </summary>
         /// <param name="logger">Injected Logger Provider.</param>
         /// <param name="pharmanetDelegate">Injected pharmanet delegate.</param>
-        public PharmanetService(ILogger<PharmanetService> logger, 
+        public PharmanetService(ILogger<PharmanetService> logger,
             IPharmanetDelegate pharmanetDelegate)
         {
             this.pharmanetDelegate = pharmanetDelegate;
         }
         /// <summary>
-        /// 
+        /// Submit Request to Pharmanet.
         ///</summary>
         public async Task<DocumentReference> SubmitRequest(DocumentReference request)
         {
-            DocumentReference response = await this.pharmanetDelegate.SubmitRequest(request);
+            PharmanetMessageModel requestMessage =  convertFromFhir(request);
+
+            PharmanetMessageModel responseMessage = await this.pharmanetDelegate.SubmitRequest(requestMessage);
+            DocumentReference response = convertToFhir(responseMessage);
             return response;
         }
     }
