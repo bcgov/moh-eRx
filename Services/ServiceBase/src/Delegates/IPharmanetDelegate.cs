@@ -23,15 +23,16 @@ namespace Health.PharmaNet.Delegates
 
   /// <summary>
   /// The Pharmanet Delegate, which communicates directly to the Pharmanet proxy service.
-  /// </summary>  
+  /// </summary>
   public interface IPharmanetDelegate
   {
     /// <summary>
     /// The Pharmanet Delegate, which communicates directly to the Pharmanet proxy service.
     /// </summary>
     /// <param name="request">A PharmanetMessageModel instance containing the HL7v2 request message.</param>
-    /// <returns>A PharmanetMessageModel as response.</returns>  
-    public Task<PharmanetMessageModel> SubmitRequest(PharmanetMessageModel request);
-  }
+    /// <returns>A PharmanetMessageModel as response.</returns>
+    public Task<PharmanetMessage> SubmitRequest(PharmanetMessage request);
 
+  }
+  
 }

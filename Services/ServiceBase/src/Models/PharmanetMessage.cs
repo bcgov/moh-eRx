@@ -15,25 +15,24 @@
 //-------------------------------------------------------------------------
 namespace Health.PharmaNet.Models
 {
-    using System.Collections.Generic;
     using System.Text.Json.Serialization;
     using System;
 
-#nullable enable
     /// <summary>
     /// The Pharmanet proxy message model. This json model is defined in collaboration with the vendor managing PharmaNet.
     /// </summary>
-    public class PharmanetMessageModel
+    public class PharmanetMessage
     {
         /// <summary>
         /// Gets or sets the unique transaction identifier.
         /// </summary>
-        public string transactionUUID { get; set; }
-        /// <summary>
-        /// Gets or sets the base 64 encoded HL7v2 Message.
-        /// </summary>        
-        public string hl7Message { get; set; }
-    }
+        [JsonPropertyName("transactionUUID")]
+        public string TransactionId { get; set; } = string.Empty;
 
+        /// <summary>
+        /// Gets or sets the Base 64 encoded HL7v2 Message.
+        /// </summary>        
+        [JsonPropertyName("hl7Message")]
+        public string Hl7Message { get; set; } = string.Empty;
+    }
 }
-#nullable restore

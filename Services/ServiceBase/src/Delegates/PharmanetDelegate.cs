@@ -23,9 +23,15 @@ namespace Health.PharmaNet.Delegates
   /// </summary>  
   public class PharmanetDelegate : IPharmanetDelegate
   {
-    public async Task<PharmanetMessageModel> SubmitRequest(PharmanetMessageModel request)
+
+    ///<summary>
+    /// Submit a PharmanetMessage to Pharmanet System.
+    ///</summary>
+    ///<param name="request">The PharmanetMessage request containing HL7v2 base 64 payload.</param>
+    ///<returns>A PharmanetMessage response.</returns>
+    public async Task<PharmanetMessage> SubmitRequest(PharmanetMessage request)
     {
-            PharmanetMessageModel response = new PharmanetMessageModel();
+            PharmanetMessage response = new PharmanetMessage();
             // 0. Setup authentication.
             // 1. Submit the request to the Pharmanet HL7v2 protected endpoint.
             // 2. Return the response.
