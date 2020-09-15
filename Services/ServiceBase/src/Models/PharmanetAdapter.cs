@@ -50,7 +50,7 @@ namespace Health.PharmaNet.Models
 
             documentReference.Content.Add(item);
 
-            if ( related != null)
+            if (related != null)
             {
                 documentReference.Context.Related.Add(related);
             }
@@ -69,7 +69,7 @@ namespace Health.PharmaNet.Models
             PharmanetMessage messageModel = new PharmanetMessage();
 
             // HL7 FHIR spec for GUID/UUID has this mandatory prefix in the value field.
-            foreach( Match? m in Regex.Matches(documentReference.MasterIdentifier.Value, @"urn:uuid:(\s+)"))
+            foreach(Match? m in Regex.Matches(documentReference.MasterIdentifier.Value, @"urn:uuid:(\s+)"))
             {
                 GroupCollection groups = m!.Groups;
                 string value = groups[0].Value;
