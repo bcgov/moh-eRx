@@ -26,7 +26,7 @@ namespace Health.PharmaNet.Parsers
     /// <summary>
     /// The Pharmanet FHIR Parser helper class.
     /// </summary>
-    /// <param name="json">A json structure to be parsed into a FHIR DocumentReference object</param>
+    /// <param name="json">A json structure to be parsed into a FHIR DocumentReference object.</param>
     /// <returns>A DocumentReference as response.</returns>
     public static DocumentReference ParseJson(string json)
     {

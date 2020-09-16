@@ -29,7 +29,7 @@ namespace Health.PharmaNet.Common.Authorization
     public class Hl7v2AuthorizationHandler : AuthorizationHandler<CorrectScopeRequirement, MessageType>
     {
         /// <summary>
-        /// Checks if the user has the appropriate scopes claimed.
+        /// Checks if the user has the appropriate scopes claimed for the given HL7-v2 MessageType
         /// </summary>
         /// <param name="context">The AuthorizationHandler context.</param>
         /// <param name="requirement">The authorization requirement being checked.</param>

@@ -15,8 +15,8 @@
 //-------------------------------------------------------------------------
 namespace Health.PharmaNet.Parsers
 {
-  using System.Text;
   using System;
+  using System.Text;
 
   using HL7.Dotnetcore;
 
@@ -39,10 +39,12 @@ namespace Health.PharmaNet.Parsers
         Message message = new Message(messageString);
         if (!message.ParseMessage())
         {
-          throw new ArgumentException(nameof(base64EncodedData));
+          throw new ArgumentException("Failed to parse ${1}", nameof(base64EncodedData));
         }
+
         return message;
       }
+
       throw new ArgumentNullException(nameof(base64EncodedData));
     }
 
@@ -59,7 +61,7 @@ namespace Health.PharmaNet.Parsers
       {
         messageType = message.GetValue("MSH.9.1");
       }
- 
+
       return messageType;
     }
   }

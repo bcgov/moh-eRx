@@ -18,7 +18,6 @@ namespace Health.PharmaNet.Controllers
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
-    using System;
 
     using Health.PharmaNet.Common.Authorization.Policy;
     using Health.PharmaNet.Parsers;
@@ -32,7 +31,6 @@ namespace Health.PharmaNet.Controllers
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
-
 
     /// <summary>
     /// The Template controller.
@@ -106,6 +104,5 @@ namespace Health.PharmaNet.Controllers
         {
             return Hl7FhirParser.ParseJson(json);
         }
-
     }
 }
