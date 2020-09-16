@@ -16,7 +16,7 @@
 namespace Health.PharmaNet.Common.Authorization.Constants
 {
     /// <summary>
-    /// A class with constants representing the various email template names.
+    /// A class with constants representing the various resource template names.
     /// </summary>
     public static class FhirResource
     {
@@ -26,27 +26,9 @@ namespace Health.PharmaNet.Common.Authorization.Constants
         public const string Wildcard = "*";
 
         /// <summary>
-        /// Information about observations performed by a healthcare provider
-        /// See <a href="http://www.hl7.org/fhir/stu3/observation.html"/>.
+        /// DocumentReference used to carry Hl7-v2 payload among other uses.
+        /// See <a href="https://www.hl7.org/fhir/documentreference.html"/>.
         /// </summary>
-        public const string Observation = "Observation";
-
-        /// <summary>
-        /// Information about a patient's immunizations.
-        /// See <a href="http://www.hl7.org/fhir/stu3/immunization.html"/>.
-        /// </summary>
-        public const string Immunization = "Immunization";
-
-        /// <summary>
-        /// Information about the believed state of a medication.
-        /// See <a href="http://www.hl7.org/fhir/stu3/medicationstatement.html"/>.
-        /// </summary>
-        public const string MedicationStatement = "MedicationStatement";
-
-        /// <summary>
-        /// Demographic information about the patient.
-        /// See <a href="http://www.hl7.org/fhir/stu3/patient.html"/>.
-        /// </summary>
-        public const string Patient = "Patient";
+        public const string DocumentReference = "DocumentReference";
     }
 }

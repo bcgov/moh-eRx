@@ -16,6 +16,7 @@
 namespace Health.PharmaNet.Delegates
 {
   using System.Threading.Tasks;
+
   using Health.PharmaNet.Models;
 
   /// <summary>
@@ -30,12 +31,12 @@ namespace Health.PharmaNet.Delegates
     /// <returns>A PharmanetMessage response.</returns>
     public async Task<PharmanetMessage> SubmitRequest(PharmanetMessage request)
     {
-            PharmanetMessage response = new PharmanetMessage();
+      PharmanetMessage response = new PharmanetMessage();
 
-            // 0. Setup authentication.
-            // 1. Submit the request to the Pharmanet HL7v2 protected endpoint.
-            // 2. Return the response.
-            return response;
+      // 0. Setup authentication.
+      // 1. Submit the request to the Pharmanet HL7v2 protected endpoint.
+      // 2. Return the response.
+      return response;
     }
   }
 }

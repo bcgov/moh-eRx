@@ -16,18 +16,14 @@
 namespace Health.PharmaNet.Common.Authorization.Claims
 {
     /// <summary>
-    /// Claims specific to Health Gateway.
+    /// Claims specific to PharmanetAPI
     /// </summary>
-    public static class GatewayClaims
+    public static class PharmanetAPIClaims
     {
         /// <summary>
         /// Policy claim representing the scopes the user has.
         /// </summary>
         public const string Scope = "scope";
 
-        /// <summary>
-        /// Policy claims requiring an HDID.
-        /// </summary>
-        public const string HDID = "hdid";
     }
 }

@@ -16,6 +16,7 @@
     <ApplicationURL>http://localhost:3001;</ApplicationURL>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="HL7-dotnetcore" Version="2.19.0" />
     <PackageReference Include="Hl7.Fhir.R4" Version="1.9.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="4.1.0" />

@@ -13,21 +13,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
-namespace Health.PharmaNet.Common.Authorization.Policy
+namespace Health.PharmaNet.Parsers
 {
-    /// <summary>
-    /// The set of claims to access Fhir Scope based access to data.
-    /// </summary>
-    public static class FhirScopesPolicy
-    {
-        /// <summary>
-        /// Policy which allows the access based on configured scopes allowed.
-        /// </summary>
-        public const string Access = "FhirScopesAccess";
+  using Hl7.Fhir.Model;
+  using Hl7.Fhir.Serialization;
 
-        /// <summary>
-        /// Policy which ensures that for a given HL7-v2 message type, the correct FHIR-based scope is present in the claims.
-        /// </summary>
-        public const string MessageTypeScopeAccess = "MessageTypeScopeAccess";
+  /// <summary>
+  /// The Pharmanet Delegate, which communicates directly to the Pharmanet proxy service.
+  /// </summary>
+  public static class Hl7FhirParser
+  {
+    /// <summary>
+    /// The Pharmanet FHIR Parser helper class.
+    /// </summary>
+    /// <param name="json">A json structure to be parsed into a FHIR DocumentReference object</param>
+    /// <returns>A DocumentReference as response.</returns>
+    public static DocumentReference ParseJson(string json)
+    {
+      FhirJsonParser parser = new FhirJsonParser(new ParserSettings { AcceptUnknownMembers = true, AllowUnrecognizedEnums = true });
+      DocumentReference documentReference = parser.Parse<DocumentReference>(json);
+      return documentReference;
     }
+  }
 }

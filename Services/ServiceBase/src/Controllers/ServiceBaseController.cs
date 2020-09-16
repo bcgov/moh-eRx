@@ -15,12 +15,13 @@
 //-------------------------------------------------------------------------
 namespace Health.PharmaNet.Controllers
 {
-    using System;
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
+    using System;
 
     using Health.PharmaNet.Common.Authorization.Policy;
+    using Health.PharmaNet.Parsers;
     using Health.PharmaNet.Services;
 
     using Hl7.Fhir.Model;
@@ -31,6 +32,7 @@ namespace Health.PharmaNet.Controllers
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
+
 
     /// <summary>
     /// The Template controller.
@@ -102,9 +104,8 @@ namespace Health.PharmaNet.Controllers
         /// <returns>DocumentReference instance or throws an error.</returns>
         private static DocumentReference ParseJsonBody(string json)
         {
-            FhirJsonParser parser = new FhirJsonParser(new ParserSettings { AcceptUnknownMembers = true, AllowUnrecognizedEnums = true });
-            DocumentReference request = parser.Parse<DocumentReference>(json);
-            return request;
+            return Hl7FhirParser.ParseJson(json);
         }
+
     }
 }
