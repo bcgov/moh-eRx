@@ -36,6 +36,7 @@ namespace Health.PharmaNet.Delegates
       // 0. Setup authentication.
       // 1. Submit the request to the Pharmanet HL7v2 protected endpoint.
       // 2. Return the response.
+
       return response;
     }
   }

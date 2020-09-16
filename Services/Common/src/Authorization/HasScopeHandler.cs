@@ -17,6 +17,7 @@ namespace Health.PharmaNet.Common.Authorization
 {
     using System.Linq;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Authorization;
 
     /// <summary>

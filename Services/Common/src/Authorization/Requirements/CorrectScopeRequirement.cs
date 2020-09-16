@@ -15,21 +15,10 @@
 //-------------------------------------------------------------------------
 namespace Health.PharmaNet.Common.Authorization
 {
-    using System.Collections.Generic;
     using System;
+    using System.Collections.Generic;
 
     using Microsoft.AspNetCore.Authorization;
-
-    /// <summary>
-    /// object to pass as the TResource type for the handler.
-    /// </summary>
-    public class MessageType
-    {
-        /// <summary>
-        /// Gets or sets the MessageType value.
-        /// </summary>
-        public string Value { get; set; } = string.Empty;
-    }
 
     /// <summary>
     /// The Authorization Scope Requirement. The user (the jwt) must have at least one of the scopes specified.
@@ -42,7 +31,6 @@ namespace Health.PharmaNet.Common.Authorization
         /// Initializes a new instance of the <see cref="CorrectScopeRequirement"/> class.
         /// </summary>
         /// <param name="authorizationDictionary">The dictionary of scope+messageType pairings.</param>
-
         public CorrectScopeRequirement(Dictionary<string, string> authorizationDictionary)
         {
             this.authorizationDictionary = authorizationDictionary ??
@@ -57,7 +45,7 @@ namespace Health.PharmaNet.Common.Authorization
         /// <returns>Returns true if the scope provided is the right one for the MessageType.</returns>
         public bool HasCorrectScopeforMessageType(MessageType messageType, string scope)
         {
-            string scopeString = authorizationDictionary[messageType.Value];
+            string scopeString = this.authorizationDictionary[messageType.Value];
             string[] scopes = scopeString.Split(' ');
             return Array.Exists(scopes, element => element == scope);
         }

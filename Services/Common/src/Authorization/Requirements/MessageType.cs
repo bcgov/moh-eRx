@@ -13,16 +13,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
-namespace Health.PharmaNet.Common.Authorization.Claims
+namespace Health.PharmaNet.Common.Authorization
 {
     /// <summary>
-    /// Claims specific to PharmanetAPI.
+    /// object to pass as the TResource type for the handler.
     /// </summary>
-    public static class PharmanetAPIClaims
+    public class MessageType
     {
         /// <summary>
-        /// Policy claim representing the scopes the user has.
+        /// Gets or sets the MessageType value.
         /// </summary>
-        public const string Scope = "scope";
+        public string Value { get; set; } = string.Empty;
     }
 }

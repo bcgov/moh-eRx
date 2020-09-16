@@ -13,16 +13,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
-namespace Health.PharmaNet.Common.Authorization.Claims
+namespace Health.PharmaNet.Common.AspNetConfiguration
 {
     /// <summary>
-    /// Claims specific to PharmanetAPI.
+    /// The Configuration Sections.
     /// </summary>
-    public static class PharmanetAPIClaims
+    public static class ConfigurationSections
     {
         /// <summary>
-        /// Policy claim representing the scopes the user has.
+        /// The Configuration Section for OAuth2 OpenIdConnect.
         /// </summary>
-        public const string Scope = "scope";
+        public const string OpenIdConnect = "OpenIdConnect";
+
+        /// <summary>
+        /// The Configuration Section for OAuth2 Hl7-v2 Message Scopes by MessageType.
+        /// </summary>
+        public const string Hl7v2MessageScopes = "Hl7v2MessageScopes";
     }
 }

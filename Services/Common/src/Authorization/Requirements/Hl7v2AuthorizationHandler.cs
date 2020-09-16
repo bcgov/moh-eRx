@@ -29,13 +29,13 @@ namespace Health.PharmaNet.Common.Authorization
     public class Hl7v2AuthorizationHandler : AuthorizationHandler<CorrectScopeRequirement, MessageType>
     {
         /// <summary>
-        /// Checks if the user has the appropriate scopes claimed for the given HL7-v2 MessageType
+        /// Checks if the user has the appropriate scopes claimed for the given HL7-v2 MessageType.
         /// </summary>
         /// <param name="context">The AuthorizationHandler context.</param>
         /// <param name="requirement">The authorization requirement being checked.</param>
-        /// <param name="messageType">The Hl7-v2 MessageType of the request message.</param>
+        /// <param name="resource">The Hl7-v2 MessageType of the request message.</param>
         /// <returns>A context Task.</returns>
-        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, CorrectScopeRequirement requirement, MessageType messageType)
+        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, CorrectScopeRequirement requirement, MessageType resource)
         {
             // If user does not have the scope claim, get out of here
             if (!context.User.HasClaim(c => c.Type == PharmanetAPIClaims.Scope))
@@ -44,13 +44,14 @@ namespace Health.PharmaNet.Common.Authorization
             }
 
             var scopeClaim = context.User.Claims.FirstOrDefault(
-                    c => string.Equals(c.Type, PharmanetAPIClaims.Scope, StringComparison.OrdinalIgnoreCase));
+                c => string.Equals(c.Type, PharmanetAPIClaims.Scope, StringComparison.OrdinalIgnoreCase));
 
             if (scopeClaim != null)
             {
                 var scopes = scopeClaim.Value.Split(" ", StringSplitOptions.RemoveEmptyEntries);
-                foreach (string scope in scopes) {
-                    if (requirement.HasCorrectScopeforMessageType(messageType, scope))
+                foreach (string scope in scopes)
+                {
+                    if (requirement.HasCorrectScopeforMessageType(resource, scope))
                     {
                         context.Succeed(requirement);
                         break;
