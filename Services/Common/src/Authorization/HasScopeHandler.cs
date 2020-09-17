@@ -19,12 +19,27 @@ namespace Health.PharmaNet.Common.Authorization
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.Extensions.Logging;
 
     /// <summary>
     /// Authorization scope handler to check for necessary scope claims.
     /// </summary>
     public class HasScopeHandler : AuthorizationHandler<HasScopesRequirement>
     {
+        /// <summary>
+        /// Gets or sets the Logger Service.
+        /// </summary>
+        private readonly ILogger logger;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HasScopeHandler"/> class.
+        /// </summary>
+        /// <param name="logger">Injected Logger Provider.</param>
+        public HasScopeHandler(ILogger logger)
+        {
+            this.logger = logger;
+        }
+
         /// <summary>
         /// Checks if the user has the appropriate scopes claimed.
         /// </summary>
@@ -36,6 +51,7 @@ namespace Health.PharmaNet.Common.Authorization
             // If user does not have the scope claim, get out of here
             if (!context.User.HasClaim(c => c.Type == "scope" && c.Issuer == requirement.ClaimsIssuer))
             {
+                this.logger.LogDebug("Missing scope claim in JWT");
                 return Task.CompletedTask;
             }
 

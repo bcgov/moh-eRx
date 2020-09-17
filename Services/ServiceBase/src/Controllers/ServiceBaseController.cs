@@ -15,10 +15,10 @@
 //-------------------------------------------------------------------------
 namespace Health.PharmaNet.Controllers
 {
-    using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
 
+    using Health.PharmaNet.Common.Authorization;
     using Health.PharmaNet.Common.Authorization.Policy;
     using Health.PharmaNet.Parsers;
     using Health.PharmaNet.Services;
@@ -56,18 +56,26 @@ namespace Health.PharmaNet.Controllers
         private readonly IHttpContextAccessor httpContextAccessor;
 
         /// <summary>
+        /// Gets or sets the authorization service.
+        /// </summary>
+        private readonly IAuthorizationService authorizationService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ServiceBaseController"/> class.
         /// </summary>
         /// <param name="logger">Injected Logger Provider.</param>
         /// <param name="service">Injected service.</param>
+        /// <param name="authorizationService">Injected authorization service.</param>
         /// <param name="httpContextAccessor">The Http Context accessor.</param>
         public ServiceBaseController(
             ILogger<ServiceBaseController> logger,
             IPharmanetService service,
+            IAuthorizationService authorizationService,
             IHttpContextAccessor httpContextAccessor)
         {
             this.service = service;
             this.logger = logger;
+            this.authorizationService = authorizationService;
             this.httpContextAccessor = httpContextAccessor;
         }
 
@@ -90,8 +98,16 @@ namespace Health.PharmaNet.Controllers
             string accessToken = await this.httpContextAccessor.HttpContext.GetTokenAsync("access_token").ConfigureAwait(true);
 
             DocumentReference request = ParseJsonBody(json);
-            DocumentReference response = await this.service.SubmitRequest(request);
 
+            MessageType messageType = GetHl7v2MessageType(request);
+
+            AuthorizationResult result = await AuthorizationServiceExtensions.AuthorizeAsync(this.authorizationService, user, FhirScopesPolicy.MessageTypeScopeAccess);
+            if (!result.Succeeded)
+            {
+                return new ChallengeResult();
+            }
+
+            DocumentReference response = await this.service.SubmitRequest(request);
             return new JsonResult(response.ToJson());
         }
 
@@ -103,6 +119,18 @@ namespace Health.PharmaNet.Controllers
         private static DocumentReference ParseJsonBody(string json)
         {
             return Hl7FhirParser.ParseJson(json);
+        }
+
+        private static MessageType GetHl7v2MessageType(DocumentReference request)
+        {
+            DocumentReference.ContentComponent[] content = request.Content.ToArray();
+
+            byte[] data = content[0].Attachment.Data;
+            string? base64string = System.Text.Encoding.UTF8.GetString(data, 0, data.Length);
+
+            HL7.Dotnetcore.Message msg = HL7v2Parser.ParseBase64EncodedData(base64string);
+
+            return new MessageType(HL7v2Parser.GetMessageType(msg));
         }
     }
 }

@@ -165,8 +165,9 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
                 });
             });
 
-            // register the scope authorization handler
-            IServiceCollection serviceCollections = services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
+            // register the  handlers
+            services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
+            services.AddSingleton<IAuthorizationHandler, Hl7v2AuthorizationHandler>();
         }
 
         /// <summary>

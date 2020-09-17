@@ -22,12 +22,27 @@ namespace Health.PharmaNet.Common.Authorization
     using Health.PharmaNet.Common.Authorization.Claims;
 
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.Extensions.Logging;
 
     /// <summary>
     /// PharmanetAuthorizationHandler resource-based handler to check for necessary scope claims.
     /// </summary>
     public class Hl7v2AuthorizationHandler : AuthorizationHandler<CorrectScopeRequirement, MessageType>
     {
+        /// <summary>
+        /// Gets or sets the Logger Service.
+        /// </summary>
+        private readonly ILogger logger;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Hl7v2AuthorizationHandler"/> class.
+        /// </summary>
+        /// <param name="logger">Injected Logger Provider.</param>
+        public Hl7v2AuthorizationHandler(ILogger logger)
+        {
+            this.logger = logger;
+        }
+
         /// <summary>
         /// Checks if the user has the appropriate scopes claimed for the given HL7-v2 MessageType.
         /// </summary>
@@ -40,6 +55,7 @@ namespace Health.PharmaNet.Common.Authorization
             // If user does not have the scope claim, get out of here
             if (!context.User.HasClaim(c => c.Type == PharmanetAPIClaims.Scope))
             {
+                this.logger.LogDebug("Missing scope claim in JWT");
                 return Task.CompletedTask;
             }
 
@@ -53,6 +69,7 @@ namespace Health.PharmaNet.Common.Authorization
                 {
                     if (requirement.HasCorrectScopeforMessageType(resource, scope))
                     {
+                        this.logger.LogDebug("Scope(s) provided are correct for the HL7v2 MessagType");
                         context.Succeed(requirement);
                         break;
                     }

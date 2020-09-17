@@ -21,6 +21,15 @@ namespace Health.PharmaNet.Common.Authorization
     public class MessageType
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="MessageType"/> class.
+        /// </summary>
+        /// <param name="messageType">The value to set.</param>
+        public MessageType(string messageType)
+        {
+            this.Value = messageType;
+        }
+
+        /// <summary>
         /// Gets or sets the MessageType value.
         /// </summary>
         public string Value { get; set; } = string.Empty;
