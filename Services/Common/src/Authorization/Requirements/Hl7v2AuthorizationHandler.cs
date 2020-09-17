@@ -38,7 +38,7 @@ namespace Health.PharmaNet.Common.Authorization
         /// Initializes a new instance of the <see cref="Hl7v2AuthorizationHandler"/> class.
         /// </summary>
         /// <param name="logger">Injected Logger Provider.</param>
-        public Hl7v2AuthorizationHandler(ILogger logger)
+        public Hl7v2AuthorizationHandler(ILogger<Hl7v2AuthorizationHandler> logger)
         {
             this.logger = logger;
         }

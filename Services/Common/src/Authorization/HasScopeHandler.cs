@@ -35,7 +35,7 @@ namespace Health.PharmaNet.Common.Authorization
         /// Initializes a new instance of the <see cref="HasScopeHandler"/> class.
         /// </summary>
         /// <param name="logger">Injected Logger Provider.</param>
-        public HasScopeHandler(ILogger logger)
+        public HasScopeHandler(ILogger<HasScopeHandler> logger)
         {
             this.logger = logger;
         }
