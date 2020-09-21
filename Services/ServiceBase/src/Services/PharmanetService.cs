@@ -52,11 +52,11 @@ namespace Health.PharmaNet.Services
         /// <returns>Returns a DocumentReference containing the response from PharmaNet.</returns>
         public async Task<DocumentReference> SubmitRequest(DocumentReference request)
         {
-            PharmanetMessage requestMessage = PharmanetAdapter.FromDocumentReference(request);
-            PharmanetMessage responseMessage = await this.pharmanetDelegate.SubmitRequest(requestMessage).ConfigureAwait(false);
+            PharmanetProxyMessage requestMessage = PharmanetProxyAdapter.FromDocumentReference(request);
+            PharmanetProxyMessage responseMessage = await this.pharmanetDelegate.SubmitRequest(requestMessage).ConfigureAwait(false);
 
-            ResourceReference reference = PharmanetAdapter.RelatedToDocumentReference(request);
-            DocumentReference response = PharmanetAdapter.FromPharmanetMessage(responseMessage, reference);
+            ResourceReference reference = PharmanetProxyAdapter.RelatedToDocumentReference(request);
+            DocumentReference response = PharmanetProxyAdapter.FromPharmanetProxyMessage(responseMessage, reference);
             return response;
         }
     }

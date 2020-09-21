@@ -62,7 +62,7 @@ namespace Health.PharmaNet.Delegates
         /// </summary>
         /// <param name="request">The PharmanetMessage request containing HL7v2 base 64 payload.</param>
         /// <returns>A PharmanetMessage response.</returns>
-        public async Task<PharmanetMessage> SubmitRequest(PharmanetMessage request)
+        public async Task<PharmanetProxyMessage> SubmitRequest(PharmanetProxyMessage request)
         {
             Client.DefaultRequestHeaders.Accept.Clear();
             Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
@@ -71,7 +71,7 @@ namespace Health.PharmaNet.Delegates
 
             Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", System.Convert.ToBase64String(authdata));
 
-            string jsonOutput = JsonSerializer.Serialize<PharmanetMessage>(request);
+            string jsonOutput = JsonSerializer.Serialize<PharmanetProxyMessage>(request);
 
             HttpContent content = new StringContent(jsonOutput);
 
@@ -83,7 +83,7 @@ namespace Health.PharmaNet.Delegates
             }
 
             string result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-            PharmanetMessage responseMessage = JsonSerializer.Deserialize<PharmanetMessage>(result);
+            PharmanetProxyMessage responseMessage = JsonSerializer.Deserialize<PharmanetProxyMessage>(result);
 
             return responseMessage;
         }

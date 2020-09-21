@@ -24,7 +24,7 @@ namespace Health.PharmaNet.Models
     /// <summary>
     /// The Pharmanet Adapter to convert from/to message models.
     /// </summary>
-    public static class PharmanetAdapter
+    public static class PharmanetProxyAdapter
     {
         /// <summary>
         /// The standard ContentType ("Mime Type") for HL7-v2 payload.
@@ -49,7 +49,7 @@ namespace Health.PharmaNet.Models
         /// <returns>Returns a new DocumentReference from the PharmanetMessage.
         /// If the requestDocumentReference is provided, it used that to fill out cross-referenced data.
         /// </returns>
-        public static DocumentReference FromPharmanetMessage(PharmanetMessage messageModel, ResourceReference? related = null)
+        public static DocumentReference FromPharmanetProxyMessage(PharmanetProxyMessage messageModel, ResourceReference? related = null)
         {
             DocumentReference documentReference = new DocumentReference();
 
@@ -73,9 +73,9 @@ namespace Health.PharmaNet.Models
         /// </summary>
         /// <param name="documentReference">The DocumentReference to convert from.</param>
         /// <returns>Returns a new PharmanetMessage mapped from the provided DocumentReference.</returns>
-        public static PharmanetMessage FromDocumentReference(DocumentReference documentReference)
+        public static PharmanetProxyMessage FromDocumentReference(DocumentReference documentReference)
         {
-            PharmanetMessage messageModel = new PharmanetMessage();
+            PharmanetProxyMessage messageModel = new PharmanetProxyMessage();
 
             // HL7 FHIR spec for GUID/UUID has this mandatory prefix in the value field.
             foreach (Match? m in Regex.Matches(documentReference.MasterIdentifier.Value, MasterIdentifierPattern))

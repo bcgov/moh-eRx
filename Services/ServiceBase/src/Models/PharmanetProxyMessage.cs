@@ -20,7 +20,7 @@ namespace Health.PharmaNet.Models
     /// <summary>
     /// The Pharmanet proxy message model. This json model is defined in collaboration with the vendor managing PharmaNet.
     /// </summary>
-    public class PharmanetMessage
+    public class PharmanetProxyMessage
     {
         /// <summary>
         /// Gets or sets the unique transaction identifier.
