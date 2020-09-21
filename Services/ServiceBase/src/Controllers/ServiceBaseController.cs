@@ -92,7 +92,7 @@ namespace Health.PharmaNet.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [Route("MedicationRequest")]
         [Authorize(Policy = FhirScopesPolicy.Access)]
-        public async Task<ActionResult<JsonResult>> PharmanetRequest([FromBody] string json)
+        public async Task<ActionResult<DocumentReference>> PharmanetRequest([FromBody] string json)
         {
             ClaimsPrincipal user = this.httpContextAccessor.HttpContext.User;
             string accessToken = await this.httpContextAccessor.HttpContext.GetTokenAsync("access_token").ConfigureAwait(true);
@@ -111,7 +111,7 @@ namespace Health.PharmaNet.Controllers
             }
 
             DocumentReference response = await this.service.SubmitRequest(request).ConfigureAwait(false);
-            return new JsonResult(response.ToJson());
+            return response;
         }
 
         /// <summary>

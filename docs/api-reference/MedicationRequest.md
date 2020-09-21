@@ -93,10 +93,10 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI4NmRlMD
     "resourceType": "DocumentReference",
     "masterIdentifier": {
         "system" : "urn:ietf:rfc:3986",
-        "value": "urn:uuid:D8196F60-8E3F-40A6-B5C8-B5680B2C21EC",
+        "value": "urn:uuid:D8196F60-8E3F-40A6-B5C8-B5680B2C21EC"
         },
     "status" : "current",
-    "date": ""2020-08-02T21:58:30Z",
+    "date": "2020-08-02T21:58:30Z",
     "extension": [{
         "url" : "https://api.example.org/PharmaNet/documentSignature",
         "valueSignature": {
