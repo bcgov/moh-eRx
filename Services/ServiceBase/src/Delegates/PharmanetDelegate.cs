@@ -69,7 +69,7 @@ namespace Health.PharmaNet.Delegates
 
             byte[] authdata = Encoding.ASCII.GetBytes(this.pharmanetProxyConfig.Username + ":" + this.pharmanetProxyConfig.Password);
 
-            Client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", System.Convert.ToBase64String(authdata));
+            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", System.Convert.ToBase64String(authdata));
 
             string jsonOutput = JsonSerializer.Serialize<PharmanetMessage>(request);
 
