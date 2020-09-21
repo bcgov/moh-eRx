@@ -13,26 +13,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
-namespace Health.PharmaNet.Common.Authorization
+namespace Health.PharmaNet.Models
 {
-
-    /// <summary>
-    /// object to pass as the TResource type for the handler.
-    /// </summary>
-    public class MessageType
+     /// <summary>
+        /// The configuration settings for connecting to the PharmanetProxy
+    /// </summary>    
+    public class PharmanetProxyConfig
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MessageType"/> class.
+        /// Gets or sets the endpoint path for the protective word service.
         /// </summary>
-        /// <param name="messageType">The value to set.</param>
-        public MessageType(string messageType)
-        {
-            this.Value = messageType;
-        }
+        public string EndpointUrl { get; set; } = string.Empty;
 
         /// <summary>
-        /// Gets or sets the MessageType value.
+        /// Gets or sets the username to use for authentication.
         /// </summary>
-        public string Value { get; set; } = string.Empty;
+        public string Username { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Gets or sets the password to use for authentication.
+        /// </summary>
+        public string Password { get; set; } = string.Empty;
     }
+    
 }

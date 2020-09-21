@@ -15,29 +15,72 @@
 //-------------------------------------------------------------------------
 namespace Health.PharmaNet.Delegates
 {
-  using System.Threading.Tasks;
+    using System.Net;
+    using System.Net.Http;
+    using System.Net.Http.Headers;
+    using System.Net.Mime;
+    using System.Text;
+    using System.Text.Json;
+    using System.Threading.Tasks;
 
-  using Health.PharmaNet.Models;
+    using Health.PharmaNet.Models;
 
-  /// <summary>
-  /// The Pharmanet Delegate, which communicates directly to the Pharmanet proxy service.
-  /// </summary>
-  public class PharmanetDelegate : IPharmanetDelegate
-  {
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.Logging;
+
     /// <summary>
-    /// Submit a PharmanetMessage to Pharmanet System.
+    /// The Pharmanet Delegate, which communicates directly to the Pharmanet proxy service.
     /// </summary>
-    /// <param name="request">The PharmanetMessage request containing HL7v2 base 64 payload.</param>
-    /// <returns>A PharmanetMessage response.</returns>
-    public async Task<PharmanetMessage> SubmitRequest(PharmanetMessage request)
+    public class PharmanetDelegate : IPharmanetDelegate
     {
-      PharmanetMessage response = new PharmanetMessage();
+        private static readonly HttpClient client = new HttpClient();
 
-      // 0. Setup authentication.
-      // 1. Submit the request to the Pharmanet HL7v2 protected endpoint.
-      // 2. Return the response.
+        private const string ConfigurationSectionKey = "PharmanetProxy";
+        private readonly IConfiguration configuration;
 
-      return response;
+        private readonly ILogger logger;
+
+        private readonly PharmanetProxyConfig pharmanetProxyConfig;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PharmanetDelegate"/> class.
+        /// </summary>
+        /// <param name="logger">Injected Logger Provider.</param>
+        /// <param name="configuration">The injected configuration provider.</param>
+        public PharmanetDelegate(ILogger logger, IConfiguration configuration)
+        {
+            this.logger = logger;
+            this.configuration = configuration;
+            this.pharmanetProxyConfig = new PharmanetProxyConfig();
+            this.configuration.Bind(ConfigurationSectionKey, this.pharmanetProxyConfig);
+        }
+
+        /// <summary>
+        /// Submit a PharmanetMessage to Pharmanet System.
+        /// </summary>
+        /// <param name="request">The PharmanetMessage request containing HL7v2 base 64 payload.</param>
+        /// <returns>A PharmanetMessage response.</returns>
+        public async Task<PharmanetMessage> SubmitRequest(PharmanetMessage request)
+        {
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
+
+            byte[] authdata = Encoding.ASCII.GetBytes(this.pharmanetProxyConfig.Username + ":" + this.pharmanetProxyConfig.Password);
+
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", System.Convert.ToBase64String(authdata));
+
+            string jsonOutput = JsonSerializer.Serialize<PharmanetMessage>(request);
+
+            HttpResponseMessage response = await client.PostAsync(this.pharmanetProxyConfig.EndpointUrl, new StringContent(jsonOutput));
+            if (!response.IsSuccessStatusCode)
+            {
+                this.logger.LogError("PharmanetProxy returned with StatusCode := {response.StatusCode}." + response.StatusCode);
+            }
+            string result = await response.Content.ReadAsStringAsync();
+            PharmanetMessage responseMessage = JsonSerializer.Deserialize<PharmanetMessage>(result);
+
+
+            return responseMessage;
+        }
     }
-  }
 }
