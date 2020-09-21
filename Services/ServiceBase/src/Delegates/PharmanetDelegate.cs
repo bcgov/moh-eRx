@@ -15,6 +15,7 @@
 //-------------------------------------------------------------------------
 namespace Health.PharmaNet.Delegates
 {
+    using System;
     using System.Net;
     using System.Net.Http;
     using System.Net.Http.Headers;
@@ -33,9 +34,10 @@ namespace Health.PharmaNet.Delegates
     /// </summary>
     public class PharmanetDelegate : IPharmanetDelegate
     {
-        private static readonly HttpClient client = new HttpClient();
-
         private const string ConfigurationSectionKey = "PharmanetProxy";
+
+        private static readonly HttpClient Client = new HttpClient();
+
         private readonly IConfiguration configuration;
 
         private readonly ILogger logger;
@@ -62,23 +64,26 @@ namespace Health.PharmaNet.Delegates
         /// <returns>A PharmanetMessage response.</returns>
         public async Task<PharmanetMessage> SubmitRequest(PharmanetMessage request)
         {
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
+            Client.DefaultRequestHeaders.Accept.Clear();
+            Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
 
             byte[] authdata = Encoding.ASCII.GetBytes(this.pharmanetProxyConfig.Username + ":" + this.pharmanetProxyConfig.Password);
 
-            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", System.Convert.ToBase64String(authdata));
+            Client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", System.Convert.ToBase64String(authdata));
 
             string jsonOutput = JsonSerializer.Serialize<PharmanetMessage>(request);
 
-            HttpResponseMessage response = await client.PostAsync(this.pharmanetProxyConfig.EndpointUrl, new StringContent(jsonOutput));
+            HttpContent content = new StringContent(jsonOutput);
+
+            HttpResponseMessage response = await Client.PostAsync(new Uri(this.pharmanetProxyConfig.Endpoint), content).ConfigureAwait(false);
+            content.Dispose();
             if (!response.IsSuccessStatusCode)
             {
                 this.logger.LogError("PharmanetProxy returned with StatusCode := {response.StatusCode}." + response.StatusCode);
             }
-            string result = await response.Content.ReadAsStringAsync();
-            PharmanetMessage responseMessage = JsonSerializer.Deserialize<PharmanetMessage>(result);
 
+            string result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            PharmanetMessage responseMessage = JsonSerializer.Deserialize<PharmanetMessage>(result);
 
             return responseMessage;
         }

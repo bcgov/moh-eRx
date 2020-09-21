@@ -53,7 +53,7 @@ namespace Health.PharmaNet.Services
         public async Task<DocumentReference> SubmitRequest(DocumentReference request)
         {
             PharmanetMessage requestMessage = PharmanetAdapter.FromDocumentReference(request);
-            PharmanetMessage responseMessage = await this.pharmanetDelegate.SubmitRequest(requestMessage);
+            PharmanetMessage responseMessage = await this.pharmanetDelegate.SubmitRequest(requestMessage).ConfigureAwait(false);
 
             ResourceReference reference = PharmanetAdapter.RelatedToDocumentReference(request);
             DocumentReference response = PharmanetAdapter.FromPharmanetMessage(responseMessage, reference);

@@ -15,15 +15,15 @@
 //-------------------------------------------------------------------------
 namespace Health.PharmaNet.Models
 {
-     /// <summary>
-        /// The configuration settings for connecting to the PharmanetProxy
-    /// </summary>    
+    /// <summary>
+    /// The configuration settings for connecting to the PharmanetProxy.
+    /// </summary>
     public class PharmanetProxyConfig
     {
         /// <summary>
         /// Gets or sets the endpoint path for the protective word service.
         /// </summary>
-        public string EndpointUrl { get; set; } = string.Empty;
+        public string Endpoint { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the username to use for authentication.
@@ -35,5 +35,4 @@ namespace Health.PharmaNet.Models
         /// </summary>
         public string Password { get; set; } = string.Empty;
     }
-    
 }

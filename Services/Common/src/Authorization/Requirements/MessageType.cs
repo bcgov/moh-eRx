@@ -15,7 +15,6 @@
 //-------------------------------------------------------------------------
 namespace Health.PharmaNet.Common.Authorization
 {
-
     /// <summary>
     /// object to pass as the TResource type for the handler.
     /// </summary>

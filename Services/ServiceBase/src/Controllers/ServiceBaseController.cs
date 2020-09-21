@@ -101,13 +101,16 @@ namespace Health.PharmaNet.Controllers
 
             MessageType messageType = GetHl7v2MessageType(request);
 
-            AuthorizationResult result = await AuthorizationServiceExtensions.AuthorizeAsync(this.authorizationService, user, FhirScopesPolicy.MessageTypeScopeAccess);
+            AuthorizationResult result = await AuthorizationServiceExtensions.AuthorizeAsync(
+                    this.authorizationService,
+                    user,
+                    FhirScopesPolicy.MessageTypeScopeAccess).ConfigureAwait(false);
             if (!result.Succeeded)
             {
                 return new ChallengeResult();
             }
 
-            DocumentReference response = await this.service.SubmitRequest(request);
+            DocumentReference response = await this.service.SubmitRequest(request).ConfigureAwait(false);
             return new JsonResult(response.ToJson());
         }
 
