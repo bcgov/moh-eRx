@@ -82,7 +82,7 @@ namespace Health.PharmaNet.Controllers
         /// <summary>
         /// Takes HL7 FHIR DocumentReference Object containing HL7v2 payload.
         /// </summary>
-        /// <param name="json">The Json payload taken from body of HTTP message.</param>
+        /// <param name="request">The DocumentReference Json payload taken from body of HTTP message.</param>
         /// <returns>The DocumentReference Response, or error JSON.</returns>
         /// <response code="200">Returns Ok when the transaction went through.</response>
         /// <response code="401">Authorization error, returns JSON describing the error.</response>
@@ -92,12 +92,10 @@ namespace Health.PharmaNet.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [Route("MedicationRequest")]
         [Authorize(Policy = FhirScopesPolicy.Access)]
-        public async Task<ActionResult<DocumentReference>> PharmanetRequest([FromBody] string json)
+        public async Task<ActionResult<DocumentReference>> PharmanetRequest([FromBody] DocumentReference request)
         {
             ClaimsPrincipal user = this.httpContextAccessor.HttpContext.User;
             string accessToken = await this.httpContextAccessor.HttpContext.GetTokenAsync("access_token").ConfigureAwait(true);
-
-            DocumentReference request = ParseJsonBody(json);
 
             MessageType messageType = GetHl7v2MessageType(request);
 

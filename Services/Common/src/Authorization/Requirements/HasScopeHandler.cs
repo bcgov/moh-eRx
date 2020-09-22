@@ -61,9 +61,14 @@ namespace Health.PharmaNet.Common.Authorization
             // Succeed if the scope array contains any of the required scopes
             if (scopes.Any(s => requirement.IsRequiredScope(s) == true))
             {
+                this.logger.LogDebug("JWT Has at least one of the required scope claims.");
+
                 context.Succeed(requirement);
             }
-
+            else
+            {
+                this.logger.LogError("JWT is missing the required scope claims.");
+            }
             return Task.CompletedTask;
         }
     }
