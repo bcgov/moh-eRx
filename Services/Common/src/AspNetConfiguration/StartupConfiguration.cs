@@ -128,13 +128,16 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
                 options.SaveToken = true;
                 options.RequireHttpsMetadata = true;
                 options.IncludeErrorDetails = true;
+
                 this.configuration.GetSection(ConfigurationSections.OpenIdConnect).Bind(options);
 
                 options.TokenValidationParameters = new TokenValidationParameters()
                 {
-                    ValidateIssuerSigningKey = true,
                     ValidateAudience = true,
                     ValidateIssuer = true,
+                    ValidIssuer = options.Authority,
+                    ValidateIssuerSigningKey = true,
+                    RequireSignedTokens = true,
                 };
                 options.Events = new JwtBearerEvents()
                 {
