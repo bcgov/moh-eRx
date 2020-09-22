@@ -49,7 +49,7 @@ namespace Health.PharmaNet.Delegates
         /// </summary>
         /// <param name="logger">Injected Logger Provider.</param>
         /// <param name="configuration">The injected configuration provider.</param>
-        public PharmanetDelegate(ILogger logger, IConfiguration configuration)
+        public PharmanetDelegate(ILogger<PharmanetDelegate> logger, IConfiguration configuration)
         {
             this.logger = logger;
             this.configuration = configuration;
