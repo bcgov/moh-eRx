@@ -15,9 +15,7 @@
 //-------------------------------------------------------------------------
 namespace Health.PharmaNet.Controllers
 {
-    using System.IO;
     using System.Security.Claims;
-    using System.Text.Json;
     using System.Threading.Tasks;
 
     using Health.PharmaNet.Common.Authorization;
@@ -103,9 +101,9 @@ namespace Health.PharmaNet.Controllers
 
             MessageType messageType = GetHl7v2MessageType(request);
 
-            AuthorizationResult result = await AuthorizationServiceExtensions.AuthorizeAsync(
-                    this.authorizationService,
+            AuthorizationResult result = await this.authorizationService.AuthorizeAsync(
                     user,
+                    messageType,
                     FhirScopesPolicy.MessageTypeScopeAccess).ConfigureAwait(false);
             if (!result.Succeeded)
             {
@@ -116,38 +114,16 @@ namespace Health.PharmaNet.Controllers
             return response;
         }
 
-        /// <summary>
-        /// Parses the Json into an HL7 FHIR DocumentReference object.
-        /// </summary>
-        /// <param name="json">The JSON to parse.</param>
-        /// <returns>DocumentReference instance or throws an error.</returns>
-        private static DocumentReference ParseJsonBody(string json)
-        {
-            return Hl7FhirParser.ParseJson(json);
-        }
-
         private static MessageType GetHl7v2MessageType(DocumentReference request)
         {
             DocumentReference.ContentComponent[] content = request.Content.ToArray();
 
-            byte[] data = content[0].Attachment.Data;
-            string? base64string = System.Text.Encoding.UTF8.GetString(data, 0, data.Length);
+            byte[] data = content[0].Attachment.Data; // The data is returned decoded from Base64 original encoding.
+            string? msgString = System.Text.Encoding.UTF8.GetString(data, 0, data.Length);
 
-            HL7.Dotnetcore.Message msg = HL7v2Parser.ParseBase64EncodedData(base64string);
+            HL7.Dotnetcore.Message msg = HL7v2Parser.ParseString(msgString);
 
             return new MessageType(HL7v2Parser.GetMessageType(msg));
-        }
-
-        private static string ToJsonString(JsonDocument jsonDocument)
-        {
-            using (var stream = new MemoryStream())
-            {
-                Utf8JsonWriter writer = new Utf8JsonWriter(stream, new JsonWriterOptions { Indented = true });
-                jsonDocument.WriteTo(writer);
-                writer.Flush();
-                writer.Dispose();
-                return System.Text.Encoding.UTF8.GetString(stream.ToArray());
-            }
         }
     }
 }

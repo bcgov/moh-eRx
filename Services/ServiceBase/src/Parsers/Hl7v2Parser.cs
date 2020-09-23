@@ -15,54 +15,75 @@
 //-------------------------------------------------------------------------
 namespace Health.PharmaNet.Parsers
 {
-  using System;
-  using System.Text;
+    using System;
+    using System.Text;
 
-  using HL7.Dotnetcore;
+    using HL7.Dotnetcore;
 
-  /// <summary>
-  /// The Pharmanet Fhir Parser helper.
-  /// </summary>
-  public static class HL7v2Parser
-  {
     /// <summary>
-    /// Parse a base64 encoded string into a HL7-v2 Message object.
+    /// The Pharmanet Fhir Parser helper.
     /// </summary>
-    /// <param name="base64EncodedData">A base64 stream to be parsed into a Hl7-v2 object.</param>
-    /// <returns>A HL7.Dotnetcore.Message instance.</returns>
-    public static Message ParseBase64EncodedData(string base64EncodedData)
+    public static class HL7v2Parser
     {
-      if (!string.IsNullOrEmpty(base64EncodedData))
-      {
-        string messageString = Encoding.UTF8.GetString(System.Convert.FromBase64String(base64EncodedData));
-
-        Message message = new Message(messageString);
-        if (!message.ParseMessage())
+        /// <summary>
+        /// Parse a base64 encoded string into a HL7-v2 Message object.
+        /// </summary>
+        /// <param name="base64EncodedData">A base64 stream to be parsed into a Hl7-v2 object.</param>
+        /// <returns>A HL7.Dotnetcore.Message instance.</returns>
+        public static Message ParseBase64EncodedData(string base64EncodedData)
         {
-          throw new ArgumentException("Failed to parse ${1}", nameof(base64EncodedData));
+            if (!string.IsNullOrEmpty(base64EncodedData))
+            {
+                string messageString = Encoding.UTF8.GetString(System.Convert.FromBase64String(base64EncodedData));
+
+                Message message = new Message(messageString);
+                if (!message.ParseMessage())
+                {
+                    throw new ArgumentException("Failed to parse ${1}", nameof(base64EncodedData));
+                }
+
+                return message;
+            }
+
+            throw new ArgumentNullException(nameof(base64EncodedData));
         }
 
-        return message;
-      }
+        /// <summary>
+        /// Parse a base64 encoded string into a HL7-v2 Message object.
+        /// </summary>
+        /// <param name="messageString">A string containing HL7v2 message to be parsed into a Hl7-v2 object.</param>
+        /// <returns>A HL7.Dotnetcore.Message instance.</returns>
+        public static Message ParseString(string messageString)
+        {
+            if (!string.IsNullOrEmpty(messageString))
+            {
+                Message message = new Message(messageString);
+                if (!message.ParseMessage())
+                {
+                    throw new ArgumentException("Failed to parse ${1}", nameof(messageString));
+                }
 
-      throw new ArgumentNullException(nameof(base64EncodedData));
+                return message;
+            }
+
+            throw new ArgumentNullException(nameof(messageString));
+        }
+
+        /// <summary>
+        /// Get the MessageType from the HL7-v2 Message Header field MSH.9.
+        /// </summary>
+        /// <param name="message">An hl7-v2 Message.</param>
+        /// <returns>A string containing the HL7-v2 MSH.9 MessageType value.</returns>
+        public static string GetMessageType(Message? message)
+        {
+            string messageType = message!.GetValue("MSH.9");
+
+            if (message.IsComponentized("MSH.9"))
+            {
+                messageType = message.GetValue("MSH.9.1");
+            }
+
+            return messageType;
+        }
     }
-
-    /// <summary>
-    /// Get the MessageType from the HL7-v2 Message Header field MSH.9.
-    /// </summary>
-    /// <param name="message">An hl7-v2 Message.</param>
-    /// <returns>A string containing the HL7-v2 MSH.9 MessageType value.</returns>
-    public static string GetMessageType(Message? message)
-    {
-      string messageType = message!.GetValue("MSH.9");
-
-      if (message.IsComponentized("MSH.9"))
-      {
-        messageType = message.GetValue("MSH.9.1");
-      }
-
-      return messageType;
-    }
-  }
 }
