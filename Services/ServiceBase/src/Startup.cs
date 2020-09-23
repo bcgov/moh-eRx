@@ -16,6 +16,8 @@
 namespace Health.PharmaNet
 {
     using Health.PharmaNet.Common.AspNetConfiguration;
+    using Health.PharmaNet.Common.Http;
+
     using Health.PharmaNet.Delegates;
     using Health.PharmaNet.Services;
 
@@ -65,6 +67,9 @@ namespace Health.PharmaNet
                         .AllowAnyHeader();
                 });
             });
+
+            // Add ContentType Formatter so we can accept json string in POST for this MediaType
+            services.AddMvc(o => o.InputFormatters.Insert(0, new FhirJsonRequestBodyFormatter()));
 
             // Add Services
             services.AddTransient<IPharmanetDelegate, PharmanetDelegate>();

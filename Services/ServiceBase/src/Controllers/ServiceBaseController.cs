@@ -15,16 +15,18 @@
 //-------------------------------------------------------------------------
 namespace Health.PharmaNet.Controllers
 {
+    using System.IO;
     using System.Security.Claims;
+    using System.Text.Json;
     using System.Threading.Tasks;
 
     using Health.PharmaNet.Common.Authorization;
     using Health.PharmaNet.Common.Authorization.Policy;
+    using Health.PharmaNet.Common.Http;
     using Health.PharmaNet.Parsers;
     using Health.PharmaNet.Services;
 
     using Hl7.Fhir.Model;
-    using Hl7.Fhir.Serialization;
 
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;
@@ -80,9 +82,8 @@ namespace Health.PharmaNet.Controllers
         }
 
         /// <summary>
-        /// Takes HL7 FHIR DocumentReference Object containing HL7v2 payload.
+        /// Takes request body containing an HL7 FHIR DocumentReference Object containing HL7v2 payload.
         /// </summary>
-        /// <param name="request">The DocumentReference Json payload taken from body of HTTP message.</param>
         /// <returns>The DocumentReference Response, or error JSON.</returns>
         /// <response code="200">Returns Ok when the transaction went through.</response>
         /// <response code="401">Authorization error, returns JSON describing the error.</response>
@@ -92,10 +93,13 @@ namespace Health.PharmaNet.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [Route("MedicationRequest")]
         [Authorize(Policy = FhirScopesPolicy.Access)]
-        public async Task<ActionResult<DocumentReference>> PharmanetRequest([FromBody] DocumentReference request)
+        public async Task<ActionResult<DocumentReference>> PharmanetRequest()
         {
             ClaimsPrincipal user = this.httpContextAccessor.HttpContext.User;
             string accessToken = await this.httpContextAccessor.HttpContext.GetTokenAsync("access_token").ConfigureAwait(true);
+
+            string jsonString = await this.Request.GetRawBodyStringAsync().ConfigureAwait(false);
+            DocumentReference request = Hl7FhirParser.ParseJson(jsonString);
 
             MessageType messageType = GetHl7v2MessageType(request);
 
@@ -132,6 +136,18 @@ namespace Health.PharmaNet.Controllers
             HL7.Dotnetcore.Message msg = HL7v2Parser.ParseBase64EncodedData(base64string);
 
             return new MessageType(HL7v2Parser.GetMessageType(msg));
+        }
+
+        private static string ToJsonString(JsonDocument jsonDocument)
+        {
+            using (var stream = new MemoryStream())
+            {
+                Utf8JsonWriter writer = new Utf8JsonWriter(stream, new JsonWriterOptions { Indented = true });
+                jsonDocument.WriteTo(writer);
+                writer.Flush();
+                writer.Dispose();
+                return System.Text.Encoding.UTF8.GetString(stream.ToArray());
+            }
         }
     }
 }

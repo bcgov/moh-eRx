@@ -69,6 +69,7 @@ namespace Health.PharmaNet.Common.Authorization
             {
                 this.logger.LogError("JWT is missing the required scope claims.");
             }
+
             return Task.CompletedTask;
         }
     }
