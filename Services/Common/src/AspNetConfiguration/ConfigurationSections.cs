@@ -24,10 +24,5 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
         /// The Configuration Section for OAuth2 OpenIdConnect.
         /// </summary>
         public const string OpenIdConnect = "OpenIdConnect";
-
-        /// <summary>
-        /// The Configuration Section for OAuth2 Hl7-v2 Message Scopes by MessageType.
-        /// </summary>
-        public const string Hl7v2MessageScopes = "Hl7v2MessageScopes";
     }
 }

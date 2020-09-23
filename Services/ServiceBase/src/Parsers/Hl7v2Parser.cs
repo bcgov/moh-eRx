@@ -17,6 +17,7 @@ namespace Health.PharmaNet.Parsers
 {
     using System;
     using System.Text;
+    using Health.PharmaNet.Common.Authorization;
 
     using HL7.Dotnetcore;
 
@@ -58,6 +59,7 @@ namespace Health.PharmaNet.Parsers
             if (!string.IsNullOrEmpty(messageString))
             {
                 Message message = new Message(messageString);
+
                 if (!message.ParseMessage())
                 {
                     throw new ArgumentException("Failed to parse ${1}", nameof(messageString));
@@ -74,16 +76,17 @@ namespace Health.PharmaNet.Parsers
         /// </summary>
         /// <param name="message">An hl7-v2 Message.</param>
         /// <returns>A string containing the HL7-v2 MSH.9 MessageType value.</returns>
-        public static string GetMessageType(Message? message)
+        public static MessageType GetMessageType(Message? message)
         {
             string messageType = message!.GetValue("MSH.9");
+            string controlId = message!.GetValue("MSH.10");
 
             if (message.IsComponentized("MSH.9"))
             {
                 messageType = message.GetValue("MSH.9.1");
             }
 
-            return messageType;
+            return new MessageType(messageType, controlId);
         }
     }
 }

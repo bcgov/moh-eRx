@@ -27,7 +27,7 @@ namespace Health.PharmaNet.Common.Authorization
     /// <summary>
     /// PharmanetAuthorizationHandler resource-based handler to check for necessary scope claims.
     /// </summary>
-    public class Hl7v2AuthorizationHandler : AuthorizationHandler<CorrectScopeRequirement, MessageType>
+    public class Hl7v2AuthorizationHandler : AuthorizationHandler<Hl7v2AuthorizationRequirement, MessageType>
     {
         /// <summary>
         /// Gets or sets the Logger Service.
@@ -50,7 +50,7 @@ namespace Health.PharmaNet.Common.Authorization
         /// <param name="requirement">The authorization requirement being checked.</param>
         /// <param name="resource">The Hl7-v2 MessageType of the request message.</param>
         /// <returns>A context Task.</returns>
-        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, CorrectScopeRequirement requirement, MessageType resource)
+        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, Hl7v2AuthorizationRequirement requirement, MessageType resource)
         {
             // If user does not have the scope claim, get out of here
             if (!context.User.HasClaim(c => c.Type == PharmanetAPIClaims.Scope))

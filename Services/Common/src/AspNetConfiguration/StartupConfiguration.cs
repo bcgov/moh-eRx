@@ -150,8 +150,6 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
                 string claimsIssuer = this.configuration.GetSection(ConfigurationSections.OpenIdConnect).GetValue<string>("ClaimsIssuer");
                 string scopes = this.configuration.GetSection(ConfigurationSections.OpenIdConnect).GetValue<string>("Scope");
 
-                Dictionary<string, string> correctScopes = this.configuration.GetSection(ConfigurationSections.Hl7v2MessageScopes).Get<Dictionary<string, string>>();
-
                 string[] scope = scopes.Split(" ", StringSplitOptions.RemoveEmptyEntries);
 
                 options.AddPolicy(FhirScopesPolicy.Access, policy =>
@@ -164,7 +162,7 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
                 {
                     policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
                     policy.RequireAuthenticatedUser();
-                    policy.Requirements.Add(new CorrectScopeRequirement(correctScopes));
+                    policy.Requirements.Add(new Hl7v2AuthorizationRequirement(this.configuration));
                 });
             });
 

@@ -123,7 +123,9 @@ namespace Health.PharmaNet.Controllers
 
             HL7.Dotnetcore.Message msg = HL7v2Parser.ParseString(msgString);
 
-            return new MessageType(HL7v2Parser.GetMessageType(msg));
+            MessageType messageType = HL7v2Parser.GetMessageType(msg);
+
+            return messageType;
         }
     }
 }

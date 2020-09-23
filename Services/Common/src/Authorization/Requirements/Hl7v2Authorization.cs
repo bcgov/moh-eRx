@@ -15,30 +15,29 @@
 //-------------------------------------------------------------------------
 namespace Health.PharmaNet.Common.Authorization
 {
+    using System.Text.Json.Serialization;
+
     /// <summary>
-    /// object to pass as the TResource type for the handler.
+    /// The configuration settings for enforcing correct JWT for a given HL7v2 Message.
     /// </summary>
-    public class MessageType
+    public partial class Hl7v2Authorization
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MessageType"/> class.
+        /// Gets or sets the Hl7v2 Message Type for authorization.
         /// </summary>
-        /// <param name="messageType">The value to set.</param>
-        /// <param name="controlId">The optional control id.</param>
-        public MessageType(string messageType, string? controlId = null)
-        {
-            this.Type = messageType;
-            this.ControlId = (controlId != null) ? controlId : string.Empty;
-        }
+        [JsonPropertyName("MessageType")]
+        public string MessageType { get; set; } = string.Empty;
 
         /// <summary>
-        /// Gets or sets the Hl7v2 message Type value.
+        /// Gets or sets the ControlId to use for authorization.
         /// </summary>
-        public string Type { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Gets or sets the HL7v2 ControlId value.
-        /// </summary>
+        [JsonPropertyName("ControlId")]
         public string ControlId { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Gets or sets the scope to use for authorization.
+        /// </summary>
+        [JsonPropertyName("Scope")]
+        public string Scope { get; set; } = string.Empty;
     }
 }

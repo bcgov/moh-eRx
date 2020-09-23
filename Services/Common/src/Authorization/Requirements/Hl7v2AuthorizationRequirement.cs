@@ -19,35 +19,50 @@ namespace Health.PharmaNet.Common.Authorization
     using System.Collections.Generic;
 
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.Extensions.Configuration;
 
     /// <summary>
     /// The Authorization Scope Requirement. The user (the jwt) must have at least one of the scopes specified.
     /// </summary>
-    public class CorrectScopeRequirement : IAuthorizationRequirement
+    public class Hl7v2AuthorizationRequirement : IAuthorizationRequirement
     {
-        private Dictionary<string, string> authorizationDictionary;
+        /// <summary>
+        /// The Configuration Section for OAuth2 Hl7-v2 Message Scopes by MessageType.
+        /// </summary>
+        private const string Hl7v2AuthorizationConfigSection = "Hl7v2Authorization";
+
+        private readonly Hl7v2AuthorizationConfiguration hl7AuthConfig;
+
+        private readonly IConfiguration configuration;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CorrectScopeRequirement"/> class.
+        /// Initializes a new instance of the <see cref="Hl7v2AuthorizationRequirement"/> class.
         /// </summary>
-        /// <param name="authorizationDictionary">The dictionary of scope+messageType pairings.</param>
-        public CorrectScopeRequirement(Dictionary<string, string> authorizationDictionary)
+        /// <param name="configuration">The app setting configuration.</param>
+        public Hl7v2AuthorizationRequirement(IConfiguration configuration)
         {
-            this.authorizationDictionary = authorizationDictionary ??
-                throw new ArgumentNullException(nameof(authorizationDictionary));
+            this.configuration = configuration;
+            this.hl7AuthConfig = new Hl7v2AuthorizationConfiguration();
+            this.configuration.Bind(Hl7v2AuthorizationConfigSection, this.hl7AuthConfig);
         }
 
         /// <summary>
-        /// Returns whether the scope provided is an accepted Scope.
+        /// Returns whether the scope provided is an accepted Scope for the given messagetype and optional control id.
         /// </summary>
         /// <param name="messageType">The Hl7-v2 MessageType to be checked.</param>
         /// <param name="scope">The scope to be checked.</param>
         /// <returns>Returns true if the scope provided is the right one for the MessageType.</returns>
         public bool HasCorrectScopeforMessageType(MessageType messageType, string scope)
         {
-            string scopeString = this.authorizationDictionary[messageType.Value];
-            string[] scopes = scopeString.Split(' ');
-            return Array.Exists(scopes, element => element == scope);
+            string key = messageType.Type + "|" + messageType.ControlId;
+
+            if (this.hl7AuthConfig.Hl7v2Authorizations.TryGetValue(key, out Hl7v2Authorization? entry))
+            {
+                string[] scopes = entry.Scope!.Split(" ");
+                return Array.Exists(scopes, element => element == scope);
+            }
+
+            return false;
         }
     }
 }

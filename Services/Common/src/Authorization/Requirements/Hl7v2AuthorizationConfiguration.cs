@@ -15,30 +15,18 @@
 //-------------------------------------------------------------------------
 namespace Health.PharmaNet.Common.Authorization
 {
+    using System.Collections.Generic;
+    using System.Text.Json.Serialization;
+
     /// <summary>
-    /// object to pass as the TResource type for the handler.
+    /// The configuration settings for determining Hl7v2 messages permitted for a given scope(s).
     /// </summary>
-    public class MessageType
+    public partial class Hl7v2AuthorizationConfiguration
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MessageType"/> class.
+        /// Gets the Hl7v2 Hl7v2Authorization configurations.
         /// </summary>
-        /// <param name="messageType">The value to set.</param>
-        /// <param name="controlId">The optional control id.</param>
-        public MessageType(string messageType, string? controlId = null)
-        {
-            this.Type = messageType;
-            this.ControlId = (controlId != null) ? controlId : string.Empty;
-        }
-
-        /// <summary>
-        /// Gets or sets the Hl7v2 message Type value.
-        /// </summary>
-        public string Type { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Gets or sets the HL7v2 ControlId value.
-        /// </summary>
-        public string ControlId { get; set; } = string.Empty;
+        [JsonPropertyName("Hl7v2Authorization")]
+        public Dictionary<string, Hl7v2Authorization> Hl7v2Authorizations { get; } = new Dictionary<string, Hl7v2Authorization>();
     }
 }
