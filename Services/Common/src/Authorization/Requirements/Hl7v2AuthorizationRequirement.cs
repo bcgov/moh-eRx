@@ -29,7 +29,7 @@ namespace Health.PharmaNet.Common.Authorization
         /// <summary>
         /// The Configuration Section for OAuth2 Hl7-v2 Message Scopes by MessageType.
         /// </summary>
-        private const string Hl7v2AuthorizationConfigSection = "Hl7v2Authorization";
+        private const string ConfigSection = "Hl7v2Authorization";
 
         private readonly Hl7v2AuthorizationConfiguration hl7AuthConfig;
 
@@ -43,7 +43,7 @@ namespace Health.PharmaNet.Common.Authorization
         {
             this.configuration = configuration;
             this.hl7AuthConfig = new Hl7v2AuthorizationConfiguration();
-            this.configuration.Bind(Hl7v2AuthorizationConfigSection, this.hl7AuthConfig);
+            this.configuration.Bind(ConfigSection, this.hl7AuthConfig.Hl7v2AuthorizationDict);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Health.PharmaNet.Common.Authorization
         {
             string key = messageType.Type + "|" + messageType.ControlId;
 
-            if (this.hl7AuthConfig.Hl7v2Authorizations.TryGetValue(key, out Hl7v2Authorization? entry))
+            if (this.hl7AuthConfig.Hl7v2AuthorizationDict.TryGetValue(key, out Hl7v2Authorization? entry))
             {
                 string[] scopes = entry.Scope!.Split(" ");
                 return Array.Exists(scopes, element => element == scope);

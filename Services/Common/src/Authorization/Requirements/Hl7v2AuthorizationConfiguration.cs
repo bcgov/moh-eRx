@@ -21,12 +21,13 @@ namespace Health.PharmaNet.Common.Authorization
     /// <summary>
     /// The configuration settings for determining Hl7v2 messages permitted for a given scope(s).
     /// </summary>
-    public partial class Hl7v2AuthorizationConfiguration
+    public class Hl7v2AuthorizationConfiguration
     {
         /// <summary>
         /// Gets the Hl7v2 Hl7v2Authorization configurations.
         /// </summary>
+        ///
         [JsonPropertyName("Hl7v2Authorization")]
-        public Dictionary<string, Hl7v2Authorization> Hl7v2Authorizations { get; } = new Dictionary<string, Hl7v2Authorization>();
+        public Dictionary<string, Hl7v2Authorization> Hl7v2AuthorizationDict { get; } = new Dictionary<string, Hl7v2Authorization>();
     }
 }
