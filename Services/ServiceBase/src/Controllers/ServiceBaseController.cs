@@ -121,9 +121,7 @@ namespace Health.PharmaNet.Controllers
             byte[] data = content[0].Attachment.Data; // The data is returned decoded from Base64 original encoding.
             string? msgString = System.Text.Encoding.UTF8.GetString(data, 0, data.Length);
 
-            HL7.Dotnetcore.Message msg = HL7v2Parser.ParseString(msgString);
-
-            MessageType messageType = HL7v2Parser.GetMessageType(msg);
+            MessageType messageType = Health.PharmaNet.Parsers.HL7v2Parser.GetMessageType(msgString);
 
             return messageType;
         }

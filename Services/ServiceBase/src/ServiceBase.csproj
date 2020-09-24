@@ -12,6 +12,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'HealthGateway.Pharmanet.ServiceBase' " />
   <ItemGroup>
+    <PackageReference Include="Galkam.HL7Enumerator" Version="1.1.0" />
     <PackageReference Include="HL7-dotnetcore" Version="2.19.0" />
     <PackageReference Include="Hl7.Fhir.R4" Version="1.9.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.0" />
