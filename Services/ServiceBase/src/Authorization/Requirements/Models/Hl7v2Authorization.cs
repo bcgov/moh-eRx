@@ -13,31 +13,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
-namespace Health.PharmaNet.Common.Authorization
+namespace Health.PharmaNet.Authorization.Requirements.Models
 {
+    using System.Collections.Generic;
     using System.Text.Json.Serialization;
 
     /// <summary>
-    /// The configuration settings for enforcing correct JWT for a given HL7v2 Message.
+    /// Class representing the array of message authorizations needed for each Pharmanet Transaction.
     /// </summary>
     public partial class Hl7v2Authorization
     {
         /// <summary>
-        /// Gets or sets the Hl7v2 Message Type for authorization.
+        /// Gets the custom message type keys,  such as ZPN.
         /// </summary>
-        [JsonPropertyName("MessageType")]
-        public string MessageType { get; set; } = string.Empty;
+        [JsonPropertyName("MessageTypeKeys")]
+        public Dictionary<string, MessageTypeKey> MessageTypeKeys { get; } = new Dictionary<string, MessageTypeKey>();
 
         /// <summary>
-        /// Gets or sets the ControlId to use for authorization.
+        /// Gets the Message Scopes dictionary.
         /// </summary>
-        [JsonPropertyName("ControlId")]
-        public string ControlId { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Gets or sets the scope to use for authorization.
-        /// </summary>
-        [JsonPropertyName("Scope")]
-        public string Scope { get; set; } = string.Empty;
+        [JsonPropertyName("MessageScopes")]
+        public Dictionary<string, MessageScope> MessageScopes { get; } = new Dictionary<string, MessageScope>();
     }
 }

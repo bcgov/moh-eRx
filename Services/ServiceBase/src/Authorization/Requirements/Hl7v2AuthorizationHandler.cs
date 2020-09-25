@@ -13,13 +13,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
-namespace Health.PharmaNet.Common.Authorization
+namespace Health.PharmaNet.Authorization
 {
     using System;
     using System.Linq;
     using System.Threading.Tasks;
 
     using Health.PharmaNet.Common.Authorization.Claims;
+    using HL7.Dotnetcore;
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.Extensions.Logging;
@@ -27,7 +28,7 @@ namespace Health.PharmaNet.Common.Authorization
     /// <summary>
     /// PharmanetAuthorizationHandler resource-based handler to check for necessary scope claims.
     /// </summary>
-    public class Hl7v2AuthorizationHandler : AuthorizationHandler<Hl7v2AuthorizationRequirement, MessageType>
+    public class Hl7v2AuthorizationHandler : AuthorizationHandler<Hl7v2AuthorizationRequirement, Message>
     {
         /// <summary>
         /// Gets or sets the Logger Service.
@@ -48,9 +49,9 @@ namespace Health.PharmaNet.Common.Authorization
         /// </summary>
         /// <param name="context">The AuthorizationHandler context.</param>
         /// <param name="requirement">The authorization requirement being checked.</param>
-        /// <param name="resource">The Hl7-v2 MessageType of the request message.</param>
+        /// <param name="resource">The Hl7-v2 Message of the request message.</param>
         /// <returns>A context Task.</returns>
-        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, Hl7v2AuthorizationRequirement requirement, MessageType resource)
+        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, Hl7v2AuthorizationRequirement requirement, Message resource)
         {
             // If user does not have the scope claim, get out of here
             if (!context.User.HasClaim(c => c.Type == PharmanetAPIClaims.Scope))
@@ -64,15 +65,12 @@ namespace Health.PharmaNet.Common.Authorization
 
             if (scopeClaim != null)
             {
-                var scopes = scopeClaim.Value.Split(" ", StringSplitOptions.RemoveEmptyEntries);
-                foreach (string scope in scopes)
+                string[] scopes = scopeClaim.Value.Split(" ", StringSplitOptions.RemoveEmptyEntries);
+
+                if (requirement.HasCorrectScopesForMessage(resource, scopes))
                 {
-                    if (requirement.HasCorrectScopeforMessageType(resource, scope))
-                    {
-                        this.logger.LogDebug("Scope(s) provided are correct for the HL7v2 MessagType");
-                        context.Succeed(requirement);
-                        break;
-                    }
+                    this.logger.LogDebug("Scope(s) provided are correct for the HL7v2 MessagType");
+                    context.Succeed(requirement);
                 }
             }
 

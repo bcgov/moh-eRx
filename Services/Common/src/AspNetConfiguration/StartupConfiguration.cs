@@ -16,7 +16,6 @@
 namespace Health.PharmaNet.Common.AspNetConfiguration
 {
     using System;
-    using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Net;
     using System.Net.Http;
@@ -146,29 +145,22 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
             });
 
             services.AddAuthorization(options =>
-            {
-                string claimsIssuer = this.configuration.GetSection(ConfigurationSections.OpenIdConnect).GetValue<string>("ClaimsIssuer");
-                string scopes = this.configuration.GetSection(ConfigurationSections.OpenIdConnect).GetValue<string>("Scope");
+                        {
+                            string claimsIssuer = this.configuration.GetSection(ConfigurationSections.OpenIdConnect).GetValue<string>("ClaimsIssuer");
+                            string scopes = this.configuration.GetSection(ConfigurationSections.OpenIdConnect).GetValue<string>("Scope");
 
-                string[] scope = scopes.Split(" ", StringSplitOptions.RemoveEmptyEntries);
+                            string[] scope = scopes.Split(" ", StringSplitOptions.RemoveEmptyEntries);
 
-                options.AddPolicy(FhirScopesPolicy.Access, policy =>
-                {
-                    policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
-                    policy.RequireAuthenticatedUser();
-                    policy.Requirements.Add(new HasScopesRequirement(scope, claimsIssuer));
-                });
-                options.AddPolicy(FhirScopesPolicy.MessageTypeScopeAccess, policy =>
-                {
-                    policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
-                    policy.RequireAuthenticatedUser();
-                    policy.Requirements.Add(new Hl7v2AuthorizationRequirement(this.configuration));
-                });
-            });
+                            options.AddPolicy(FhirScopesPolicy.Access, policy =>
+                            {
+                                policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+                                policy.RequireAuthenticatedUser();
+                                policy.Requirements.Add(new HasScopesRequirement(scope, claimsIssuer));
+                            });
+                        });
 
             // register the  handlers
             services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
-            services.AddSingleton<IAuthorizationHandler, Hl7v2AuthorizationHandler>();
         }
 
         /// <summary>

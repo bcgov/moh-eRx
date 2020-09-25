@@ -15,12 +15,17 @@
 //-------------------------------------------------------------------------
 namespace Health.PharmaNet
 {
+    using System;
+
+    using Health.PharmaNet.Authorization;
+    using Health.PharmaNet.Authorization.Policy;
     using Health.PharmaNet.Common.AspNetConfiguration;
-    using Health.PharmaNet.Common.Http;
 
     using Health.PharmaNet.Delegates;
+    using Health.PharmaNet.Parsers;
     using Health.PharmaNet.Services;
 
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
@@ -55,6 +60,21 @@ namespace Health.PharmaNet
             this.startupConfig.ConfigureHttpServices(services);
             this.startupConfig.ConfigureAuthServicesForJwtBearer(services);
 
+            services.AddAuthorization(options =>
+  {
+      string claimsIssuer = this.configuration.GetSection(ConfigurationSections.OpenIdConnect).GetValue<string>("ClaimsIssuer");
+      string scopes = this.configuration.GetSection(ConfigurationSections.OpenIdConnect).GetValue<string>("Scope");
+
+      string[] scope = scopes.Split(" ", StringSplitOptions.RemoveEmptyEntries);
+
+      options.AddPolicy(Hl7v2ScopesPolicy.MessageTypeScopeAccess, policy =>
+      {
+          policy.Requirements.Add(new Hl7v2AuthorizationRequirement(this.configuration));
+      });
+  });
+
+            services.AddSingleton<IAuthorizationHandler, Hl7v2AuthorizationHandler>();
+
             this.startupConfig.ConfigureSwaggerServices(services);
 
             services.AddCors(options =>
@@ -71,6 +91,7 @@ namespace Health.PharmaNet
             // Add Services
             services.AddTransient<IPharmanetDelegate, PharmanetDelegate>();
             services.AddTransient<IPharmanetService, PharmanetService>();
+            services.AddTransient<IHl7Parser, Hl7Parser>();
         }
 
         /// <summary>
