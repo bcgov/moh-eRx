@@ -1,31 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>    
+  <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>Health.PharmaNet.Common</RootNamespace>
     <Nullable>enable</Nullable>
     <LangVersion>8.0</LangVersion>
     <WarningsAsErrors>CS8600;CS8602;CS8603</WarningsAsErrors>
   </PropertyGroup>
-
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DocumentationFile>bin\Debug\netcoreapp3.1\Common.xml</DocumentationFile>
   </PropertyGroup>
-
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <Nullable></Nullable>
+    <Nullable />
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Macross.Json.Extensions" Version="1.4.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.0" />
+    <PackageReference Include="Macross.Json.Extensions" Version="1.5.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.8" />
     <PackageReference Include="Microsoft.AspNetCore.HttpOverrides" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="4.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="4.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.AspNetCore.SpaServices" Version="3.1.0" />
-    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis" Version="3.6.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0">
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices" Version="3.1.8" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.8" />
+    <PackageReference Include="Microsoft.CodeAnalysis" Version="3.7.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -33,10 +31,9 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.OpenApi" Version="1.1.4" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.5.1" />
+    <PackageReference Include="Microsoft.OpenApi" Version="1.2.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
-
   <ItemGroup>
     <AdditionalFiles Include="..\..\stylecop.json" />
   </ItemGroup>
@@ -44,6 +41,44 @@
     <None Include="..\..\.editorconfig" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Authorization\Policies\" />
+    <Content Include="AspNetConfiguration\ConfigurationSections.cs" />
+    <Content Include="AspNetConfiguration\ProgramConfiguration.cs" />
+    <Content Include="AspNetConfiguration\StartupConfiguration.cs" />
+    <Content Include="Authorization\Claims\PharmanetAPIClaims.cs" />
+    <Content Include="Authorization\Policy\FhirScopesPolicy.cs" />
+    <Content Include="Authorization\Constants\FhirResourceLookup.cs" />
+    <Content Include="Authorization\Constants\FhirResource.cs" />
+    <Content Include="Authorization\Constants\FhirAccessType.cs" />
+    <Content Include="Authorization\Requirements\HasScopeHandler.cs" />
+    <Content Include="Authorization\Requirements\HasScopesRequirement.cs" />
+    <Content Include="Swagger\SwaggerSettings.cs" />
+    <Content Include="Swagger\MiddlewareExtensions.cs" />
+    <Content Include="Swagger\ConfigureSwaggerOptions.cs" />
+    <Content Include="Swagger\SwaggerDefaultValues.cs" />
+    <Content Include="Swagger\ServicesExtensions.cs" />
+    <Content Include="Swagger\AuthenticationRequirementsOperationFilter.cs" />
+    <Content Include="Swagger\ConfigureSwaggerUiOptions.cs" />
+    <Content Include="Swagger\ConfigureSwaggerGenOptions.cs" />
+    <Content Include="obj\project.assets.json" />
+    <Content Include="obj\Debug\netcoreapp3.1\Common.assets.cache" />
+    <Content Include="obj\Debug\netcoreapp3.1\Common.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\netcoreapp3.1\Common.AssemblyInfoInputs.cache" />
+    <Content Include="obj\Debug\netcoreapp3.1\.NETCoreApp,Version=v3.1.AssemblyAttributes.cs" />
+    <Content Include="obj\Debug\netcoreapp3.1\Common.csproj.CoreCompileInputs.cache" />
+    <Content Include="obj\Debug\netcoreapp3.1\Common.pdb" />
+    <Content Include="Http\HttpRequestExtension.cs" />
+    <Content Include="obj\Debug\netcoreapp3.1\Common.dll" />
+    <Content Include="obj\Debug\netcoreapp3.1\Common.csprojAssemblyReference.cache" />
+    <Content Include="obj\Debug\netcoreapp3.1\Common.AssemblyInfo.cs" />
+    <Content Include="obj\Common.csproj.nuget.dgspec.json" />
+    <Content Include="obj\project.nuget.cache" />
+    <Content Include="obj\Common.csproj.nuget.g.props" />
+    <Content Include="obj\Common.csproj.nuget.g.targets" />
+    <Content Include="obj\netcoreapp3.1\Common.assets.cache" />
+    <Content Include="obj\netcoreapp3.1\Common.csprojAssemblyReference.cache" />
+    <Content Include="bin\Debug\netcoreapp3.1\Common.deps.json" />
+    <Content Include="bin\Debug\netcoreapp3.1\Common.xml" />
+    <Content Include="bin\Debug\netcoreapp3.1\Common.pdb" />
+    <Content Include="bin\Debug\netcoreapp3.1\Common.dll" />
   </ItemGroup>
 </Project>

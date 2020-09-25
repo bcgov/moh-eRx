@@ -37,3 +37,6 @@ Thumbs.db
 .dropbox
 .dropox.attr
 .dropbox.cache
+
+# MacOS
+.DS_Store

@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\src\Common
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBase", "ServiceBase\src\ServiceBase.csproj", "{A3AB4A17-46DE-4245-A817-1CA3E9B38B9A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedicationRequestService", "MedicationRequestService\src\MedicationRequestService.csproj", "{39285F96-BA19-443E-B3D7-327B685BD321}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{A3AB4A17-46DE-4245-A817-1CA3E9B38B9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3AB4A17-46DE-4245-A817-1CA3E9B38B9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3AB4A17-46DE-4245-A817-1CA3E9B38B9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39285F96-BA19-443E-B3D7-327B685BD321}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39285F96-BA19-443E-B3D7-327B685BD321}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39285F96-BA19-443E-B3D7-327B685BD321}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39285F96-BA19-443E-B3D7-327B685BD321}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0

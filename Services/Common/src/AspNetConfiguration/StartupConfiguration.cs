@@ -78,6 +78,8 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
         {
             this.Logger.LogDebug("Configure Http Services...");
 
+            services.AddControllers();
+
             services.AddResponseCompression(options =>
             {
                 options.Providers.Add<GzipCompressionProvider>();

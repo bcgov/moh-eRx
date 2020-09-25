@@ -13,31 +13,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
-namespace Health.PharmaNet.ServiceBase
+namespace Health.PharmaNet.MedicationRequestService
 {
-    using Health.PharmaNet.Common.AspNetConfiguration;
-    using Microsoft.Extensions.Hosting;
-
+    using System;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
     /// <summary>
-    /// The entry point for the project.
+    /// Configures the application during startup.
     /// </summary>
-    public static class Program
+    public class Startup : Health.PharmaNet.ServiceBase.Startup
     {
-        /// <summary>.
-        /// The entry point for the class.
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Startup"/> class.
         /// </summary>
-        /// <param name="args">The command line arguments to be passed in.</param>
-        public static void Main(string[] args)
+        /// <param name="env">The injected Environment provider.</param>
+        /// <param name="configuration">The injected configuration provider.</param>
+        public Startup(IWebHostEnvironment env, IConfiguration configuration) 
+        : base(
+            env, 
+            configuration)
         {
-            CreateHostBuilder(args).Build().Run();
         }
-
-        /// <summary>.
-        /// Creates the IWebHostBuilder.
-        /// </summary>
-        /// <param name="args">The command line arguments to be passed in.</param>
-        /// <returns>Returns the configured webhost.</returns>
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            ProgramConfiguration.CreateHostBuilder<Startup>(args);
     }
 }
