@@ -98,7 +98,7 @@ namespace Health.PharmaNet.Controllers
         /// <returns>The DocumentReference Response, or error JSON.</returns>
         /// <response code="200">Returns Ok when the transaction went through.</response>
         /// <response code="401">Authorization error, returns JSON describing the error.</response>
-        /// <response code="503">The service is unavailable for use.</response>
+        /// <response code="50x">The service is unavailable for use.</response>
         // [HttpPost]
         // [Route("DocumentReference")]
         // [Produces("application/fhir+json")]
