@@ -37,7 +37,7 @@ namespace Health.PharmaNet.Controllers
     /// The Template controller.
     /// </summary>
     [ApiVersion("1.0")]
-    [Route("/api/v{version:apiVersion}/MedicationService/")]
+    [Route("/api/v{version:apiVersion}/ServiceBase/")]
     [ApiController]
     public class ServiceBaseController : ControllerBase
     {
@@ -102,7 +102,7 @@ namespace Health.PharmaNet.Controllers
         [HttpPost]
         [Produces("application/fhir+json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [Route("MedicationRequest")]
+        [Route("DocumentReference")]
         [Authorize(Policy = FhirScopesPolicy.Access)]
         public async Task<ActionResult<DocumentReference>> PharmanetRequest()
         {

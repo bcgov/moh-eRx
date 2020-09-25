@@ -13,7 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
-namespace Health.PharmaNet
+namespace Health.PharmaNet.ServiceBase
 {
     using Health.PharmaNet.Common.AspNetConfiguration;
     using Microsoft.Extensions.Hosting;

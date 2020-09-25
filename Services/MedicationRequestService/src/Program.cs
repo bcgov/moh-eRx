@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace MedicationRequestService
+namespace Health.PharmaNet.MedicationRequestService
 {
     public class Program
     {
@@ -20,7 +20,7 @@ namespace MedicationRequestService
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder.UseStartup<Health.PharmaNet.ServiceBase.Startup>();
                 });
     }
 }

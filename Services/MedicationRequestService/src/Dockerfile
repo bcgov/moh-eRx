@@ -4,4 +4,4 @@ ENV ASPNETCORE_ENVIRONMENT=Production
 WORKDIR /app
 COPY . .
 EXPOSE 8080
-ENTRYPOINT ["dotnet","Template.dll"]
+ENTRYPOINT ["dotnet","MedicationRequestService.dll"]
