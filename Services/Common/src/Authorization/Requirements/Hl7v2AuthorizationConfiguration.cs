@@ -13,21 +13,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
-namespace Health.PharmaNet.Common.Authorization.Policy
+namespace Health.PharmaNet.Common.Authorization
 {
+    using System.Collections.Generic;
+    using System.Text.Json.Serialization;
+
     /// <summary>
-    /// The set of claims to access Fhir Scope based access to data.
+    /// The configuration settings for determining Hl7v2 messages permitted for a given scope(s).
     /// </summary>
-    public static class FhirScopesPolicy
+    public class Hl7v2AuthorizationConfiguration
     {
         /// <summary>
-        /// Policy which allows the access based on configured scopes allowed.
+        /// Gets the Hl7v2 Hl7v2Authorization configurations.
         /// </summary>
-        public const string Access = "FhirScopesAccess";
-
-        /// <summary>
-        /// Policy which ensures that for a given HL7-v2 message type, the correct FHIR-based scope is present in the claims.
-        /// </summary>
-        public const string MessageTypeScopeAccess = "MessageTypeScopeAccess";
+        ///
+        [JsonPropertyName("Hl7v2Authorization")]
+        public Dictionary<string, Hl7v2Authorization> Hl7v2AuthorizationDict { get; } = new Dictionary<string, Hl7v2Authorization>();
     }
 }

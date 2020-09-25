@@ -16,6 +16,11 @@
 namespace Health.PharmaNet
 {
     using Health.PharmaNet.Common.AspNetConfiguration;
+    using Health.PharmaNet.Common.Http;
+
+    using Health.PharmaNet.Delegates;
+    using Health.PharmaNet.Services;
+
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
@@ -50,7 +55,6 @@ namespace Health.PharmaNet
             this.startupConfig.ConfigureHttpServices(services);
             this.startupConfig.ConfigureAuthServicesForJwtBearer(services);
 
-            // this.startupConfig.ConfigureAuthorizationServices(services);
             this.startupConfig.ConfigureSwaggerServices(services);
 
             services.AddCors(options =>
@@ -63,6 +67,10 @@ namespace Health.PharmaNet
                         .AllowAnyHeader();
                 });
             });
+
+            // Add Services
+            services.AddTransient<IPharmanetDelegate, PharmanetDelegate>();
+            services.AddTransient<IPharmanetService, PharmanetService>();
         }
 
         /// <summary>

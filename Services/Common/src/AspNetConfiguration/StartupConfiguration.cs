@@ -16,14 +16,17 @@
 namespace Health.PharmaNet.Common.AspNetConfiguration
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Net;
     using System.Net.Http;
     using System.Text.Json;
     using System.Threading.Tasks;
+
     using Health.PharmaNet.Common.Authorization;
     using Health.PharmaNet.Common.Authorization.Policy;
     using Health.PharmaNet.Common.Swagger;
+
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Builder;
@@ -38,6 +41,7 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
     using Microsoft.Extensions.Logging;
     using Microsoft.IdentityModel.Logging;
     using Microsoft.IdentityModel.Tokens;
+
 #pragma warning disable CA1303 // Do not pass literals as localized parameters
 
     /// <summary>
@@ -47,7 +51,6 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Maintainability", "CA1506:Avoid excessive class coupling", Justification = "Team decision")]
     public class StartupConfiguration
     {
-        private const string OPENIDCONNECT = "OpenIdConnect";
         private readonly IWebHostEnvironment environment;
         private readonly IConfiguration configuration;
 
@@ -105,20 +108,6 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
         }
 
         /// <summary>
-        /// Configures the SPA services.
-        /// </summary>
-        /// <param name="services">The service collection provider.</param>
-        public void ConfigureSpaServices(IServiceCollection services)
-        {
-            this.Logger.LogDebug("Configure Spa Services...");
-
-            services.AddSpaStaticFiles(config =>
-            {
-                config.RootPath = "ClientApp";
-            });
-        }
-
-        /// <summary>
         /// Configures the auth services for json web token bearer.
         /// </summary>
         /// <param name="services">The injected services provider.</param>
@@ -139,13 +128,16 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
                 options.SaveToken = true;
                 options.RequireHttpsMetadata = true;
                 options.IncludeErrorDetails = true;
-                this.configuration.GetSection(OPENIDCONNECT).Bind(options);
+
+                this.configuration.GetSection(ConfigurationSections.OpenIdConnect).Bind(options);
 
                 options.TokenValidationParameters = new TokenValidationParameters()
                 {
-                    ValidateIssuerSigningKey = true,
                     ValidateAudience = true,
                     ValidateIssuer = true,
+                    ValidIssuer = options.Authority,
+                    ValidateIssuerSigningKey = true,
+                    RequireSignedTokens = true,
                 };
                 options.Events = new JwtBearerEvents()
                 {
@@ -155,10 +147,10 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
 
             services.AddAuthorization(options =>
             {
-                string claimsIssuer = this.configuration.GetSection(OPENIDCONNECT).GetValue<string>("ClaimsIssuer");
-                string scopes = this.configuration.GetSection(OPENIDCONNECT).GetValue<string>("Scope");
+                string claimsIssuer = this.configuration.GetSection(ConfigurationSections.OpenIdConnect).GetValue<string>("ClaimsIssuer");
+                string scopes = this.configuration.GetSection(ConfigurationSections.OpenIdConnect).GetValue<string>("Scope");
 
-                string[] scope = scopes.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                string[] scope = scopes.Split(" ", StringSplitOptions.RemoveEmptyEntries);
 
                 options.AddPolicy(FhirScopesPolicy.Access, policy =>
                 {
@@ -166,10 +158,17 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
                     policy.RequireAuthenticatedUser();
                     policy.Requirements.Add(new HasScopesRequirement(scope, claimsIssuer));
                 });
+                options.AddPolicy(FhirScopesPolicy.MessageTypeScopeAccess, policy =>
+                {
+                    policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+                    policy.RequireAuthenticatedUser();
+                    policy.Requirements.Add(new Hl7v2AuthorizationRequirement(this.configuration));
+                });
             });
 
-            // register the scope authorization handler
-            IServiceCollection serviceCollections = services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
+            // register the  handlers
+            services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
+            services.AddSingleton<IAuthorizationHandler, Hl7v2AuthorizationHandler>();
         }
 
         /// <summary>

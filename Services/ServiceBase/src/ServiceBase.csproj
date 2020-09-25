@@ -10,12 +10,11 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DocumentationFile>bin\Debug\netcoreapp3.1\ServiceBase.xml</DocumentationFile>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Health.PharmaNet.ServiceBase' ">
-    <StartAction>Project</StartAction>
-    <LaunchBrowser></LaunchBrowser>
-    <ApplicationURL>http://localhost:3001;</ApplicationURL>
-  </PropertyGroup>
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'HealthGateway.Pharmanet.ServiceBase' " />
   <ItemGroup>
+    <PackageReference Include="Galkam.HL7Enumerator" Version="1.1.0" />
+    <PackageReference Include="HL7-dotnetcore" Version="2.19.0" />
+    <PackageReference Include="Hl7.Fhir.R4" Version="1.9.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="4.1.0" />
     <PackageReference Include="Microsoft.CodeAnalysis" Version="3.6.0" />

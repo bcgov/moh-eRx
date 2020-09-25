@@ -2,7 +2,7 @@
 
 To access the PharmaNet interaction resources, you call and specify the resource URL corresponding to the interaction your application wishes to invoke using only HTTP POST operations when submitting HL7-v2 in a FHIR DocumentReference resource over HTTPS.
 
-> Unlike a pure RESTful interface, all HL7-v2 interactions are submitted with HTTP POST, with the content type, or Mime-Type set as `Content-Type: application/fhir+json`, and with top-level resource type of DocumentReference as per the recommendation by HL7 when submitting HL7-v2 messages. The HL7-v2 message is added to the FHIR DocumentResource attachement as `"data"`, base64 encoded.
+> Unlike a pure RESTful interface, all HL7-v2 interactions are submitted with HTTP POST, with the content type, or Mime-Type set as `Content-Type: application/fhir+json`, and with top-level resource type of DocumentReference as per the recommendation by HL7 when submitting HL7-v2 messages. The HL7-v2 message is added to the FHIR DocumentResource attachment as `"data"`, base64 encoded.
 
 All PharmaNet API request use the following basic URL pattern:
 
@@ -35,7 +35,10 @@ Authorization: Bearer <access_token>
 
 {
     "resourceType": "DocumentReference",
-    "masterIdentifier": "D8DA8971-FC3F-47C3-A96A-2CBC825DEAB5",
+    "masterIdentifier": {
+        "system" : "urn:ietf:rfc:3986",
+        "value": "urn:uuid:D8196F60-8E3F-40A6-B5C8-B5680B2C21EC"
+        },
     "status" : "current",
     "date": ""2020-07030T01:09:57Z",
     "content": [{

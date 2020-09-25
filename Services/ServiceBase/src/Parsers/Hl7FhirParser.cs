@@ -13,21 +13,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
-namespace Health.PharmaNet.Common.Authorization.Claims
+namespace Health.PharmaNet.Parsers
 {
-    /// <summary>
-    /// Claims specific to Health Gateway.
-    /// </summary>
-    public static class GatewayClaims
-    {
-        /// <summary>
-        /// Policy claim representing the scopes the user has.
-        /// </summary>
-        public const string Scope = "scope";
+  using Hl7.Fhir.Model;
+  using Hl7.Fhir.Serialization;
 
-        /// <summary>
-        /// Policy claims requiring an HDID.
-        /// </summary>
-        public const string HDID = "hdid";
+  /// <summary>
+  /// The Pharmanet Delegate, which communicates directly to the Pharmanet proxy service.
+  /// </summary>
+  public static class Hl7FhirParser
+  {
+    /// <summary>
+    /// The Pharmanet FHIR Parser helper class.
+    /// </summary>
+    /// <param name="json">A json structure to be parsed into a FHIR DocumentReference object.</param>
+    /// <returns>A DocumentReference as response.</returns>
+    public static DocumentReference ParseJson(string json)
+    {
+      FhirJsonParser parser = new FhirJsonParser(new ParserSettings { AcceptUnknownMembers = true, AllowUnrecognizedEnums = true });
+      DocumentReference documentReference = parser.Parse<DocumentReference>(json);
+      return documentReference;
     }
+  }
 }

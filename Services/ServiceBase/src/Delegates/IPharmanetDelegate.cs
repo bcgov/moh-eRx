@@ -13,21 +13,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
-namespace Health.PharmaNet.Common.Authorization.Policy
+namespace Health.PharmaNet.Delegates
 {
-    /// <summary>
-    /// The set of claims to access Fhir Scope based access to data.
-    /// </summary>
-    public static class FhirScopesPolicy
-    {
-        /// <summary>
-        /// Policy which allows the access based on configured scopes allowed.
-        /// </summary>
-        public const string Access = "FhirScopesAccess";
+  using System.Threading.Tasks;
 
-        /// <summary>
-        /// Policy which ensures that for a given HL7-v2 message type, the correct FHIR-based scope is present in the claims.
-        /// </summary>
-        public const string MessageTypeScopeAccess = "MessageTypeScopeAccess";
-    }
+  using Health.PharmaNet.Models;
+
+  /// <summary>
+  /// The Pharmanet Delegate, which communicates directly to the Pharmanet proxy service.
+  /// </summary>
+  public interface IPharmanetDelegate
+  {
+    /// <summary>
+    /// The Pharmanet Delegate, which communicates directly to the Pharmanet proxy service.
+    /// </summary>
+    /// <param name="request">A PharmanetMessageModel instance containing the HL7v2 request message.</param>
+    /// <returns>A PharmanetMessageModel as response.</returns>
+    public Task<PharmanetProxyMessage> SubmitRequest(PharmanetProxyMessage request);
+  }
 }

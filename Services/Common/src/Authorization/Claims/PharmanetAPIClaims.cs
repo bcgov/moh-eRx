@@ -13,21 +13,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
-namespace Health.PharmaNet.Common.Authorization.Policy
+namespace Health.PharmaNet.Common.Authorization.Claims
 {
     /// <summary>
-    /// The set of claims to access Fhir Scope based access to data.
+    /// Claims specific to PharmanetAPI.
     /// </summary>
-    public static class FhirScopesPolicy
+    public static class PharmanetAPIClaims
     {
         /// <summary>
-        /// Policy which allows the access based on configured scopes allowed.
+        /// Policy claim representing the scopes the user has.
         /// </summary>
-        public const string Access = "FhirScopesAccess";
-
-        /// <summary>
-        /// Policy which ensures that for a given HL7-v2 message type, the correct FHIR-based scope is present in the claims.
-        /// </summary>
-        public const string MessageTypeScopeAccess = "MessageTypeScopeAccess";
+        public const string Scope = "scope";
     }
 }

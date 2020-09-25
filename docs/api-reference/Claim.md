@@ -41,9 +41,12 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI4NmRlMD
 
 {
     "resourceType": "DocumentReference",
-    "masterIdentifier": "D8196F60-8E3F-40A6-B5C8-B5680B2C21EC",
+    "masterIdentifier": {
+        "system" : "urn:ietf:rfc:3986",
+        "value": "urn:uuid:D8196F60-8E3F-40A6-B5C8-B5680B2C21EC"
+        },
     "status" : "current",
-    "date": ""2020-08-13:32:12Zå",
+    "date": ""2020-08-13:32:12Z",
     "content": [{
         "attachment": {
             "contentType": "x-application/hl7-v2+er7",

@@ -13,21 +13,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
-namespace Health.PharmaNet.Common.Authorization.Policy
+namespace Health.PharmaNet.Common.AspNetConfiguration
 {
     /// <summary>
-    /// The set of claims to access Fhir Scope based access to data.
+    /// The Configuration Sections.
     /// </summary>
-    public static class FhirScopesPolicy
+    public static class ConfigurationSections
     {
         /// <summary>
-        /// Policy which allows the access based on configured scopes allowed.
+        /// The Configuration Section for OAuth2 OpenIdConnect.
         /// </summary>
-        public const string Access = "FhirScopesAccess";
-
-        /// <summary>
-        /// Policy which ensures that for a given HL7-v2 message type, the correct FHIR-based scope is present in the claims.
-        /// </summary>
-        public const string MessageTypeScopeAccess = "MessageTypeScopeAccess";
+        public const string OpenIdConnect = "OpenIdConnect";
     }
 }

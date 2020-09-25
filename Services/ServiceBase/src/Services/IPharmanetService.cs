@@ -13,21 +13,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
-namespace Health.PharmaNet.Common.Authorization.Policy
+namespace Health.PharmaNet.Services
 {
+    using System.Threading.Tasks;
+    using Hl7.Fhir.Model;
+
     /// <summary>
-    /// The set of claims to access Fhir Scope based access to data.
+    /// The Pharmanet service.
     /// </summary>
-    public static class FhirScopesPolicy
+    public interface IPharmanetService
     {
         /// <summary>
-        /// Policy which allows the access based on configured scopes allowed.
+        /// Submit request of type DocumentReference containing HL7v2 message to PharmaNet.
         /// </summary>
-        public const string Access = "FhirScopesAccess";
-
-        /// <summary>
-        /// Policy which ensures that for a given HL7-v2 message type, the correct FHIR-based scope is present in the claims.
-        /// </summary>
-        public const string MessageTypeScopeAccess = "MessageTypeScopeAccess";
+        /// <param name="request">An HL7 FHIR DocumentReference request containing HL7v2 payload.</param>
+        /// <returns>Returns a DocumentReference response.</returns>
+        Task<DocumentReference> SubmitRequest(DocumentReference request);
     }
 }

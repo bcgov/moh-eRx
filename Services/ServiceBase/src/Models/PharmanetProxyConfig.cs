@@ -13,21 +13,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
-namespace Health.PharmaNet.Common.Authorization.Policy
+namespace Health.PharmaNet.Models
 {
     /// <summary>
-    /// The set of claims to access Fhir Scope based access to data.
+    /// The configuration settings for connecting to the PharmanetProxy.
     /// </summary>
-    public static class FhirScopesPolicy
+    public class PharmanetProxyConfig
     {
         /// <summary>
-        /// Policy which allows the access based on configured scopes allowed.
+        /// Gets or sets the endpoint path for the protective word service.
         /// </summary>
-        public const string Access = "FhirScopesAccess";
+        public string Endpoint { get; set; } = string.Empty;
 
         /// <summary>
-        /// Policy which ensures that for a given HL7-v2 message type, the correct FHIR-based scope is present in the claims.
+        /// Gets or sets the username to use for authentication.
         /// </summary>
-        public const string MessageTypeScopeAccess = "MessageTypeScopeAccess";
+        public string Username { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Gets or sets the password to use for authentication.
+        /// </summary>
+        public string Password { get; set; } = string.Empty;
     }
 }

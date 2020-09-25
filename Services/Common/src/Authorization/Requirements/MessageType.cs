@@ -13,21 +13,32 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
-namespace Health.PharmaNet.Common.Authorization.Policy
+namespace Health.PharmaNet.Common.Authorization
 {
     /// <summary>
-    /// The set of claims to access Fhir Scope based access to data.
+    /// object to pass as the TResource type for the handler.
     /// </summary>
-    public static class FhirScopesPolicy
+    public class MessageType
     {
         /// <summary>
-        /// Policy which allows the access based on configured scopes allowed.
+        /// Initializes a new instance of the <see cref="MessageType"/> class.
         /// </summary>
-        public const string Access = "FhirScopesAccess";
+        /// <param name="messageType">The value to set.</param>
+        /// <param name="controlId">The optional control id.</param>
+        public MessageType(string messageType, string? controlId = null)
+        {
+            this.Type = messageType;
+            this.ControlId = (controlId != null) ? controlId : string.Empty;
+        }
 
         /// <summary>
-        /// Policy which ensures that for a given HL7-v2 message type, the correct FHIR-based scope is present in the claims.
+        /// Gets or sets the Hl7v2 message Type value.
         /// </summary>
-        public const string MessageTypeScopeAccess = "MessageTypeScopeAccess";
+        public string Type { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Gets or sets the HL7v2 ControlId value.
+        /// </summary>
+        public string ControlId { get; set; } = string.Empty;
     }
 }

@@ -13,21 +13,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
-namespace Health.PharmaNet.Common.Authorization.Policy
+namespace Health.PharmaNet.Models
 {
+    using System.Text.Json.Serialization;
+
     /// <summary>
-    /// The set of claims to access Fhir Scope based access to data.
+    /// The Pharmanet proxy message model. This json model is defined in collaboration with the vendor managing PharmaNet.
     /// </summary>
-    public static class FhirScopesPolicy
+    public class PharmanetProxyMessage
     {
         /// <summary>
-        /// Policy which allows the access based on configured scopes allowed.
+        /// Gets or sets the unique transaction identifier.
         /// </summary>
-        public const string Access = "FhirScopesAccess";
+        [JsonPropertyName("transactionUUID")]
+        public string TransactionId { get; set; } = string.Empty;
 
         /// <summary>
-        /// Policy which ensures that for a given HL7-v2 message type, the correct FHIR-based scope is present in the claims.
+        /// Gets or sets the Base 64 encoded HL7v2 Message.
         /// </summary>
-        public const string MessageTypeScopeAccess = "MessageTypeScopeAccess";
+        [JsonPropertyName("hl7Message")]
+        public string Hl7Message { get; set; } = string.Empty;
     }
 }

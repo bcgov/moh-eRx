@@ -1,5 +1,5 @@
 ﻿//-------------------------------------------------------------------------
-// Copyright © 2019 Province of British Columbia
+// Copyright © 2020 Province of British Columbia
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,10 +15,18 @@
 //-------------------------------------------------------------------------
 namespace Health.PharmaNet.Controllers
 {
-    using System.Collections.Generic;
-    using System.Linq;
+    using System.Security.Claims;
     using System.Threading.Tasks;
+
+    using Health.PharmaNet.Common.Authorization;
     using Health.PharmaNet.Common.Authorization.Policy;
+    using Health.PharmaNet.Common.Http;
+    using Health.PharmaNet.Parsers;
+    using Health.PharmaNet.Services;
+
+    using Hl7.Fhir.Model;
+
+    using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
@@ -28,12 +36,19 @@ namespace Health.PharmaNet.Controllers
     /// The Template controller.
     /// </summary>
     [ApiVersion("1.0")]
-    //[Route("/api/v{version:apiVersion}/[controller]/")]
     [Route("/api/v{version:apiVersion}/MedicationService/")]
     [ApiController]
     public class ServiceBaseController : ControllerBase
     {
+        /// <summary>
+        /// Gets or sets the Logger Service.
+        /// </summary>
         private readonly ILogger logger;
+
+        /// <summary>
+        /// Gets or sets the MedicationRequest Service.
+        /// </summary>
+        private readonly IPharmanetService service;
 
         /// <summary>
         /// Gets or sets the http context accessor.
@@ -41,51 +56,74 @@ namespace Health.PharmaNet.Controllers
         private readonly IHttpContextAccessor httpContextAccessor;
 
         /// <summary>
+        /// Gets or sets the authorization service.
+        /// </summary>
+        private readonly IAuthorizationService authorizationService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ServiceBaseController"/> class.
         /// </summary>
         /// <param name="logger">Injected Logger Provider.</param>
+        /// <param name="service">Injected service.</param>
+        /// <param name="authorizationService">Injected authorization service.</param>
         /// <param name="httpContextAccessor">The Http Context accessor.</param>
         public ServiceBaseController(
             ILogger<ServiceBaseController> logger,
+            IPharmanetService service,
+            IAuthorizationService authorizationService,
             IHttpContextAccessor httpContextAccessor)
         {
+            this.service = service;
             this.logger = logger;
+            this.authorizationService = authorizationService;
             this.httpContextAccessor = httpContextAccessor;
         }
 
         /// <summary>
-        /// Healthcheck API implementation.
+        /// Takes request body containing an HL7 FHIR DocumentReference Object containing HL7v2 payload.
         /// </summary>
-        /// <returns>JSon status = available.</returns>
-        /// <response code="200">Always returns Ok and HTTP Response code of 200.</response>
-        [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [Route("healthcheck")]
-        [Produces("application/json")]
-        public ActionResult<string> HealthCheck()
-        {
-            this.logger.LogDebug($"Healthcheck");
-            // TODO: check ODR delegate is alive?
-            return "{'status' : 'available'}";
-        }
-
-        /// <summary> 
-        /// Takes HL7 FHIR DocumentReference Object containing HL7v2 payload.
-        /// </summary>
-        /// <returns>The DocumentReference Response, or error JSON</returns>
-        /// <response code="200">Returns Ok when the transaction went through</response>
-        /// <response code="401">Authorization error, returns JSON describing the error</response>
+        /// <returns>The DocumentReference Response, or error JSON.</returns>
+        /// <response code="200">Returns Ok when the transaction went through.</response>
+        /// <response code="401">Authorization error, returns JSON describing the error.</response>
         /// <response code="503">The service is unavailable for use.</response>
         [HttpPost]
         [Produces("application/fhir+json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [Route("MedicationRequest")]
         [Authorize(Policy = FhirScopesPolicy.Access)]
-        public ActionResult<JsonResult> MedicationRequest() 
+        public async Task<ActionResult<DocumentReference>> PharmanetRequest()
         {
-            this.logger.LogDebug($"MedicationRequest");
+            ClaimsPrincipal user = this.httpContextAccessor.HttpContext.User;
+            string accessToken = await this.httpContextAccessor.HttpContext.GetTokenAsync("access_token").ConfigureAwait(true);
 
-            return new JsonResult("");
-        } 
-    }  
+            string jsonString = await this.Request.GetRawBodyStringAsync().ConfigureAwait(false);
+            DocumentReference request = Hl7FhirParser.ParseJson(jsonString);
+
+            MessageType messageType = GetHl7v2MessageType(request);
+
+            AuthorizationResult result = await this.authorizationService.AuthorizeAsync(
+                    user,
+                    messageType,
+                    FhirScopesPolicy.MessageTypeScopeAccess).ConfigureAwait(false);
+            if (!result.Succeeded)
+            {
+                return new ChallengeResult();
+            }
+
+            DocumentReference response = await this.service.SubmitRequest(request).ConfigureAwait(false);
+            return response;
+        }
+
+        private static MessageType GetHl7v2MessageType(DocumentReference request)
+        {
+            DocumentReference.ContentComponent[] content = request.Content.ToArray();
+
+            byte[] data = content[0].Attachment.Data; // The data is returned decoded from Base64 original encoding.
+            string? msgString = System.Text.Encoding.UTF8.GetString(data, 0, data.Length);
+
+            MessageType messageType = Health.PharmaNet.Parsers.HL7v2Parser.GetMessageType(msgString);
+
+            return messageType;
+        }
+    }
 }
