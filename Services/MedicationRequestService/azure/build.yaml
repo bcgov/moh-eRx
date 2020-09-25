@@ -1,0 +1,68 @@
+name: 1.0.0$(Rev:.r) #Build number
+
+#Build variables
+variables:
+    App.Name: Template
+    App.Name.Lower: $[lower(variables['App.Name'])]
+    App.Home: $(Build.SourcesDirectory)/Services/$(App.Name)
+    App.UnitTests: $(App.Home)/test/unit
+    App.FunctionalTests: $(App.Home)/test/functional
+
+pr: none
+
+trigger:
+    batch: "true"
+    branches:
+        include:
+            - dev
+    paths:
+        include:
+            - Apps/$(App.Name)
+            - Apps/Common
+
+pool:
+    name: "eRx"
+
+steps:
+    - task: DotNetCoreCLI@2
+      displayName: Running $(App.Name) Unit Tests
+      inputs:
+          command: "test"
+          projects: "$(App.Home)/test/unit/$(App.Name)Tests.csproj"
+          arguments: "/p:CollectCoverage=true /p:CoverletOutputFormat=cobertura"
+          testRunTitle: "$(App.Name) Service Unit Tests"
+
+    - script: |
+          set -e
+          reportgenerator -reports:$(App.Home)/test/**/coverage.cobertura.xml -targetdir:$(App.Home)/CodeCoverage -reporttypes:"HtmlInline_AzurePipelines;Cobertura"
+      displayName: Creating Code Coverage Report
+
+    - task: PublishCodeCoverageResults@1
+      displayName: "Publish Code Coverage"
+      inputs:
+          codeCoverageTool: Cobertura
+          summaryFileLocation: "$(App.Home)/CodeCoverage/Cobertura.xml"
+          pathToSources: "$(App.Home)/src"
+          reportDirectory: "$(App.Home)/CodeCoverage"
+
+    - task: DotNetCoreCLI@2
+      displayName: Publishing dotnet code
+      inputs:
+          modifyOutputPath: false
+          command: "publish"
+          publishWebProjects: false
+          projects: "$(App.Home)/src"
+          arguments: "-o $(Build.BinariesDirectory)"
+          zipAfterPublish: false
+
+    - script: |
+          set -e
+          cp $(App.Home)/Dockerfile $(Build.BinariesDirectory)
+          oc projects
+          oc project fqlmjp-tools
+          oc process -f $(Build.SourcesDirectory)/Tools/BaseBuild/build.yaml -p NAME=$(App.Name.Lower) | oc apply -f -
+          oc start-build $(App.Name.Lower) --wait --follow --from-dir $(Build.BinariesDirectory) 
+          oc tag $(App.Name.Lower):latest $(App.Name.Lower):$(Build.BuildNumber)
+          echo `date` > $(Build.ArtifactStagingDirectory)/$(Build.BuildNumber).txt
+      displayName: "Build OpenShift Image and push to Image Stream"
+
