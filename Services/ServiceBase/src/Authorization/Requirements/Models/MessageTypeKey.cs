@@ -13,26 +13,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
-namespace Health.PharmaNet.Parsers
+namespace Health.PharmaNet.Authorization.Requirements.Models
 {
-  using Hl7.Fhir.Model;
-  using Hl7.Fhir.Serialization;
+    using System.Text.Json.Serialization;
 
-  /// <summary>
-  /// The Pharmanet Delegate, which communicates directly to the Pharmanet proxy service.
-  /// </summary>
-  public static class Hl7FhirParser
-  {
     /// <summary>
-    /// The Pharmanet FHIR Parser helper class.
+    /// Class representing the array of message key entries for each Pharmanet Transaction.
     /// </summary>
-    /// <param name="json">A json structure to be parsed into a FHIR DocumentReference object.</param>
-    /// <returns>A DocumentReference as response.</returns>
-    public static DocumentReference ParseJson(string json)
+    public partial class MessageTypeKey
     {
-      FhirJsonParser parser = new FhirJsonParser(new ParserSettings { AcceptUnknownMembers = true, AllowUnrecognizedEnums = true });
-      DocumentReference documentReference = parser.Parse<DocumentReference>(json);
-      return documentReference;
+        /// <summary>
+        /// Gets or sets the keys to use for authorization.
+        /// </summary>
+        [JsonPropertyName("KeyTemplate")]
+        public string KeyTemplate { get; set; } = string.Empty;
     }
-  }
 }

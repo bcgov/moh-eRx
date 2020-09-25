@@ -13,21 +13,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
-namespace Health.PharmaNet.Common.Authorization
+namespace Health.PharmaNet.Authorization.Requirements.Models
 {
-    using System.Collections.Generic;
     using System.Text.Json.Serialization;
 
     /// <summary>
-    /// The configuration settings for determining Hl7v2 messages permitted for a given scope(s).
+    /// Class representing the array of message scope value for each Pharmanet Transaction.
     /// </summary>
-    public class Hl7v2AuthorizationConfiguration
+    public partial class MessageScope
     {
         /// <summary>
-        /// Gets the Hl7v2 Hl7v2Authorization configurations.
+        /// Gets or sets the scope to use for authorization.
         /// </summary>
-        ///
-        [JsonPropertyName("Hl7v2Authorization")]
-        public Dictionary<string, Hl7v2Authorization> Hl7v2AuthorizationDict { get; } = new Dictionary<string, Hl7v2Authorization>();
+        [JsonPropertyName("Scope")]
+        public string Scope { get; set; } = string.Empty;
     }
 }

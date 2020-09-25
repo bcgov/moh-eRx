@@ -18,18 +18,19 @@ namespace Health.PharmaNet.Controllers
     using System.Security.Claims;
     using System.Threading.Tasks;
 
-    using Health.PharmaNet.Common.Authorization;
     using Health.PharmaNet.Common.Authorization.Policy;
     using Health.PharmaNet.Common.Http;
     using Health.PharmaNet.Parsers;
     using Health.PharmaNet.Services;
 
+    using HL7.Dotnetcore;
     using Hl7.Fhir.Model;
 
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
 
     /// <summary>
@@ -41,40 +42,52 @@ namespace Health.PharmaNet.Controllers
     public class ServiceBaseController : ControllerBase
     {
         /// <summary>
-        /// Gets or sets the Logger Service.
+        /// The Logger Service.
         /// </summary>
         private readonly ILogger logger;
+        private readonly IConfiguration configuration;
 
         /// <summary>
-        /// Gets or sets the MedicationRequest Service.
+        /// The IPharmanet Service.
         /// </summary>
         private readonly IPharmanetService service;
 
         /// <summary>
-        /// Gets or sets the http context accessor.
+        /// The http context accessor.
         /// </summary>
         private readonly IHttpContextAccessor httpContextAccessor;
 
         /// <summary>
-        /// Gets or sets the authorization service.
+        /// The authorization service.
         /// </summary>
         private readonly IAuthorizationService authorizationService;
+
+        /// <summary>
+        /// The HL7 parser service.
+        /// </summary>
+        private readonly IHl7Parser parser;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ServiceBaseController"/> class.
         /// </summary>
         /// <param name="logger">Injected Logger Provider.</param>
         /// <param name="service">Injected service.</param>
+        /// <param name="parser">Injected HL7 message parser.</param>
+        /// <param name="configuration">Injected iConfiguration service.</param>
         /// <param name="authorizationService">Injected authorization service.</param>
         /// <param name="httpContextAccessor">The Http Context accessor.</param>
         public ServiceBaseController(
             ILogger<ServiceBaseController> logger,
             IPharmanetService service,
+            IHl7Parser parser,
+            IConfiguration configuration,
             IAuthorizationService authorizationService,
             IHttpContextAccessor httpContextAccessor)
         {
             this.service = service;
             this.logger = logger;
+            this.parser = parser;
+            this.configuration = configuration;
             this.authorizationService = authorizationService;
             this.httpContextAccessor = httpContextAccessor;
         }
@@ -97,13 +110,13 @@ namespace Health.PharmaNet.Controllers
             string accessToken = await this.httpContextAccessor.HttpContext.GetTokenAsync("access_token").ConfigureAwait(true);
 
             string jsonString = await this.Request.GetRawBodyStringAsync().ConfigureAwait(false);
-            DocumentReference request = Hl7FhirParser.ParseJson(jsonString);
+            DocumentReference request = this.parser.ParseFhirJson(jsonString);
 
-            MessageType messageType = GetHl7v2MessageType(request);
+            Message message = this.ExtractV2Message(request);
 
             AuthorizationResult result = await this.authorizationService.AuthorizeAsync(
                     user,
-                    messageType,
+                    message,
                     FhirScopesPolicy.MessageTypeScopeAccess).ConfigureAwait(false);
             if (!result.Succeeded)
             {
@@ -114,16 +127,16 @@ namespace Health.PharmaNet.Controllers
             return response;
         }
 
-        private static MessageType GetHl7v2MessageType(DocumentReference request)
+        private Message ExtractV2Message(DocumentReference request)
         {
             DocumentReference.ContentComponent[] content = request.Content.ToArray();
 
             byte[] data = content[0].Attachment.Data; // The data is returned decoded from Base64 original encoding.
             string? msgString = System.Text.Encoding.UTF8.GetString(data, 0, data.Length);
 
-            MessageType messageType = Health.PharmaNet.Parsers.HL7v2Parser.GetMessageType(msgString);
+            Message message = this.parser.ParseV2String(msgString);
 
-            return messageType;
+            return message;
         }
     }
 }

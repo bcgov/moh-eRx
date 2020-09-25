@@ -13,32 +13,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
-namespace Health.PharmaNet.Common.Authorization
+namespace Health.PharmaNet.Parsers
 {
+    using HL7.Dotnetcore;
+    using Hl7.Fhir.Model;
+
     /// <summary>
-    /// object to pass as the TResource type for the handler.
+    /// The Pharmanet service.
     /// </summary>
-    public class MessageType
+    public interface IHl7Parser
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MessageType"/> class.
+        /// Parse a string containing HL7v2 message.
         /// </summary>
-        /// <param name="messageType">The value to set.</param>
-        /// <param name="controlId">The optional control id.</param>
-        public MessageType(string messageType, string? controlId = null)
-        {
-            this.Type = messageType;
-            this.ControlId = (controlId != null) ? controlId : string.Empty;
-        }
+        /// <param name="messageString">An HL7v2 message as a string.</param>
+        /// <returns>Returns an HL7v2 Message response.</returns>
+        Message ParseV2String(string messageString);
 
         /// <summary>
-        /// Gets or sets the Hl7v2 message Type value.
+        /// Parse a string containing FHIR message.
         /// </summary>
-        public string Type { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Gets or sets the HL7v2 ControlId value.
-        /// </summary>
-        public string ControlId { get; set; } = string.Empty;
+        /// <param name="json">An HL7 FHIR message as a string.</param>
+        /// <returns>Returns a FHIR DocumentReference.</returns>
+        DocumentReference ParseFhirJson(string json);
     }
 }
