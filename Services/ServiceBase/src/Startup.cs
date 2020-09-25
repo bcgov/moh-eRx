@@ -60,22 +60,21 @@ namespace Health.PharmaNet.ServiceBase
             this.startupConfig.ConfigureHttpServices(services);
             this.startupConfig.ConfigureAuthServicesForJwtBearer(services);
 
+            this.startupConfig.ConfigureSwaggerServices(services);
+
             services.AddAuthorization(options =>
-  {
-      string claimsIssuer = this.configuration.GetSection(ConfigurationSections.OpenIdConnect).GetValue<string>("ClaimsIssuer");
-      string scopes = this.configuration.GetSection(ConfigurationSections.OpenIdConnect).GetValue<string>("Scope");
+            {
+                string claimsIssuer = this.configuration.GetSection(ConfigurationSections.OpenIdConnect).GetValue<string>("ClaimsIssuer");
+                string scopes = this.configuration.GetSection(ConfigurationSections.OpenIdConnect).GetValue<string>("Scope");
+                string[] scope = scopes.Split(" ", StringSplitOptions.RemoveEmptyEntries);
 
-      string[] scope = scopes.Split(" ", StringSplitOptions.RemoveEmptyEntries);
-
-      options.AddPolicy(Hl7v2ScopesPolicy.MessageTypeScopeAccess, policy =>
-      {
-          policy.Requirements.Add(new Hl7v2AuthorizationRequirement(this.configuration));
-      });
-  });
+                options.AddPolicy(Hl7v2ScopesPolicy.MessageTypeScopeAccess, policy =>
+                {
+                    policy.Requirements.Add(new Hl7v2AuthorizationRequirement(this.configuration));
+                });
+            });
 
             services.AddSingleton<IAuthorizationHandler, Hl7v2AuthorizationHandler>();
-
-            this.startupConfig.ConfigureSwaggerServices(services);
 
             services.AddCors(options =>
             {

@@ -36,9 +36,9 @@ namespace Health.PharmaNet.Controllers
     /// <summary>
     /// The Template controller.
     /// </summary>
-    [ApiVersion("1.0")]
-    [Route("/api/v{version:apiVersion}/ServiceBase/")]
-    [ApiController]
+    // ApiVersion("1.0")]
+    // [Route("/api/v{version:apiVersion}/ServiceBase/")]
+    // [ApiController]
     public class ServiceBaseController : ControllerBase
     {
         /// <summary>
@@ -99,12 +99,12 @@ namespace Health.PharmaNet.Controllers
         /// <response code="200">Returns Ok when the transaction went through.</response>
         /// <response code="401">Authorization error, returns JSON describing the error.</response>
         /// <response code="503">The service is unavailable for use.</response>
-        [HttpPost]
-        [Produces("application/fhir+json")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [Route("DocumentReference")]
-        [Authorize(Policy = FhirScopesPolicy.Access)]
-        public async Task<ActionResult<DocumentReference>> PharmanetRequest()
+        // [HttpPost]
+        // [Route("DocumentReference")]
+        // [Produces("application/fhir+json")]
+        // [ProducesResponseType(StatusCodes.Status200OK)]
+        // [Authorize(Policy = FhirScopesPolicy.Access)]
+        protected async Task<ActionResult<DocumentReference>> PharmanetRequest()
         {
             ClaimsPrincipal user = this.httpContextAccessor.HttpContext.User;
             string accessToken = await this.httpContextAccessor.HttpContext.GetTokenAsync("access_token").ConfigureAwait(true);

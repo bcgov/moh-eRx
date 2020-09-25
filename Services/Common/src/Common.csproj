@@ -41,7 +41,6 @@
     <None Include="..\..\.editorconfig" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Authorization\Policies\" />
     <Content Include="AspNetConfiguration\ConfigurationSections.cs" />
     <Content Include="AspNetConfiguration\ProgramConfiguration.cs" />
     <Content Include="AspNetConfiguration\StartupConfiguration.cs" />

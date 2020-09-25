@@ -36,7 +36,7 @@ namespace Health.PharmaNet.Controllers
     /// The MedicationService controller.
     /// </summary>
     [ApiVersion("1.0")]
-    [Route("/api/v{version:apiVersion}/MedicationRequestService/")]
+    [Route("/api/v{version:apiVersion}/MedicationRequest/")]
     [ApiController]
     public class MedicationRequestController : ServiceBaseController
     {
@@ -61,15 +61,14 @@ namespace Health.PharmaNet.Controllers
         }
 
         /// <summary>
-        /// The main controller.
+        /// The MedicationRequest task.
         /// </summary>
         /// <returns>A DocumentReference response as Json.</returns>
         [HttpPost]
         [Produces("application/fhir+json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [Route("MedicationRequest")]
         [Authorize(Policy = FhirScopesPolicy.Access)]
-        public new async Task<ActionResult<DocumentReference>> PharmanetRequest()
+        public async Task<ActionResult<DocumentReference>> MedicationRequest()
         {
             return await base.PharmanetRequest().ConfigureAwait(false);
         }
