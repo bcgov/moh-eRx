@@ -18,7 +18,7 @@ namespace Health.PharmaNet.Controllers
     using System.Security.Claims;
     using System.Threading.Tasks;
 
-    using Health.PharmaNet.Common.Authorization.Policy;
+    using Health.PharmaNet.Authorization.Policy;
     using Health.PharmaNet.Common.Http;
     using Health.PharmaNet.Parsers;
     using Health.PharmaNet.Services;
@@ -117,7 +117,7 @@ namespace Health.PharmaNet.Controllers
             AuthorizationResult result = await this.authorizationService.AuthorizeAsync(
                     user,
                     message,
-                    FhirScopesPolicy.MessageTypeScopeAccess).ConfigureAwait(false);
+                    Hl7v2ScopesPolicy.MessageTypeScopeAccess).ConfigureAwait(false);
             if (!result.Succeeded)
             {
                 return new ChallengeResult();
