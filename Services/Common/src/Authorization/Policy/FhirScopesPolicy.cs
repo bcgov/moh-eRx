@@ -24,10 +24,5 @@ namespace Health.PharmaNet.Common.Authorization.Policy
         /// Policy which allows the access based on configured scopes allowed.
         /// </summary>
         public const string Access = "FhirScopesAccess";
-
-        /// <summary>
-        /// Policy which ensures that for a given HL7-v2 message type, the correct FHIR-based scope is present in the claims.
-        /// </summary>
-        public const string MessageTypeScopeAccess = "MessageTypeScopeAccess";
     }
 }
