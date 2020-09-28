@@ -14,6 +14,9 @@
 
 ## VSCode including workspaces
 .vscode/
+!.vscode/launch.json
+!.vscode/settings.json
+!.vscode/tasks.json
 *.code-workspace
 
 ## Visual Studio
