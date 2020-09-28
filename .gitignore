@@ -39,4 +39,4 @@ Thumbs.db
 .dropbox.cache
 
 # MacOS
-.DS_Store
+**/.DS_Store
