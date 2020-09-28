@@ -75,11 +75,13 @@ namespace Health.PharmaNet.Delegates
 
             HttpContent content = new StringContent(jsonOutput);
 
+            this.logger.LogDebug($"PharmanetProxy returned with StatusCode := {this.pharmanetProxyConfig.Endpoint}.");
+
             HttpResponseMessage response = await Client.PostAsync(new Uri(this.pharmanetProxyConfig.Endpoint), content).ConfigureAwait(false);
             content.Dispose();
             if (!response.IsSuccessStatusCode)
             {
-                this.logger.LogError("PharmanetProxy returned with StatusCode := {response.StatusCode}." + response.StatusCode);
+                this.logger.LogError($"PharmanetProxy returned with StatusCode := {response.StatusCode}.");
             }
 
             string result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
