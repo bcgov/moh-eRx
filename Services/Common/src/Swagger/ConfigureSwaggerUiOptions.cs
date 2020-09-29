@@ -52,6 +52,7 @@ namespace Health.PharmaNet.Common.Swagger
         {
             if (options != null)
             {
+                options.RoutePrefix = string.Empty; // put swagger as top level path.
                 this.provider
                     .ApiVersionDescriptions
                     .ToList()
