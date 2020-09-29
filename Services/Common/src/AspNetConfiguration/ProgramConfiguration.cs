@@ -49,7 +49,13 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
                 })
                 .ConfigureAppConfiguration((builderContext, config) =>
                 {
-                    config.AddJsonFile("appsettings.local.json", true, true); // Loads local settings
+                    var env = builderContext.HostingEnvironment;
+
+                    config.SetBasePath(env.ContentRootPath);
+                    config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+                    config.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+                    config.AddJsonFile("appsettings.local.json", optional: true, reloadOnChange: true); // Loads local settings
+
                     config.AddEnvironmentVariables(prefix: EnvironmentPrefix);
                 })
                 .ConfigureWebHostDefaults(webBuilder =>

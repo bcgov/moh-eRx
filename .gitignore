@@ -13,7 +13,7 @@
 .VolumeIcon.icns
 
 ## VSCode including workspaces
-.vscode/
+.vscode/*
 !.vscode/launch.json
 !.vscode/settings.json
 !.vscode/tasks.json
@@ -40,6 +40,3 @@ Thumbs.db
 .dropbox
 .dropox.attr
 .dropbox.cache
-
-# MacOS
-**/.DS_Store
