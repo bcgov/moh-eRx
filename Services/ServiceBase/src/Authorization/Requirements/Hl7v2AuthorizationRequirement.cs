@@ -25,6 +25,7 @@ namespace Health.PharmaNet.Authorization
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.Logging;
 
     /// <summary>
     /// The Authorization Scope Requirement. The user (the jwt) must have at least one of the scopes specified.

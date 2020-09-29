@@ -1,0 +1,47 @@
+// Use IntelliSense to find out which attributes exist for C# debugging
+// Use hover for the description of the existing attributes
+// For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
+{
+   "configurations": [
+   {
+      "name": "Debug MedicationRequest (web)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/Services/MedicationRequestService/src/bin/Debug/netcoreapp3.1/MedicationRequestService.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/Services/MedicationRequestService/src/bin/Debug/netcoreapp3.1",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+         "action": "openExternally",
+         "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+      },
+      "env": {
+         "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+         "/Views": "${workspaceFolder}/"
+      }
+   },
+   {
+      "name": "Debug MedicationStatement (web)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/Services/MedicationStatementService/src/bin/Debug/netcoreapp3.1/MedicationStatementService.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/Services/MedicationStatementService/src/bin/Debug/netcoreapp3.1",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+         "action": "openExternally",
+         "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+      },
+      "env": {
+         "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+         "/Views": "${workspaceFolder}/"
+      }
+   }
+   ]
+}
