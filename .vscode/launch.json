@@ -10,7 +10,7 @@
       "preLaunchTask": "build",
       "program": "${workspaceFolder}/Services/MedicationRequestService/src/bin/Debug/netcoreapp3.1/MedicationRequestService.dll",
       "args": [],
-      "cwd": "${workspaceFolder}/Services/MedicationRequestService/src/bin/Debug/netcoreapp3.1/",
+      "cwd": "${workspaceFolder}/Services/MedicationRequestService/src/bin/Debug/netcoreapp3.1",
       "stopAtEntry": false,
       "serverReadyAction": {
          "action": "openExternally",
@@ -30,7 +30,7 @@
       "preLaunchTask": "build",
       "program": "${workspaceFolder}/Services/MedicationStatementService/src/bin/Debug/netcoreapp3.1/MedicationStatementService.dll",
       "args": [],
-      "cwd": "${workspaceFolder}",
+      "cwd": "${workspaceFolder}/Services/MedicationStatementService/src/bin/Debug/netcoreapp3.1",
       "stopAtEntry": false,
       "serverReadyAction": {
          "action": "openExternally",
