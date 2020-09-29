@@ -2,7 +2,7 @@ name: 1.0.0$(Rev:.r) #Build number
 
 #Build variables
 variables:
-    App.Name: Template
+    App.Name: MedicationRequestService
     App.Name.Lower: $[lower(variables['App.Name'])]
     App.Home: $(Build.SourcesDirectory)/Services/$(App.Name)
     App.UnitTests: $(App.Home)/test/unit
@@ -24,26 +24,26 @@ pool:
     name: "eRx"
 
 steps:
-    - task: DotNetCoreCLI@2
-      displayName: Running $(App.Name) Unit Tests
-      inputs:
-          command: "test"
-          projects: "$(App.Home)/test/unit/$(App.Name)Tests.csproj"
-          arguments: "/p:CollectCoverage=true /p:CoverletOutputFormat=cobertura"
-          testRunTitle: "$(App.Name) Service Unit Tests"
+    # - task: DotNetCoreCLI@2
+    #   displayName: Running $(App.Name) Unit Tests
+    #   inputs:
+    #       command: "test"
+    #       projects: "$(App.Home)/test/unit/$(App.Name)Tests.csproj"
+    #       arguments: "/p:CollectCoverage=true /p:CoverletOutputFormat=cobertura"
+    #       testRunTitle: "$(App.Name) Service Unit Tests"
 
-    - script: |
-          set -e
-          reportgenerator -reports:$(App.Home)/test/**/coverage.cobertura.xml -targetdir:$(App.Home)/CodeCoverage -reporttypes:"HtmlInline_AzurePipelines;Cobertura"
-      displayName: Creating Code Coverage Report
+    # - script: |
+    #       set -e
+    #       reportgenerator -reports:$(App.Home)/test/**/coverage.cobertura.xml -targetdir:$(App.Home)/CodeCoverage -reporttypes:"HtmlInline_AzurePipelines;Cobertura"
+    #   displayName: Creating Code Coverage Report
 
-    - task: PublishCodeCoverageResults@1
-      displayName: "Publish Code Coverage"
-      inputs:
-          codeCoverageTool: Cobertura
-          summaryFileLocation: "$(App.Home)/CodeCoverage/Cobertura.xml"
-          pathToSources: "$(App.Home)/src"
-          reportDirectory: "$(App.Home)/CodeCoverage"
+    # - task: PublishCodeCoverageResults@1
+    #   displayName: "Publish Code Coverage"
+    #   inputs:
+    #       codeCoverageTool: Cobertura
+    #       summaryFileLocation: "$(App.Home)/CodeCoverage/Cobertura.xml"
+    #       pathToSources: "$(App.Home)/src"
+    #       reportDirectory: "$(App.Home)/CodeCoverage"
 
     - task: DotNetCoreCLI@2
       displayName: Publishing dotnet code
