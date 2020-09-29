@@ -73,21 +73,20 @@ namespace Health.PharmaNet.Delegates
 
             string jsonOutput = JsonSerializer.Serialize<PharmanetProxyMessage>(request);
 
-            HttpContent content = new StringContent(jsonOutput);
+            this.logger.LogDebug($"PharmanetProxy := {this.pharmanetProxyConfig.Endpoint}.");
 
-            this.logger.LogDebug($"PharmanetProxy returned with StatusCode := {this.pharmanetProxyConfig.Endpoint}.");
-
-            HttpResponseMessage response = await Client.PostAsync(new Uri(this.pharmanetProxyConfig.Endpoint), content).ConfigureAwait(false);
-            content.Dispose();
-            if (!response.IsSuccessStatusCode)
+            using (HttpContent content = new StringContent(jsonOutput))
             {
-                this.logger.LogError($"PharmanetProxy returned with StatusCode := {response.StatusCode}.");
+                HttpResponseMessage response = await Client.PostAsync(new Uri(this.pharmanetProxyConfig.Endpoint), content).ConfigureAwait(false);
+                if (!response.IsSuccessStatusCode)
+                {
+                    this.logger.LogError($"PharmanetProxy returned with StatusCode := {response.StatusCode}.");
+                }
+
+                string result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                PharmanetProxyMessage responseMessage = JsonSerializer.Deserialize<PharmanetProxyMessage>(result);
+                return responseMessage;
             }
-
-            string result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-            PharmanetProxyMessage responseMessage = JsonSerializer.Deserialize<PharmanetProxyMessage>(result);
-
-            return responseMessage;
         }
     }
 }
