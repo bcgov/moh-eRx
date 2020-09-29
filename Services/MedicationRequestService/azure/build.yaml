@@ -57,7 +57,7 @@ steps:
 
     - script: |
           set -e
-          cp $(App.Home)/Dockerfile $(Build.BinariesDirectory)
+          cp $(App.Home)/src/Dockerfile $(Build.BinariesDirectory)
           oc projects
           oc project fqlmjp-tools
           oc process -f $(Build.SourcesDirectory)/Tools/BaseBuild/build.yaml -p NAME=$(App.Name.Lower) | oc apply -f -
