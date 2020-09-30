@@ -18,7 +18,7 @@ namespace Health.PharmaNet.Models
     /// <summary>
     /// The configuration settings for connecting to the PharmanetProxy.
     /// </summary>
-    public class PharmanetProxyConfig
+    public class PharmanetDelegateConfig
     {
         /// <summary>
         /// Gets or sets the endpoint path for the protective word service.
@@ -34,5 +34,15 @@ namespace Health.PharmaNet.Models
         /// Gets or sets the password to use for authentication.
         /// </summary>
         public string Password { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Gets or sets the path to the client certificate (pfx) file to use for client authentication.
+        /// </summary>
+        public string ClientCertificatePath { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Gets or sets the path to the client certificate password/secret (for the pfx file) to use for client authentication.
+        /// </summary>
+        public string ClientCertificatePassword { get; set; } = string.Empty;
     }
 }
