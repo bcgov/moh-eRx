@@ -22,7 +22,7 @@ The resource endpoint examines the HL7-v2 transaction type submitted and then ap
 | PharmaNet Interaction |  Hl7-v2 Request | Required System Scope |
 | ------ | ------ | ------ |
 | Adjudicate a Dispense Claim TAC/TDU_01_04 - Input| TACTDU_0104_REQUEST | system/Claim.write, or user/Claim.write |
-| Adjudicate a Dispense Claim TAC/TDU_11_61 - Input| TACTDU_11_REQUEST | system/Claim.write, or user/Claim.write |
+| Adjudicate a Dispense Claim Reversal TAC/TDU_11_61 - Input| TACTDU_11_REQUEST | system/Claim.write, or user/Claim.write |
 
 ## Example TAC/TDU_01_04 Request
 

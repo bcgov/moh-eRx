@@ -2,6 +2,8 @@
 
 This resource endpoint is following HL7 FHIR version 4.0.1 specifications.
 
+This resource is primarily used for the identification and definition of a medication for the purposes of prescribing, dispensing, and administering a medication as well as for making statements about medication use.
+
 ## Supported HL7-v2 Interactions
 
 ```javascript
@@ -11,6 +13,7 @@ This resource endpoint is following HL7 FHIR version 4.0.1 specifications.
 | PharmaNet Interaction | Description |  Type | HL7-v2 Request | HL7-v2 Response |  HTTP Request Action |
 | ------ | ------ | ------ | ------ | ---- | ----- |
 | Drug utilization evaluation (DUE) information inquiry  | | read | TDU_00.50 | TDU_00.50_RESPONSE |  POST |
+| Drug Monograph Information inquiry | The Drug Monograph Information request allows information to be requested about specific drugs based on the search criteria defined below. The transaction response returns one match that satisfies the search criteria. Along with the basic drug identification data, generic equivalents information, drug monographs, drug interaction monographs, and professional or patient education information can also be requested.| read | TDR_00_REQUEST | TDR_50_RESPONSE | POST |
 
 ## Permissions
 
@@ -19,3 +22,4 @@ The resource endpoint examines the HL7-v2 transaction type submitted and then ap
 | PharmaNet Interaction |  Hl7-v2 Request | Required System Scope |
 | ------ | ------ | ------ |
 | Drug utilization evaluation (DUE) information inquiry | TDU_00.50 | system/Medication.read, or user/Medication.read, or patient/Medication.read |
+| Drug Monograph Information | TDR_00.50 | system/Medication.read, or user/Medication.read, or patient/Medication.read |
