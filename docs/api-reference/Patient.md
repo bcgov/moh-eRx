@@ -31,4 +31,3 @@ The resource endpoint examines the HL7-v2 transaction type submitted and then ap
 TBD...
 
 ## The REST HL7 FHIR DocumentReference request using HTTP POST
-
