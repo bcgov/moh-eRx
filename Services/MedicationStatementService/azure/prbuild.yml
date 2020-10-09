@@ -2,7 +2,7 @@ name: PR$(Rev:.r) #Build number
 
 #Build variables
 variables:
-    App.Name: Template
+    App.Name: MedicationStatementService
     App.Home: $(Build.SourcesDirectory)/Apps/$(App.Name)
     App.Name.Lower: $(echo "$(App.Name)" | tr "[:upper:]" "[:lower:]")
     App.UnitTests: $(App.Home)/test/unit
