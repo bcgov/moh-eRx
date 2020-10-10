@@ -1,6 +1,6 @@
 # Patient Resource
 
-This HL7 FHIR-compliant resource endpoint patient demographics and other administrative information about an individual receiving care or other health-related services.
+This HL7 FHIR-compliant resource endpoint for patient demographics and other administrative information about an individual receiving care or other health-related services.
 
 The data in the Resource covers the "who" information about the patient: its attributes are focused on the demographic information necessary to support the administrative, financial and logistic procedures. A Patient record is generally created and maintained by each organization providing care for a patient. A patient receiving care at multiple organizations may therefore have its information present in multiple Patient Resources.
 
