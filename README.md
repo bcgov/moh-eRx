@@ -2,7 +2,7 @@
 
 ## BC Ministry of Health PharmaNet Electronic Prescribing API
 
-This repository the architecture and components to enable PharmaNet electronic prescribing in British Columbia.
+This repository holds the architecture and components to enable PharmaNet electronic prescribing in British Columbia.
 
 ## Objectives
 
