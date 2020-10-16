@@ -36,12 +36,12 @@ namespace Health.PharmaNet.Controllers
     /// The MedicationService controller.
     /// </summary>
     [ApiVersion("1.0")]
-    [Route("/api/v{version:apiVersion}/Medication/")]
+    [Route("/api/v{version:apiVersion}/MedicationDispense/")]
     [ApiController]
-    public class MedicationController : ServiceBaseController
+    public class MedicationDispenseController : ServiceBaseController
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MedicationController"/> class.
+        /// Initializes a new instance of the <see cref="MedicationDispenseController"/> class.
         /// </summary>
         /// <param name="logger">Injected Logger Provider.</param>
         /// <param name="service">Injected service.</param>
@@ -71,7 +71,7 @@ namespace Health.PharmaNet.Controllers
         [Produces("application/fhir+json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [Authorize(Policy = FhirScopesPolicy.Access)]
-        public async Task<ActionResult<DocumentReference>> Medication()
+        public async Task<ActionResult<DocumentReference>> MedicationDispense()
         {
             return await base.PharmanetRequest().ConfigureAwait(false);
         }
