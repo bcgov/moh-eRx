@@ -7,6 +7,7 @@ variables:
     App.Home: $(Build.SourcesDirectory)/Services/$(App.Name)
     App.UnitTests: $(App.Home)/test/unit
     App.FunctionalTests: $(App.Home)/test/functional
+    Tools.Namespace: 2f77cb
 
 pr: none
 
@@ -21,7 +22,7 @@ trigger:
             - Apps/Common
 
 pool:
-    name: "eRx"
+    name: "eRxOCP4"
 
 steps:
     - task: DotNetCoreCLI@2
@@ -59,7 +60,7 @@ steps:
           set -e
           cp $(App.Home)/Dockerfile $(Build.BinariesDirectory)
           oc projects
-          oc project fqlmjp-tools
+          oc project $(Tools.Namespace)-tools
           oc process -f $(Build.SourcesDirectory)/Tools/BaseBuild/build.yaml -p NAME=$(App.Name.Lower) | oc apply -f -
           oc start-build $(App.Name.Lower) --wait --follow --from-dir $(Build.BinariesDirectory) 
           oc tag $(App.Name.Lower):latest $(App.Name.Lower):$(Build.BuildNumber)

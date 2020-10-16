@@ -9,7 +9,7 @@ variables:
     App.FunctionalTests: $(App.Home)/test/functional
 
 pool:
-    name: "eRx"
+    name: "eRxOCP4"
 
 trigger: none
 
