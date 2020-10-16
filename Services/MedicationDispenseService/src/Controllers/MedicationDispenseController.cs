@@ -49,7 +49,7 @@ namespace Health.PharmaNet.Controllers
         /// <param name="configuration">Injected iConfiguration service.</param>
         /// <param name="authorizationService">Injected authorization service.</param>
         /// <param name="httpContextAccessor">The Http Context accessor.</param>
-        public MedicationController(
+        public MedicationDispenseController(
             ILogger<ServiceBaseController> logger,
             IPharmanetService service,
             IHl7Parser parser,
