@@ -23,7 +23,10 @@ objects:
       deploymentconfig: ${NAME}
     strategy:
       activeDeadlineSeconds: 21600
-      resources: {}
+      resources:
+        limits:
+          cpu: '2'
+          memory: 2Gi
       rollingParams:
         intervalSeconds: 1
         maxSurge: 25%
@@ -55,7 +58,12 @@ objects:
             periodSeconds: 10
             successThreshold: 1
             timeoutSeconds: 1
-          resources: {}
+            resources:
+              limits:
+                cpu: 750m
+              requests:
+                cpu: 500m
+                memory: 512Mi
           terminationMessagePath: /${NAME}/termination-log
           terminationMessagePolicy: File
         dnsPolicy: ClusterFirst
@@ -83,7 +91,7 @@ objects:
     name: ${NAME}
   spec:
     maxReplicas: 4
-    minReplicas: 2
+    minReplicas: 1
     scaleTargetRef:
       apiVersion: v1
       kind: DeploymentConfig
@@ -96,7 +104,7 @@ objects:
       app: ${NAME}
     name: ${NAME}
   spec:
-    host: ${ENV}-${APP_NAME}-${WEB_HOST}.pathfinder.gov.bc.ca
+    host: ${ENV}-${APP_NAME}-${WEB_HOST}.apps.silver.devops.gov.bc.ca
     tls:
       insecureEdgeTerminationPolicy: Redirect
       termination: edge
@@ -144,7 +152,7 @@ parameters:
   - name: TOOLS_NAMESPACE
     displayName: Tools Project Namespace
     description: The namespace of the tools project
-    value: fqlmjp-tools
+    value: 2f77cb-tools
     required: true 
   - name: ENV
     displayName: Enviroment

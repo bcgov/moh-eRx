@@ -1,0 +1,31 @@
+apiVersion: v1
+items:
+- apiVersion: authorization.openshift.io/v1
+  groupNames:
+  - system:serviceaccounts:2f77cb-tools
+  kind: RoleBinding
+  metadata:
+    name: system:image-pullers
+    namespace: 2f77cb-tools
+  roleRef:
+    name: system:image-puller
+  subjects:
+  - kind: SystemGroup
+    name: system:serviceaccounts:2f77cb-tools
+  - kind: ServiceAccount
+    name: default
+    namespace: 2f77cb-dev
+  - kind: ServiceAccount
+    name: default
+    namespace: 2f77cb-test
+  - kind: ServiceAccount
+    name: default
+    namespace: 2f77cb-prod
+  userNames:
+  - system:serviceaccount:2f77cb-dev:default
+  - system:serviceaccount:2f77cb-test:default
+  - system:serviceaccount:2f77cb-prod:default
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
