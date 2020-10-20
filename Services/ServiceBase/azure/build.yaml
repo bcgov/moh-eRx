@@ -21,7 +21,7 @@ trigger:
             - Apps/Common
 
 pool:
-    name: "eRx"
+    name: "eRxOCP4"
 
 steps:
     - task: DotNetCoreCLI@2
