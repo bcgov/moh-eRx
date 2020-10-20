@@ -18,8 +18,8 @@ trigger:
             - dev
     paths:
         include:
-            - Apps/$(App.Name)
-            - Apps/Common
+            - Services/$(App.Name)
+            - Services/Common
 
 pool:
     name: "eRxOCP4"

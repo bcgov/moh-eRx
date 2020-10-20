@@ -17,8 +17,8 @@ trigger:
             - dev
     paths:
         include:
-            - Apps/$(App.Name)
-            - Apps/Common
+            - Services/$(App.Name)
+            - Services/Common
 
 pool:
     name: "eRxOCP4"
@@ -59,7 +59,7 @@ steps:
           set -e
           cp $(App.Home)/src/Dockerfile $(Build.BinariesDirectory)
           oc projects
-          oc project fqlmjp-tools
+          oc project 2f77cb-tools
           oc process -f $(Build.SourcesDirectory)/Tools/BaseBuild/build.yaml -p NAME=$(App.Name.Lower) | oc apply -f -
           oc start-build $(App.Name.Lower) --wait --follow --from-dir $(Build.BinariesDirectory) 
           oc tag $(App.Name.Lower):latest $(App.Name.Lower):$(Build.BuildNumber)
