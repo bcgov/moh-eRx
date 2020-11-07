@@ -12,5 +12,10 @@
         "pharma",
         "pharmacare",
         "pharmanet"
+    ],
+    "cSpell.ignoreWords": [
+        "request",
+        "tactdu",
+        "tactdu request"
     ]
 }

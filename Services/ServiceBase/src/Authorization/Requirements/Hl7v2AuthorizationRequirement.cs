@@ -16,10 +16,12 @@
 namespace Health.PharmaNet.Authorization
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     using Health.PharmaNet.Authorization.Requirements;
     using Health.PharmaNet.Authorization.Requirements.Models;
+
 
     using HL7.Dotnetcore;
 
@@ -53,26 +55,60 @@ namespace Health.PharmaNet.Authorization
         }
 
         /// <summary>
-        /// Returns whether any of the scopes provided is an accepted Scope for the given messagetype and optional control id.
+        /// Returns the configured scopes needed for the HL7v2 message passed in.
         /// </summary>
         /// <param name="message">The Hl7-v2 message to be checked.</param>
-        /// <param name="scopes">The scopes claimed by User.</param>
-        /// <returns>Returns true if the scope provided is the right one for the MessageType.</returns>
-        public bool HasCorrectScopesForMessage(Message message, string[] scopes)
+        /// <returns>Returns a string array of scopes needed, or empty array when the message was unknown/not supported.</returns>
+        public string[] ScopesNeededForMessage(HL7.Dotnetcore.Message message)
         {
-            string key = this.GetMessageAuthorizationKey(message);
-
-            if (this.hl7AuthConfig.Hl7v2Authorization.MessageScopes.TryGetValue(key, out MessageScope? entry))
-            {
-                string[] scopesNeeded = entry.Scope!.Split(" ");
-
-                return scopes.Intersect<string>(scopesNeeded).Any<string>();
-            }
-
-            return false;
+            return this.GetMessageAuthorizationScope(message);
         }
 
-        private static string GetMessageType(Message message)
+        /// <summary>
+        /// Checks that the message passed has all the fields.
+        /// </summary>
+        /// <param name="messageConfig">The MessageConfig configuration from app settings.</param>
+        /// <param name="message">The HL7v2 message being matched.</param>
+        /// <returns>Returns true when the HL7v2 message was found in the configuration.</returns>
+        private static bool IsConfiguredMessage(MessageConfig messageConfig, HL7.Dotnetcore.Message message)
+        {
+            int requiredMatches = messageConfig.MessageSegments.Count;
+            int matches = 0;
+
+            foreach (MessageSegment ms in messageConfig.MessageSegments)
+            {
+                List<string> segmentValues = new List<string>();
+
+                foreach (HL7.Dotnetcore.Segment segment in message.Segments(ms.SegmentName))
+                {
+                    bool fieldsMatch = false;
+                    bool firstField = true;
+
+                    foreach (SegmentField sf in ms.SegmentFields)
+                    {
+                        bool found = segment.Fields(sf.Index).Value.Equals(sf.Value, StringComparison.Ordinal);
+                        if (firstField == true)
+                        {
+                            fieldsMatch = found;
+                            firstField = false;
+                        }
+                        else
+                        {
+                            fieldsMatch &= found;
+                        }
+                    }
+
+                    if (fieldsMatch == true)
+                    {
+                        matches++;
+                    }
+                }
+            }
+
+            return matches == requiredMatches;
+        }
+
+        private static string GetMessageType(HL7.Dotnetcore.Message message)
         {
             string messageType = string.Empty;
 
@@ -92,32 +128,22 @@ namespace Health.PharmaNet.Authorization
         /// Determine the configuration authorization key to use to check authorization.
         /// </summary>
         /// <param name="message">An HL7v2 message.</param>
-        /// <returns>Returns a MessageAuthorizationKey to use to lookup the configured authorization (scopes).</returns>
-        private string GetMessageAuthorizationKey(Message message)
+        /// <returns>Returns the configured authorization scopes, or empty if unknown message.</returns>
+        private string[] GetMessageAuthorizationScope(HL7.Dotnetcore.Message message)
         {
-            string key = string.Empty;
-            string messageType = GetMessageType(message);
+            string[] scopesNeeded = Array.Empty<string>();
+            string messageType = GetMessageType(message); // MSH.9
 
-            if (this.hl7AuthConfig.Hl7v2Authorization.MessageTypeKeys.TryGetValue(messageType, out MessageTypeKey? messageKey))
+            foreach (MessageConfig messageConfig in this.hl7AuthConfig.Hl7v2Authorization.MessageConfig)
             {
-                key = messageKey.KeyTemplate;
-                string[] segmentNames = messageKey.KeyTemplate.Split("_");
-
-                foreach (string s in segmentNames)
+                if ((messageType == messageConfig.MessageType) && IsConfiguredMessage(messageConfig, message))
                 {
-                    if (s.Equals("MSH.9", StringComparison.Ordinal))
-                    {
-                        key = key.Replace(s, messageType, StringComparison.Ordinal);
-                    }
-                    else
-                    {
-                        string segmentName = message.GetValue(s);
-                        key = key.Replace(s, segmentName, StringComparison.Ordinal);
-                    }
+                    scopesNeeded = messageConfig.Scope.Split(" ", StringSplitOptions.RemoveEmptyEntries);
+                    break;
                 }
             }
 
-            return key;
+            return scopesNeeded;
         }
     }
 }

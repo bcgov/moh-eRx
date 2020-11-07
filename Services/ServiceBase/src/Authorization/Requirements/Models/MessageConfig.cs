@@ -15,15 +15,34 @@
 //-------------------------------------------------------------------------
 namespace Health.PharmaNet.Authorization.Requirements.Models
 {
+    using System.Collections.Generic;
     using System.Text.Json.Serialization;
 
     /// <summary>
     /// Class representing the array of message scope value for each Pharmanet Transaction.
     /// </summary>
-    public partial class MessageScope
+    public class MessageConfig
     {
         /// <summary>
-        /// Gets or sets the scope to use for authorization.
+        /// Gets or sets the HL7v2 Transaction Name.
+        /// </summary>
+        [JsonPropertyName("Name")]
+        public string Name { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Gets or sets the MessageType (MSH.9).
+        /// </summary>
+        [JsonPropertyName("MessageType")]
+        public string MessageType { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Gets the segment fields.
+        /// </summary>
+        [JsonPropertyName("MessageSegments")]
+        public List<MessageSegment> MessageSegments { get; } = new List<MessageSegment>();
+
+        /// <summary>
+        /// Gets or sets the scope field.
         /// </summary>
         [JsonPropertyName("Scope")]
         public string Scope { get; set; } = string.Empty;

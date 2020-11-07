@@ -26,7 +26,25 @@ The resource endpoint examines the HL7-v2 transaction type submitted and then ap
 
 ## Example TAC/TDU_01_04 Request
 
-TBD...
+### TACTDU_01_REQUEST-319233
+
+ Adjudicate a Dispense Claim request message
+
+- Transaction: TACTDU (0104 / 5154)
+- Source: PNET R70
+
+```code
+MSH|^~\&|123456|123456||ERXPP||userID:192.168.0.1|ZPN|319233|P|2.1||
+ZCA|1|70|04|AR|05|
+ZCB|BC00000I10|140905|319233
+ZCC||||||||||000nnnnnnnnnn|
+ZCD|||N|319233||319233|2063735||100|7|91|nnnnnnnnnn|||||1486||222|||||nnnnnn|912351176
+ZPJ|ZPJ1^^^^^^|ZPJ2^^~ZPJ2^^~ZPJ2^^|ZPJ3^^|ZPJ4^Transaction Trace ID: 319233
+ZZZ|TAC||319233|P1|nnnnnnnnnn|||||ZZZ1^
+ZZZ|TDU||319233|P1|nnnnnnnnnn|||||ZZZ1^
+```
+Comments:
+   1. userID - must be replaced with the actual authenticated ID of an individual user
 
 ## The REST HL7 FHIR DocumentReference request using HTTP POST
 

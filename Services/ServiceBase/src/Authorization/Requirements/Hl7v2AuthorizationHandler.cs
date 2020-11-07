@@ -67,18 +67,38 @@ namespace Health.PharmaNet.Authorization
             {
                 string[] scopes = scopeClaim.Value.Split(" ", StringSplitOptions.RemoveEmptyEntries);
 
-                if (requirement.HasCorrectScopesForMessage(resource, scopes))
+                string[] scopesNeeded = requirement.ScopesNeededForMessage(resource);
+
+                if (HasCorrectScopes(scopesNeeded, scopes))
                 {
-                    this.logger.LogDebug("HL7v2 Authorization: Success! Scope(s) provided are correct for the HL7v2 MessagType");
+                    this.logger.LogDebug("HL7v2 Authorization Success! Scope(s) provided are correct for the HL7v2 message");
                     context.Succeed(requirement);
                 }
                 else
                 {
-                     this.logger.LogInformation("HL7v2 Authorization: Failed! Scope(s) provided are NOT correct for the HL7v2 MessagType");
+                    if (scopesNeeded.Length > 0)
+                    {
+                        this.logger.LogInformation("HL7v2 Authorization Failed! Scope(s) provided are NOT correct for the HL7v2 MessagType");
+                    }
+                    else
+                    {
+                        this.logger.LogInformation("HL7v2 Authorization Failed! The HL7v2 Message is not known/supported by this service.");
+                    }
                 }
             }
 
             return Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Returns whether any of the scopes provided is an accepted Scope for the given messagetype and optional control id.
+        /// </summary>
+        /// <param name="scopesNeeded">The scopes needed. The scopes passed in the JWT must match at least one.</param>
+        /// <param name="scopes">The scopes claimed by User.</param>
+        /// <returns>Returns true if the scopes provided matches any of the required scope values.</returns>
+        private static bool HasCorrectScopes(string[] scopesNeeded, string[] scopes)
+        {
+            return scopes.Intersect<string>(scopesNeeded).Any<string>();
         }
     }
 }

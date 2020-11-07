@@ -15,6 +15,7 @@
 //-------------------------------------------------------------------------
 namespace Health.PharmaNet.Authorization.Requirements
 {
+    using System;
     using System.Text.Json.Serialization;
 
     using Health.PharmaNet.Authorization.Requirements.Models;

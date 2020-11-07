@@ -15,18 +15,21 @@
 //-------------------------------------------------------------------------
 namespace Health.PharmaNet.Authorization.Requirements.Models
 {
+    using System;
     using System.Collections.Generic;
     using System.Text.Json.Serialization;
 
     /// <summary>
-    /// Class representing the array of message authorizations needed for each Pharmanet Transaction.
+    /// Class representing a segment field signature for a HL7v2 message evaluation.
     /// </summary>
-    public class Hl7v2Authorization
+    public class SegmentField
     {
-        /// <summary>
-        /// Gets the Messages configured.
-        /// </summary>
-        [JsonPropertyName("MessageConfig")]
-        public List<MessageConfig> MessageConfig { get; } = new List<MessageConfig>();
+        /// <summary>Gets or sets the SegmentField Index.</summary>
+        [JsonPropertyName("Index")]
+        public int Index { get; set; }
+
+        /// <summary>Gets or sets the SegmentField Value.</summary>
+        [JsonPropertyName("Value")]
+        public string Value { get; set; } = string.Empty;
     }
 }

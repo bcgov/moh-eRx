@@ -15,17 +15,25 @@
 //-------------------------------------------------------------------------
 namespace Health.PharmaNet.Authorization.Requirements.Models
 {
+    using System;
+    using System.Collections.Generic;
     using System.Text.Json.Serialization;
 
     /// <summary>
     /// Class representing the array of message key entries for each Pharmanet Transaction.
     /// </summary>
-    public partial class MessageTypeKey
+    public class MessageSegment
     {
         /// <summary>
-        /// Gets or sets the keys to use for authorization.
+        /// Gets or sets the name of the segment.field.
         /// </summary>
-        [JsonPropertyName("KeyTemplate")]
-        public string KeyTemplate { get; set; } = string.Empty;
+        [JsonPropertyName("SegmentName")]
+        public string SegmentName { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Gets the List of Segment Fields.
+        /// </summary>
+        [JsonPropertyName("SegmentFields")]
+        public List<SegmentField> SegmentFields { get; } = new List<SegmentField>();
     }
 }
