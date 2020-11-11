@@ -22,7 +22,6 @@ namespace Health.PharmaNet.Authorization
     using Health.PharmaNet.Authorization.Requirements;
     using Health.PharmaNet.Authorization.Requirements.Models;
 
-
     using HL7.Dotnetcore;
 
     using Microsoft.AspNetCore.Authorization;

@@ -6,12 +6,13 @@ This resource endpoint is following  HL7 FHIR version 4.0.1 specifications. It i
 
 The payload of a MedicationStatement request contains an HL7 FHIR compliant DocumentReference, which contains the HL7-v2 message, Base 64 encoded, as listed in the table below. A successful response will contain the corresponding HL7-v2 message, also wrapped in an HL7 FHIR DocumentReference.  
 
-| PharmaNet Interaction | Description |  Type | HL7-v2 Request | HL7-v2 Response |  HTTP Request Action |
+| PharmaNet Interaction |  Type | HL7-v2 Request | HL7-v2 Response |  HTTP Request Action |
 | ------ | ------ | ------ | ------ | ---- | ----- |
-| Patient Profile Information Request (complete) | | read | TRP_00.50 | TRP_00.50_RESPONSE |  POST |
-| Patient Profile Information Request (latest) | | read | TRP_00.50 | TRP_00.50_RESPONSE |  POST |
-| DUE inquiry with patient profile information (complete) | | read | TDUTRP_00.50 |TDUTRP_00.50_RESPONSE | POST |
-| DUE inquiry with patient profile information (latest) | | read | TDUTRR_00.50 | TDUTRR_00.50_RESPONSE | POST |
+| Retrieve Profile Most Recent Only Request | read | TRR_00_REQUEST | TRR_00.50_RESPONSE |  POST |
+| Patient Profile Information Request (complete) | read | TRP_00_REQUEST | TRP_00.50_RESPONSE |  POST |
+| Patient Profile Information Request (latest) | read | TRP_00_REQUEST | TRP_00.50_RESPONSE |  POST |
+| DUE inquiry with patient profile information (complete) | read | TDUTRP_00.50_REQUEST |TDUTRP_00.50_RESPONSE | POST |
+| DUE inquiry with patient profile information (latest) | read | TDUTRR_00.50_REQUEST | TDUTRR_00.50_RESPONSE | POST |
 
 ### DocumentReference attachment Content-Type
 
@@ -27,7 +28,7 @@ The resource endpoint examines the HL7-v2 transaction type submitted and then ap
 
 | PharmaNet Interaction |  Hl7-v2 Request | Required System Scope |
 | ------ | ------ | ------ |
-| Patient Profile Information Request (complete or latest) | TRP_00.50 | system/MedicationStatement.read, or user/MedicationStatement.read, or patient/MedicationStatement.read |
+| Patient Profile Information Request (complete or latest) | TRP_00_REQUEST| system/MedicationStatement.read, or user/MedicationStatement.read, or patient/MedicationStatement.read |
 | DUE inquiry with patient profile information (complete) | TDUTRP_00.50 | system/MedicationStatement.read, or user/MedicationStatement.read, or patient/MedicationStatement.read |
 | DUE inquiry with patient profile information (latest) | TDUTRR_00.50 | system/MedicationStatement.read, or user/MedicationStatement.read, or patient/MedicationStatement.read |
 

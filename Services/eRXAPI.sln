@@ -19,6 +19,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PatientService", "PatientSe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PractitionerService", "PractitionerService\src\PractitionerService.csproj", "{84314338-B7D1-4C3B-A5A4-EE0AD56D7EF5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsentService", "ConsentService\src\ConsentService.csproj", "{3FA04F86-6F18-4296-84BC-81F776513005}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedicationDispenseService", "MedicationDispenseService\src\MedicationDispenseService.csproj", "{844DE75C-8367-4778-BB17-4AA4259D0FC1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +65,14 @@ Global
 		{84314338-B7D1-4C3B-A5A4-EE0AD56D7EF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84314338-B7D1-4C3B-A5A4-EE0AD56D7EF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84314338-B7D1-4C3B-A5A4-EE0AD56D7EF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FA04F86-6F18-4296-84BC-81F776513005}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FA04F86-6F18-4296-84BC-81F776513005}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FA04F86-6F18-4296-84BC-81F776513005}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FA04F86-6F18-4296-84BC-81F776513005}.Release|Any CPU.Build.0 = Release|Any CPU
+		{844DE75C-8367-4778-BB17-4AA4259D0FC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{844DE75C-8367-4778-BB17-4AA4259D0FC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{844DE75C-8367-4778-BB17-4AA4259D0FC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{844DE75C-8367-4778-BB17-4AA4259D0FC1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0

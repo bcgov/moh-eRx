@@ -15,6 +15,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'LocationService' " />
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'MedicationRequestService' " />
   <ItemGroup>
     <Content Include=".vscode\launch.json" />
   </ItemGroup>
