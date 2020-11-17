@@ -72,7 +72,7 @@ namespace Health.PharmaNet.Controllers
         [Authorize(Policy = FhirScopesPolicy.Access)]
         public async Task<ActionResult<DocumentReference>> Practitioner()
         {
-            return await base.PharmanetRequest().ConfigureAwait(false);
+            return await this.PharmanetRequest().ConfigureAwait(false);
         }
     }
 }

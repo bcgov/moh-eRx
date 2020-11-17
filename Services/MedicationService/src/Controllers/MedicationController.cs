@@ -61,7 +61,7 @@ namespace Health.PharmaNet.Controllers
         }
 
         /// <summary>
-        /// This resource is primarily used for the identification and definition 
+        /// This resource is primarily used for the identification and definition
         /// of a medication for the purposes of prescribing, dispensing, and administering
         /// a medication as well as for making statements about medication use. </summary>
         /// <returns>A DocumentReference response as Json.</returns>
@@ -73,7 +73,7 @@ namespace Health.PharmaNet.Controllers
         [Authorize(Policy = FhirScopesPolicy.Access)]
         public async Task<ActionResult<DocumentReference>> Medication()
         {
-            return await base.PharmanetRequest().ConfigureAwait(false);
+            return await this.PharmanetRequest().ConfigureAwait(false);
         }
     }
 }

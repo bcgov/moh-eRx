@@ -19,6 +19,7 @@ namespace Health.PharmaNet.ConsentService
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+
     /// <summary>
     /// Configures the application during startup.
     /// </summary>
@@ -29,12 +30,11 @@ namespace Health.PharmaNet.ConsentService
         /// </summary>
         /// <param name="env">The injected Environment provider.</param>
         /// <param name="configuration">The injected configuration provider.</param>
-        public Startup(IWebHostEnvironment env, IConfiguration configuration) 
+        public Startup(IWebHostEnvironment env, IConfiguration configuration)
         : base(
-            env, 
+            env,
             configuration)
         {
-            
         }
     }
 }

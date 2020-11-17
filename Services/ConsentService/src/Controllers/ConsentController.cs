@@ -13,6 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
+
 namespace Health.PharmaNet.Controllers
 {
     using System.Security.Claims;
@@ -73,7 +74,7 @@ namespace Health.PharmaNet.Controllers
         [Authorize(Policy = FhirScopesPolicy.Access)]
         public async Task<ActionResult<DocumentReference>> ProtectiveKeyword()
         {
-            return await base.PharmanetRequest().ConfigureAwait(false);
+            return await this.PharmanetRequest().ConfigureAwait(false);
         }
     }
 }

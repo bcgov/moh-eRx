@@ -15,17 +15,14 @@
 //-------------------------------------------------------------------------
 namespace Health.PharmaNet.Controllers
 {
-    using System.Security.Claims;
     using System.Threading.Tasks;
 
     using Health.PharmaNet.Common.Authorization.Policy;
-    using Health.PharmaNet.Common.Http;
     using Health.PharmaNet.Parsers;
     using Health.PharmaNet.Services;
 
     using Hl7.Fhir.Model;
 
-    using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
@@ -61,7 +58,7 @@ namespace Health.PharmaNet.Controllers
         }
 
         /// <summary>
-        /// This resource is primarily used for the identification and definition 
+        /// This resource is primarily used for the identification and definition
         /// of a medication for the purposes of prescribing, dispensing, and administering
         /// a medication as well as for making statements about medication use. </summary>
         /// <returns>A DocumentReference response as Json.</returns>
@@ -73,7 +70,7 @@ namespace Health.PharmaNet.Controllers
         [Authorize(Policy = FhirScopesPolicy.Access)]
         public async Task<ActionResult<DocumentReference>> MedicationDispense()
         {
-            return await base.PharmanetRequest().ConfigureAwait(false);
+            return await this.PharmanetRequest().ConfigureAwait(false);
         }
     }
 }

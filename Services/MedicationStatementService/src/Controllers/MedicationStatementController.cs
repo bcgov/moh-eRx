@@ -61,7 +61,10 @@ namespace Health.PharmaNet.Controllers
         }
 
         /// <summary>
-        /// The MedicationRequest is an order or request for both supply of the medication and the instructions for administration of the medication to a patient. The resource is called "MedicationRequest" rather than "MedicationPrescription" or "MedicationOrder" to generalize the use across inpatient and outpatient settings, including care plans, etc., and to harmonize with workflow patterns.
+        /// The MedicationRequest is an order or request for both supply of the medication and the
+        /// instructions for administration of the medication to a patient. The resource is called "MedicationRequest" rather than
+        /// "MedicationPrescription" or "MedicationOrder" to generalize the use across inpatient and outpatient settings, including care plans, etc.,
+        /// and to harmonize with workflow patterns.
         /// </summary>
         /// <returns>A DocumentReference response as Json.</returns>
         /// <response code="200">Returns Ok when the transaction went through.</response>
@@ -72,7 +75,7 @@ namespace Health.PharmaNet.Controllers
         [Authorize(Policy = FhirScopesPolicy.Access)]
         public async Task<ActionResult<DocumentReference>> MedicationStatement()
         {
-            return await base.PharmanetRequest().ConfigureAwait(false);
+            return await this.PharmanetRequest().ConfigureAwait(false);
         }
     }
 }

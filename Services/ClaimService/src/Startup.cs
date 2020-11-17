@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------
-// Copyright © 2020 Province of British Columbia
+// Copyright © 2020 by Province of British Columbia
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ namespace Health.PharmaNet.ClaimService
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+
     /// <summary>
     /// Configures the application during startup.
     /// </summary>
@@ -29,12 +30,9 @@ namespace Health.PharmaNet.ClaimService
         /// </summary>
         /// <param name="env">The injected Environment provider.</param>
         /// <param name="configuration">The injected configuration provider.</param>
-        public Startup(IWebHostEnvironment env, IConfiguration configuration) 
-        : base(
-            env, 
-            configuration)
+        public Startup(IWebHostEnvironment env, IConfiguration configuration)
+        : base(env, configuration)
         {
-            
         }
     }
 }
