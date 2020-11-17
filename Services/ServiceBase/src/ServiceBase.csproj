@@ -12,9 +12,9 @@
     <Reference Include="HL7-dotnetcore" Version="2.19.1">
       <HintPath>.\Libs\HL7-dotnetcore\HL7-dotnetcore.dll</HintPath>
     </Reference>
-    <PackageReference Include="Hl7.Fhir.R4" Version="1.9.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.8" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="4.1.1" />
+    <PackageReference Include="Hl7.Fhir.R4" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="4.2.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\src\Common.csproj" />
