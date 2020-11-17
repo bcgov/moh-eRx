@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>Health.PharmaNet</RootNamespace>
-    <Nullable>enable</Nullable>
-    <LangVersion>8.0</LangVersion>
-    <WarningsAsErrors>CS8600;CS8602;CS8603</WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DocumentationFile>bin\Debug\netcoreapp3.1\ServiceBase.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\net5.0\ServiceBase.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'Health.Pharmanet.ServiceBase' " />
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'HealthGateway.Pharmanet.ServiceBase' " />
@@ -16,19 +12,9 @@
     <Reference Include="HL7-dotnetcore" Version="2.19.1">
       <HintPath>.\Libs\HL7-dotnetcore\HL7-dotnetcore.dll</HintPath>
     </Reference>
-    <PackageReference Include="Hl7.Fhir.R4" Version="1.9.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.8" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="4.1.1" />
-    <PackageReference Include="Microsoft.CodeAnalysis" Version="3.7.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.0">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
+    <PackageReference Include="Hl7.Fhir.R4" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="4.2.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\src\Common.csproj" />
