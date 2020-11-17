@@ -16,6 +16,7 @@
 namespace Health.PharmaNet.Common.Authorization
 {
     using System.Linq;
+    using System.Security.Claims;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
@@ -56,18 +57,27 @@ namespace Health.PharmaNet.Common.Authorization
             }
 
             // Split the scopes string into an array
-            var scopes = context.User.FindFirst(c => c.Type == "scope" && c.Issuer == requirement.ClaimsIssuer).Value.Split(' ');
+            Claim? scopeClaim = context.User.FindFirst(c => c.Type == "scope" && (c.Issuer == requirement.ClaimsIssuer));
 
-            // Succeed if the scope array contains any of the required scopes
-            if (scopes.Any(s => requirement.IsRequiredScope(s) == true))
+            if (scopeClaim != null)
             {
-                this.logger.LogDebug("JWT Has at least one of the required scope claims.");
+                string[] scopes = scopeClaim!.Value.Split(' ');
 
-                context.Succeed(requirement);
+                // Succeed if the scope array contains any of the required scopes
+                if (scopes.Any(s => requirement.IsRequiredScope(s) == true))
+                {
+                    this.logger.LogDebug("JWT Has at least one of the required scope claims.");
+
+                    context.Succeed(requirement);
+                }
+                else
+                {
+                    this.logger.LogError("JWT is missing the required scope claims.");
+                }
             }
             else
             {
-                this.logger.LogError("JWT is missing the required scope claims.");
+                this.logger.LogError("JWT is missing the mandatory scope claim.");
             }
 
             return Task.CompletedTask;

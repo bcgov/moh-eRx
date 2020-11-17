@@ -87,11 +87,13 @@ namespace Health.PharmaNet.Delegates
                 if (!response.IsSuccessStatusCode)
                 {
                     this.logger.LogError($"PharmanetProxy returned with StatusCode := {response.StatusCode}.");
+                    return new PharmanetDelegateMessageModel();
                 }
 
-                string result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                PharmanetDelegateMessageModel responseMessage = JsonSerializer.Deserialize<PharmanetDelegateMessageModel>(result);
-                return responseMessage;
+                string? result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                PharmanetDelegateMessageModel? responseMessage = JsonSerializer.Deserialize<PharmanetDelegateMessageModel>(result);
+
+                return responseMessage!;
             }
         }
     }

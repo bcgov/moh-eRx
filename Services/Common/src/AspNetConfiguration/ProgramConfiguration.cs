@@ -20,6 +20,7 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
+    using Microsoft.Extensions.Logging.Console;
 
     /// <summary>
     /// The program configuration class.
@@ -42,10 +43,7 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
                 .ConfigureLogging(logging =>
                 {
                     logging.ClearProviders();
-                    logging.AddConsole(options =>
-                    {
-                        options.TimestampFormat = "[yyyy/MM/dd HH:mm:ss]";
-                    });
+                    logging.AddConsole();
                 })
                 .ConfigureAppConfiguration((builderContext, config) =>
                 {

@@ -106,8 +106,8 @@ namespace Health.PharmaNet.Controllers
         // [Authorize(Policy = FhirScopesPolicy.Access)]
         protected async Task<ActionResult<DocumentReference>> PharmanetRequest()
         {
-            ClaimsPrincipal user = this.httpContextAccessor.HttpContext.User;
-            string accessToken = await this.httpContextAccessor.HttpContext.GetTokenAsync("access_token").ConfigureAwait(true);
+            ClaimsPrincipal? user = this.httpContextAccessor.HttpContext!.User;
+            string? accessToken = await this.httpContextAccessor.HttpContext.GetTokenAsync("access_token").ConfigureAwait(true);
 
             string jsonString = await this.Request.GetRawBodyStringAsync().ConfigureAwait(false);
             DocumentReference request = this.parser.ParseFhirJson(jsonString);
