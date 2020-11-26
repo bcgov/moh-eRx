@@ -445,4 +445,7 @@ package-lock.json
 #SonarQube
 **/.sonarqube
 
+# MacOS
+.DS_Store
+
 
