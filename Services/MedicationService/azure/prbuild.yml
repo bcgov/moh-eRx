@@ -19,7 +19,7 @@ pr:
             - dev
     paths:
         include:
-            - Apps/$(App.Name)
+            - Apps/MedicationService
             - Apps/Common
 
 steps:

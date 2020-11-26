@@ -17,7 +17,7 @@ trigger:
             - dev
     paths:
         include:
-            - Services/$(App.Name)
+            - Services/MedicationDispenseService
             - Services/Common
 
 pool:
