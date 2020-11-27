@@ -20,7 +20,7 @@ import { Rate, Trend } from 'k6/metrics';
 
 export let client_secret = __ENV.CLIENT_SECRET;
 
-export let maxVus = (__ENV.HG_VUS) ? __ENV.HG_VUS : 300; 
+export let maxVus = (__ENV.VUS) ? __ENV.VUS : 300; 
 maxVus = (maxVus < 1) ? 1 : maxVus;
 export let rampVus = (maxVus / 4).toFixed(0);
 rampVus = (rampVus < 1) ? 1 : rampVus;
@@ -30,7 +30,7 @@ export let errorRate = new Rate('errors');
 
 export let refreshTokenSuccess = new Rate('auth_refresh_successful');
 
-export let environment = (__ENV.API_ENV) ? __ENV.API_ENV : 'test'; // default to test environment
+export let environment = (__ENV.API_ENV) ? __ENV.API_ENV : 'dev'; // default to test environment
 
 export let smokeOptions = {
     vus: 5,
@@ -56,45 +56,20 @@ export let loadOptions = {
 }
 export let groupDuration = Trend('batch');
 
+export let baseUrl = "https://" + environment + "-";
+export let TokenEndpointUrl = "https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos/protocol/openid-connect/token";
+export let ClaimServiceUrl = baseUrl + "claimservice-erx.apps.silver.devops.gov.bc.ca/Pharmanet/v1/api/Claim";
+export let ConsentServiceUrl = baseUrl + "consentservice-erx.apps.silver.devops.gov.bc.ca/Pharmanet/v1/api/Consent";
+export let LocationServiceUrl = baseUrl + "locationservice-erx.apps.silver.devops.gov.bc.ca/Pharmanet/v1/api/Location";
+export let MedicationDispenseServiceUrl = baseUrl + "medicationdispenseservice-erx.apps.silver.devops.gov.bc.ca/Pharmanet/v1/api/MedicationDispense";
+export let MedicationRequestServiceUrl = baseUrl + "medicationrequestservice-erx.apps.silver.devops.gov.bc.ca/Pharmanet/v1/api/MedicationRequest";
+export let MedicationService = baseUrl + "medicationservice-erx.apps.silver.devops.gov.bc.ca/Pharmanet/v1/api/Medication";
+export let MedicationStatementService = baseUrl + "medicationstatementservice-erx.apps.silver.devops.gov.bc.ca/Pharmanet/v1/api/MedicationStatement";
+export let PatientService = baseUrl + "patientservice-erx.apps.silver.devops.gov.bc.ca/Pharmanet/v1/api/Patient";
+export let PractitionerService = baseUrl + "practitionerservice-erx.apps.silver.devops.gov.bc.ca/Pharmanet/v1/api/Practitioner";
 
-export let baseUrl = "https://" + environment + ".healthgateway.gov.bc.ca"; // with this, we can be confident that production can't be hit.
-export let TokenEndpointUrl = "https://" + environment + ".oidc.gov.bc.ca/auth/realms/ff09qn3f/protocol/openid-connect/token";
-export let ClaimServiceUrl = baseUrl + "/api/medicationservice/v1/api/MedicationStatement";
-export let ConsentServiceUrl = baseUrl + "/api/v1/Consent";
-export let LocationServiceUrl = baseUrl + "/api/v1/Location/";
-
-// console.log("Running tests against baseUrl := " + baseUrl);
-
-// Health Gateway WebClient app APIs:
-export let BetaRequestUrl = baseUrl + "/v1/api/BetaRequest";
-export let CommentUrl = baseUrl + "/v1/api/Comment";
-export let CommunicationUrl = baseUrl + "/v1/api/Communication";
-export let ConfigurationUrl = baseUrl + "/v1/api/Configuration";
-export let NoteUrl = baseUrl + "/v1/api/Note";
-export let UserProfileUrl = baseUrl + "/v1/api/UserProfile";
-
-export let ClientId = (__ENV.HG_CLIENT) ? __ENV.HG_CLIENT : 'k6'; // default to k6 client id
-export let OptionsType = (__ENV.HG_TEST) ? __ENV.HG_TEST : 'load'; // default to smoke test
-
-export let users = [
-    { username: "loadtest_01", password: passwd, hdid: null, token: null, refresh: null, expires: null },
-    { username: "loadtest_02", password: passwd, hdid: null, token: null, refresh: null, expires: null },
-    { username: "loadtest_03", password: passwd, hdid: null, token: null, refresh: null, expires: null },
-    { username: "loadtest_04", password: passwd, hdid: null, token: null, refresh: null, expires: null },
-    { username: "loadtest_05", password: passwd, hdid: null, token: null, refresh: null, expires: null },
-    { username: "loadtest_06", password: passwd, hdid: null, token: null, refresh: null, expires: null },
-    { username: "loadtest_07", password: passwd, hdid: null, token: null, refresh: null, expires: null },
-    { username: "loadtest_08", password: passwd, hdid: null, token: null, refresh: null, expires: null },
-    { username: "loadtest_10", password: passwd, hdid: null, token: null, refresh: null, expires: null },
-    { username: "loadtest_11", password: passwd, hdid: null, token: null, refresh: null, expires: null },
-    { username: "loadtest_12", password: passwd, hdid: null, token: null, refresh: null, expires: null },
-    { username: "loadtest_14", password: passwd, hdid: null, token: null, refresh: null, expires: null },
-    { username: "loadtest_15", password: passwd, hdid: null, token: null, refresh: null, expires: null },
-    { username: "loadtest_20", password: passwd, hdid: null, token: null, refresh: null, expires: null },
-    { username: "loadtest_401", password: passwd, hdid: null, token: null, refresh: null, expires: null },
-    { username: "loadtest_402", password: passwd, hdid: null, token: null, refresh: null, expires: null },
-    { username: "loadtest_403", password: passwd, hdid: null, token: null, refresh: null, expires: null },
-];
+export let ClientId = (__ENV.HG_CLIENT) ? __ENV.CLIENT_ID : 'erx_development'; // default to k6 client id
+export let OptionsType = (__ENV.TEST) ? __ENV.TEST : 'load'; // default test type
 
 function parseJwt(jwt) {
     var accessToken = jwt.split('.')[1];
@@ -104,11 +79,6 @@ function parseJwt(jwt) {
     return token_json;
 };
 
-function parseHdid(accessToken) {
-    var json = parseJwt(accessToken);
-    var hdid = json["hdid"];
-    return hdid;
-}
 
 export function groupWithDurationMetric(name, group_function) {
     let start = new Date();
@@ -132,42 +102,39 @@ export function getExpiresTime(seconds) {
     return (Date.now() + seconds * 1000);
 }
 
-export function authorizeUser(user) {
-    if (((__ITER == 0) && (user.token == null)) || (user.hdid == null)) {
-        let loginRes = authenticateUser(user);
+export function authorizeClient(client) {
+    if (((__ITER == 0) && (client.token == null)) {
+        let loginRes = authenticateClient(client);
         check(loginRes, {
             'Authenticated successfully': loginRes === 200
         });
     }
-    refreshTokenIfNeeded(user);
+    refreshTokenIfNeeded(client);
 }
 
-function authenticateUser(user) {
+function authenticateClient(client) {
 
     let auth_form_data = {
-        grant_type: "password",
+        grant_type: "client_credentials_grant",
         client_id: ClientId,
-        audience: "healthgateway",
-        scope: "openid patient/Laboratory.read patient/MedicationStatement.read patient/Immunization.read",
-        username: user.username,
-        password: user.password,
+        audience: "pharmanet",
+        scope: "openid system/*.write system/*.read",
+        client_secret: client.client_secret,
     };
-    console.log("Authenticating username: " + auth_form_data.username + ", KeyCloak client_id: " + ClientId);
+    console.log("Authenticating client: " + auth_form_data.client_id);
     var res = http.post(TokenEndpointUrl, auth_form_data);
     if (res.status == 200) {
         var res_json = JSON.parse(res.body);
-        user.token = res_json["access_token"];
-        user.refresh = res_json["refresh_token"];
+        client.token = res_json["access_token"];
+        client.refresh = res_json["refresh_token"];
         var seconds = res_json["expires_in"];
         user.expires = getExpiresTime(seconds);
-        user.hdid = parseHdid(user.token);
         authSuccess.add(1);
     }
     else {
-        console.log("Authentication Error for user= " + user.username + ". ResponseCode[" + res.status + "] " + res.error);
+        console.log("Authentication Error for client= " + client.client_id + ". ResponseCode[" + res.status + "] " + res.error);
         authSuccess.add(0);
-        user.token = null;
-        user.hdid = null;
+        client.token = null;
     }
 
     return res.status;
@@ -181,20 +148,20 @@ function refreshTokenIfNeeded(user) {
     }
 }
 
-export function refreshUser(user) {
+export function refreshClient(client) {
 
-    if (user.token == null) {
+    if (client.token == null) {
         // means our previous refresh failed.
-        return authenticateUser(user);
+        return authenticateClient(client);
     }
 
     let refresh_form_data = {
         grant_type: "refresh_token",
         client_id: ClientId,
-        refresh_token: user.refresh,
+        refresh_token: client.refresh,
     };
 
-    console.log("Getting Refresh Token for username: " + user.username);
+    console.log("Getting Refresh Token for username: " + client.client_id);
     let res = http.post(TokenEndpointUrl, refresh_form_data);
 
     if (res.status == 200) {
@@ -206,12 +173,11 @@ export function refreshUser(user) {
         refreshTokenSuccess.add(1);
     }
     else {
-        console.log("Token Refresh Error for user= " + user.username + ". ResponseCode[" + res.status + "] " + res.error);
+        console.log("Token Refresh Error for user= " + client.client_id + ". ResponseCode[" + res.status + "] " + res.error);
         refreshTokenSuccess.add(0);
-        user.token = null; // clear out the expiring token, forcing to re-authenticate.
-        user.hdid = null;
+        client.token = null; // clear out the expiring token, forcing to re-authenticate.
         sleep(1);
-        return authenticateUser(user);
+        return authenticateClient(client);
     }
     return res.status;
 }
@@ -224,77 +190,26 @@ export function getRandom(min, max) {
     return Math.random() * (max - min) + min;
 }
 
-export function getHdid(user) {
-    return user.hdid;
-}
 
-export function params(user) {
+export function params(client) {
     var params = {
         headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer " + user.token,
+            Authorization: "Bearer " + client.token,
         },
     };
     return params;
 }
 
-export function timelineRequests(user) {
-    let timelineRequests = {
-        'comments': {
-            method: 'GET',  
-            url: common.CommentUrl + "/" + user.hdid,
-            params: params(user)
-        },
-        'notes': {
-            method: 'GET',
-            url: common.NoteUrl + "/" + user.hdid,
-            params: params(user)
-        },
-        'meds': {
-            method: 'GET',
-            url: common.MedicationServiceUrl + "/" + user.hdid,
-            params: params(user)
-        },
-
-        'labs': {
-            method: 'GET',
-            url: common.LaboratoryServiceUrl + "?hdid=" + user.hdid,
-            params: params(user)
+export function MedicationDispense(client) {
+    let medicationDispenseRequests = {
+        'dispense': {
+            method: 'POST',  
+            url: common.CommentUrl,
+            body: ""
         }
     };
-    return timelineRequests;
-}
-
-export function webClientRequests(user) {
-
-    let webClientRequests = {
-        'patient': {
-            method: 'GET',
-            url: common.PatientServiceUrl + "/" + user.hdid,
-            params: params(user)
-        },
-        'beta': {
-            method: 'GET',
-            url: common.BetaRequestUrl + "/" + user.hdid,
-            params: params(user)
-        },
-        'communication': {
-            method: 'GET',
-            url: common.CommunicationUrl + "/" + user.hdid,
-            params: params(user)
-        },
-        'configuration': {
-            method: 'GET',
-            url: common.ConfigurationUrl + "/" + user.hdid,
-            params: params(user)
-        },
-        'profile': {
-            method: 'GET',
-            url: common.UserProfileUrl + "/" + user.hdid,
-            params: params(user)
-        }
-    };
-    return webClientRequests;
+    return medicationDispenseRequests;
 }
 
 function isObject(val) {

@@ -22,17 +22,15 @@ export let options = common.smokeOptions;
 
 export default function () {
 
-  let user = common.users[common.getRandomInteger(0, common.users.length - 1)];
+  let client_id = common.clients[common.getRandomInteger(0, common.clients.length - 1)];
 
-  common.authorizeUser(user);
+  common.authorizeClient(client_id);
 
   common.groupWithDurationMetric('batch', function () {
 
-    let webClientBatchResponses = http.batch(common.webClientRequests(user));
-    let timelineBatchResponses = http.batch(common.timelineRequests(user));
+    let requestBatch = http.batch(common.requestBatch(client));
 
-    common.checkResponses(webClientBatchResponses);
-    common.checkResponses(timelineBatchResponses);
+    common.checkResponses(requestBatch);
   });
 
   sleep(1);
