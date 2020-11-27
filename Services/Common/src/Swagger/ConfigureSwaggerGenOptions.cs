@@ -73,14 +73,6 @@ namespace Health.PharmaNet.Common.Swagger
             options.OperationFilter<AuthenticationRequirementsOperationFilter>();
 
             this.AddSwaggerDocumentForEachDiscoveredApiVersion(options);
-            SetCommentsPathForSwaggerJsonAndUi(options);
-        }
-
-        private static void SetCommentsPathForSwaggerJsonAndUi(SwaggerGenOptions options)
-        {
-            var xmlFile = $"{Assembly.GetEntryAssembly() !.GetName().Name}.xml";
-            var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-            options.IncludeXmlComments(xmlPath);
         }
 
         private void AddSwaggerDocumentForEachDiscoveredApiVersion(SwaggerGenOptions options)
