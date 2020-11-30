@@ -18,3 +18,33 @@ oc process -f ./nsp.yaml -p NAMESPACE=2f77cb-prod | oc apply -f -
 ```
 
 Please ensure that the AzureAgents have been deployed into the OpenShift tools namespace.
+
+### Common Secrets
+
+The Pharmanet proxy requires 4 secrets be defined
+
+```console
+  oc process -f ./commonSecrets.yaml --parameters
+```
+
+Create the common config
+
+```console
+oc process -f ./commonSecrets.yaml -p PROXY_ENDPOINT=[ENDPOINT] -p PROXY_USERNAME=[USERNAME] -p PROXY_PASSWORD=[PASSWORD] -p PROXY_CERT_PASSWORD=[CERT PASSWORD]| oc apply -f -
+```
+
+### Certificates
+
+The Pharmanet backing service requires a certificate for system to system authentication
+
+```console
+oc create configmap pharmanet-cert --from-file=path/cert
+```
+
+### Services
+
+To create the services for a given namespace do the following
+
+```console
+./deploy_services.sh 2f77cb dev dev
+```
