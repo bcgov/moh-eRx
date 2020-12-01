@@ -54,6 +54,7 @@ namespace Health.PharmaNet.Services
         {
             PharmanetDelegateMessageModel requestMessage = PharmanetDelegateAdapter.FromDocumentReference(request);
             PharmanetDelegateMessageModel responseMessage = await this.pharmanetDelegate.SubmitRequest(requestMessage).ConfigureAwait(false);
+            this.logger.LogDebug("Pharmanet Response: messageTransactionId = ${1} ; hl7v2 = ${2}", responseMessage.TransactionId, responseMessage.Hl7Message);
 
             ResourceReference reference = PharmanetDelegateAdapter.RelatedToDocumentReference(request);
             DocumentReference response = PharmanetDelegateAdapter.FromPharmanetProxyMessage(responseMessage, reference);
