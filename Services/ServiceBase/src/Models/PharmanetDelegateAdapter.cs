@@ -42,6 +42,11 @@ namespace Health.PharmaNet.Models
         private const string MasterIdentifierPattern = @"urn:uuid:(\s+)";
 
         /// <summary>
+        /// The system value of urn:ietf:rfc:3986 for when the value of the identifier is itself a globally unique URI.
+        /// </summary>
+        private const string MasterIdentifierNamespace = @"urn:ietf:rfc:3986";
+
+        /// <summary>
         /// Converts a PharmanetMessage to an HL7 FHIR DocumentReference model.
         /// </summary>
         /// <param name="messageModel">The PharmanetMessage to convert from.</param>
@@ -56,15 +61,16 @@ namespace Health.PharmaNet.Models
             documentReference.Status = DocumentReferenceStatus.Current;
             documentReference.Date = DateTime.UtcNow;
             documentReference.Id = messageModel.TransactionId; // set the GUID as the base artefact ID.
-            documentReference.MasterIdentifier = new Identifier();
-            documentReference.MasterIdentifier.Value = MasterIdentifierUrnPrefix + messageModel.TransactionId;
-
+            documentReference.MasterIdentifier = new Identifier(MasterIdentifierNamespace, MasterIdentifierUrnPrefix + messageModel.TransactionId);
             DocumentReference.ContentComponent item = new DocumentReference.ContentComponent();
             item.Attachment.Data = Encoding.UTF8.GetBytes(messageModel.Hl7Message);
             item.Attachment.ContentType = HL7v2ContentType;
 
             documentReference.Content.Add(item);
-            documentReference.Context.Related.Add(related);
+            if (related != null)
+            {
+                documentReference.Context.Related.Add(related);
+            }
 
             return documentReference;
         }
