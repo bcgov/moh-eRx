@@ -56,6 +56,7 @@ namespace Health.PharmaNet.Models
             documentReference.Status = DocumentReferenceStatus.Current;
             documentReference.Date = DateTime.UtcNow;
             documentReference.Id = messageModel.TransactionId; // set the GUID as the base artefact ID.
+            documentReference.MasterIdentifier = new Identifier();
             documentReference.MasterIdentifier.Value = MasterIdentifierUrnPrefix + messageModel.TransactionId;
 
             DocumentReference.ContentComponent item = new DocumentReference.ContentComponent();

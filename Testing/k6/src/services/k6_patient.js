@@ -22,10 +22,10 @@ export let options = common.OptionConfig();
 
 export default function () {
 
-  let user = common.users[__VU % common.users.length];
+  let client = common.clients[__VU % common.clients.length];
 
-  common.authorizeUser(user);
-  let response = http.get(common.PatientServiceUrl + "/" + user.hdid, common.params(user));
+  common.authorizeClient(client);
+  let response = http.post(common.PatientServiceUrl,  common.FHIRBody, common.params(client));
   common.checkResponse(response);
   sleep(1);
 }
