@@ -20,6 +20,7 @@ namespace Health.PharmaNet.Controllers
 
     using Health.PharmaNet.Authorization.Policy;
     using Health.PharmaNet.Common.Http;
+    using Health.PharmaNet.Models;
     using Health.PharmaNet.Parsers;
     using Health.PharmaNet.Services;
 
@@ -123,8 +124,15 @@ namespace Health.PharmaNet.Controllers
                 return new ChallengeResult();
             }
 
-            DocumentReference response = await this.service.SubmitRequest(request).ConfigureAwait(false);
-            return response;
+            RequestResult<DocumentReference> response = await this.service.SubmitRequest(request).ConfigureAwait(false);
+            DocumentReference? fhirResponse = response.Payload;
+            if (response.IsSuccessStatusCode == false)
+            {
+                string msg = "An Error occurred while invoking Pharmanet endpoint: " + response.ResultErrorMessage;
+                return this.StatusCode((int)response.StatusCode, msg);
+            }
+
+            return new JsonResult(response.Payload);
         }
 
         private Message ExtractV2Message(DocumentReference request)

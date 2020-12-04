@@ -16,6 +16,7 @@
 namespace Health.PharmaNet.Services
 {
     using System.Threading.Tasks;
+    using Health.PharmaNet.Models;
     using Hl7.Fhir.Model;
 
     /// <summary>
@@ -28,6 +29,6 @@ namespace Health.PharmaNet.Services
         /// </summary>
         /// <param name="request">An HL7 FHIR DocumentReference request containing HL7v2 payload.</param>
         /// <returns>Returns a DocumentReference response.</returns>
-        Task<DocumentReference> SubmitRequest(DocumentReference request);
+        Task<RequestResult<DocumentReference>> SubmitRequest(DocumentReference request);
     }
 }

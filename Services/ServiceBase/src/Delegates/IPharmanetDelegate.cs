@@ -29,6 +29,6 @@ namespace Health.PharmaNet.Delegates
     /// </summary>
     /// <param name="request">A PharmanetMessageModel instance containing the HL7v2 request message.</param>
     /// <returns>A PharmanetMessageModel as response.</returns>
-    public Task<PharmanetDelegateMessageModel> SubmitRequest(PharmanetDelegateMessageModel request);
+    public Task<RequestResult<PharmanetDelegateMessageModel>> SubmitRequest(PharmanetDelegateMessageModel request);
   }
 }

@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <IsPackable>false</IsPackable>
     <!-- SonarQube needs this -->
     <SonarQubeTestProject>true</SonarQubeTestProject>
-    <RootNamespace>Health.eRx.ImmunizationTests</RootNamespace>
+    <RootNamespace>Health.PharmaNet.Tests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -36,6 +36,6 @@
     <Folder Include="Controllers.Test\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Template.csproj" />
+    <ProjectReference Include="..\..\src\ServiceBase.csproj" />
   </ItemGroup>
 </Project>

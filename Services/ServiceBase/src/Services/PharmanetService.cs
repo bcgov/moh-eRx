@@ -15,6 +15,7 @@
 //-------------------------------------------------------------------------
 namespace Health.PharmaNet.Services
 {
+    using System;
     using System.Threading.Tasks;
 
     using Health.PharmaNet.Delegates;
@@ -50,14 +51,36 @@ namespace Health.PharmaNet.Services
         /// </summary>
         /// <param name="request">The DocumentReference to be submitted.</param>
         /// <returns>Returns a DocumentReference containing the response from PharmaNet.</returns>
-        public async Task<DocumentReference> SubmitRequest(DocumentReference request)
+        public async Task<RequestResult<DocumentReference>> SubmitRequest(DocumentReference request)
         {
+            RequestResult<DocumentReference> response = new RequestResult<DocumentReference>();
             PharmanetDelegateMessageModel requestMessage = PharmanetDelegateAdapter.FromDocumentReference(request);
-            PharmanetDelegateMessageModel responseMessage = await this.pharmanetDelegate.SubmitRequest(requestMessage).ConfigureAwait(false);
-            this.logger.LogDebug("Pharmanet Response: messageTransactionId = ${1} ; hl7v2 = ${2}", responseMessage.TransactionId, responseMessage.Hl7Message);
 
-            ResourceReference reference = PharmanetDelegateAdapter.RelatedToDocumentReference(request);
-            DocumentReference response = PharmanetDelegateAdapter.FromPharmanetProxyMessage(responseMessage, reference);
+            try
+            {
+                RequestResult<PharmanetDelegateMessageModel> result = await this.pharmanetDelegate.SubmitRequest(requestMessage).ConfigureAwait(false);
+
+                response.StatusCode = result.StatusCode;
+                response.ResultErrorMessage = result.ResultErrorMessage;
+
+                if (result.IsSuccessStatusCode)
+                {
+                    PharmanetDelegateMessageModel? message = result.Payload;
+
+                    this.logger.LogDebug($"Pharmanet Response: messageTransactionId = {message!.TransactionId} ; hl7v2 = {message!.Hl7Message}");
+                    ResourceReference reference = PharmanetDelegateAdapter.RelatedToDocumentReference(request);
+                    response.Payload = PharmanetDelegateAdapter.FromPharmanetProxyMessage(message, reference);
+                }
+            }
+#pragma warning disable CA1031 // Do not catch general exception types
+            catch (Exception ex)
+#pragma warning restore CA1031 // Do not catch general exception types
+            {
+                response.IsSuccessStatusCode = false;
+                response.StatusCode = System.Net.HttpStatusCode.InternalServerError;
+                response.ResultErrorMessage = ex.Message;
+            }
+
             return response;
         }
     }

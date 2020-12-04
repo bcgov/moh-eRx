@@ -70,8 +70,10 @@ namespace Health.PharmaNet.Delegates
         /// </summary>
         /// <param name="request">The PharmanetMessage request containing HL7v2 base 64 payload.</param>
         /// <returns>A PharmanetMessage response.</returns>
-        public async Task<PharmanetDelegateMessageModel> SubmitRequest(PharmanetDelegateMessageModel request)
+        public async Task<RequestResult<PharmanetDelegateMessageModel>> SubmitRequest(PharmanetDelegateMessageModel request)
         {
+            RequestResult<PharmanetDelegateMessageModel> requestResult = new RequestResult<PharmanetDelegateMessageModel>();
+
             Client.DefaultRequestHeaders.Accept.Clear();
             Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
 
@@ -83,17 +85,35 @@ namespace Health.PharmaNet.Delegates
 
             using (HttpContent content = new StringContent(jsonOutput))
             {
-                HttpResponseMessage response = await Client.PostAsync(new Uri(this.pharmanetDelegateConfig.Endpoint), content).ConfigureAwait(false);
-                if (!response.IsSuccessStatusCode)
+                HttpResponseMessage response = await Client.PostAsync(new Uri(this.pharmanetDelegateConfig.Endpoint), content).ConfigureAwait(true);
+                requestResult.IsSuccessStatusCode = response.IsSuccessStatusCode;
+
+                if (!requestResult.IsSuccessStatusCode)
                 {
-                    this.logger.LogError($"PharmanetProxy returned with StatusCode := {response.StatusCode}.");
-                    return new PharmanetDelegateMessageModel();
+                    this.logger.LogError($"PharmanetDelegate Proxy call returned with StatusCode := {response.StatusCode}.");
+                    return requestResult;
+                }
+                else
+                {
+                    try
+                    {
+                        string? result = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
+                        PharmanetDelegateMessageModel? responseMessage = JsonSerializer.Deserialize<PharmanetDelegateMessageModel>(result);
+                        requestResult.Payload = responseMessage;
+                    }
+#pragma warning disable CA1031 // Do not catch general exception types
+                    catch (Exception ex)
+#pragma warning restore CA1031 // Do not catch general exception types
+                    {
+                        this.logger.LogError($"PharmanetDelegate Exception := {ex.Message}.");
+
+                        requestResult.IsSuccessStatusCode = false;
+                        requestResult.ResultErrorMessage = ex.Message;
+                        return requestResult;
+                    }
                 }
 
-                string? result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                PharmanetDelegateMessageModel? responseMessage = JsonSerializer.Deserialize<PharmanetDelegateMessageModel>(result);
-
-                return responseMessage!;
+                return requestResult;
             }
         }
     }

@@ -1,4 +1,5 @@
-namespace HealthGateway.Immunization.Test.Controller
+namespace Health.PharmaNet.Test
+
 {
     using System.Collections.Generic;
     using System.Security.Claims;
@@ -14,15 +15,14 @@ namespace HealthGateway.Immunization.Test.Controller
     using Moq;
     using Xunit;
 
-    public class TemplateController_Test
+    using Health.PharmaNet.Controllers;
+
+    public class ServiceBaseController_Test
     {
         [Fact]
-        public void ShouldOk()
+        public void GetPharmanetResponse()
         {
-            Mock<IHttpContextAccessor> httpContextAccessorMock = new Mock<IHttpContextAccessor>();
-            TemplateController controller = new TemplateController(new Mock<ILogger<TemplateController>>().Object,httpContextAccessorMock.Object);
-            ActionResult<string> result = controller.Test("123");
-            Assert.True(true);
+           
         }
     }
 }
