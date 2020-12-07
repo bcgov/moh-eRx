@@ -16,6 +16,7 @@
 namespace Health.PharmaNet.Common.Authorization
 {
     using System;
+    using System.IdentityModel.Tokens.Jwt;
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
@@ -54,10 +55,9 @@ namespace Health.PharmaNet.Common.Authorization
             {
                 this.logger.LogError("No authenticated user.");
                 return Task.CompletedTask;
-
             }
 
-            Claim? scopeClaim = context.User.Claims.FirstOrDefault(c => string.Equals(c.Type, "scope", StringComparison.OrdinalIgnoreCase) && c.Issuer == requirement.ClaimsIssuer);
+            Claim? scopeClaim = context.User.FindFirst(c => string.Equals(c.Type, "scope", StringComparison.OrdinalIgnoreCase) && c.Issuer == requirement.ClaimsIssuer);
 
             // If user does not have the scope claim, get out of here
             if (scopeClaim == null)
@@ -67,25 +67,18 @@ namespace Health.PharmaNet.Common.Authorization
             }
 
             // Split the scopes string into an array
-            if (scopeClaim != null)
+            string[] scopes = scopeClaim!.Value.Split(' ');
+
+            // Succeed if the scope array contains any of the required scopes
+            if (scopes.Any(s => requirement.IsRequiredScope(s) == true))
             {
-                string[] scopes = scopeClaim!.Value.Split(' ');
+                this.logger.LogDebug("JWT Has at least one of the required scope claims.");
 
-                // Succeed if the scope array contains any of the required scopes
-                if (scopes.Any(s => requirement.IsRequiredScope(s) == true))
-                {
-                    this.logger.LogDebug("JWT Has at least one of the required scope claims.");
-
-                    context.Succeed(requirement);
-                }
-                else
-                {
-                    this.logger.LogError("JWT is missing the required scope claims.");
-                }
+                context.Succeed(requirement);
             }
             else
             {
-                this.logger.LogError("JWT is missing the mandatory scope claim.");
+                this.logger.LogError("JWT is missing the required scope claims.");
             }
 
             return Task.CompletedTask;
