@@ -52,7 +52,7 @@ namespace Health.PharmaNet.Common.Authorization
         {
             if (context.User == null)
             {
-                this.logger.LogDebug("No authenticated user.");
+                this.logger.LogError("No authenticated user.");
                 return Task.CompletedTask;
 
             }
@@ -62,7 +62,7 @@ namespace Health.PharmaNet.Common.Authorization
             // If user does not have the scope claim, get out of here
             if (scopeClaim == null)
             {
-                this.logger.LogDebug("Missing scope claim in JWT");
+                this.logger.LogError("Missing scope claim in JWT");
                 return Task.CompletedTask;
             }
 
