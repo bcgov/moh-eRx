@@ -62,7 +62,7 @@ namespace Health.PharmaNet.Common.Authorization
             // If user does not have the scope claim, get out of here
             if (scopeClaim == null)
             {
-                this.logger.LogError("Missing scope claim in JWT");
+                this.logger.LogError("Scope not found in ClaimsPrincipal: failed to find 'scope' claim in Access Token)");
                 return Task.CompletedTask;
             }
 
