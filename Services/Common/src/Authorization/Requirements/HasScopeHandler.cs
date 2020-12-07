@@ -15,6 +15,7 @@
 //-------------------------------------------------------------------------
 namespace Health.PharmaNet.Common.Authorization
 {
+    using System;
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
@@ -49,16 +50,23 @@ namespace Health.PharmaNet.Common.Authorization
         /// <returns>A context Task.</returns>
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, HasScopesRequirement requirement)
         {
+            if (context.User == null)
+            {
+                this.logger.LogDebug("No authenticated user.");
+                return Task.CompletedTask;
+
+            }
+
+            Claim? scopeClaim = context.User.Claims.FirstOrDefault(c => string.Equals(c.Type, "scope", StringComparison.OrdinalIgnoreCase) && c.Issuer == requirement.ClaimsIssuer);
+
             // If user does not have the scope claim, get out of here
-            if (!context.User.HasClaim(c => c.Type == "scope" && c.Issuer == requirement.ClaimsIssuer))
+            if (scopeClaim == null)
             {
                 this.logger.LogDebug("Missing scope claim in JWT");
                 return Task.CompletedTask;
             }
 
             // Split the scopes string into an array
-            Claim? scopeClaim = context.User.FindFirst(c => c.Type == "scope" && (c.Issuer == requirement.ClaimsIssuer));
-
             if (scopeClaim != null)
             {
                 string[] scopes = scopeClaim!.Value.Split(' ');

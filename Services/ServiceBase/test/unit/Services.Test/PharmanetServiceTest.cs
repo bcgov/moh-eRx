@@ -39,6 +39,12 @@ namespace Health.PharmaNet.Test
 
     public class PharmanetServiceTest
     {
+        [Setup]
+        public void Setup()
+        {
+
+        }
+        
         [Fact]
         public void ValidatePharmanetResponse()
         {
