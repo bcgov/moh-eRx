@@ -16,6 +16,7 @@
 namespace Health.PharmaNet.Test
 {
     using System.Collections.Generic;
+    using System.Net;
     using System.Security.Claims;
     using System.Security.Principal;
     using System.Threading.Tasks;
@@ -23,8 +24,11 @@ namespace Health.PharmaNet.Test
     using DeepEqual.Syntax;
 
     using Health.PharmaNet.Controllers;
-    using Health.PharmaNet.Services;
+    using Health.PharmaNet.Delegates;
     using Health.PharmaNet.Models;
+    using Health.PharmaNet.Services;
+
+    using Hl7.Fhir.Model;
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
@@ -33,31 +37,20 @@ namespace Health.PharmaNet.Test
     using Moq;
     using Xunit;
 
-    public class ServiceBaseControllerTest
+    public class PharmanetServiceTest
     {
         [Fact]
-        public void ShouldGetPharmanetResponse()
+        public void ValidatePharmanetResponse()
         {
-           Mock<IPharmanetService> serviceMock = new Mock<IPharmanetService>();
-
-        serviceMock.Setup(s => s.PharmanetRequest(It.IsAny<DocumentReference>())).Returns(new DocumentReference());
-
-        Mock<ILogger> loggerMock = new Mock<ILogger>();
-
-        string hl7v2 = "{Mock HL7v2}";
-
-                    ILogger<ServiceBaseController> logger,
-            IPharmanetService service,
-            IHl7Parser parser,
-            IConfiguration configuration,
-            IAuthorizationService authorizationService,
-            IHttpContextAccessor httpContextAccessor)
-
-        ServiceBaseController controller = new ServiceBaseController(
-                loggerMock.Object, 
-                serviceMock.Object,
-                parser);
-
+            var mockDelegate = new Mock<IPharmanetDelegate>();
+            RequestResult<DocumentReference> delegateResult = new RequestResult<DocumentReference>()
+            {
+                StatusCode = HttpStatusCode.OK,
+                IsSuccessStatusCode = true,
+                Payload = new DocumentReference()
+                {
+                },
+            };
 
         }
     }
