@@ -85,7 +85,9 @@ namespace Health.PharmaNet.Delegates
 
             using (HttpContent content = new StringContent(jsonOutput))
             {
-                HttpResponseMessage response = await Client.PostAsync(new Uri(this.pharmanetDelegateConfig.Endpoint), content).ConfigureAwait(true);
+                Uri delegateUri = new Uri(this.pharmanetDelegateConfig.Endpoint);
+
+                HttpResponseMessage response = await Client.PostAsync(delegateUri, content).ConfigureAwait(true);
                 requestResult.IsSuccessStatusCode = response.IsSuccessStatusCode;
 
                 if (!requestResult.IsSuccessStatusCode)

@@ -97,9 +97,12 @@ namespace Health.PharmaNet.Models
 
             byte[] data = content[0].Attachment.Data;
             string contentType = content[0].Attachment.ContentType;
-
             bool good = (data.Length > 0) && contentType.Equals(HL7v2ContentType, System.StringComparison.Ordinal);
-            messageModel.Hl7Message = good ? Encoding.UTF8.GetString(data) : string.Empty;
+
+            // string hl7v2message = Encoding.UTF8.GetString(data);
+            messageModel.Hl7Message = good ? Convert.ToBase64String(data) : string.Empty;
+
+            byte[] bytes = Convert.FromBase64String(messageModel.Hl7Message);
 
             return messageModel;
         }
