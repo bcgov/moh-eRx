@@ -87,6 +87,8 @@ namespace Health.PharmaNet.Delegates
             {
                 Uri delegateUri = new Uri(this.pharmanetDelegateConfig.Endpoint);
 
+                this.logger.LogDebug($"PharmanetDelegate Proxy POST {delegateUri}. Payload: {jsonOutput}");
+
                 HttpResponseMessage response = await Client.PostAsync(delegateUri, content).ConfigureAwait(true);
                 requestResult.IsSuccessStatusCode = response.IsSuccessStatusCode;
 
@@ -102,6 +104,7 @@ namespace Health.PharmaNet.Delegates
                         string? result = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
                         PharmanetDelegateMessageModel? responseMessage = JsonSerializer.Deserialize<PharmanetDelegateMessageModel>(result);
                         requestResult.Payload = responseMessage;
+                        this.logger.LogDebug($"PharmanetDelegate Proxy Response: {responseMessage}");
                     }
 #pragma warning disable CA1031 // Do not catch general exception types
                     catch (Exception ex)
