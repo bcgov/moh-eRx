@@ -83,7 +83,9 @@ namespace Health.PharmaNet.Delegates
 
             string jsonOutput = JsonSerializer.Serialize<PharmanetDelegateMessageModel>(request);
 
-            using (HttpContent content = new StringContent(jsonOutput))
+            using HttpContent content = new StringContent(jsonOutput);
+
+            try
             {
                 Uri delegateUri = new Uri(this.pharmanetDelegateConfig.Endpoint);
 
@@ -99,27 +101,24 @@ namespace Health.PharmaNet.Delegates
                 }
                 else
                 {
-                    try
-                    {
-                        string? result = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
-                        PharmanetDelegateMessageModel? responseMessage = JsonSerializer.Deserialize<PharmanetDelegateMessageModel>(result);
-                        requestResult.Payload = responseMessage;
-                        this.logger.LogDebug($"PharmanetDelegate Proxy Response: {responseMessage}");
-                    }
-#pragma warning disable CA1031 // Do not catch general exception types
-                    catch (Exception ex)
-#pragma warning restore CA1031 // Do not catch general exception types
-                    {
-                        this.logger.LogError($"PharmanetDelegate Exception := {ex.Message}.");
-
-                        requestResult.IsSuccessStatusCode = false;
-                        requestResult.ResultErrorMessage = ex.Message;
-                        return requestResult;
-                    }
+                    string? result = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
+                    PharmanetDelegateMessageModel? responseMessage = JsonSerializer.Deserialize<PharmanetDelegateMessageModel>(result);
+                    requestResult.Payload = responseMessage;
+                    this.logger.LogDebug($"PharmanetDelegate Proxy Response: {responseMessage}");
                 }
+            }
+#pragma warning disable CA1031 // Do not catch general exception types
+            catch (Exception ex)
+#pragma warning restore CA1031 // Do not catch general exception types
+            {
+                this.logger.LogError($"PharmanetDelegate Exception := {ex.Message}.");
 
+                requestResult.IsSuccessStatusCode = false;
+                requestResult.ResultErrorMessage = ex.Message;
                 return requestResult;
             }
+
+            return requestResult;
         }
     }
 }
