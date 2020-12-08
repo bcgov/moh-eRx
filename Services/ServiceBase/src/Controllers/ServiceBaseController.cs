@@ -105,12 +105,12 @@ namespace Health.PharmaNet.Controllers
         // [Produces("application/fhir+json")]
         // [ProducesResponseType(StatusCodes.Status200OK)]
         // [Authorize(Policy = FhirScopesPolicy.Access)]
+        [Authorize]
         protected async Task<ActionResult<DocumentReference>> PharmanetRequest()
         {
-            ClaimsPrincipal? user = HttpContext!.User;
-            string? accessToken = await this.HttpContext.GetTokenAsync("access_token").ConfigureAwait(true);
+            ClaimsPrincipal? user = this.HttpContext!.User;
 
-            string jsonString = await this.Request.GetRawBodyStringAsync().ConfigureAwait(false);
+            string jsonString = await this.Request.GetRawBodyStringAsync().ConfigureAwait(true);
             DocumentReference request = this.parser.ParseFhirJson(jsonString);
 
             Message message = this.ExtractV2Message(request);
@@ -118,13 +118,13 @@ namespace Health.PharmaNet.Controllers
             AuthorizationResult result = await this.authorizationService.AuthorizeAsync(
                     user,
                     message,
-                    Hl7v2ScopesPolicy.MessageTypeScopeAccess).ConfigureAwait(false);
+                    Hl7v2ScopesPolicy.MessageTypeScopeAccess).ConfigureAwait(true);
             if (!result.Succeeded)
             {
                 return new ChallengeResult();
             }
 
-            RequestResult<DocumentReference> response = await this.service.SubmitRequest(request).ConfigureAwait(false);
+            RequestResult<DocumentReference> response = await this.service.SubmitRequest(request).ConfigureAwait(true);
             DocumentReference? fhirResponse = response.Payload;
             if (response.IsSuccessStatusCode == false)
             {

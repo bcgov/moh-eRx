@@ -58,7 +58,7 @@ namespace Health.PharmaNet.Services
 
             try
             {
-                RequestResult<PharmanetDelegateMessageModel> result = await this.pharmanetDelegate.SubmitRequest(requestMessage).ConfigureAwait(false);
+                RequestResult<PharmanetDelegateMessageModel> result = await this.pharmanetDelegate.SubmitRequest(requestMessage).ConfigureAwait(true);
 
                 response.StatusCode = result.StatusCode;
                 response.ResultErrorMessage = result.ResultErrorMessage;
