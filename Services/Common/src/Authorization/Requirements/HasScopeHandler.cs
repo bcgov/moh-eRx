@@ -20,6 +20,8 @@ namespace Health.PharmaNet.Common.Authorization
     using System.Security.Claims;
     using System.Threading.Tasks;
 
+    using Health.PharmaNet.Common.Authorization.Claims;
+
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.Extensions.Logging;
 
@@ -66,12 +68,12 @@ namespace Health.PharmaNet.Common.Authorization
                 return Task.CompletedTask;
             }
 
-            Claim? scopeClaim = context.User.FindFirst(c => string.Equals(c.Type, "scope", StringComparison.OrdinalIgnoreCase) && c.Issuer == requirement.ClaimsIssuer);
+            Claim? scopeClaim = context.User.Claims.FirstOrDefault<Claim>(c => string.Equals(c.Type, PharmanetAPIClaims.Scope, StringComparison.OrdinalIgnoreCase) && string.Equals(c.Issuer, requirement.ClaimsIssuer, StringComparison.OrdinalIgnoreCase));
 
             // If user does not have the scope claim, get out of here
             if (scopeClaim == null)
             {
-                this.logger.LogError("Failed to find 'scope' claim in Access Token)");
+                this.logger.LogError("scopeClaim: Failed to find 'scope' claim in Access Token)");
                 return Task.CompletedTask;
             }
 
