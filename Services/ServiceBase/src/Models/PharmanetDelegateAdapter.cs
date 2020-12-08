@@ -39,7 +39,7 @@ namespace Health.PharmaNet.Models
         /// <summary>
         /// The regular expression pattern to use to extract just the UUID from the master identifier.
         /// </summary>
-        private const string MasterIdentifierPattern = @"urn:uuid:(\s+)";
+        private const string MasterIdentifierPattern = @"^urn:uuid:(.*)$";
 
         /// <summary>
         /// The system value of urn:ietf:rfc:3986 for when the value of the identifier is itself a globally unique URI.
@@ -88,7 +88,7 @@ namespace Health.PharmaNet.Models
             foreach (Match? m in Regex.Matches(documentReference.MasterIdentifier.Value, MasterIdentifierPattern))
             {
                 GroupCollection groups = m!.Groups;
-                string value = groups[0].Value;
+                string value = groups[1].Value;
                 messageModel.TransactionId = value; // The GUID/UUID
                 break;
             }
