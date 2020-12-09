@@ -12,6 +12,5 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\src\Common.csproj" />
-    <ProjectReference Include="..\..\ServiceBase\src\ServiceBase.csproj" />
   </ItemGroup>
 </Project>

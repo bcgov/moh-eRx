@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\src\Common.csproj", "{6FD0CAD2-3B97-4146-9FB1-D5A858666EC7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBase", "ServiceBase\src\ServiceBase.csproj", "{A3AB4A17-46DE-4245-A817-1CA3E9B38B9A}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedicationRequestService", "MedicationRequestService\src\MedicationRequestService.csproj", "{39285F96-BA19-443E-B3D7-327B685BD321}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClaimService", "ClaimService\src\ClaimService.csproj", "{9680F1BF-9D45-4463-BC9C-9B94D7065FCE}"
