@@ -102,8 +102,6 @@ namespace Health.PharmaNet.Models
 
             messageModel.Hl7Message = good ? (base64Encode ? Convert.ToBase64String(data) : Encoding.UTF8.GetString(data)) : string.Empty;
 
-            byte[] bytes = Convert.FromBase64String(messageModel.Hl7Message);
-
             return messageModel;
         }
 
