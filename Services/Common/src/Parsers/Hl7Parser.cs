@@ -50,12 +50,12 @@ namespace Health.PharmaNet.Parsers
                 {
                     if (!message.ParseMessage())
                     {
-                        throw new ArgumentException("Failed to parse ${1}", nameof(messageString));
+                        throw new ArgumentException("HL7v2 Parsing Error.");
                     }
                 }
                 catch (Exception ex)
                 {
-                    throw new ArgumentException("Failed to parse ${1}. ${2}", nameof(messageString), ex);
+                    throw new ArgumentException($"HL7v2 Exception: {1}. {2}", messageString, ex);
                 }
 
                 return message;
