@@ -16,12 +16,18 @@
 namespace Health.PharmaNet.ServiceBase
 {
     using System;
+    using System.Net.Http;
+    using System.Net.Http.Headers;
+    using System.Net.Mime;
+    using System.Security.Cryptography.X509Certificates;
+    using System.Text;
 
     using Health.PharmaNet.Authorization;
     using Health.PharmaNet.Authorization.Policy;
     using Health.PharmaNet.Common.AspNetConfiguration;
 
     using Health.PharmaNet.Delegates;
+    using Health.PharmaNet.Models;
     using Health.PharmaNet.Parsers;
     using Health.PharmaNet.Services;
 
@@ -88,8 +94,31 @@ namespace Health.PharmaNet.ServiceBase
                 });
             });
 
-            // Add Services
-            services.AddTransient<IPharmanetDelegate, PharmanetDelegate>();
+            PharmanetDelegateConfig pharmanetDelegateConfig = new PharmanetDelegateConfig();
+            this.configuration.Bind("PharmanetProxy", pharmanetDelegateConfig);
+
+            // Add http client services at ConfigureServices(IServiceCollection services).
+            services.AddHttpClient<IPharmanetDelegate, PharmanetDelegate>("PharmanetClient", c =>
+            {
+                c.BaseAddress = new Uri(pharmanetDelegateConfig.Endpoint);
+                c.DefaultRequestHeaders.Accept.Clear();
+                c.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
+
+                byte[] authdata = Encoding.ASCII.GetBytes(pharmanetDelegateConfig.Username + ":" + pharmanetDelegateConfig.Password);
+
+                c.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", System.Convert.ToBase64String(authdata));
+            }).ConfigurePrimaryHttpMessageHandler(() =>
+            {
+                HttpClientHandler handler = new HttpClientHandler();
+
+                // Load Certificate.
+                string certPath = pharmanetDelegateConfig.ClientCertificatePath;
+                string certPassword = pharmanetDelegateConfig.ClientCertificatePassword;
+                handler.ClientCertificates.Add(new X509Certificate2(System.IO.File.ReadAllBytes(certPath), certPassword));
+                return handler;
+            });
+
+            // Add services.
             services.AddTransient<IPharmanetService, PharmanetService>();
             services.AddTransient<IHl7Parser, Hl7Parser>();
         }

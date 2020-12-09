@@ -21,6 +21,11 @@ namespace Health.PharmaNet.Models
     public class PharmanetDelegateConfig
     {
         /// <summary>
+        /// The appsettings.json section.
+        /// </summary>
+        public const string ConfigurationSectionKey = "PharmanetProxy";
+
+        /// <summary>
         /// Gets or sets the endpoint path for the protective word service.
         /// </summary>
         public string Endpoint { get; set; } = string.Empty;

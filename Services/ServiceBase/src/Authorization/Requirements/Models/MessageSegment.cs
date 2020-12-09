@@ -34,6 +34,6 @@ namespace Health.PharmaNet.Authorization.Requirements.Models
         /// Gets the List of Segment Fields.
         /// </summary>
         [JsonPropertyName("SegmentFields")]
-        public List<SegmentField> SegmentFields { get; } = new List<SegmentField>();
+        public IList<SegmentField> SegmentFields { get; } = new List<SegmentField>();
     }
 }

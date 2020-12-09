@@ -27,6 +27,6 @@ namespace Health.PharmaNet.Authorization.Requirements.Models
         /// Gets the Messages configured.
         /// </summary>
         [JsonPropertyName("MessageConfig")]
-        public List<MessageConfig> MessageConfig { get; } = new List<MessageConfig>();
+        public IList<MessageConfig> MessageConfig { get; } = new List<MessageConfig>();
     }
 }

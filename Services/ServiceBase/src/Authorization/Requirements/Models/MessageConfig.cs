@@ -39,7 +39,7 @@ namespace Health.PharmaNet.Authorization.Requirements.Models
         /// Gets the segment fields.
         /// </summary>
         [JsonPropertyName("MessageSegments")]
-        public List<MessageSegment> MessageSegments { get; } = new List<MessageSegment>();
+        public IList<MessageSegment> MessageSegments { get; } = new List<MessageSegment>();
 
         /// <summary>
         /// Gets or sets the scope field.

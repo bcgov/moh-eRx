@@ -34,35 +34,24 @@ namespace Health.PharmaNet.Delegates
     /// </summary>
     public class PharmanetDelegate : IPharmanetDelegate
     {
-        private const string ConfigurationSectionKey = "PharmanetProxy";
-
-        private static readonly HttpClientHandler ClientHandler = new HttpClientHandler();
-
-        private static readonly HttpClient Client = new HttpClient(ClientHandler);
-
         private readonly IConfiguration configuration;
-
         private readonly ILogger logger;
-
+        private readonly HttpClient httpClient;
         private readonly PharmanetDelegateConfig pharmanetDelegateConfig;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PharmanetDelegate"/> class.
         /// </summary>
+        /// <param name="client">The injected HttpClient from service injection.</param>
         /// <param name="logger">Injected Logger Provider.</param>
         /// <param name="configuration">The injected configuration provider.</param>
-        public PharmanetDelegate(ILogger<PharmanetDelegate> logger, IConfiguration configuration)
+        public PharmanetDelegate(HttpClient client, ILogger<PharmanetDelegate> logger, IConfiguration configuration)
         {
+            this.httpClient = client;
             this.logger = logger;
             this.configuration = configuration;
             this.pharmanetDelegateConfig = new PharmanetDelegateConfig();
-            this.configuration.Bind(ConfigurationSectionKey, this.pharmanetDelegateConfig);
-
-            // Load Certificate
-            string certPath = this.pharmanetDelegateConfig.ClientCertificatePath;
-            string certPassword = this.pharmanetDelegateConfig.ClientCertificatePassword;
-
-            ClientHandler.ClientCertificates.Add(new X509Certificate2(System.IO.File.ReadAllBytes(certPath), certPassword));
+            this.configuration.Bind(PharmanetDelegateConfig.ConfigurationSectionKey, this.pharmanetDelegateConfig);
         }
 
         /// <summary>
@@ -74,13 +63,6 @@ namespace Health.PharmaNet.Delegates
         {
             RequestResult<PharmanetDelegateMessageModel> requestResult = new RequestResult<PharmanetDelegateMessageModel>();
 
-            Client.DefaultRequestHeaders.Accept.Clear();
-            Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
-
-            byte[] authdata = Encoding.ASCII.GetBytes(this.pharmanetDelegateConfig.Username + ":" + this.pharmanetDelegateConfig.Password);
-
-            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", System.Convert.ToBase64String(authdata));
-
             string jsonOutput = JsonSerializer.Serialize<PharmanetDelegateMessageModel>(request);
 
             using HttpContent content = new StringContent(jsonOutput);
@@ -91,7 +73,7 @@ namespace Health.PharmaNet.Delegates
 
                 this.logger.LogDebug($"PharmanetDelegate Proxy POST {delegateUri}. Payload: {jsonOutput}");
 
-                HttpResponseMessage response = await Client.PostAsync(delegateUri, content).ConfigureAwait(true);
+                HttpResponseMessage response = await this.httpClient.PostAsync(delegateUri, content).ConfigureAwait(true);
                 requestResult.IsSuccessStatusCode = response.IsSuccessStatusCode;
 
                 if (!requestResult.IsSuccessStatusCode)
