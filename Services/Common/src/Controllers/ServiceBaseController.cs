@@ -15,6 +15,8 @@
 //-------------------------------------------------------------------------
 namespace Health.PharmaNet.Controllers
 {
+    using System;
+    using System.Net;
     using System.Security.Claims;
     using System.Threading.Tasks;
 
@@ -111,9 +113,20 @@ namespace Health.PharmaNet.Controllers
             ClaimsPrincipal? user = this.HttpContext!.User;
 
             string jsonString = await this.Request.GetRawBodyStringAsync().ConfigureAwait(true);
-            DocumentReference request = this.parser.ParseFhirJson(jsonString);
-
-            Message message = this.ExtractV2Message(request);
+            DocumentReference request;
+            Message message;
+            try
+            {
+                request = this.parser.ParseFhirJson(jsonString);
+                message = this.ExtractV2Message(request);
+            }
+#pragma warning disable CA1031 // Do not catch general exception types
+            catch (Exception ex)
+#pragma warning restore CA1031 // Do not catch general exception types
+            {
+                // Return Bad Message Http Error since the HL7 payload could not be parsed.
+                return this.StatusCode((int)HttpStatusCode.BadRequest, ex.Message);
+            }
 
             AuthorizationResult result = await this.authorizationService.AuthorizeAsync(
                     user,
