@@ -7,7 +7,6 @@
     <DocumentationFile>bin\Debug\net5.0\PatientService.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'PatientService' " />
-  <PropertyGroup Condition=" '$(RunConfiguration)' == 'MedicationRequestService' " />
   <ItemGroup>
     <Content Include=".vscode\launch.json" />
   </ItemGroup>

@@ -6,8 +6,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DocumentationFile>bin\Debug\net5.0\ServiceBase.xml</DocumentationFile>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Health.Pharmanet.ServiceBase' " />
-  <PropertyGroup Condition=" '$(RunConfiguration)' == 'HealthGateway.Pharmanet.ServiceBase' " />
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'ServiceBase' " />
   <ItemGroup>
     <Reference Include="HL7-dotnetcore" Version="2.19.1">
       <HintPath>.\Libs\HL7-dotnetcore\HL7-dotnetcore.dll</HintPath>
