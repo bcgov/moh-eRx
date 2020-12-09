@@ -79,8 +79,9 @@ namespace Health.PharmaNet.Models
         /// Converts an HL7 FHIR DocumentReference model to a PharmanetMessage model.
         /// </summary>
         /// <param name="documentReference">The DocumentReference to convert from.</param>
+        /// <param name="base64Encode">A value indicating whether to base64 encode the HL7v2.</param>
         /// <returns>Returns a new PharmanetMessage mapped from the provided DocumentReference.</returns>
-        public static PharmanetDelegateMessageModel FromDocumentReference(DocumentReference documentReference)
+        public static PharmanetDelegateMessageModel FromDocumentReference(DocumentReference documentReference, bool base64Encode)
         {
             PharmanetDelegateMessageModel messageModel = new PharmanetDelegateMessageModel();
 
@@ -99,8 +100,7 @@ namespace Health.PharmaNet.Models
             string contentType = content[0].Attachment.ContentType;
             bool good = (data.Length > 0) && contentType.Equals(HL7v2ContentType, System.StringComparison.Ordinal);
 
-            // string hl7v2message = Encoding.UTF8.GetString(data);
-            messageModel.Hl7Message = good ? Convert.ToBase64String(data) : string.Empty;
+            messageModel.Hl7Message = good ? (base64Encode ? Convert.ToBase64String(data) : Encoding.UTF8.GetString(data)) : string.Empty;
 
             byte[] bytes = Convert.FromBase64String(messageModel.Hl7Message);
 

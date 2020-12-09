@@ -23,6 +23,7 @@ namespace Health.PharmaNet.Services
 
     using Hl7.Fhir.Model;
 
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
 
     /// <summary>
@@ -32,18 +33,22 @@ namespace Health.PharmaNet.Services
     {
         private readonly IPharmanetDelegate pharmanetDelegate;
         private readonly ILogger<PharmanetService> logger;
+        private readonly IConfiguration configuration;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PharmanetService"/> class.
         /// </summary>
         /// <param name="logger">Injected Logger Provider.</param>
         /// <param name="pharmanetDelegate">Injected delegate.</param>
+        /// <param name="configuration">Injected configuration.</param>
         public PharmanetService(
             ILogger<PharmanetService> logger,
-            IPharmanetDelegate pharmanetDelegate)
+            IPharmanetDelegate pharmanetDelegate,
+            IConfiguration configuration)
         {
             this.pharmanetDelegate = pharmanetDelegate;
             this.logger = logger;
+            this.configuration = configuration;
         }
 
         /// <summary>
@@ -54,7 +59,8 @@ namespace Health.PharmaNet.Services
         public async Task<RequestResult<DocumentReference>> SubmitRequest(DocumentReference request)
         {
             RequestResult<DocumentReference> response = new RequestResult<DocumentReference>();
-            PharmanetDelegateMessageModel requestMessage = PharmanetDelegateAdapter.FromDocumentReference(request);
+            bool base64Encode = this.configuration.GetSection(PharmanetDelegateConfig.ConfigurationSectionKey).GetValue<bool>("Base64EncodeHl7Message");
+            PharmanetDelegateMessageModel requestMessage = PharmanetDelegateAdapter.FromDocumentReference(request, base64Encode);
 
             try
             {

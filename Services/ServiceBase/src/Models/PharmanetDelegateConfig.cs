@@ -15,6 +15,8 @@
 //-------------------------------------------------------------------------
 namespace Health.PharmaNet.Models
 {
+    using System.Text.Json.Serialization;
+
     /// <summary>
     /// The configuration settings for connecting to the PharmanetProxy.
     /// </summary>
@@ -26,28 +28,39 @@ namespace Health.PharmaNet.Models
         public const string ConfigurationSectionKey = "PharmanetProxy";
 
         /// <summary>
+        /// Gets or sets a value indicating whether to Base64 Encode the Hl7v2 payload.
+        /// </summary>
+        [JsonPropertyName("Base64EncodeHl7Message")]
+        public bool Base64EncodeHl7Message { get; set; } = true;
+
+        /// <summary>
         /// Gets or sets the endpoint path for the protective word service.
         /// </summary>
+        [JsonPropertyName("Endpoint")]
         public string Endpoint { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the username to use for authentication.
         /// </summary>
+        [JsonPropertyName("Username")]
         public string Username { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the password to use for authentication.
         /// </summary>
+        [JsonPropertyName("Password")]
         public string Password { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the path to the client certificate (pfx) file to use for client authentication.
         /// </summary>
+        [JsonPropertyName("ClientCertificatePath")]
         public string ClientCertificatePath { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the path to the client certificate password/secret (for the pfx file) to use for client authentication.
         /// </summary>
+        [JsonPropertyName("ClientCertificatePassword")]
         public string ClientCertificatePassword { get; set; } = string.Empty;
     }
 }
