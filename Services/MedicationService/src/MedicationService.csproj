@@ -6,7 +6,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DocumentationFile>bin\Debug\net5.0\MedicationService.xml</DocumentationFile>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(RunConfiguration)' == 'MedicationService' " />
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'MedicationRequestService' " />
   <ItemGroup>
     <Content Include=".vscode\launch.json" />
   </ItemGroup>

@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Lightweight HL7 2.x library compatible with .Net Standard and .Net Core</Description>
+    <Copyright>(c) Efferent Health, LLC</Copyright>
+    <VersionPrefix>2.19.1.1</VersionPrefix>
+    <TargetFrameworks>netstandard1.3;netstandard1.6;netstandard2.0;net5.0</TargetFrameworks>
+    <AssemblyName>HL7-dotnetcore</AssemblyName>
+    <PackageId>HL7-dotnetcore</PackageId>
+    <PackageTags>hl7;dotnetcore</PackageTags>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/Efferent-Health/HL7-dotnetcore</RepositoryUrl>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageTags>hl7 dotnetcore hl7-parser hl7-writer</PackageTags>
+    <PackageProjectUrl>https://github.com/Efferent-Health/HL7-dotnetcore</PackageProjectUrl>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/Efferent-Health/HL7-dotnetcore</RepositoryUrl>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <!--
+    Make sure any documentation comments which are included in code get checked for syntax during the build, but do
+    not report warnings for missing comments.
+
+    CS1573: Parameter 'parameter' has no matching param tag in the XML comment for 'parameter' (but other parameters do)
+    CS1591: Missing XML comment for publicly visible type or member 'Type_or_Member'
+  -->
+    <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
+    <NoWarn>CS1573, CS1591, CS1712, CS1707, CA1707, SA1310, SA1600, SA1629, SA1633, SA1636</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="../LICENSE.txt" Pack="true" PackagePath="$(PackageLicenseFile)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Runtime" Version="4.3.0" />
+    <PackageReference Include="System.Runtime.Extensions" Version="4.3.0" />
+    <PackageReference Include="System.Linq" Version="4.3.0" />
+    <PackageReference Include="System.Text.RegularExpressions" Version="4.3.0" />
+  </ItemGroup>
+</Project>

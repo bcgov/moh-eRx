@@ -85,7 +85,7 @@ namespace Health.PharmaNet.Authorization
 
                     foreach (SegmentField sf in ms.SegmentFields)
                     {
-                        bool found = segment.Fields(sf.Index).Value.Equals(sf.Value, StringComparison.Ordinal);
+                        bool found = segment.FieldAt(sf.Index).Value.Equals(sf.Value, StringComparison.Ordinal);
                         if (firstField == true)
                         {
                             fieldsMatch = found;

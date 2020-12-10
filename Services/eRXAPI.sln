@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsentService", "ConsentSe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedicationDispenseService", "MedicationDispenseService\src\MedicationDispenseService.csproj", "{844DE75C-8367-4778-BB17-4AA4259D0FC1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HL7-dotnetcore", "HL7-dotnetcore\src\HL7-dotnetcore.csproj", "{C41A36C5-73DF-4BE0-8D1D-1FDD119BB6D5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,10 @@ Global
 		{844DE75C-8367-4778-BB17-4AA4259D0FC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{844DE75C-8367-4778-BB17-4AA4259D0FC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{844DE75C-8367-4778-BB17-4AA4259D0FC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C41A36C5-73DF-4BE0-8D1D-1FDD119BB6D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C41A36C5-73DF-4BE0-8D1D-1FDD119BB6D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C41A36C5-73DF-4BE0-8D1D-1FDD119BB6D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C41A36C5-73DF-4BE0-8D1D-1FDD119BB6D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0
