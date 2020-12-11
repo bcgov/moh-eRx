@@ -62,6 +62,26 @@
       "sourceFileMap": {
          "/Views": "${workspaceFolder}/"
       }
+   },
+   {
+      "name": "Debug PatientService (web)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/Services/PatientService/src/bin/Debug/net5.0/PatientService.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/Services/PatientService/src/",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+         "action": "openExternally",
+         "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+      },
+      "env": {
+         "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+         "/Views": "${workspaceFolder}/"
+      }
    }
    ]
 }

@@ -67,7 +67,7 @@ namespace Health.PharmaNet.Services
                 RequestResult<PharmanetDelegateMessageModel> result = await this.pharmanetDelegate.SubmitRequest(requestMessage).ConfigureAwait(true);
 
                 response.StatusCode = result.StatusCode;
-                response.ResultErrorMessage = result.ResultErrorMessage;
+                response.ErrorMessage = result.ErrorMessage;
 
                 if (result.IsSuccessStatusCode)
                 {
@@ -77,6 +77,10 @@ namespace Health.PharmaNet.Services
                     ResourceReference reference = PharmanetDelegateAdapter.RelatedToDocumentReference(request);
                     response.Payload = PharmanetDelegateAdapter.FromPharmanetProxyMessage(message, reference);
                 }
+                else
+                {
+                    this.logger.LogError($"Pharmanet Response Error: {1}", result.ErrorMessage);
+                }
             }
 #pragma warning disable CA1031 // Do not catch general exception types
             catch (Exception ex)
@@ -84,7 +88,7 @@ namespace Health.PharmaNet.Services
             {
                 response.IsSuccessStatusCode = false;
                 response.StatusCode = System.Net.HttpStatusCode.InternalServerError;
-                response.ResultErrorMessage = ex.Message;
+                response.ErrorMessage = ex.Message;
             }
 
             return response;

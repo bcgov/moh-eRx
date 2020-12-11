@@ -47,19 +47,7 @@ namespace Health.PharmaNet.Models
         /// <summary>
         /// Gets or sets the status message of the result.
         /// </summary>
-        [JsonPropertyName("ResultErrorMessage")]
-        public string ResultErrorMessage { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Gets a value indicating whether the status code is a success code.
-        /// </summary>
-        public bool IsSuccessCode
-        {
-            get
-            {
-                int code = (int)this.StatusCode;
-                return (code >= 200) && (code <= 299);
-            }
-        }
+        [JsonPropertyName("ErrorMessage")]
+        public string ErrorMessage { get; set; } = string.Empty;
     }
 }

@@ -75,10 +75,13 @@ namespace Health.PharmaNet.Delegates
 
                 HttpResponseMessage response = await this.httpClient.PostAsync(delegateUri, content).ConfigureAwait(true);
                 requestResult.IsSuccessStatusCode = response.IsSuccessStatusCode;
+                requestResult.StatusCode = response.StatusCode;
 
                 if (!requestResult.IsSuccessStatusCode)
                 {
-                    this.logger.LogError($"PharmanetDelegate Proxy call returned with StatusCode := {response.StatusCode}.");
+                    string msg = "PharmanetDelegate Proxy call returned with StatusCode := " + response.StatusCode;
+                    this.logger.LogError(msg);
+                    requestResult.ErrorMessage = msg;
                     return requestResult;
                 }
                 else
@@ -96,7 +99,9 @@ namespace Health.PharmaNet.Delegates
                 this.logger.LogError($"PharmanetDelegate Exception := {ex.Message}.");
 
                 requestResult.IsSuccessStatusCode = false;
-                requestResult.ResultErrorMessage = ex.Message;
+                requestResult.ErrorMessage = ex.Message;
+                requestResult.StatusCode = System.Net.HttpStatusCode.InternalServerError;
+
                 return requestResult;
             }
 
