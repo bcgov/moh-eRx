@@ -42,4 +42,4 @@ Thumbs.db
 .dropbox.cache
 
 # node_modules
-./node_modules
+node_modules/
