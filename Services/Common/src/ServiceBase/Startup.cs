@@ -118,6 +118,7 @@ namespace Health.PharmaNet.ServiceBase
                 {
                     handler.ClientCertificates.Add(new X509Certificate2(System.IO.File.ReadAllBytes(certPath), certPassword));
                 }
+
                 return handler;
             });
 
