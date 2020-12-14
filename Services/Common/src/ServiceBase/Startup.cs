@@ -98,7 +98,7 @@ namespace Health.PharmaNet.ServiceBase
             this.configuration.Bind("PharmanetProxy", pharmanetDelegateConfig);
 
             // Add http client services at ConfigureServices(IServiceCollection services).
-            services.AddHttpClient<IPharmanetDelegate, PharmanetDelegate>("PharmanetClient", c =>
+            services.AddHttpClient<IPharmanetDelegate, PharmanetDelegate>("PharmanetProxyClient", c =>
             {
                 c.BaseAddress = new Uri(pharmanetDelegateConfig.Endpoint);
                 c.DefaultRequestHeaders.Accept.Clear();
@@ -111,10 +111,13 @@ namespace Health.PharmaNet.ServiceBase
             {
                 HttpClientHandler handler = new HttpClientHandler();
 
-                // Load Certificate.
+                // Load Certificate, if non-empty in Configuration.
                 string certPath = pharmanetDelegateConfig.ClientCertificatePath;
                 string certPassword = pharmanetDelegateConfig.ClientCertificatePassword;
-                handler.ClientCertificates.Add(new X509Certificate2(System.IO.File.ReadAllBytes(certPath), certPassword));
+                if (!string.IsNullOrEmpty(certPath))
+                {
+                    handler.ClientCertificates.Add(new X509Certificate2(System.IO.File.ReadAllBytes(certPath), certPassword));
+                }
                 return handler;
             });
 
