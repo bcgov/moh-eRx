@@ -16,6 +16,7 @@
 namespace Health.PharmaNet.Models
 {
     using System;
+    using System.Collections.Generic;
     using System.Text;
     using System.Text.RegularExpressions;
 
@@ -63,12 +64,15 @@ namespace Health.PharmaNet.Models
             documentReference.Id = messageModel.TransactionId; // set the GUID as the base artefact ID.
             documentReference.MasterIdentifier = new Identifier(MasterIdentifierNamespace, MasterIdentifierUrnPrefix + messageModel.TransactionId);
             DocumentReference.ContentComponent item = new DocumentReference.ContentComponent();
+            item.Attachment = new Attachment();
             item.Attachment.Data = Encoding.UTF8.GetBytes(messageModel.Hl7Message);
             item.Attachment.ContentType = HL7v2ContentType;
 
             documentReference.Content.Add(item);
             if (related != null)
             {
+                documentReference.Context = new DocumentReference.ContextComponent();
+                documentReference.Context.Related = new List<ResourceReference>();
                 documentReference.Context.Related.Add(related);
             }
 
