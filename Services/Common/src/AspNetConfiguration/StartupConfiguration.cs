@@ -107,6 +107,7 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
                 .AddJsonOptions(options =>
                 {
                     options.JsonSerializerOptions.WriteIndented = true;
+                    options.JsonSerializerOptions.IgnoreNullValues = true;
                 });
         }
 
