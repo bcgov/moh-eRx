@@ -1,5 +1,7 @@
 # moh-eRx
 
+[![img](https://img.shields.io/badge/Lifecycle-Maturing-007EC6)](https://github.com/bcgov/repomountie/blob/master/doc/lifecycle-badges.md)
+
 ## BC Ministry of Health PharmaNet Electronic Prescribing API
 
 This repository holds the architecture and components to enable PharmaNet electronic prescribing in British Columbia.
