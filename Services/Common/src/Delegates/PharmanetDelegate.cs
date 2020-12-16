@@ -17,11 +17,9 @@ namespace Health.PharmaNet.Delegates
 {
     using System;
     using System.Net.Http;
-    using System.Net.Http.Headers;
-    using System.Net.Mime;
-    using System.Security.Cryptography.X509Certificates;
-    using System.Text;
+    using System.Text.Encodings.Web;
     using System.Text.Json;
+    using System.Text.Unicode;
     using System.Threading.Tasks;
 
     using Health.PharmaNet.Models;
@@ -63,7 +61,11 @@ namespace Health.PharmaNet.Delegates
         {
             RequestResult<PharmanetDelegateMessageModel> requestResult = new RequestResult<PharmanetDelegateMessageModel>();
 
-            string jsonOutput = JsonSerializer.Serialize<PharmanetDelegateMessageModel>(request);
+            JsonSerializerOptions options = new JsonSerializerOptions();
+
+            options.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+
+            string jsonOutput = JsonSerializer.Serialize<PharmanetDelegateMessageModel>(request, options);
 
             using HttpContent content = new StringContent(jsonOutput);
 

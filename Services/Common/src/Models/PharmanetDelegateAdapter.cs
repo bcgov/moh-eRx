@@ -104,7 +104,7 @@ namespace Health.PharmaNet.Models
             string contentType = content[0].Attachment.ContentType;
             bool good = (data.Length > 0) && contentType.Equals(HL7v2ContentType, System.StringComparison.Ordinal);
 
-            messageModel.Hl7Message = good ? (base64Encode ? Convert.ToBase64String(data) : Encoding.UTF8.GetString(data)) : string.Empty;
+            messageModel.Hl7Message = good ? (base64Encode ? Convert.ToBase64String(data, Base64FormattingOptions.None) : Encoding.UTF8.GetString(data)) : string.Empty;
 
             return messageModel;
         }

@@ -64,6 +64,8 @@ namespace Health.PharmaNet.Services
 
             try
             {
+                this.logger.LogDebug($"Pharmanet Request: {requestMessage.Hl7Message}");
+
                 RequestResult<PharmanetDelegateMessageModel> result = await this.pharmanetDelegate.SubmitRequest(requestMessage).ConfigureAwait(true);
 
                 response.StatusCode = result.StatusCode;
@@ -73,9 +75,9 @@ namespace Health.PharmaNet.Services
                 {
                     PharmanetDelegateMessageModel? message = result.Payload;
 
-                    this.logger.LogDebug($"Pharmanet Response: messageTransactionId = {message!.TransactionId} ; hl7v2 = {message!.Hl7Message}");
+                    this.logger.LogDebug($"Pharmanet Response: {message!.Hl7Message}");
                     ResourceReference reference = PharmanetDelegateAdapter.RelatedToDocumentReference(request);
-                    response.Payload = PharmanetDelegateAdapter.FromPharmanetProxyMessage(message, reference);
+                    response.Payload = PharmanetDelegateAdapter.FromPharmanetProxyMessage(message!, reference);
                 }
                 else
                 {

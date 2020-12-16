@@ -21,7 +21,9 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
     using System.Net;
     using System.Net.Http;
     using System.Reflection;
+    using System.Text.Encodings.Web;
     using System.Text.Json;
+    using System.Text.Unicode;
     using System.Threading.Tasks;
 
     using Health.PharmaNet.Common.Authorization;
