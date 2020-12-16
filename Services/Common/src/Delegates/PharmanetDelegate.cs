@@ -62,9 +62,7 @@ namespace Health.PharmaNet.Delegates
             RequestResult<PharmanetDelegateMessageModel> requestResult = new RequestResult<PharmanetDelegateMessageModel>();
 
             JsonSerializerOptions options = new JsonSerializerOptions();
-
             options.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
-
             string jsonOutput = JsonSerializer.Serialize<PharmanetDelegateMessageModel>(request, options);
 
             using HttpContent content = new StringContent(jsonOutput);

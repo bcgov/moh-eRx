@@ -65,7 +65,8 @@ namespace Health.PharmaNet.Models
             documentReference.MasterIdentifier = new Identifier(MasterIdentifierNamespace, MasterIdentifierUrnPrefix + messageModel.TransactionId);
             DocumentReference.ContentComponent item = new DocumentReference.ContentComponent();
             item.Attachment = new Attachment();
-            item.Attachment.Data = Encoding.UTF8.GetBytes(messageModel.Hl7Message);
+            string hl7Message = Encoding.UTF8.GetString(Convert.FromBase64String(messageModel.Hl7Message));
+            item.Attachment.Data = Encoding.UTF8.GetBytes(hl7Message);
             item.Attachment.ContentType = HL7v2ContentType;
 
             documentReference.Content.Add(item);

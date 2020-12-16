@@ -78,6 +78,7 @@ namespace Health.PharmaNet.Services
                     this.logger.LogDebug($"Pharmanet Response: {message!.Hl7Message}");
                     ResourceReference reference = PharmanetDelegateAdapter.RelatedToDocumentReference(request);
                     response.Payload = PharmanetDelegateAdapter.FromPharmanetProxyMessage(message!, reference);
+                    response.IsSuccessStatusCode = true;
                 }
                 else
                 {

@@ -28,6 +28,7 @@ namespace Health.PharmaNet.Controllers
 
     using HL7.Dotnetcore;
     using Hl7.Fhir.Model;
+    using Hl7.Fhir.Serialization;
 
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;
@@ -113,12 +114,12 @@ namespace Health.PharmaNet.Controllers
             ClaimsPrincipal? user = this.HttpContext!.User;
 
             string jsonString = await this.Request.GetRawBodyStringAsync().ConfigureAwait(true);
-            DocumentReference request;
-            Message message;
+            DocumentReference fhirRequest;
+            Message hl7v2Message;
             try
             {
-                request = this.parser.ParseFhirJson(jsonString);
-                message = this.ExtractV2Message(request);
+                fhirRequest = this.parser.ParseFhirJson(jsonString);
+                hl7v2Message = this.ExtractV2Message(fhirRequest);
             }
 #pragma warning disable CA1031 // Do not catch general exception types
             catch (Exception ex)
@@ -128,16 +129,16 @@ namespace Health.PharmaNet.Controllers
                 return this.StatusCode((int)HttpStatusCode.BadRequest, ex.Message);
             }
 
-            AuthorizationResult result = await this.authorizationService.AuthorizeAsync(
+            AuthorizationResult authResult = await this.authorizationService.AuthorizeAsync(
                     user,
-                    message,
+                    hl7v2Message,
                     Hl7v2ScopesPolicy.MessageTypeScopeAccess).ConfigureAwait(true);
-            if (!result.Succeeded)
+            if (!authResult.Succeeded)
             {
                 return new ChallengeResult();
             }
 
-            RequestResult<DocumentReference> response = await this.service.SubmitRequest(request).ConfigureAwait(true);
+            RequestResult<DocumentReference> response = await this.service.SubmitRequest(fhirRequest).ConfigureAwait(true);
             if (response.IsSuccessStatusCode == false)
             {
                 this.logger.LogError($"An Error occurred while invoking Pharmanet endpoint: {1}", response.ErrorMessage);
@@ -148,8 +149,9 @@ namespace Health.PharmaNet.Controllers
                     ContentType = "application/json",
                 };
             }
+            DocumentReference? docRef = response.Payload;
 
-            return new JsonResult(response.Payload);
+            return new JsonResult(docRef);
         }
 
         private Message ExtractV2Message(DocumentReference request)

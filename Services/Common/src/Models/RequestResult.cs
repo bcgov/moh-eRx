@@ -30,13 +30,13 @@ namespace Health.PharmaNet.Models
         /// Gets or sets the result payload.
         /// </summary>
         [JsonPropertyName("Payload")]
-        public T? Payload { get; set; } = default(T);
+        public T? Payload { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the status code is a success code.
         /// </summary>
         [JsonPropertyName("IsSuccessStatusCode")]
-        public bool IsSuccessStatusCode { get; set; } = false;
+        public bool IsSuccessStatusCode { get; set; }
 
         /// <summary>
         /// Gets or sets the status code of the result.
