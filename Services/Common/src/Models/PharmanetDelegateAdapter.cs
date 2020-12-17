@@ -55,7 +55,7 @@ namespace Health.PharmaNet.Models
         /// <returns>Returns a new DocumentReference from the PharmanetMessage.
         /// If the requestDocumentReference is provided, it used that to fill out cross-referenced data.
         /// </returns>
-        public static DocumentReference FromPharmanetProxyMessage(PharmanetDelegateMessageModel messageModel, ResourceReference? related = null)
+        public static DocumentReference ToDocumentReference(PharmanetMessageModel messageModel, ResourceReference? related = null)
         {
             DocumentReference documentReference = new DocumentReference();
 
@@ -86,9 +86,9 @@ namespace Health.PharmaNet.Models
         /// <param name="documentReference">The DocumentReference to convert from.</param>
         /// <param name="base64Encode">A value indicating whether to base64 encode the HL7v2.</param>
         /// <returns>Returns a new PharmanetMessage mapped from the provided DocumentReference.</returns>
-        public static PharmanetDelegateMessageModel FromDocumentReference(DocumentReference documentReference, bool base64Encode)
+        public static PharmanetMessageModel ToPharmanetMessageModel(DocumentReference documentReference, bool base64Encode)
         {
-            PharmanetDelegateMessageModel messageModel = new PharmanetDelegateMessageModel();
+            PharmanetMessageModel messageModel = new PharmanetMessageModel();
 
             // HL7 FHIR spec for GUID/UUID has this mandatory prefix in the value field.
             foreach (Match? m in Regex.Matches(documentReference.MasterIdentifier.Value, MasterIdentifierPattern))

@@ -60,24 +60,24 @@ namespace Health.PharmaNet.Services
         {
             RequestResult<DocumentReference> response = new RequestResult<DocumentReference>();
             bool base64Encode = this.configuration.GetSection(PharmanetDelegateConfig.ConfigurationSectionKey).GetValue<bool>("Base64EncodeHl7Message");
-            PharmanetDelegateMessageModel requestMessage = PharmanetDelegateAdapter.FromDocumentReference(request, base64Encode);
+            PharmanetMessageModel requestMessage = PharmanetDelegateAdapter.ToPharmanetMessageModel(request, base64Encode);
 
             try
             {
                 this.logger.LogDebug($"Pharmanet Request: {requestMessage.Hl7Message}");
 
-                RequestResult<PharmanetDelegateMessageModel> result = await this.pharmanetDelegate.SubmitRequest(requestMessage).ConfigureAwait(true);
+                RequestResult<PharmanetMessageModel> result = await this.pharmanetDelegate.SubmitRequest(requestMessage).ConfigureAwait(true);
 
                 response.StatusCode = result.StatusCode;
                 response.ErrorMessage = result.ErrorMessage;
 
                 if (result.IsSuccessStatusCode)
                 {
-                    PharmanetDelegateMessageModel? message = result.Payload;
+                    PharmanetMessageModel? message = result.Payload;
 
                     this.logger.LogDebug($"Pharmanet Response: {message!.Hl7Message}");
                     ResourceReference reference = PharmanetDelegateAdapter.RelatedToDocumentReference(request);
-                    response.Payload = PharmanetDelegateAdapter.FromPharmanetProxyMessage(message!, reference);
+                    response.Payload = PharmanetDelegateAdapter.ToDocumentReference(message!, reference);
                     response.IsSuccessStatusCode = true;
                 }
                 else

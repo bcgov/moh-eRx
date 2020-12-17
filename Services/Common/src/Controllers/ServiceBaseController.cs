@@ -149,9 +149,16 @@ namespace Health.PharmaNet.Controllers
                     ContentType = "application/json",
                 };
             }
+
             DocumentReference? docRef = response.Payload;
 
-            return new JsonResult(docRef);
+            FhirJsonSerializer serializer = new FhirJsonSerializer(new SerializerSettings() { Pretty = true });
+
+            return new ContentResult()
+            {
+                Content = serializer.SerializeToString(docRef),
+                ContentType = "application/fhir+json",
+            };
         }
 
         private Message ExtractV2Message(DocumentReference request)

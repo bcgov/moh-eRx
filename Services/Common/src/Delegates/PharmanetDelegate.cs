@@ -57,13 +57,13 @@ namespace Health.PharmaNet.Delegates
         /// </summary>
         /// <param name="request">The PharmanetMessage request containing HL7v2 base 64 payload.</param>
         /// <returns>A PharmanetMessage response.</returns>
-        public async Task<RequestResult<PharmanetDelegateMessageModel>> SubmitRequest(PharmanetDelegateMessageModel request)
+        public async Task<RequestResult<PharmanetMessageModel>> SubmitRequest(PharmanetMessageModel request)
         {
-            RequestResult<PharmanetDelegateMessageModel> requestResult = new RequestResult<PharmanetDelegateMessageModel>();
+            RequestResult<PharmanetMessageModel> requestResult = new RequestResult<PharmanetMessageModel>();
 
             JsonSerializerOptions options = new JsonSerializerOptions();
             options.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
-            string jsonOutput = JsonSerializer.Serialize<PharmanetDelegateMessageModel>(request, options);
+            string jsonOutput = JsonSerializer.Serialize<PharmanetMessageModel>(request, options);
 
             using HttpContent content = new StringContent(jsonOutput);
 
@@ -87,7 +87,7 @@ namespace Health.PharmaNet.Delegates
                 else
                 {
                     string? result = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
-                    PharmanetDelegateMessageModel? responseMessage = JsonSerializer.Deserialize<PharmanetDelegateMessageModel>(result);
+                    PharmanetMessageModel? responseMessage = JsonSerializer.Deserialize<PharmanetMessageModel>(result);
                     requestResult.Payload = responseMessage;
                     this.logger.LogDebug($"PharmanetDelegate Proxy Response: {responseMessage}");
                 }
