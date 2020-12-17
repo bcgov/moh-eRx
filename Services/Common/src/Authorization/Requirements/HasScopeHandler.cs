@@ -15,8 +15,12 @@
 //-------------------------------------------------------------------------
 namespace Health.PharmaNet.Common.Authorization
 {
+    using System;
     using System.Linq;
+    using System.Security.Claims;
     using System.Threading.Tasks;
+
+    using Health.PharmaNet.Common.Authorization.Claims;
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.Extensions.Logging;
@@ -48,21 +52,38 @@ namespace Health.PharmaNet.Common.Authorization
         /// <returns>A context Task.</returns>
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, HasScopesRequirement requirement)
         {
-            // If user does not have the scope claim, get out of here
-            if (!context.User.HasClaim(c => c.Type == "scope" && c.Issuer == requirement.ClaimsIssuer))
+            if (context.User == null)
             {
-                this.logger.LogDebug("Missing scope claim in JWT");
+                this.logger.LogError("No authenticated user.");
+                context.Fail();
+                return Task.CompletedTask;
+            }
+
+            bool userIsAnonymous = context.User.Identity == null || !context.User.Identities.Any(i => i.IsAuthenticated);
+
+            if (userIsAnonymous == true)
+            {
+                this.logger.LogError("Skipping Authorization checks: user is not authenticated.");
+                context.Fail();
+                return Task.CompletedTask;
+            }
+
+            Claim? scopeClaim = context.User.Claims.FirstOrDefault<Claim>(c => string.Equals(c.Type, PharmanetAPIClaims.Scope, StringComparison.OrdinalIgnoreCase) && string.Equals(c.Issuer, requirement.ClaimsIssuer, StringComparison.OrdinalIgnoreCase));
+
+            // If user does not have the scope claim, get out of here
+            if (scopeClaim == null)
+            {
+                this.logger.LogError("scopeClaim: Failed to find 'scope' claim in Access Token)");
                 return Task.CompletedTask;
             }
 
             // Split the scopes string into an array
-            var scopes = context.User.FindFirst(c => c.Type == "scope" && c.Issuer == requirement.ClaimsIssuer).Value.Split(' ');
+            string[] scopes = scopeClaim.Value.Split(" ", StringSplitOptions.RemoveEmptyEntries);
 
             // Succeed if the scope array contains any of the required scopes
             if (scopes.Any(s => requirement.IsRequiredScope(s) == true))
             {
                 this.logger.LogDebug("JWT Has at least one of the required scope claims.");
-
                 context.Succeed(requirement);
             }
             else

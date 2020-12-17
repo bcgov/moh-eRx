@@ -1,6 +1,7 @@
 {
     "cSpell.words": [
         "Keycloak",
+        "Xunit",
         "componentized",
         "is",
         "is componentized",
@@ -12,5 +13,10 @@
         "pharma",
         "pharmacare",
         "pharmanet"
+    ],
+    "cSpell.ignoreWords": [
+        "request",
+        "tactdu",
+        "tactdu request"
     ]
 }

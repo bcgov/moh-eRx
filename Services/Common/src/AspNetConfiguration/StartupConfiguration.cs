@@ -17,9 +17,13 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
+    using System.IO;
     using System.Net;
     using System.Net.Http;
+    using System.Reflection;
+    using System.Text.Encodings.Web;
     using System.Text.Json;
+    using System.Text.Unicode;
     using System.Threading.Tasks;
 
     using Health.PharmaNet.Common.Authorization;
@@ -105,6 +109,7 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
                 .AddJsonOptions(options =>
                 {
                     options.JsonSerializerOptions.WriteIndented = true;
+                    options.JsonSerializerOptions.IgnoreNullValues = true;
                 });
         }
 
@@ -172,11 +177,15 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
         public void ConfigureSwaggerServices(IServiceCollection services)
         {
             services.Configure<SwaggerSettings>(this.configuration.GetSection(nameof(SwaggerSettings)));
-
+            var xmlFile = $"{Assembly.GetCallingAssembly() !.GetName().Name}.xml";
+            var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
             services
                 .AddApiVersionWithExplorer()
                 .AddSwaggerOptions()
-                .AddSwaggerGen();
+                .AddSwaggerGen(options =>
+                {
+                    options.IncludeXmlComments(xmlPath);
+                });
         }
 
         /// <summary>

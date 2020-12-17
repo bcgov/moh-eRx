@@ -20,6 +20,7 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
+    using Microsoft.Extensions.Logging.Console;
 
     /// <summary>
     /// The program configuration class.
@@ -42,18 +43,12 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
                 .ConfigureLogging(logging =>
                 {
                     logging.ClearProviders();
-                    logging.AddConsole(options =>
-                    {
-                        options.TimestampFormat = "[yyyy/MM/dd HH:mm:ss]";
-                    });
+                    logging.AddConsole();
                 })
                 .ConfigureAppConfiguration((builderContext, config) =>
                 {
                     var env = builderContext.HostingEnvironment;
 
-                    config.SetBasePath(env.ContentRootPath);
-                    config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-                    config.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
                     config.AddJsonFile("appsettings.local.json", optional: true, reloadOnChange: true); // Loads local settings
 
                     config.AddEnvironmentVariables(prefix: EnvironmentPrefix);

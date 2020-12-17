@@ -1,0 +1,13 @@
+{
+  "name": "pnet-proxy-app",
+  "version": "1.0.0",
+  "description": "A fake Pharmanet Proxy used for local end-end flow testing",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "brad.head@gov.bc.ca",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

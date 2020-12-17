@@ -46,7 +46,7 @@ namespace Health.PharmaNet.Common.Http
 
             using (StreamReader reader = new StreamReader(inputStream, encoding))
             {
-                return await reader.ReadToEndAsync().ConfigureAwait(false);
+                return await reader.ReadToEndAsync().ConfigureAwait(true);
             }
         }
     }

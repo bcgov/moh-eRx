@@ -19,6 +19,7 @@ In addition to the core Medication Resources, PharmaNet supports additional reso
 
 - [Claim](Claim.md)
 - [Location](Location.md)
+- [Patient](Patient.md)
 - [Practitioner](Practitioner.md)
 
 ## PharmaNet Private Practice Interactions for ePrescribing
