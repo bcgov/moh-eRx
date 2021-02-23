@@ -1,35 +1,39 @@
 @startuml PNet_API_Components
 
-package "PharmaNet APIs" {
-    folder "Resource APIs" {
-    [Medication]
-    [MedicationRequest]
-    [MedicationStatement]
-    [Location]
+package "PharmaNet APIs on OpenShift" {
+    folder "HL7 FHIR Resource APIs" {
+        [Claim]
+        [Consent]
+        [Location]
+        [Medication]
+        [MedicationDispense]
+        [MedicationRequest]
+        [MedicationStatement]
+        [Patient]
+        [Practioner]
     }
     folder "Common Components" {
         [Authorization]
         [Audit Logging]
-        [HL7 Processing]
-        [Signature Delegate]
-        [PharmaNet Delegate]
-    }
-    database "PNet Electronic Signatures" {
-        [Electronic Signatures]
+        [HL7 FHIR Processing]
+        [HL7-v2 Processing]
+        [PharmaNet Proxy Delegate]
     }
 }
-newpage 
+newpage
 
-package "PharmaNet System" {
+package "HIBC PharmaNet Services" {
     [PharmaNet Proxy]
-    [PharmaNet ODR]
-    [PharmaNet]
+    [PharmaNet Web Services]
+    [PharmaNet OLTP]
+    [PharmaNet LDAP]
+    [PharmaNet Database]
 }
 
-package "PharmaNet Authorization Platform" {
+package "MOH API Authorization Platform" {
     [Keycloak]
     database "KeycloakDB" {
-    [Keycloak Datastore] 
+        [Keycloak Datastore]
     }
 }
 @enduml

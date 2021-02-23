@@ -18,7 +18,7 @@ import { b64decode } from 'k6/encoding';
 import { check, group, sleep } from 'k6';
 import { Rate, Trend } from 'k6/metrics';
 
-export let client_secret = __ENV.CLIENT_SECRET;
+export let client_secret = __ENV.ERX_CLIENT_SECRET;
 
 export let maxVus = (__ENV.VUS) ? __ENV.VUS : 300; 
 maxVus = (maxVus < 1) ? 1 : maxVus;
@@ -30,7 +30,7 @@ export let errorRate = new Rate('errors');
 
 export let refreshTokenSuccess = new Rate('auth_refresh_successful');
 
-export let environment = (__ENV.API_ENV) ? __ENV.API_ENV : 'dev'; // default to test environment
+export let environment = (__ENV.ERX_ENV) ? __ENV.ERX_ENV : 'dev'; // default to test environment
 
 export let smokeOptions = {
     vus: 5,
