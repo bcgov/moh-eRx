@@ -3,7 +3,7 @@ licenseplate=$1
 env=$2
 dotnet=$3
 
-if [ -z "$namespace" ] 
+if [ -z "$licenseplate" ] 
 then
   echo Parameter 1 must be set and is the namespace to deploy into ex: 0bd5ad
 fi
@@ -18,7 +18,7 @@ then
   echo Parameter 3 must be set and is the dotnet environment name ex: dev, Test, Production
 fi
 
-oc project $namespace-$env
+oc project $licenseplate-$env
 oc process -f ./service.yaml -p NAME=claimservice -p APP_NAME=claimservice -p TOOLS_NAMESPACE=$licenseplate-tools -p ENV=$env -p ASPNETCORE_ENVIRONMENT=$dotnet | oc apply -f -
 oc process -f ./service.yaml -p NAME=consentservice -p APP_NAME=consentservice -p TOOLS_NAMESPACE=$licenseplate-tools -p ENV=$env -p ASPNETCORE_ENVIRONMENT=$dotnet | oc apply -f -
 oc process -f ./service.yaml -p NAME=locationservice -p APP_NAME=locationservice -p TOOLS_NAMESPACE=$licenseplate-tools -p ENV=$env -p ASPNETCORE_ENVIRONMENT=$dotnet | oc apply -f -

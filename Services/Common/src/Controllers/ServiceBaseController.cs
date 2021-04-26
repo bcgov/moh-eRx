@@ -141,7 +141,7 @@ namespace Health.PharmaNet.Controllers
             RequestResult<DocumentReference> response = await this.service.SubmitRequest(fhirRequest).ConfigureAwait(true);
             if (response.IsSuccessStatusCode == false)
             {
-                this.logger.LogError($"An Error occurred while invoking Pharmanet endpoint: {1}", response.ErrorMessage);
+                this.logger.LogError($"An Error occurred while invoking Pharmanet endpoint: {response.ErrorMessage}");
                 this.StatusCode((int)response.StatusCode);
                 return new JsonResult(response)
                 {
