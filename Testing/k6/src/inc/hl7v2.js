@@ -37,8 +37,10 @@ export function MedicationRequest(template)
 function timestamp()
 {
     var now = new Date(Date.now());
-    var mon = now.getMonth() < 10 ? "0" + now.getMonth() : now.getMonth();
-    var day = now.getDay() < 10 ? "0" + now.getDay() : now.getDay();
+    var mon = now.getMonth() + 1;
+    mon = (mon < 10) ? "0" + mon : mon;
+    var day = now.getDate();
+    day = (day < 10) ? "0" + day : day
     var str = now.getFullYear() + "/" +   // oddly the time stamp in HL7v2 does not use en-CA as in "2012-12-20"
         mon + "/" + day + " " +
         now.toLocaleTimeString("en-CA");

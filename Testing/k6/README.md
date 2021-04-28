@@ -44,8 +44,7 @@ CLIENT_SECRET=<client_credentials_grant_secret> run.sh
 
 Stress Testing is a type of load testing used to determine the limits of the system. The purpose of this test is to verify the stability and reliability of the system under extreme conditions.
 
-
-## Sample HL7v2 Messages from Pharmanet:
+## Sample HL7v2 Messages from Pharmanet
 
 The web service is deployed to DEV and it is ready for your team to submit the transaction. The following sample requests work in DEV.
 

@@ -17,6 +17,9 @@ import http from 'k6/http';
 import { b64decode } from 'k6/encoding';
 import { check, group, sleep } from 'k6';
 import { Rate, Trend } from 'k6/metrics';
+import * as uuid from './uuid.js';
+
+
 
 export let client_secret = __ENV.ERX_CLIENT_SECRET;
 export let client_id = __ENV.ERX_CLIENT;
@@ -162,15 +165,40 @@ export function params(client) {
 }
 
 export function postMessage(url, payload) {
+    var now = new Date(Date.now());
     console.log("POST " + url);
-    console.log("HL7v2.Encoded() = " + payload);
 
     var params = this.params(common.client);
 
-    var res = http.post(url, payload, params);
+    var msgId = "urn:uuid:" + uuid.v4(); 
+
+    var timestamp = now.toISOString().replace("Z", "");
+    var timestamp = timestamp.substr(0, 19) + "+00:00";
+
+    var fhirPayload = {
+        "resourceType": "DocumentReference",
+        "masterIdentifier": {
+            "system": "urn:ietf:rfc:3986",
+            "value": msgId
+        },
+        "status": "current",
+        "date": timestamp,
+        "content": [
+            {
+                "attachment": {
+                    "contentType": "x-application/hl7-v2+er7",
+                    "data": payload
+                }
+            }
+        ]
+    };
+
+    console.log(JSON.stringify(fhirPayload));
+
+    var res = http.post(url, fhirPayload, params);
     if (res.status == 200) {
         var res_json = JSON.parse(res.body);
-        console.log(res_json);
+        console.log(JSON.stringify(res_json));
         errorRate.add(0);
     }
     else {
