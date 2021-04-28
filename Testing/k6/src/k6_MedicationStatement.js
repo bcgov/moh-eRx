@@ -20,9 +20,9 @@ import * as hl7 from './inc/hl7v2.js';
 
 export default function() {
 
-    var url = common.MedicationRequestServiceUrl;
-    var payload = hl7.Hl7v2RequestEncoded(hl7.MedicationRequest_ZPN_TRX_X0); // Returns Base64 encoded hl7v2 message
-    var scopes = "openid audience system/MedicationRequest.write system/MedicationRequest.read";
+    var url = common.MedicationStatementServiceUrl;
+    var payload = hl7.Hl7v2RequestEncoded(hl7.MedicationStatement_ZPN_TRP_00); // Returns Base64 encoded hl7v2 message
+    var scopes = "openid audience system/MedicationStatement.read";
     common.authorizeClient(scopes);
     common.postMessage(url, payload);
 }

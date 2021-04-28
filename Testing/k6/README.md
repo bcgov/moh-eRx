@@ -25,7 +25,8 @@ The Smoke Test's role is to verify that your System can handle minimal load, wit
 Any errors here are an indication of functionality not working under basic load.
 
 ```bash
-CLIENT_SECRET=<client_credentials_grant_secret> run.sh $1
+export ERX_ENV=dev
+ERX_CLIENT_SECRET=<client_credentials_grant_secret> bash run.sh ./src/MedicationRequest.js
 ```
 
 ### When to run the smoke test
@@ -37,7 +38,8 @@ Run this test often, after each system change/release.  This ensures that functi
 Load testing is primarily concerned with assessing the systems performance, the purpose of stress testing is to assess the availability and stability of the system under heavy load.
 
 ```bash
-CLIENT_SECRET=<client_credentials_grant_secret> run.sh
+export ERX_ENV=dev
+ERX_CLIENT_SECRET=<client_credentials_grant_secret> bash run.sh ./src/Patient.js
 ```
 
 ## Stress Testing
@@ -50,7 +52,7 @@ The web service is deployed to DEV and it is ready for your team to submit the t
 
 ```bash
 REQUEST :
-MSH|^~\&|TRXTOOL|PCARESUP|PNP|PP|||ZPN|3362|P|2.1||ZZZ|TID||3362|P1|6H2O2||ZCA||03|00|KC|13ZCB|BC00007007|200916|3362ZCC||||||||||0009433498542|
+MSH|^~\&|TRXTOOL|PCARESUP|PNP|PP|||ZPN^^|3362|P|2.1||ZZZ|TID||3362|P1|6H2O2||ZCA||03|00|KC|13ZCB|BC00007007|200916|3362|ZCC||||||||||0009433498542|
 
 RESPONSE :
    MSH|^~\&|TRXTOOL|PCARESUP|TRXTOOL|PCARESUP|||ZPN|003362|P|2.1|
@@ -61,7 +63,7 @@ RESPONSE :
  
  
 REQUEST :
-MSH|^~\&|TRXTOOL|PCARESUP|PNP|PP|||ZPN|3365|P|2.1||ZZZ|TRP||3365|P1|3E9V1|||PHSVE105|ZCA||03|00|KC|13|ZCB|BC00007007|200916|3365ZCC||||||||||0009388880284|
+MSH|^~\&|TRXTOOL|PCARESUP|PNP|PP|||ZPN^^|3365|P|2.1||ZZZ|TRP||3365|P1|3E9V1|||PHSVE105|ZCA||03|00|KC|13|ZCB|BC00007007|200916|3365|ZCC||||||||||0009388880284|
 
 RESPONSE :
    MSH|^~\&|TRXTOOL|PCARESUP|TRXTOOL|PCARESUP|||ZPN|003365|P|2.1
@@ -72,7 +74,10 @@ RESPONSE :
  
  
 REQUEST :
-MSH|^~\&|TRXTOOL|PCARESUP|PNP|PP|||ZPN|3371|P|2.1||ZZZ|TRS||3371|P1|1D5T2|||RAHIMAN|ZCA||03|00|KC|13|ZCB|BC00007007|200916|3371ZCC||||||||||0009427405543|
+MSH|^~\&|TRXTOOL|PCARESUP|PNP|PP|||ZPN^^|3371|P|2.1||
+ZZZ|TRS||3371|P1|1D5T2|||RAHIMAN|
+ZCA||03|00|KC|13|ZCB|BC00007007|200916|3371|
+ZCC||||||||||0009427405543|
 
 RESPONSE :
    MSH|^~\&|TRXTOOL|PCARESUP|TRXTOOL|PCARESUP|||ZPN|003371|P|2.1

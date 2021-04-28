@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------
-// Copyright © 2019 Province of British Columbia
+// Copyright © 2021 Province of British Columbia
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,25 +13,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
-import http from 'k6/http';
-import { check, group, sleep } from 'k6';
-import { Rate, Trend } from 'k6/metrics';
+
+import { sleep } from 'k6';
 import * as common from './inc/common.js';
+import * as hl7 from './inc/hl7v2.js';
 
-export let options = common.smokeOptions;
+export default function() {
 
-export default function () {
-
-  let client_id = common.clients[common.getRandomInteger(0, common.clients.length - 1)];
-
-  common.authorizeClient(client_id);
-
-  common.groupWithDurationMetric('batch', function () {
-
-    let requestBatch = http.batch(common.requestBatch(client));
-
-    common.checkResponses(requestBatch);
-  });
-
-  sleep(1);
+    var url = common.PractitionerServiceUrl;
+    var payload = hl7.Hl7v2RequestEncoded(hl7.MedicationRequest_ZPN_TRX_X0); // Returns Base64 encoded hl7v2 message
+    var scopes = "openid audience system/MedicationRequest.write system/MedicationRequest.read";
+    common.authorizeClient(scopes);
+    common.postMessage(url, payload);
 }

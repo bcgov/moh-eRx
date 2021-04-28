@@ -19,8 +19,6 @@ import { check, group, sleep } from 'k6';
 import { Rate, Trend } from 'k6/metrics';
 import * as uuid from './uuid.js';
 
-
-
 export let client_secret = __ENV.ERX_CLIENT_SECRET;
 export let client_id = __ENV.ERX_CLIENT;
 
@@ -36,16 +34,17 @@ export let environment = (__ENV.ERX_ENV) ? __ENV.ERX_ENV : 'dev'; // default to 
 
 export let TokenEndpointUrl = "https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos/protocol/openid-connect/token";
 
-export let baseUrl = "https://" + environment + "-";
-export let ClaimServiceUrl = baseUrl + "claimservice-erx.apps.silver.devops.gov.bc.ca/Pharmanet/v1/api/Claim";
-export let ConsentServiceUrl = baseUrl + "consentservice-erx.apps.silver.devops.gov.bc.ca/Pharmanet/v1/api/Consent";
-export let LocationServiceUrl = baseUrl + "locationservice-erx.apps.silver.devops.gov.bc.ca/Pharmanet/v1/api/Location";
-export let MedicationDispenseServiceUrl = baseUrl + "medicationdispenseservice-erx.apps.silver.devops.gov.bc.ca/Pharmanet/v1/api/MedicationDispense";
-export let MedicationRequestServiceUrl = baseUrl + "medicationrequestservice-erx.apps.silver.devops.gov.bc.ca/Pharmanet/api/v1/MedicationRequest";
-export let MedicationServiceUrl = baseUrl + "medicationservice-erx.apps.silver.devops.gov.bc.ca/Pharmanet/v1/api/Medication";
-export let MedicationStatementService = baseUrl + "medicationstatementservice-erx.apps.silver.devops.gov.bc.ca/Pharmanet/v1/api/MedicationStatement";
-export let PatientService = baseUrl + "patientservice-erx.apps.silver.devops.gov.bc.ca/Pharmanet/v1/api/Patient";
-export let PractitionerService = baseUrl + "practitionerservice-erx.apps.silver.devops.gov.bc.ca/Pharmanet/v1/api/Practitioner";
+export let baseUrl = "https://pnet-" + environment + ".api.gov.bc.ca/api/v1/";
+
+export let ClaimServiceUrl = baseUrl + "Claim";
+export let ConsentServiceUrl = baseUrl + "Consent";
+export let LocationServiceUrl = baseUrl + "Location";
+export let MedicationDispenseServiceUrl = baseUrl + "MedicationDispense";
+export let MedicationRequestServiceUrl = baseUrl + "MedicationRequest";
+export let MedicationServiceUrl = baseUrl + "Medication";
+export let MedicationStatementServiceUrl = baseUrl + "MedicationStatement";
+export let PatientServiceUrl = baseUrl + "Patient";
+export let PractitionerServiceUrl = baseUrl + "Practitioner";
 
 export let ClientId = __ENV.ERX_CLIENT ? __ENV.ERX_CLIENT : 'erx_development';
 
@@ -195,7 +194,7 @@ export function postMessage(url, payload) {
 
     console.log(JSON.stringify(fhirPayload));
 
-    var res = http.post(url, fhirPayload, params);
+    var res = http.post(url, JSON.stringify(fhirPayload), params);
     if (res.status == 200) {
         var res_json = JSON.parse(res.body);
         console.log(JSON.stringify(res_json));
@@ -203,6 +202,7 @@ export function postMessage(url, payload) {
     }
     else {
         console.log("[ResponseCode= " + res.status + "]");
+        console.log(res.body);
         errorRate.add(1);
     }
     return res;

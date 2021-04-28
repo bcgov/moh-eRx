@@ -15,23 +15,36 @@
 //-------------------------------------------------------------------------
 import { b64encode } from 'k6/encoding';
 
-export let MedicationRequest_ZPN_TRX_X0 = "MSH|^~\&|DESKTOP|EMR|DESKTOP|EMRMD|{{ timestamp }}|userID:192.168.0.1|ZPN|691365|P|2.1||" + "\n" +
-"ZCA||70|X0|MA|01|" + "\n" +
-"ZCB|LDJQQ|140827|691365"  + "\n" +
-"ZCC||||||||||000nnnnnnnnnn|"  + "\n" +
-"ZPR|||||||||||"  + "\n" +
+export let MedicationRequest_ZPN_TRX_X0 = "MSH|^~\&|DESKTOP|EMR|DESKTOP|EMRMD|${{ timestamp }}|userID:192.168.0.1|ZPN^^|691365|P|2.1||" + "\r" +
+"ZCA||70|X0|MA|01|" + "\r" +
+"ZCB|LDJQQ|140827|691365"  + "\r" +
+"ZCC||||||||||000nnnnnnnnnn|"  + "\r" +
+"ZPR|||||||||||"  + "\r" +
 "ZZZ|TRX||691365|P1|nnnnnnnnnn|||||ZZZ1";
 
-export let scopes ="audience "
+export let Patient_ZPN_TID_00 = "MSH|^~\&|TRXTOOL|PCARESUP|PNP|PP|${{ timestamp }}|userID:192.168.0.1|ZPN^^|3362|P|2.1||" + "\r" +
+"ZZZ|TID||3362|P1|6H2O2||" + "\r" +
+"ZCA||03|00|KC|13ZCB|BC00007007|200916|3362|" + "\r" + 
+"ZCC||||||||||0009433498542|";
 
-export function encode(hl7Message) {
-    return b64encode(hl7Message, 'rawstd');
+export let MedicationStatement_ZPN_TRP_00 = "MSH|^~\&|TRXTOOL|PCARESUP|PNP|PP|${{ timestamp }}|userID:192.168.0.1|ZPN^^|3365|P|2.1||" + "\r" + 
+"ZZZ|TRP||3365|P1|3E9V1|||PHSVE105|" + "\r" +
+"ZCA||03|00|KC|13|ZCB|BC00007007|200916|3365|" + "\r" + 
+"ZCC||||||||||0009388880284|";
+
+export let MedicationStatement_ZPN_TRS_00 = "MSH|^~\&|TRXTOOL|PCARESUP|PNP|PP|${{ timestamp }}|userID:192.168.0.1|ZPN^^|3371|P|2.1||" + "\r" +
+"ZZZ|TRS||3371|P1|1D5T2|||RAHIMAN|" + "\r" +
+"ZCA||03|00|KC|13|ZCB|BC00007007|200916|3371|" + "\r" +
+"ZCC||||||||||0009427405543|" 
+
+function encode(hl7Message) {
+    return b64encode(hl7Message, 'std');
 }
 
-export function MedicationRequest(template)
+export function Hl7v2RequestEncoded(template)
 {
-    var res = template.replace("{{ timestamp }}", timestamp());
-    return res;
+    var res = template.replace("${{ timestamp }}", timestamp());
+    return encode(res);
 }
 
 function timestamp()
