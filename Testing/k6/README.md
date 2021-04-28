@@ -25,8 +25,7 @@ The Smoke Test's role is to verify that your System can handle minimal load, wit
 Any errors here are an indication of functionality not working under basic load.
 
 ```bash
-cd run
-CLIENT_SECRET=<client_credentials_grant_secret> smoke.sh
+CLIENT_SECRET=<client_credentials_grant_secret> run.sh $1
 ```
 
 ### When to run the smoke test
@@ -38,45 +37,19 @@ Run this test often, after each system change/release.  This ensures that functi
 Load testing is primarily concerned with assessing the systems performance, the purpose of stress testing is to assess the availability and stability of the system under heavy load.
 
 ```bash
-cd run
-CLIENT_SECRET=<client_credentials_grant_secret> load.sh
+CLIENT_SECRET=<client_credentials_grant_secret> run.sh
 ```
 
 ## Stress Testing
 
 Stress Testing is a type of load testing used to determine the limits of the system. The purpose of this test is to verify the stability and reliability of the system under extreme conditions.
 
-```bash
-cd run
-CLIENT_SECRET=<client_credentials_grant_secret> stress.sh
-```
-
-## Spike Testing
-
-Spike testing is a type of stress testing that immediately overwhelms the system with an extreme surge of load.
-
-```bash
-cd run
-CLIENT_SECRET=<client_credentials_grant_secret> spike.sh
-```
-
-## Soak Testing
-
-While load testing is primarily concerned with performance assessment, and stress testing is concerned with system stability under extreme conditions, soak testing is concerned with reliability over a long time. The soak test uncovers performance and reliability issues stemming from a system being under pressure for an extended period.
-
-```bash
-cd run
-CLIENT_SECRET=<client_credentials_grant_secret> soak.sh
-```
-
-### When to run the soak test
-
-Soak testing helps uncover bugs and reliability issues that surface when a system is loaded over an extended period of time. Soak testing helps reliability. Run this test only once you have successfully run other tests.
-
 
 ## Sample HL7v2 Messages from Pharmanet:
+
 The web service is deployed to DEV and it is ready for your team to submit the transaction. The following sample requests work in DEV.
- 
+
+```bash
 REQUEST :
 MSH|^~\&|TRXTOOL|PCARESUP|PNP|PP|||ZPN|3362|P|2.1||ZZZ|TID||3362|P1|6H2O2||ZCA||03|00|KC|13ZCB|BC00007007|200916|3362ZCC||||||||||0009433498542|
 
@@ -108,5 +81,5 @@ RESPONSE :
    ZZZ|TRS|0|3371|P1|1D5T2||3049 Operation Successful: Rx's not filled here.|RAHIMAN
    ZCC||||||||||0009427405543
    ZPB|
- 
+ ```
 
