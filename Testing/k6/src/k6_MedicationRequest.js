@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------
-// Copyright © 2019 Province of British Columbia
+// Copyright © 2021 Province of British Columbia
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,28 +14,16 @@
 // limitations under the License.
 //-------------------------------------------------------------------------
 
-import http from 'k6/http';
 import { sleep } from 'k6';
 import * as common from './inc/common.js';
+import * as hl7 from './inc/hl7v2.js';
 
-export let options = common.loadOptions;
+export default function() {
 
-export default function () {
-
-  let user = common.users[__VU % common.users.length];
-
-  common.authorizeUser(user);
-
-  common.groupWithDurationMetric('batch', function () {
-
-    let webClientBatchResponses = http.batch(common.webClientRequests(user));
-    let timelineBatchResponses = http.batch(common.timelineRequests(user));
-
-    common.checkResponses(webClientBatchResponses);
-    common.checkResponses(timelineBatchResponses);
-
-  });
-
-  sleep(1);
+    var url = common.MedicationRequestServiceUrl;
+    var payload = hl7.encode(hl7.MedicationRequest(hl7.MedicationRequest_ZPN_TRX_X0));
+    var scopes = "openid audience system/MedicationRequest.write system/MedicationRequest.read";
+    common.authorizeClient(scopes);
+    common.postMessage(url, payload);
+    sleep(1);
 }
-
