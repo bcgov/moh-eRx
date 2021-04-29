@@ -20,13 +20,14 @@ See [k6 calculation guidance](https://k6.io/docs/cloud/cloud-faq/what-are-vus-vi
 
 ## Smoke Testing
 
-The Smoke Test's role is to verify that your System can handle minimal load, without any problems. Our smoke tests uses by default 30 virtual users and executes each API call once to ensure it returns a 200 OK.
+The Smoke Test's role is to verify that your System can handle minimal load, without any problems. 
+Our smoke tests uses by default 1 virtual user and executes the API call iteratively for 15 seconds duration to ensure it returns a 200 OK.
 
 Any errors here are an indication of functionality not working under basic load.
 
 ```bash
 export ERX_ENV=dev
-ERX_CLIENT_SECRET=<client_credentials_grant_secret> bash run.sh ./src/MedicationRequest.js
+ERX_CLIENT_SECRET=<client_credentials_grant_secret> bash smoke.sh ./src/MedicationRequest.js
 ```
 
 ### When to run the smoke test
@@ -35,16 +36,17 @@ Run this test often, after each system change/release.  This ensures that functi
 
 ## Load Testing
 
-Load testing is primarily concerned with assessing the systems performance, the purpose of stress testing is to assess the availability and stability of the system under heavy load.
+Load testing is primarily concerned with assessing the systems performance, the purpose of stress testing is to assess the availability and stability of the system under heavy load. You can play with the VUS and Iterations within the shell script.
 
 ```bash
 export ERX_ENV=dev
-ERX_CLIENT_SECRET=<client_credentials_grant_secret> bash run.sh ./src/Patient.js
+ERX_CLIENT_SECRET=<client_credentials_grant_secret> bash load.sh ./src/Patient.js
 ```
+Future: Add more sophisticated load test script that includes ramp up time and groups logical sequences of api calls mimicking real world flow.
 
 ## Stress Testing
 
-Stress Testing is a type of load testing used to determine the limits of the system. The purpose of this test is to verify the stability and reliability of the system under extreme conditions.
+Stress Testing is a type of load testing used to determine the limits of the system. The purpose of this test is to verify the stability and reliability of the system under extreme conditions. Set the vus in the load test to be really high.
 
 ## Sample HL7v2 Messages from Pharmanet
 

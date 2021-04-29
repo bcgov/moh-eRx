@@ -10,4 +10,4 @@
 ## cd k6/run
 ## /bin/bash run.sh ./src/k6_MedicationRequest.js
 ##
-docker run -v $PWD/src:/src -a STDOUT -a STDERR -i loadimpact/k6 run --vus=100 --iterations=125 -e ERX_CLIENT=$ERX_CLIENT -e ERX_CLIENT_SECRET=$ERX_CLIENT_SECRET -e ERX_ENV=$ERX_ENV  $1 $2 $2 $4
+docker run -v $PWD/src:/src -a STDOUT -a STDERR -i loadimpact/k6 run --vus=100 --iterations=100 -e ERX_CLIENT=$ERX_CLIENT -e ERX_CLIENT_SECRET=$ERX_CLIENT_SECRET -e ERX_ENV=$ERX_ENV  $1 $2 $2 $4
