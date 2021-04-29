@@ -21,7 +21,7 @@ See [k6 calculation guidance](https://k6.io/docs/cloud/cloud-faq/what-are-vus-vi
 ## Smoke Testing
 
 The Smoke Test's role is to verify that your System can handle minimal load, without any problems. 
-Our smoke tests uses by default 1 virtual user and executes the API call iteratively for 15 seconds duration to ensure it returns a 200 OK.
+Our smoke tests uses by default 1 virtual user and executes the API call iteratively for 10 seconds duration to ensure it returns a 200 OK.
 
 Any errors here are an indication of functionality not working under basic load.
 

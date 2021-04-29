@@ -14,16 +14,13 @@
 // limitations under the License.
 //-------------------------------------------------------------------------
 import http from 'k6/http';
-import { b64decode } from 'k6/encoding';
+import { b64decode, b64encode } from 'k6/encoding';
 import { check, group, sleep } from 'k6';
 import { Rate, Trend } from 'k6/metrics';
 import * as uuid from './uuid.js';
 
 export let client_secret = __ENV.ERX_CLIENT_SECRET;
 export let client_id = __ENV.ERX_CLIENT;
-
-export let maxVus = (__ENV.VUS) ? __ENV.VUS : 300; 
-maxVus = (maxVus < 1) ? 1 : maxVus;
 
 export let authSuccess = new Rate('authentication_successful');
 export let errorRate = new Rate('errors');
@@ -198,6 +195,7 @@ export function postMessage(url, payload) {
     if (res.status == 200) {
         var res_json = JSON.parse(res.body);
         console.log(JSON.stringify(res_json));
+        console.log("HL7v2 Response = " + b64decode(res_json.content[0].attachment.data, "std"));
         errorRate.add(0);
     }
     else {
