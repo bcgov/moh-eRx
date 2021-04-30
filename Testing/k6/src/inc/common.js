@@ -189,12 +189,13 @@ export function postMessage(url, payload) {
         ]
     };
 
-    console.log(JSON.stringify(fhirPayload));
+    console.log("HL7v2 Request = " + b64decode(fhirPayload.content[0].attachment.data, "std"));
+    //console.log(JSON.stringify(fhirPayload));
 
     var res = http.post(url, JSON.stringify(fhirPayload), params);
     if (res.status == 200) {
         var res_json = JSON.parse(res.body);
-        console.log(JSON.stringify(res_json));
+        //console.log(JSON.stringify(res_json));
         console.log("HL7v2 Response = " + b64decode(res_json.content[0].attachment.data, "std"));
         errorRate.add(0);
     }

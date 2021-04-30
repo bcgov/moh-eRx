@@ -15,12 +15,26 @@
 //-------------------------------------------------------------------------
 import { b64encode } from 'k6/encoding';
 
-export let MedicationRequest_ZPN_TRX_X0 = "MSH|^~\&|DESKTOP|EMR|DESKTOP|EMRMD|${{ timestamp }}|userID:192.168.0.1|ZPN^^|691365|P|2.1||" + "\r" +
+/*export let MedicationRequest_ZPN_TRX_X0 = "MSH|^~\&|DESKTOP|EMR|DESKTOP|EMRMD|||ZPN^^|691365|P|2.1||" + "\r" +
 "ZCA||70|X0|MA|01|" + "\r" +
 "ZCB|LDJQQ|140827|691365"  + "\r" +
 "ZCC||||||||||000nnnnnnnnnn|"  + "\r" +
 "ZPR|||||||||||"  + "\r" +
-"ZZZ|TRX||691365|P1|nnnnnnnnnn|||||ZZZ1";
+"ZZZ|TRX||691365|P1|nnnnnnnnnn|||||ZZZ1"; */
+
+export let MedicationRequest_ZPN_TRX_X0 = "MSH|^~\&|1234567|1234567||EMRMD|||UPTO7|1112|P|2.1||" + "\r" +
+"ZCA||70|X0|QA|01|" + "\r" +
+"ZCB|QAEMRMD|210317|1112" + "\r" +
+"ZCC||||||||||0009698713408|" + "\r" +
+"ZPR|||||||||||" + "\r" +
+"ZZZ|TRX||1112|91|XXANV|||||ZZZ1^";
+
+export let MedicationRequest_ZPN_TRX_X0_sample2 = "MSH|^~\&|1234567|1234567||ERXPP||userID:192.168.0.1|ZPN|125|P|2.1||"  + "\r" +
+"ZCA||70|X0|M1|04|"  + "\r" +
+"ZCB|AAA|110916|0215"  + "\r" +
+"ZCC||||||||||000nnnnnnnnnn|"  + "\r" +
+"ZPR|1047||||||||||"  + "\r" +
+"ZZZ|TRX||545132|91|nnnnnnnnnn||||";
 
 export let Patient_ZPN_TID_00 = "MSH|^~\&|TRXTOOL|PCARESUP|PNP|PP|${{ timestamp }}|userID:192.168.0.1|ZPN^^|3362|P|2.1||" + "\r" +
 "ZZZ|TID||3362|P1|6H2O2||" + "\r" +
@@ -32,7 +46,7 @@ export let MedicationStatement_ZPN_TRP_00 = "MSH|^~\&|TRXTOOL|PCARESUP|PNP|PP|${
 "ZCA||03|00|KC|13|ZCB|BC00007007|200916|3365|" + "\r" + 
 "ZCC||||||||||0009388880284|";
 
-export let MedicationStatement_ZPN_TRS_00 = "MSH|^~\&|TRXTOOL|PCARESUP|PNP|PP|${{ timestamp }}|userID:192.168.0.1|ZPN^^|3371|P|2.1||" + "\r" +
+export let MedicationStatement_ZPN_TRS_00 = "MSH|^~\&|TRXTOOL|PCARESUP|PNP|PP|||ZPN^^|3371|P|2.1||" + "\r" +
 "ZZZ|TRS||3371|P1|1D5T2|||RAHIMAN|" + "\r" +
 "ZCA||03|00|KC|13|ZCB|BC00007007|200916|3371|" + "\r" +
 "ZCC||||||||||0009427405543|" 
