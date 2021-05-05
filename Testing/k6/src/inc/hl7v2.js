@@ -15,7 +15,8 @@
 //-------------------------------------------------------------------------
 import { b64encode } from 'k6/encoding';
 
-let SEPARATOR = "\r";
+let SEGMENT_END = "\x0d"; // Carriage Return is the standard segment terminator for HL7v2.
+let MSH_START = "MSH|^~&\\|"; // escape the escape back-slash to make sure the back slash (ASCII 92) is part of the payload.
 
 /*export let MedicationRequest_ZPN_TRX_X0 = "MSH|^~\&|DESKTOP|EMR|DESKTOP|EMRMD|||ZPN^^|691365|P|2.1||" + "\r" +
 "ZCA||70|X0|MA|01|" + "\r" +
@@ -25,46 +26,46 @@ let SEPARATOR = "\r";
 "ZZZ|TRX||691365|P1|nnnnnnnnnn|||||ZZZ1"; */
 
 export let MedicationRequest_ZPN_TRX_X0 = 
-"MSH|^~\&|1234567|1234567||EMRMD|${{ timestamp }}|userID:192.168.0.1|ZPN|1112|P|2.1||" + SEPARATOR +
-"ZCA||70|X0|QA|01|" + SEPARATOR +
-"ZCB|QAEMRMD|210317|1112" + SEPARATOR +
-"ZCC||||||||||0009698713408|" + SEPARATOR+
-"ZPR|||||||||||" + SEPARATOR +
-"ZZZ|TRX||1112|91|XXANV|||||ZZZ1^" + SEPARATOR;
+MSH_START + "1234567|1234567||EMRMD|${{ timestamp }}|userID:192.168.0.1|ZPN|1112|P|2.1||" + SEGMENT_END +
+"ZCA||70|X0|QA|01|" + SEGMENT_END +
+"ZCB|QAEMRMD|210317|1112" + SEGMENT_END +
+"ZCC||||||||||0009698713408|" + SEGMENT_END+
+"ZPR|||||||||||" + SEGMENT_END +
+"ZZZ|TRX||1112|91|XXANV|||||ZZZ1^" + SEGMENT_END + SEGMENT_END;
 
 export let MedicationRequest_ZPN_TRX_X0_sample2 = 
-"MSH|^~\&|1234567|1234567||ERXPP|${{ timestamp }}|userID:192.168.0.1|ZPN|125|P|2.1||"  + SEPARATOR +
-"ZCA||70|X0|M1|04|"  + SEPARATOR +
-"ZCB|AAA|110916|0215"  + SEPARATOR +
-"ZCC||||||||||000nnnnnnnnnn|"  + SEPARATOR +
-"ZPR|1047||||||||||"  + SEPARATOR +
-"ZZZ|TRX||545132|91|nnnnnnnnnn||||" + SEPARATOR;
+MSH_START + "1234567|1234567||ERXPP|${{ timestamp }}|userID:192.168.0.1|ZPN|125|P|2.1||"  + SEGMENT_END +
+"ZCA||70|X0|M1|04|"  + SEGMENT_END +
+"ZCB|AAA|110916|0215"  + SEGMENT_END +
+"ZCC||||||||||000nnnnnnnnnn|"  + SEGMENT_END +
+"ZPR|1047||||||||||"  + SEGMENT_END +
+"ZZZ|TRX||545132|91|nnnnnnnnnn||||" + SEGMENT_END + SEGMENT_END;
 
 export let MedicationStatement_ZPN_TRP_00 = 
-"MSH|^~\&|TRXTOOL|PCARESUP|PNP|PP|${{ timestamp }}|userID:192.168.0.1|ZPN^^|3365|P|2.1||" + SEPARATOR + 
-"ZZZ|TRP||3365|P1|3E9V1|||PHSVE105|" + SEPARATOR +
-"ZCA||03|00|KC|13|ZCB|BC00007007|200916|3365|" + SEPARATOR + 
-"ZCC||||||||||0009388880284|";
+MSH_START + "TRXTOOL|PCARESUP|PNP|PP|${{ timestamp }}|userID:192.168.0.1|ZPN|3365|P|2.1||" + SEGMENT_END + 
+"ZZZ|TRP||3365|P1|3E9V1|||PHSVE105|" + SEGMENT_END +
+"ZCA||03|00|KC|13|ZCB|BC00007007|200916|3365|" + SEGMENT_END + 
+"ZCC||||||||||0009388880284|" + SEGMENT_END + SEGMENT_END;
 
 export let MedicationStatement_ZPN_TRS_00 = 
-"MSH|^~\&|TRXTOOL|PCARESUP|PNP|PP|||ZPN^^|3371|P|2.1||" + SEPARATOR +
-"ZZZ|TRS||3371|P1|1D5T2|||RAHIMAN|" + SEPARATOR +
-"ZCA||03|00|KC|13|ZCB|BC00007007|200916|3371|" + SEPARATOR +
-"ZCC||||||||||0009427405543|";
+MSH_START + "TRXTOOL|PCARESUP|PNP|PP|${{ timestamp }}|userID:192.168.0.1|ZPN|3371|P|2.1||" + SEGMENT_END +
+"ZZZ|TRS||3371|P1|1D5T2|||RAHIMAN|" + SEGMENT_END +
+"ZCA||03|00|KC|13|ZCB|BC00007007|200916|3371|" + SEGMENT_END +
+"ZCC||||||||||0009427405543|" + SEGMENT_END + SEGMENT_END;
 
 
 export let Medication_ZPN_TDR = 
-"MSH|^~\&|TRXTOOL|PCARESUP|PNP|PP|||ZPN|9286|P|2.1||" + SEPARATOR + 
-"ZZZ|TDR||9286|P1|2F3P2||||" + SEPARATOR +
-"ZCA||03|00|KC|13|" + SEPARATOR +
-"ZCB|BC00007007|201222|9286" + SEPARATOR +
-"ZPC|2240579||||||Y|ZPC1^^^76672";
+MSH_START + "TRXTOOL|PCARESUP|PNP|PP|||ZPN|9286|P|2.1||" + SEGMENT_END + 
+"ZZZ|TDR||9286|P1|2F3P2||||" + SEGMENT_END +
+"ZCA||03|00|KC|13|" + SEGMENT_END +
+"ZCB|BC00007007|201222|9286" + SEGMENT_END +
+"ZPC|2240579||||||Y|ZPC1^^^766720" + SEGMENT_END + SEGMENT_END;
 
 export let Patient_ZPN_TID_00 = 
-"MSH|^~\&|TRXTOOL|PCARESUP|PNP|PP|${{ timestamp }}|userID:192.168.0.1|ZPN^^|3362|P|2.1||" + SEPARATOR +
-"ZZZ|TID||3362|P1|6H2O2||" + SEPARATOR +
-"ZCA||03|00|KC|13ZCB|BC00007007|200916|3362|" + SEPARATOR + 
-"ZCC||||||||||0009433498542|";
+MSH_START + "TRXTOOL|PCARESUP|PNP|PP|${{ timestamp }}||ZPN|3362|P|2.1||" + SEGMENT_END +
+"ZZZ|TID||3362|P1|6H2O2||" + SEGMENT_END +
+"ZCA||03|00|KC|13ZCB|BC00007007|200916|3362|" + SEGMENT_END + 
+"ZCC||||||||||0009433498542|" + SEGMENT_END + SEGMENT_END;
 
 
 function encode(hl7Message) {
