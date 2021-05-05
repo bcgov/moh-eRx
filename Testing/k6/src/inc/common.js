@@ -97,7 +97,7 @@ export function authenticateClient(client, scopes) {
     }
     else {
         console.log("Authentication Error for client= " + client.client_id + 
-        "client_secret=" + client.client_secret + 
+        ", client_secret=" + client.client_secret + 
         ", scope=" + client.scope + 
         ", ResponseCode[" + res.status + 
         "] " + res.error);
@@ -162,7 +162,7 @@ export function params(client) {
 
 export function postMessage(url, payload) {
     var now = new Date(Date.now());
-    console.log("POST " + url);
+    console.log("[ERX_ENV= " + environment +  "] POST " + url);
 
     var params = this.params(common.client);
 
@@ -170,6 +170,9 @@ export function postMessage(url, payload) {
 
     var timestamp = now.toISOString().replace("Z", "");
     var timestamp = timestamp.substr(0, 19) + "+00:00";
+
+    // TEMP
+    //payload = "TVNIfF5+XCZ8VFJYVE9PTHxQQ0FSRVNVUHxQTlB8UFB8fHxaUE58OTI4NnxQfDIuMXx8DVpaWnxURFJ8fDkyODZ8UDF8MkYzUDJ8fHx8DVpDQXx8MDN8MDB8S0N8MTN8DVpDQnxCQzAwMDA3MDA3fDIwMTIyMnw5Mjg2DVpQQ3wyMjQwNTc5fHx8fHx8WXxaUEMxXl5eNzY2NzIwDQ0=";
 
     var fhirPayload = {
         "resourceType": "DocumentReference",
@@ -189,8 +192,8 @@ export function postMessage(url, payload) {
         ]
     };
 
+    console.log("Payload Encoded:= " + payload);
     console.log("HL7v2 Request = " + b64decode(fhirPayload.content[0].attachment.data, "std"));
-    //console.log(JSON.stringify(fhirPayload));
 
     var res = http.post(url, JSON.stringify(fhirPayload), params);
     if (res.status == 200) {

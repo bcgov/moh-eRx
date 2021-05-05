@@ -15,6 +15,8 @@
 //-------------------------------------------------------------------------
 import { b64encode } from 'k6/encoding';
 
+let SEPARATOR = "\r";
+
 /*export let MedicationRequest_ZPN_TRX_X0 = "MSH|^~\&|DESKTOP|EMR|DESKTOP|EMRMD|||ZPN^^|691365|P|2.1||" + "\r" +
 "ZCA||70|X0|MA|01|" + "\r" +
 "ZCB|LDJQQ|140827|691365"  + "\r" +
@@ -22,34 +24,48 @@ import { b64encode } from 'k6/encoding';
 "ZPR|||||||||||"  + "\r" +
 "ZZZ|TRX||691365|P1|nnnnnnnnnn|||||ZZZ1"; */
 
-export let MedicationRequest_ZPN_TRX_X0 = "MSH|^~\&|1234567|1234567||EMRMD|||UPTO7|1112|P|2.1||" + "\r" +
-"ZCA||70|X0|QA|01|" + "\r" +
-"ZCB|QAEMRMD|210317|1112" + "\r" +
-"ZCC||||||||||0009698713408|" + "\r" +
-"ZPR|||||||||||" + "\r" +
-"ZZZ|TRX||1112|91|XXANV|||||ZZZ1^";
+export let MedicationRequest_ZPN_TRX_X0 = 
+"MSH|^~\&|1234567|1234567||EMRMD|${{ timestamp }}|userID:192.168.0.1|ZPN|1112|P|2.1||" + SEPARATOR +
+"ZCA||70|X0|QA|01|" + SEPARATOR +
+"ZCB|QAEMRMD|210317|1112" + SEPARATOR +
+"ZCC||||||||||0009698713408|" + SEPARATOR+
+"ZPR|||||||||||" + SEPARATOR +
+"ZZZ|TRX||1112|91|XXANV|||||ZZZ1^" + SEPARATOR;
 
-export let MedicationRequest_ZPN_TRX_X0_sample2 = "MSH|^~\&|1234567|1234567||ERXPP||userID:192.168.0.1|ZPN|125|P|2.1||"  + "\r" +
-"ZCA||70|X0|M1|04|"  + "\r" +
-"ZCB|AAA|110916|0215"  + "\r" +
-"ZCC||||||||||000nnnnnnnnnn|"  + "\r" +
-"ZPR|1047||||||||||"  + "\r" +
-"ZZZ|TRX||545132|91|nnnnnnnnnn||||";
+export let MedicationRequest_ZPN_TRX_X0_sample2 = 
+"MSH|^~\&|1234567|1234567||ERXPP|${{ timestamp }}|userID:192.168.0.1|ZPN|125|P|2.1||"  + SEPARATOR +
+"ZCA||70|X0|M1|04|"  + SEPARATOR +
+"ZCB|AAA|110916|0215"  + SEPARATOR +
+"ZCC||||||||||000nnnnnnnnnn|"  + SEPARATOR +
+"ZPR|1047||||||||||"  + SEPARATOR +
+"ZZZ|TRX||545132|91|nnnnnnnnnn||||" + SEPARATOR;
 
-export let Patient_ZPN_TID_00 = "MSH|^~\&|TRXTOOL|PCARESUP|PNP|PP|${{ timestamp }}|userID:192.168.0.1|ZPN^^|3362|P|2.1||" + "\r" +
-"ZZZ|TID||3362|P1|6H2O2||" + "\r" +
-"ZCA||03|00|KC|13ZCB|BC00007007|200916|3362|" + "\r" + 
-"ZCC||||||||||0009433498542|";
-
-export let MedicationStatement_ZPN_TRP_00 = "MSH|^~\&|TRXTOOL|PCARESUP|PNP|PP|${{ timestamp }}|userID:192.168.0.1|ZPN^^|3365|P|2.1||" + "\r" + 
-"ZZZ|TRP||3365|P1|3E9V1|||PHSVE105|" + "\r" +
-"ZCA||03|00|KC|13|ZCB|BC00007007|200916|3365|" + "\r" + 
+export let MedicationStatement_ZPN_TRP_00 = 
+"MSH|^~\&|TRXTOOL|PCARESUP|PNP|PP|${{ timestamp }}|userID:192.168.0.1|ZPN^^|3365|P|2.1||" + SEPARATOR + 
+"ZZZ|TRP||3365|P1|3E9V1|||PHSVE105|" + SEPARATOR +
+"ZCA||03|00|KC|13|ZCB|BC00007007|200916|3365|" + SEPARATOR + 
 "ZCC||||||||||0009388880284|";
 
-export let MedicationStatement_ZPN_TRS_00 = "MSH|^~\&|TRXTOOL|PCARESUP|PNP|PP|||ZPN^^|3371|P|2.1||" + "\r" +
-"ZZZ|TRS||3371|P1|1D5T2|||RAHIMAN|" + "\r" +
-"ZCA||03|00|KC|13|ZCB|BC00007007|200916|3371|" + "\r" +
-"ZCC||||||||||0009427405543|" 
+export let MedicationStatement_ZPN_TRS_00 = 
+"MSH|^~\&|TRXTOOL|PCARESUP|PNP|PP|||ZPN^^|3371|P|2.1||" + SEPARATOR +
+"ZZZ|TRS||3371|P1|1D5T2|||RAHIMAN|" + SEPARATOR +
+"ZCA||03|00|KC|13|ZCB|BC00007007|200916|3371|" + SEPARATOR +
+"ZCC||||||||||0009427405543|";
+
+
+export let Medication_ZPN_TDR = 
+"MSH|^~\&|TRXTOOL|PCARESUP|PNP|PP|||ZPN|9286|P|2.1||" + SEPARATOR + 
+"ZZZ|TDR||9286|P1|2F3P2||||" + SEPARATOR +
+"ZCA||03|00|KC|13|" + SEPARATOR +
+"ZCB|BC00007007|201222|9286" + SEPARATOR +
+"ZPC|2240579||||||Y|ZPC1^^^76672";
+
+export let Patient_ZPN_TID_00 = 
+"MSH|^~\&|TRXTOOL|PCARESUP|PNP|PP|${{ timestamp }}|userID:192.168.0.1|ZPN^^|3362|P|2.1||" + SEPARATOR +
+"ZZZ|TID||3362|P1|6H2O2||" + SEPARATOR +
+"ZCA||03|00|KC|13ZCB|BC00007007|200916|3362|" + SEPARATOR + 
+"ZCC||||||||||0009433498542|";
+
 
 function encode(hl7Message) {
     return b64encode(hl7Message, 'std');
