@@ -25,6 +25,48 @@ let MSH_START = "MSH|^~&\\|"; // escape the escape back-slash to make sure the b
 "ZPR|||||||||||"  + "\r" +
 "ZZZ|TRX||691365|P1|nnnnnnnnnn|||||ZZZ1"; */
 
+export let Claim_TACTDU_0104_sample1 = 
+MSH_START + "123456|123456||ERXPP||userID:192.168.0.1|ZPN|319233|P|2.1||" + SEGMENT_END +
+"ZCA|1|70|04|AR|05|" + SEGMENT_END +
+"ZCB|BC00000I10|140905|319233" + SEGMENT_END +
+"ZCC||||||||||000nnnnnnnnnn|" + SEGMENT_END +
+"ZCD|||N|319233||319233|2063735||100|7|91|nnnnnnnnnn|||||1486||222|||||nnnnnn|912351176" + SEGMENT_END +
+"ZPJ|ZPJ1^^^^^^|ZPJ2^^~ZPJ2^^~ZPJ2^^|ZPJ3^^|ZPJ4^Transaction Trace ID: 319233" + SEGMENT_END +
+"ZZZ|TAC||319233|P1|nnnnnnnnnn|||||ZZZ1^" + SEGMENT_END +
+"ZZZ|TDU||319233|P1|nnnnnnnnnn|||||ZZZ1^";
+
+export let Claim_TACTDU_0104_sample2 = 
+MSH_START + "123456|123456||ERXPP||userID:192.168.0.1|ZPN|319233|P|2.1||" + SEGMENT_END +
+"ZCA|1|70|01|AR|05|" + SEGMENT_END +
+"ZCB|BC00000I10|140905|319233" + SEGMENT_END +
+"ZCC||||||||||000nnnnnnnnnn|" + SEGMENT_END +
+"ZCD|||N|319233||319233|2063735||100|7|91|nnnnnnnnnn|||||1486||222|||||nnnnnn|912351175" + SEGMENT_END +
+"ZPJ|ZPJ1^^^^^^|ZPJ2^^~ZPJ2^^~ZPJ2^^|ZPJ3^^|ZPJ4^Transaction Trace ID: 319233" + SEGMENT_END +
+"ZZZ|TAC||319233|P1|nnnnnnnnnn|||||ZZZ1^" + SEGMENT_END +
+"ZZZ|TDU||319233|P1|nnnnnnnnnn|||||ZZZ1^" + SEGMENT_END + SEGMENT_END;
+
+export let Claim_TACTDU_11= "";  
+
+export let Consent_TCP_00_50 = "";
+
+export let Location_TIL_00_50 = "";
+
+export let Medication_ZPN_TDR = 
+MSH_START + "TRXTOOL|PCARESUP|PNP|PP|||ZPN|9286|P|2.1||" + SEGMENT_END + 
+"ZZZ|TDR||9286|P1|2F3P2||||" + SEGMENT_END +
+"ZCA||03|00|KC|13|" + SEGMENT_END +
+"ZCB|BC00007007|201222|9286" + SEGMENT_END +
+"ZPC|2240579||||||Y|ZPC1^^^766720" + SEGMENT_END + SEGMENT_END;
+
+export let MedicationDispense_TMU_01_51 = 
+MSH_START + "DESKTOP|EMR|DISMEDUPDATE|EMRMD|2014/09/09 12:33:33|userID:192.168.0.1|ZPN|119908|P|2.1||" + SEGMENT_END +
+"ZZZ|TMU||119908|91|nnnnnnnnnn|||||ZZZ1^" + SEGMENT_END +
+"ZCA|1|70|01|MA|01|" + SEGMENT_END +
+"ZCB|LDJQQ|140724|119908" + SEGMENT_END +
+"ZCC||||||||||000nnnnnnnnnn|" + SEGMENT_END +
+"ZCD|||N|126599||126599|2225972||1000|100|91|nnnnnnnnnn||||||||||||nnnnnn|" + SEGMENT_END +
+"ZPJ|ZPJ1^^^^^^|ZPJ2^^~ZPJ2^^~ZPJ2^^|ZPJ3^^|ZPJ4^TMU 0" + SEGMENT_END;
+
 export let MedicationRequest_ZPN_TRX_X0 = 
 MSH_START + "1234567|1234567||EMRMD|${{ timestamp }}|userID:192.168.0.1|ZPN|1112|P|2.1||" + SEGMENT_END +
 "ZCA||70|X0|QA|01|" + SEGMENT_END +
@@ -53,20 +95,19 @@ MSH_START + "TRXTOOL|PCARESUP|PNP|PP|${{ timestamp }}|userID:192.168.0.1|ZPN|337
 "ZCA||03|00|KC|13|ZCB|BC00007007|200916|3371|" + SEGMENT_END +
 "ZCC||||||||||0009427405543|" + SEGMENT_END + SEGMENT_END;
 
-
-export let Medication_ZPN_TDR = 
-MSH_START + "TRXTOOL|PCARESUP|PNP|PP|||ZPN|9286|P|2.1||" + SEGMENT_END + 
-"ZZZ|TDR||9286|P1|2F3P2||||" + SEGMENT_END +
-"ZCA||03|00|KC|13|" + SEGMENT_END +
-"ZCB|BC00007007|201222|9286" + SEGMENT_END +
-"ZPC|2240579||||||Y|ZPC1^^^766720" + SEGMENT_END + SEGMENT_END;
-
-export let Patient_ZPN_TID_00 = 
+export let Patient_TID_00 = 
 MSH_START + "TRXTOOL|PCARESUP|PNP|PP|${{ timestamp }}||ZPN|3362|P|2.1||" + SEGMENT_END +
 "ZZZ|TID||3362|P1|6H2O2||" + SEGMENT_END +
 "ZCA||03|00|KC|13ZCB|BC00007007|200916|3362|" + SEGMENT_END + 
 "ZCC||||||||||0009433498542|" + SEGMENT_END + SEGMENT_END;
 
+export let Practitioner_TIP_00 = MSH_START + "1234567|1234567||ERXPP|${{ timestamp }}|userID:192.168.0.1|ZPN|449126|P|2.1||"  + SEGMENT_END +
+"ZZZ|TIP||449126|P1|nnnnnnnnnn|||||ZZZ1^" + SEGMENT_END + 
+"ZCA||70|00|AR|05|" + SEGMENT_END + 
+"ZCB|BC00000I10|140819|449126" + SEGMENT_END + 
+"ZPH|P1|12615|||||||||||||||";
+
+//--------------------------------------------- END Message Examples --------------------
 
 function encode(hl7Message) {
     return b64encode(hl7Message, 'std');

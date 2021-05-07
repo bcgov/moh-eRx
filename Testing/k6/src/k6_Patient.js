@@ -21,7 +21,7 @@ import * as hl7 from './inc/hl7v2.js';
 export default function() {
 
     var url = common.PatientServiceUrl;
-    var payload = hl7.Hl7v2RequestEncoded(hl7.Patient_ZPN_TID_00); // Returns Base64 encoded hl7v2 message
+    var payload = hl7.Hl7v2RequestEncoded(hl7.Patient_TID_00); // Returns Base64 encoded hl7v2 message
     var scopes = "openid audience system/Patient.read";
     common.authorizeClient(scopes);
     common.postMessage(url, payload);
