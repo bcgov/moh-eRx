@@ -162,7 +162,6 @@ export function params(client) {
 
 export function postMessage(url, payload) {
     var now = new Date(Date.now());
-    console.log("[ERX_ENV= " + environment +  "] POST " + url);
 
     var params = this.params(common.client);
 
@@ -170,9 +169,6 @@ export function postMessage(url, payload) {
 
     var timestamp = now.toISOString().replace("Z", "");
     var timestamp = timestamp.substr(0, 19) + "+00:00";
-
-    // TEMP
-    //payload = "TVNIfF5+XCZ8VFJYVE9PTHxQQ0FSRVNVUHxQTlB8UFB8fHxaUE58OTI4NnxQfDIuMXx8DVpaWnxURFJ8fDkyODZ8UDF8MkYzUDJ8fHx8DVpDQXx8MDN8MDB8S0N8MTN8DVpDQnxCQzAwMDA3MDA3fDIwMTIyMnw5Mjg2DVpQQ3wyMjQwNTc5fHx8fHx8WXxaUEMxXl5eNzY2NzIwDQ0=";
 
     var fhirPayload = {
         "resourceType": "DocumentReference",
@@ -192,8 +188,8 @@ export function postMessage(url, payload) {
         ]
     };
 
-    console.log("Payload Encoded:= " + payload);
-    console.log("HL7v2 Request = " + b64decode(fhirPayload.content[0].attachment.data, "std"));
+    console.log("Payload:= " + payload);
+    console.log("[ERX_ENV= " + environment +  "] POST " + url);
 
     var res = http.post(url, JSON.stringify(fhirPayload), params);
     if (res.status == 200) {
@@ -208,4 +204,32 @@ export function postMessage(url, payload) {
         errorRate.add(1);
     }
     return res;
+}
+
+export function submitMessage(url, example) {
+    console.log("Request: " + example.name + ' [' + example.version + '] ' +  example.purpose);
+    var payload = Hl7v2Encoded(example.message); // Returns Base64 encoded hl7v2 message
+    return this.postMessage(url, payload);
+}
+
+function encode(hl7Message) {
+    console.log(hl7Message);
+    return b64encode(hl7Message, 'std');
+}
+
+function Hl7v2Encoded(message) {
+    var res = message.replace("${{ timestamp }}", timestamp());
+    return encode(res);
+}
+
+function timestamp() {
+    var now = new Date(Date.now());
+    var mon = now.getMonth() + 1;
+    mon = (mon < 10) ? "0" + mon : mon;
+    var day = now.getDate();
+    day = (day < 10) ? "0" + day : day
+    var str = now.getFullYear() + "/" +
+        mon + "/" + day + " " +
+        now.toLocaleTimeString("en-CA");
+    return str;
 }

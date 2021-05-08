@@ -13,14 +13,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
-
-import { sleep } from 'k6';
-import * as common from './inc/common.js';
-import * as examples from './inc/examples/Consent.js';
-
-export default function() {
-    var url = common.ConsentServiceUrl;
-    var scopes = "openid audience system/Consent.write system/Consent.read";
-    common.authorizeClient(scopes);
-    common.submitMessage(url, examples.Consent[0]);
-}
+export let Consent = [
+    {
+        name: "TCP_00_REQUEST-998015",
+        purpose: "Patient Keyword Maintenance request message",
+        version: "PNet-R70",
+        message:
+            "MSH|^~\\&|1234567|1234567||ERXPP|${{ timestamp }}|userID:192.168.0.1|ZPN|998015|P|2.1||\r" +
+            "ZZZ|TCP||998015|P1|nnnnnnnnnn||||KEYWORD|ZZZ1^\r" +
+            "ZCA||70|00|AR|05|\r" +
+            "ZCB|BC00000I10|140802|998015\r" +
+            "ZCC||||||||||000nnnnnnnnnn|\r\r"
+    }
+];

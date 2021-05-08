@@ -13,14 +13,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
-
-import { sleep } from 'k6';
-import * as common from './inc/common.js';
-import * as examples from './inc/examples/Consent.js';
-
-export default function() {
-    var url = common.ConsentServiceUrl;
-    var scopes = "openid audience system/Consent.write system/Consent.read";
-    common.authorizeClient(scopes);
-    common.submitMessage(url, examples.Consent[0]);
-}
+export let Location = [
+    {
+        name: "TIL_00_REQUEST-1111",
+        purpose: "Get Location Details request message",
+        version: "PNet-R70",
+        message:
+            "MSH|^~\\&|1234567|1234567||EMRMD|${{ timestamp }}||userID:192.168.0.1|ZPN|1111|P|2.1||\r" + 
+            "ZCA||70|00|MA|01|\r" + 
+            "ZCB|MDA|120113|1111\r" + 
+            "ZPL|QAERXPP||||||||||||||MM\r" + 
+            "ZZZ|TIL||1111|P1|nnnnnnnnnn|||||ZZZ1\r\r"
+    }
+];

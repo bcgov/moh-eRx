@@ -16,11 +16,16 @@
 
 import { sleep } from 'k6';
 import * as common from './inc/common.js';
-import * as examples from './inc/examples/Consent.js';
+import * as examples from './inc/examples/MedicationStatement.js';
 
 export default function() {
-    var url = common.ConsentServiceUrl;
-    var scopes = "openid audience system/Consent.write system/Consent.read";
+
+    var url = common.MedicationStatementServiceUrl;
+    var scopes = "openid audience system/MedicationStatement.read";
     common.authorizeClient(scopes);
-    common.submitMessage(url, examples.Consent[0]);
+
+    examples.MedicationStatement.forEach(msg => {
+        common.submitMessage(url, msg);
+        sleep(1);
+    });
 }

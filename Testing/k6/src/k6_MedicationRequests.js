@@ -16,13 +16,16 @@
 
 import { sleep } from 'k6';
 import * as common from './inc/common.js';
-import * as hl7 from './inc/hl7v2.js';
+import * as examples from './inc/examples/MedicationRequest.js';
 
 export default function() {
 
-    var url = common.MedicationStatementServiceUrl;
-    var payload = hl7.Hl7v2RequestEncoded(hl7.MedicationStatement_ZPN_TRS_00); // Returns Base64 encoded hl7v2 message
-    var scopes = "openid audience system/MedicationStatement.read";
+    var url = common.MedicationRequestServiceUrl;
+    var scopes = "openid audience system/MedicationRequest.write system/MedicationRequest.read";
     common.authorizeClient(scopes);
-    common.postMessage(url, payload);
+
+    examples.MedicationRequest.forEach(msg => {
+        common.submitMessage(url, msg);
+        sleep(1);
+    });
 }

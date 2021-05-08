@@ -16,13 +16,14 @@
 
 import { sleep } from 'k6';
 import * as common from './inc/common.js';
-import * as hl7 from './inc/hl7v2.js';
+import * as examples from './inc/examples/Claim.js';
 
 export default function() {
 
     var url = common.ClaimServiceUrl;
-    var payload = hl7.Hl7v2RequestEncoded(hl7.Claim_TACTDU_0104_sample2); // Returns Base64 encoded hl7v2 message
+    var example = examples.Claim[0];
     var scopes = "openid audience system/Claim.write system/Claim.read";
+
     common.authorizeClient(scopes);
-    common.postMessage(url, payload);
+    common.submitMessage(url, example);
 }
