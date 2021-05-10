@@ -67,9 +67,7 @@ namespace Health.PharmaNet.Controllers
         /// <returns>A DocumentReference response as Json.</returns>
         /// <response code="200">Returns Ok when the transaction went through.</response>
         /// <response code="401">Authorization error, returns JSON describing the error.</response>
-        [HttpPost]
-        [Route("")]
-        [Route("/api/v{version:apiVersion}/Consent/")]
+        [HttpPost("/api/v{version:apiVersion}/Consent/")]
         [Produces("application/fhir+json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [Authorize(Policy = FhirScopesPolicy.Access)]
