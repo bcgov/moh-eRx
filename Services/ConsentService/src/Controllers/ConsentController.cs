@@ -72,7 +72,7 @@ namespace Health.PharmaNet.Controllers
         [Produces("application/fhir+json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [Authorize(Policy = FhirScopesPolicy.Access)]
-        public async Task<ActionResult<DocumentReference>> ProtectiveKeyword()
+        public async Task<ActionResult<DocumentReference>> Consent()
         {
             return await this.PharmanetRequest().ConfigureAwait(true);
         }
