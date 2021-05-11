@@ -37,7 +37,7 @@ namespace Health.PharmaNet.Controllers
     /// The MedicationService controller.
     /// </summary>
     [ApiVersion("1.0")]
-    [Route("/api/v{version:apiVersion}/Consent")]
+    [Route("/api/v{version:apiVersion}/Consent/")]
     [ApiController]
     public class ConsentController : ServiceBaseController
     {
@@ -68,8 +68,6 @@ namespace Health.PharmaNet.Controllers
         /// <response code="200">Returns Ok when the transaction went through.</response>
         /// <response code="401">Authorization error, returns JSON describing the error.</response>
         [HttpPost]
-        [Route("")]
-        [Route("/api/v{version:apiVersion}/Consent")]
         [Produces("application/fhir+json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [Authorize(Policy = FhirScopesPolicy.Access)]
