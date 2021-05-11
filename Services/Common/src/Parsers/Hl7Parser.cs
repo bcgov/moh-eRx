@@ -55,7 +55,7 @@ namespace Health.PharmaNet.Parsers
                 }
                 catch (Exception ex)
                 {
-                    string errMsg = "HL7v2 Exception: " + ex.Message + "for HL7:" + messageString;
+                    string errMsg = "HL7v2 Exception: " + ex.Message + "for HL7v2: " + messageString;
                     throw new ArgumentException(errMsg, ex);
                 }
 
