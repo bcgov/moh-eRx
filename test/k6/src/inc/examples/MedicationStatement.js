@@ -25,6 +25,24 @@ export let MedicationStatement = [
             "ZCC||||||||||0009388880284|\r\r"
     },
     {
+        name: "TRP_00_REQUEST - R3",
+        purpose: "Patient Profile Request request message (NEXT initial request)",
+        version: "PNet-R3",
+        message:
+            "MSH|^~\\&|XXXXXXXXXXXXXXX|NA|PNP|PP||userID:192.168.0.1|ZPN|101159|P|2.1||\r" +
+            "ZZZ|TRP||101159|P1|nnnnnnnnnn||||\r" +
+            "ZCA|000001|03|00|AR|03|\r" +
+            "ZCB|BC00000HC4|110401|101159\r" +
+            "ZCC||||||||||000nnnnnnnnnn|F\r\r"
+    },
+    {
+        name: "TRP_00_REQUEST - R3",
+        purpose: "Patient Profile Request request message (NEXT part request)",
+        version: "PNet-R3",
+        message:
+            "MSH|^~\\&|XXXXXXXXXXXXXXX|NA|PNP|PP||userID:192.168.0.1|ZPN|101159|P|2.1||NEXT^ZCB^BC00000HC4^110401^101159\r\r"
+    },
+    {
         name: "TRP_00_REQUEST",
         purpose: "",
         version: "PNet-R3",
