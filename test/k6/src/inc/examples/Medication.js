@@ -19,7 +19,7 @@ export let Medication = [
         purpose: "Drug Monograph Information request message",
         version: "PNet-R3",
         message:
-            "MSH|^~\\&|TRXTOOL|PCARESUP|PNP|PP|||ZPN|9286|P|2.1||\r" +
+            "MSH|^~\\&|TRXTOOL|PCARESUP|PNP|PP|${{ timestamp }}||ZPN|9286|P|2.1||\r" +
             "ZZZ|TDR||9286|P1|2F3P2||||\r" +
             "ZCA||03|00|KC|13|\r" +
             "ZCB|BC00007007|201222|9286\r" +
@@ -31,7 +31,7 @@ export let Medication = [
         purpose: "Drug Monograph Information request message",
         version: "PNet-R70",
         message:
-            "MSH|^~\\&|1234567|1234567||ERXPP||userID:192.168.0.1|ZPN|149966|P|2.1||\r" +
+            "MSH|^~\\&|1234567|1234567||ERXPP|${{ timestamp }}|userID:192.168.0.1|ZPN|149966|P|2.1||\r" +
             "ZZZ|TDR||149966|P1|nnnnnnnnnn|||||ZZZ1^\r" +
             "ZCA||70|00|KC|13|\r" +
             "ZCB|BC00000F07|111205|149966\r" +

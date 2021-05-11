@@ -29,7 +29,7 @@ export let Patient = [
         purpose: "Patient Identification request message",
         version: "PNet-R70",
         message:
-            "MSH|^~\\&|1234567|1234567||ERXPP||userID:192.168.0.1|ZPN|443769|P|2.1||\r" +
+            "MSH|^~\\&|1234567|1234567||ERXPP|${{ timestamp }}|userID:192.168.0.1|ZPN|443769|P|2.1||\r" +
             "ZCA||70|00|AR|05|\r" +
             "ZCB|BC00000I10|140715|443769\r" +
             "ZCC||||||||||000nnnnnnnnnn|\r" +

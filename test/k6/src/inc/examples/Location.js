@@ -19,7 +19,7 @@ export let Location = [
         purpose: "Get Location Details request message",
         version: "PNet-R70",
         message:
-            "MSH|^~\\&|1234567|1234567||EMRMD|${{ timestamp }}||userID:192.168.0.1|ZPN|1111|P|2.1||\r" + 
+            "MSH|^~\\&|1234567|1234567||EMRMD|${{ timestamp }}||ZPN|1111|P|2.1||\r" +
             "ZCA||70|00|MA|01|\r" + 
             "ZCB|MDA|120113|1111\r" + 
             "ZPL|QAERXPP||||||||||||||MM\r" + 

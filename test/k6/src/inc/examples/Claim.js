@@ -33,7 +33,7 @@ export let Claim = [
         purpose: "Adjudicate a Dispense Claim request message",
         version: "PNet-R70",
         message:
-            "MSH|^~\\&|XXXXXXXXXXXXXXX|XXXXXXXXXXXXXXXXXXXX|MOH|PP||userID:192.168.0.1|XXXXXXX|20334|P|2.1|\r" +
+            "MSH|^~\\&|XXXXXXXXXXXXXXX|XXXXXXXXXXXXXXXXXXXX|MOH|PP|${{ timestamp }}|userID:192.168.0.1|XXXXXXX|20334|P|2.1|\r" +
             "ZZZ|TAC||020618|P1|nnnnnnnnnn|||\r" +
             "ZZZ|TDU||020618|P1|nnnnnnnnnn||||\r" +
             "ZCA|000001|03|01|AR|02\r" +
@@ -47,7 +47,7 @@ export let Claim = [
         purpose: "Adjudicate a Dispense Claim request message",
         version: "PNet-R70",
         message:
-            "MSH|^~\\&|123456|123456||ERXPP||userID:192.168.0.1|ZPN|319233|P|2.1||\r" +
+            "MSH|^~\\&|123456|123456||ERXPP|${{ timestamp }}|userID:192.168.0.1|ZPN|319233|P|2.1||\r" +
             "ZCA|1|70|01|AR|05|\r" +
             "ZCB|BC00000I10|140905|319233\r" +
             "ZCC||||||||||000nnnnnnnnnn|\r" +
@@ -61,7 +61,7 @@ export let Claim = [
         purpose: "Adjudicate a Dispense Claim request message",
         version: "PNet-R70",
         message:
-            "MSH|^~\\&|123456|123456||ERXPP||userID:192.168.0.1|ZPN|319233|P|2.1||\r" +
+            "MSH|^~\\&|123456|123456||ERXPP|${{ timestamp }}|userID:192.168.0.1|ZPN|319233|P|2.1||\r" +
             "ZCA|1|70|01|AR|05|\r" +
             "ZCB|BC00000I10|140905|319233\r" +
             "ZCC||||||||||000nnnnnnnnnn|\r" +
@@ -75,7 +75,7 @@ export let Claim = [
         purpose: "Adjudicate a Dispense Claim request message",
         version: "PNet-R70",
         message:
-            "MSH|^~\\&|DESKTOP|PHARMACY|PNP|ERXPP|2014/11/20 10:01:01|userID:192.168.0.1|ZPN|324232|P|2.1||\r" +
+            "MSH|^~\\&|DESKTOP|PHARMACY|PNP|ERXPP|${{ timestamp }}|userID:192.168.0.1|ZPN|324232|P|2.1||\r" +
             "ZCA|1|70|01|AR|05|\r" +
             "ZCB|BC00007310|141127|324232\r" +
             "ZCC||36876372|0009300001268||19530602|||XQNIJY|PJYJNNBD|000nnnnnnnnnn|F\r" +
@@ -89,7 +89,7 @@ export let Claim = [
         purpose: "Adjudicate a Dispense Claim request message",
         version: "PNet-R70",
         message:
-            "MSH|^~\\&|123456|123456||ERXPP||userID:192.168.0.1|ZPN|356673|P|2.1||\r" +
+            "MSH|^~\\&|123456|123456||ERXPP|${{ timestamp }}|userID:192.168.0.1|ZPN|356673|P|2.1||\r" +
             "ZCA|1|70|01|AR|05|\r" +
             "ZCB|BC00000I10|140910|356673\r" +
             "ZCC||||||||||000nnnnnnnnnn|\r" +
@@ -103,7 +103,7 @@ export let Claim = [
         purpose: "Adjudicate a Dispense Claim request message",
         version: "PNet-R70",
         message:
-            "MSH|^~\\&|DESKTOP|PHARMACY|PNP|ERXPP|2014/11/20 10:01:01|userID:192.168.0.1|ZPN|324232|P|2.1||\r" +
+            "MSH|^~\\&|DESKTOP|PHARMACY|PNP|ERXPP|${{ timestamp }}|userID:192.168.0.1|ZPN|324232|P|2.1||\r" +
             "ZCA|1|70|01|AR|05|\r" +
             "ZCB|BC00007310|141122|534532\r" +
             "ZCC||||||||XQNIJY|PJYJNNBD|000nnnnnnnnnn|F\r" +
@@ -117,7 +117,7 @@ export let Claim = [
         purpose: "Adjudicate a Dispense Claim Reversal request message",
         version: "PNet-R70",
         message:
-            "MSH|^~\\&|123456|123456||ERXPP||userID:192.168.0.1|ZPN|319233|P|2.1||\r" +
+            "MSH|^~\\&|123456|123456||ERXPP|${{ timestamp }}|userID:192.168.0.1|ZPN|319233|P|2.1||\r" +
             "ZZZ|TAC||319233|P1|nnnnnnnnnn|||||ZZZ1^\r" +
             "ZZZ|TDU||319233|P1|nnnnnnnnnn|||||ZZZ1^\r" +
             "ZCA|1|70|11|AR|05|\r" +
@@ -132,7 +132,7 @@ export let Claim = [
         purpose: "Adjudicate a Dispense Claim Reversal request message",
         version: "PNet-R70",
         message:
-            "MSH|^~\\&|123456|123456||ERXPP||userID:192.168.0.1|ZPN|319133|P|2.1||\r" +
+            "MSH|^~\\&|123456|123456||ERXPP|${{ timestamp }}|userID:192.168.0.1|ZPN|319133|P|2.1||\r" +
             "ZZZ|TAC||319133|P1|nnnnnnnnnn|||||ZZZ1^\r" +
             "ZZZ|TDU||319133|P1|nnnnnnnnnn|||||ZZZ1^\r" +
             "ZCA|1|70|11|AR|05|\r" +
@@ -147,7 +147,7 @@ export let Claim = [
         purpose: "Adjudicate a Dispense Claim Reversal request message",
         version: "PNet-R70",
         message:
-            "MSH|^~\\&|DESKTOP|PHARMACY|PNP|ERXPP|2014/11/20 10:01:01|userID:192.168.0.1|ZPN|324232|P|2.1||\r" +
+            "MSH|^~\\&|DESKTOP|PHARMACY|PNP|ERXPP|${{ timestamp }}|userID:192.168.0.1|ZPN|324232|P|2.1||\r" +
             "ZZZ|TAC||345632|P1|nnnnnnnnnn|||||ZZZ1^\r" +
             "ZCA|1|70|11|AR|05|\r" +
             "ZCB|BC00007310|141203|345632\r" +
@@ -162,7 +162,7 @@ export let Claim = [
         purpose: "Adjudicate a Dispense Claim TAC/TDU/TRP request message",
         version: "PNet-R70",
         message:
-            "MSH|^~\\&|DESKTOP|PHARMACY|PNP|ERXPP|2014/11/20 10:01:01|userID:192.168.0.1|ZPN|324232|P|2.1||\r" +
+            "MSH|^~\\&|DESKTOP|PHARMACY|PNP|ERXPP|${{ timestamp }}|userID:192.168.0.1|ZPN|324232|P|2.1||\r" +
             "ZCA|1|70|01|AR|05|\r" +
             "ZCB|BC00007310|141129|324232\r" +
             "ZCC||36876372|0009300001268||19530602|||XQNIJY|PJYJNNBD|000nnnnnnnnnn|F\r" +
@@ -177,7 +177,7 @@ export let Claim = [
         purpose: "Adjudicate a Dispense Claim TAC/TDU/TRP request message",
         version: "PNet-R70",
         message:
-            "MSH|^~\\&|1234567|1234567||ERXPP||userID:192.168.0.1|ZPN|433760|P|2.1||\r" +
+            "MSH|^~\\&|1234567|1234567||ERXPP|${{ timestamp }}|userID:192.168.0.1|ZPN|433760|P|2.1||\r" +
             "ZZZ|TDU||433760|P1|nnnnnnnnnn||||\r" +
             "ZCA|1|70|01|AR|05|\r" +
             "ZCB|BC00000I10|141014|433760\r" +

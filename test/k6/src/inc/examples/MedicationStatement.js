@@ -39,7 +39,7 @@ export let MedicationStatement = [
         purpose: "Patient Profile Request message",
         version: "PNet-R70",
         message:
-            "MSH|^~\\&|1234567|1234567||EMRMD||userID:192.168.0.1|ZPN|248875|P|2.1||\r" +
+            "MSH|^~\\&|1234567|1234567||EMRMD|${{ timestamp }}|userID:192.168.0.1|ZPN|248875|P|2.1||\r" +
             "ZZZ|TRP||248876|91|nnnnnnnnnn|||||ZZZ1^\r" +
             "ZCA|1|70|00|QA|01|\r" +
             "ZCB|QAEMRMD|140530|248876\r" +
@@ -50,7 +50,7 @@ export let MedicationStatement = [
         purpose: "Patient Profile Request message",
         version: "PNet-R70",
         message:
-            "MSH|^~\\&|1234567|1234567||ERXPP||userID:192.168.0.1|ZPN|444333|P|2.1||\r" +
+            "MSH|^~\\&|1234567|1234567||ERXPP|${{ timestamp }}|userID:192.168.0.1|ZPN|444333|P|2.1||\r" +
             "ZZZ|TRP||444333|P1|nnnnnnnnnn|||||ZZZ1^\r" +
             "ZCA||70|00|QA|02|\r" +
             "ZCB|QAERXPP|111206|235354\r" +
@@ -61,7 +61,7 @@ export let MedicationStatement = [
         purpose: "Patient Profile Request message",
         version: "PNet-R70",
         message:
-            "MSH|^~\\&|DESKTOP|EMR|DESKTOP|EMRMD|2014/09/09 10:01:01|userID:192.168.0.1|ZPN|613252|P|2.1||\r" +
+            "MSH|^~\\&|DESKTOP|EMR|DESKTOP|EMRMD|${{ timestamp }}|userID:192.168.0.1|ZPN|613252|P|2.1||\r" +
             "ZZZ|TRP||613252|P1|nnnnnnnnnn||||\r" +
             "ZCA||70|00|MA|01|\r" +
             "ZCB|LDJQQ|140806|613252\r" +

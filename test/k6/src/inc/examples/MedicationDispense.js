@@ -19,7 +19,7 @@ export let MedicationDispense = [
         purpose: "Medication Update request message",
         version: "PNet-R70",
         message:
-            "MSH|^~\\&|DESKTOP|EMR|DISMEDUPDATE|EMRMD|2014/09/09 12:33:33|userID:192.168.0.1|ZPN|119908|P|2.1||\r" +
+            "MSH|^~\\&|DESKTOP|EMR|DISMEDUPDATE|EMRMD|${{ timestamp }}|userID:192.168.0.1|ZPN|119908|P|2.1||\r" +
             "ZZZ|TMU||119908|91|nnnnnnnnnn|||||ZZZ1^\r" +
             "ZCA|1|70|01|MA|01|\r" +
             "ZCB|LDJQQ|140724|119908\r" +
@@ -32,7 +32,7 @@ export let MedicationDispense = [
         purpose: "Medication Update request message",
         version: "PNet-R70",
         message:
-            "MSH|^~\\&|1234567|1234567|1234567|PP||userID:192.168.0.1|ZPN|1111|P|2.1||\r" +
+            "MSH|^~\\&|1234567|1234567|1234567|PP|${{ timestamp }}|userID:192.168.0.1|ZPN|1111|P|2.1||\r" +
             "ZZZ|TMU||1111|P1|nnnnnnnnnn||||\r" +
             "ZCA|1|03|01|NA|01|\r" +
             "ZCB|CAS|110614|1111\r" +
@@ -45,7 +45,7 @@ export let MedicationDispense = [
         purpose: "Medication Update request message",
         version: "PNet-R70",
         message:
-            "MSH|^~\\&|DESKTOP|EMR|DISMEDUPDATE|EMRMD|2014/09/09 12:33:33|userID:192.168.0.1|ZPN|119908|P|2.1||\r" +
+            "MSH|^~\\&|DESKTOP|EMR|DISMEDUPDATE|EMRMD|${{ timestamp }}|userID:192.168.0.1|ZPN|119908|P|2.1||\r" +
             "ZZZ|TMU||119908|91|nnnnnnnnnn|||||ZZZ1^\r" +
             "ZCA|1|70|01|MA|01|\r" +
             "ZCB|LDJQQ|140724|119908\r" +

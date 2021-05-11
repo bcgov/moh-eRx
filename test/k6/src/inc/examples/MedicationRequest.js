@@ -19,7 +19,7 @@ export let MedicationRequest = [
         purpose: "Retrieve Patient Prescription request message",
         version: "PNet-R70",
         message:
-            "MSH|^~\\&|1234567|1234567||EMRMD|${{ timestamp }}|userID:192.168.0.1|ZPN|1112|P|2.1||\r" +
+            "MSH|^~\\&|1234567|1234567|DESKTOP|EMRMD|${{ timestamp }}|userID:192.168.0.1|ZPN|1112|P|2.1||\r" +
             "ZCA||70|X0|QA|01|\r" +
             "ZCB|QAEMRMD|210317|1112\r" +
             "ZCC||||||||||0009698713408|\r" +
@@ -31,7 +31,7 @@ export let MedicationRequest = [
         purpose: "Retrieve Patient Prescription request message",
         version: "PNet-R70",
         message:
-            "MSH|^~\\&|DESKTOP|EMR|DESKTOP|EMRMD|2014/09/09 12:11:11|userID:192.168.0.1|ZPN|691365|P|2.1||\r" +
+            "MSH|^~\\&|DESKTOP|EMR|DESKTOP|EMRMD|${{ timestamp }}|userID:192.168.0.1|ZPN|691365|P|2.1||\r" +
             "ZCA||70|X0|MA|01|\r" +
             "ZCB|LDJQQ|140827|691365\r" +
             "ZCC||||||||||000nnnnnnnnnn|\r" +
