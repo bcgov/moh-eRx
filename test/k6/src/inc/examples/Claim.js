@@ -30,10 +30,10 @@ export let Claim = [
     },
     {
         name: "TACTDU_0104_REQUEST-20334 (encrypted)",
-        purpose: "Adjudicate a Dispense Claim request message",
+        purpose: "Adjudicate a Dispense Claim request message (Encrypted)",
         version: "PNet-R70",
         message:
-            "MSH|^~\\&|XXXXXXXXXXXXXXX|XXXXXXXXXXXXXXXXXXXX|MOH|PP|${{ timestamp }}|userID:192.168.0.1|XXXXXXX|20334|P|2.1|\r" +
+            "MSH|^~\\&|123456|123456|MOH|PP|${{ timestamp }}||ZPN|20334|P|2.1|\r" +
             "ZZZ|TAC||020618|P1|nnnnnnnnnn|||\r" +
             "ZZZ|TDU||020618|P1|nnnnnnnnnn||||\r" +
             "ZCA|000001|03|01|AR|02\r" +
