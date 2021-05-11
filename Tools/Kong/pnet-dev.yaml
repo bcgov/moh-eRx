@@ -380,7 +380,7 @@ services:
     host: practitionerservice.2f77cb-dev.svc
     port: 8080
     protocol: http
-    path: /api/v1/practitionerservice
+    path: /api/v1/practitioner
     routes:
       - name: DEV-PractitionerService
         methods:
