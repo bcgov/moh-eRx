@@ -8,13 +8,14 @@ A Network Security Policy needs to be deployed into each namespace prior to anyt
 
 ```console
 oc project 2f77cb-tools
-oc process -f ./nsp.yaml -p NAMESPACE=2f77cb-tools | oc apply -f -
+oc process -f nsp.yaml -p NAMESPACE_PREFIX=2f77cb -p ENVIRONMENT=tools | oc apply -f -
 oc project 2f77cb-dev
-oc process -f ./nsp.yaml -p NAMESPACE=2f77cb-dev | oc apply -f -
+oc process -f nsp.yaml -p NAMESPACE_PREFIX=2f77cb -p ENVIRONMENT=dev | oc apply -f -
 oc project 2f77cb-test
-oc process -f ./nsp.yaml -p NAMESPACE=2f77cb-test | oc apply -f -
+oc process -f nsp.yaml -p NAMESPACE_PREFIX=2f77cb -p ENVIRONMENT=test | oc apply -f -
 oc project 2f77cb-prod
-oc process -f ./nsp.yaml -p NAMESPACE=2f77cb-prod | oc apply -f -
+oc process -f nsp.yaml -p NAMESPACE_PREFIX=2f77cb -p ENVIRONMENT=prod | oc apply -f -
+oc project 2f77cb-tools
 ```
 
 Please ensure that the AzureAgents have been deployed into the OpenShift tools namespace.

@@ -1,0 +1,8 @@
+@startuml PNet_HighLevel_MedicationStatement_Flow
+autonumber
+    actor EMR
+    EMR --> MOH_KeyCloak : Client Credentials Grant Invoke
+    EMR <-- MOH_KeyCloak : Return JWT (access token)
+    EMR -> PharmaNet_API : Request = https://moh.api.gov.bc.ca/PharmaNet/MedStatementService/v1/MedicationStatement (TRP_00.50)
+    EMR <- PharmaNet_API : MedicationStatement Response Returned (TRP_00.50_RESPONSE)
+@enduml

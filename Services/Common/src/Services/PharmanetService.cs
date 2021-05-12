@@ -82,7 +82,7 @@ namespace Health.PharmaNet.Services
                 }
                 else
                 {
-                    this.logger.LogError($"Pharmanet Response Error: {1}", result.ErrorMessage);
+                    this.logger.LogError($"Pharmanet Response Error: {result.ErrorMessage}");
                 }
             }
 #pragma warning disable CA1031 // Do not catch general exception types

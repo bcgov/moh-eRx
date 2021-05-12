@@ -15,17 +15,14 @@
 //-------------------------------------------------------------------------
 namespace Health.PharmaNet.Controllers
 {
-    using System.Security.Claims;
     using System.Threading.Tasks;
 
     using Health.PharmaNet.Common.Authorization.Policy;
-    using Health.PharmaNet.Common.Http;
     using Health.PharmaNet.Parsers;
     using Health.PharmaNet.Services;
 
     using Hl7.Fhir.Model;
 
-    using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
