@@ -15,7 +15,7 @@
 //-------------------------------------------------------------------------
 import http from 'k6/http';
 import { b64decode, b64encode } from 'k6/encoding';
-import { check, group, sleep } from 'k6';
+import { check, fail, group, sleep } from 'k6';
 import { Rate, Trend } from 'k6/metrics';
 import * as uuid from './uuid.js';
 
@@ -69,9 +69,12 @@ export function getExpiresTime(seconds) {
 export function authorizeClient(scopes) {
     if ((__ITER == 0) && (client.token == null)) {
         let loginRes = authenticateClient(client, scopes);
-        check(loginRes, {
+        if (!check(loginRes, {
             'Authenticated successfully': loginRes === 200
-        });
+        })) 
+        {
+            fail("Authentication Failed. Result is *not* 200 OK");
+        }
     }
     refreshTokenIfNeeded(client);
     return client;
@@ -85,7 +88,6 @@ export function authenticateClient(client, scopes) {
         scope: scopes,
         client_secret: client.client_secret
     };
-    console.log("Authenticating client: " + auth_form_data.client_id);
     var res = http.post(TokenEndpointUrl, auth_form_data);
     if (res.status == 200) {
         var res_json = JSON.parse(res.body);
@@ -94,13 +96,14 @@ export function authenticateClient(client, scopes) {
         var seconds = res_json["expires_in"];
         client.expires = getExpiresTime(seconds);
         authSuccess.add(1);
+        console.log("Authenticated client: " + auth_form_data.client_id);
     }
     else {
         console.log("Authentication Error for client= " + client.client_id + 
-        ", client_secret=" + client.client_secret + 
-        ", scope=" + client.scope + 
-        ", ResponseCode[" + res.status + 
-        "] " + res.error);
+        ", client_secret='" + client.client_secret + "'" +
+        ", scope='" + client.scope + 
+        "', ResponseCode='" + res.status + 
+        "' " + res.error);
         authSuccess.add(0);
         client.token = null;
     }

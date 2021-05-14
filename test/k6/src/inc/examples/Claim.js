@@ -19,14 +19,14 @@ export let Claim = [
         purpose: "Adjudicate a Dispense Claim request message",
         version: "PNet-R70",
         message:
-            "MSH|^~&\\|123456|123456||ERXPP|${{ timestamp }}|userID:192.168.0.1|ZPN|319233|P|2.1||\r" +
-            "ZCA|1|70|04|AR|05|\r" +
+            "MSH|^~\\&|123456|123456||ERXPP|${{ timestamp }}|userID:192.168.0.1|ZPN|319233|P|2.1||\r" +
+            "ZCA|1|70|01|AR|05|\r" +
             "ZCB|BC00000I10|140905|319233\r" +
             "ZCC||||||||||000nnnnnnnnnn|\r" +
-            "ZCD|||N|319233||319233|2063735||100|7|91|nnnnnnnnnn|||||1486||222|||||nnnnnn|912351176\r" +
+            "ZCD|||N|319233||319233|2063735||100|7|91|nnnnnnnnnn|||||1486||222|||||nnnnnn|912351175\r" +
             "ZPJ|ZPJ1^^^^^^|ZPJ2^^~ZPJ2^^~ZPJ2^^|ZPJ3^^|ZPJ4^Transaction Trace ID: 319233\r" +
             "ZZZ|TAC||319233|P1|nnnnnnnnnn|||||ZZZ1^\r" +
-            "ZZZ|TDU||319233|P1|nnnnnnnnnn|||||ZZZ1^\r\r"
+            "ZZZ|TDU||319233|P1|nnnnnnnnnn|||||ZZZ1^\r"
     },
     {
         name: "TACTDU_0104_REQUEST-20334 (encrypted)",
