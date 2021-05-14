@@ -52,5 +52,18 @@ export let MedicationDispense = [
             "ZCC||||||||||000nnnnnnnnnn|\r" +
             "ZCD|||N|126599||126599|2225972||1000|100|91|nnnnnnnnnn||||||||||||nnnnnn|\r" +
             "ZPJ|ZPJ1^^^^^^|ZPJ2^^~ZPJ2^^~ZPJ2^^|ZPJ3^^|ZPJ4^TMU 0\r\r"
+    },
+    {
+        name: "TMU_11_REQUEST - 119908-2",
+        purpose: " Medication Update Reversal request message",
+        version: "PNet-R70",
+        message:
+            "MSH|^~\&|DESKTOP|EMR|DISMEDUPDATE|EMRMD|2014/09/09 12:33:33|userID:192.168.0.1|ZPN|119908|P|2.1||\r" +
+            "ZZZ|TMU||119908|P1|nnnnnnnnnn|||||ZZZ1^\r" +
+            "ZCA|1|70|11|MA|01|\r" +
+            "ZCB|LDJQQ|141201|119908\r" +
+            "ZCC||||||||||000nnnnnnnnnn|\r" +
+            "ZCD||||126599||126599|2225972||||91|nnnnnnnnnn||||RU||||||||nnnnnn|\r" +
+            "ZPJ | ZPJ1 ^^^^^^| ZPJ2 ^^ ~ZPJ2 ^^ ~ZPJ2 ^^| ZPJ3 ^^| ZPJ4 ^ TMU 11\r"
     }
 ];
