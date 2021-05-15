@@ -38,6 +38,7 @@ namespace Health.PharmaNet.Controllers
     /// </summary>
     [ApiVersion("1.0")]
     [Route("/api/v{version:apiVersion}/Consent/")]
+    [Route("/api/v{version:apiVersion}/ConsentService/")]
     [ApiController]
     public class ConsentController : ServiceBaseController
     {

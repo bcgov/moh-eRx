@@ -37,6 +37,7 @@ namespace Health.PharmaNet.Controllers
     /// </summary>
     [ApiVersion("1.0")]
     [Route("/api/v{version:apiVersion}/Location/")]
+    [Route("/api/v{version:apiVersion}/LocationService/")]
     [ApiController]
     public class LocationController : ServiceBaseController
     {

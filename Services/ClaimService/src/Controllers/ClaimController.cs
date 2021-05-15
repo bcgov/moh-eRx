@@ -37,6 +37,7 @@ namespace Health.PharmaNet.Controllers
     /// </summary>
     [ApiVersion("1.0")]
     [Route("/api/v{version:apiVersion}/Claim/")]
+    [Route("/api/v{version:apiVersion}/ClaimService/")]
     [ApiController]
     public class ClaimController : ServiceBaseController
     {
