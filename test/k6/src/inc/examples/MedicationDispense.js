@@ -54,16 +54,16 @@ export let MedicationDispense = [
             "ZPJ|ZPJ1^^^^^^|ZPJ2^^~ZPJ2^^~ZPJ2^^|ZPJ3^^|ZPJ4^TMU 0\r\r"
     },
     {
-        name: "TMU_11_REQUEST - 119908-2",
+        name: "TMU_11_REQUEST - 58709",
         purpose: " Medication Update Reversal request message",
         version: "PNet-R70",
         message:
-            "MSH|^~\&|DESKTOP|EMR|DISMEDUPDATE|EMRMD|2014/09/09 12:33:33|userID:192.168.0.1|ZPN|119908|P|2.1||\r" +
-            "ZZZ|TMU||119908|P1|nnnnnnnnnn|||||ZZZ1^\r" +
-            "ZCA|1|70|11|MA|01|\r" +
-            "ZCB|LDJQQ|141201|119908\r" +
+            "MSH|^~\\&|1234567|1234567|1234567|OP|${{ timestamp }}|userID:192.168.0.1|ZPN|58709|P|2.1||\r" +
+            "ZZZ|TMU||58709|P1|nnnnnnnnnn||||\r" +
+            "ZCA|1|03|11|NA|01|\r" +
+            "ZCB|CAS|110414|58709\r" +
             "ZCC||||||||||000nnnnnnnnnn|\r" +
-            "ZCD||||126599||126599|2225972||||91|nnnnnnnnnn||||RU||||||||nnnnnn|\r" +
-            "ZPJ | ZPJ1 ^^^^^^| ZPJ2 ^^ ~ZPJ2 ^^ ~ZPJ2 ^^| ZPJ3 ^^| ZPJ4 ^ TMU 11\r"
+            "ZCD||||58709||58709|120375||1000|100|91|nnnnnnnnnn||||NK||||||||nnnnnn\r" +
+            "ZPJ|ZPJ1^^^^^^|ZPJ2^^~ZPJ2^^~ZPJ2^^|ZPJ3^^|ZPJ4^TMU01\r"
     }
 ];
