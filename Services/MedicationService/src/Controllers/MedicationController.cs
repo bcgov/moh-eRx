@@ -37,7 +37,6 @@ namespace Health.PharmaNet.Controllers
     /// </summary>
     [ApiVersion("1.0")]
     [Route("/api/v{version:apiVersion}/Medication/")]
-    [Route("/api/v{version:apiVersion}/MedicationService/")]
     [ApiController]
     public class MedicationController : ServiceBaseController
     {
