@@ -18,31 +18,31 @@ services:
           - OAS3_import
           - ns.ppm-vs1
         plugins:
-        - name: jwt-keycloak
-          tags: [ ns.ppm-vs1 ]
-          enabled: true
-          config:
-            client_roles: null
-            allowed_iss:
-            - https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos
-            run_on_preflight: true
-            iss_key_grace_period: 10
-            maximum_expiration: 0
-            claims_to_verify:
-            - exp
-            consumer_match_claim_custom_id: false
-            cookie_names: []
-            scope: null
-            uri_param_names:
-            - jwt
-            roles: null
-            consumer_match: false
-            well_known_template: https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos/.well-known/openid-configuration
-            consumer_match_ignore_not_found: false
-            anonymous: null
-            algorithm: RS256
-            realm_roles: null
-            consumer_match_claim: azp                 
+          - name: jwt-keycloak
+            tags: [ns.ppm-vs1]
+            enabled: true
+            config:
+              client_roles: null
+              allowed_iss:
+                - https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos
+              run_on_preflight: true
+              iss_key_grace_period: 10
+              maximum_expiration: 0
+              claims_to_verify:
+                - exp
+              consumer_match_claim_custom_id: false
+              cookie_names: []
+              scope: null
+              uri_param_names:
+                - jwt
+              roles: null
+              consumer_match: false
+              well_known_template: https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos/.well-known/openid-configuration
+              consumer_match_ignore_not_found: false
+              anonymous: null
+              algorithm: RS256
+              realm_roles: null
+              consumer_match_claim: azp
     tags:
       - OAS3_import
       - ns.ppm-vs1
@@ -65,31 +65,31 @@ services:
           - OAS3_import
           - ns.ppm-vs1
         plugins:
-        - name: jwt-keycloak
-          tags: [ ns.ppm-vs1 ]
-          enabled: true
-          config:
-            client_roles: null
-            allowed_iss:
-            - https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos
-            run_on_preflight: true
-            iss_key_grace_period: 10
-            maximum_expiration: 0
-            claims_to_verify:
-            - exp
-            consumer_match_claim_custom_id: false
-            cookie_names: []
-            scope: null
-            uri_param_names:
-            - jwt
-            roles: null
-            consumer_match: false
-            well_known_template: https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos/.well-known/openid-configuration
-            consumer_match_ignore_not_found: false
-            anonymous: null
-            algorithm: RS256
-            realm_roles: null
-            consumer_match_claim: azp                 
+          - name: jwt-keycloak
+            tags: [ns.ppm-vs1]
+            enabled: true
+            config:
+              client_roles: null
+              allowed_iss:
+                - https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos
+              run_on_preflight: true
+              iss_key_grace_period: 10
+              maximum_expiration: 0
+              claims_to_verify:
+                - exp
+              consumer_match_claim_custom_id: false
+              cookie_names: []
+              scope: null
+              uri_param_names:
+                - jwt
+              roles: null
+              consumer_match: false
+              well_known_template: https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos/.well-known/openid-configuration
+              consumer_match_ignore_not_found: false
+              anonymous: null
+              algorithm: RS256
+              realm_roles: null
+              consumer_match_claim: azp
     tags:
       - OAS3_import
       - ns.ppm-vs1
@@ -112,31 +112,31 @@ services:
           - OAS3_import
           - ns.ppm-vs1
         plugins:
-        - name: jwt-keycloak
-          tags: [ ns.ppm-vs1 ]
-          enabled: true
-          config:
-            client_roles: null
-            allowed_iss:
-            - https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos
-            run_on_preflight: true
-            iss_key_grace_period: 10
-            maximum_expiration: 0
-            claims_to_verify:
-            - exp
-            consumer_match_claim_custom_id: false
-            cookie_names: []
-            scope: null
-            uri_param_names:
-            - jwt
-            roles: null
-            consumer_match: false
-            well_known_template: https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos/.well-known/openid-configuration
-            consumer_match_ignore_not_found: false
-            anonymous: null
-            algorithm: RS256
-            realm_roles: null
-            consumer_match_claim: azp                 
+          - name: jwt-keycloak
+            tags: [ns.ppm-vs1]
+            enabled: true
+            config:
+              client_roles: null
+              allowed_iss:
+                - https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos
+              run_on_preflight: true
+              iss_key_grace_period: 10
+              maximum_expiration: 0
+              claims_to_verify:
+                - exp
+              consumer_match_claim_custom_id: false
+              cookie_names: []
+              scope: null
+              uri_param_names:
+                - jwt
+              roles: null
+              consumer_match: false
+              well_known_template: https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos/.well-known/openid-configuration
+              consumer_match_ignore_not_found: false
+              anonymous: null
+              algorithm: RS256
+              realm_roles: null
+              consumer_match_claim: azp
     tags:
       - OAS3_import
       - ns.ppm-vs1
@@ -159,31 +159,31 @@ services:
           - OAS3_import
           - ns.ppm-vs1
         plugins:
-        - name: jwt-keycloak
-          tags: [ ns.ppm-vs1 ]
-          enabled: true
-          config:
-            client_roles: null
-            allowed_iss:
-            - https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos
-            run_on_preflight: true
-            iss_key_grace_period: 10
-            maximum_expiration: 0
-            claims_to_verify:
-            - exp
-            consumer_match_claim_custom_id: false
-            cookie_names: []
-            scope: null
-            uri_param_names:
-            - jwt
-            roles: null
-            consumer_match: false
-            well_known_template: https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos/.well-known/openid-configuration
-            consumer_match_ignore_not_found: false
-            anonymous: null
-            algorithm: RS256
-            realm_roles: null
-            consumer_match_claim: azp                 
+          - name: jwt-keycloak
+            tags: [ns.ppm-vs1]
+            enabled: true
+            config:
+              client_roles: null
+              allowed_iss:
+                - https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos
+              run_on_preflight: true
+              iss_key_grace_period: 10
+              maximum_expiration: 0
+              claims_to_verify:
+                - exp
+              consumer_match_claim_custom_id: false
+              cookie_names: []
+              scope: null
+              uri_param_names:
+                - jwt
+              roles: null
+              consumer_match: false
+              well_known_template: https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos/.well-known/openid-configuration
+              consumer_match_ignore_not_found: false
+              anonymous: null
+              algorithm: RS256
+              realm_roles: null
+              consumer_match_claim: azp
     tags:
       - OAS3_import
       - ns.ppm-vs1
@@ -206,31 +206,31 @@ services:
           - OAS3_import
           - ns.ppm-vs1
         plugins:
-        - name: jwt-keycloak
-          tags: [ ns.ppm-vs1 ]
-          enabled: true
-          config:
-            client_roles: null
-            allowed_iss:
-            - https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos
-            run_on_preflight: true
-            iss_key_grace_period: 10
-            maximum_expiration: 0
-            claims_to_verify:
-            - exp
-            consumer_match_claim_custom_id: false
-            cookie_names: []
-            scope: null
-            uri_param_names:
-            - jwt
-            roles: null
-            consumer_match: false
-            well_known_template: https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos/.well-known/openid-configuration
-            consumer_match_ignore_not_found: false
-            anonymous: null
-            algorithm: RS256
-            realm_roles: null
-            consumer_match_claim: azp                 
+          - name: jwt-keycloak
+            tags: [ns.ppm-vs1]
+            enabled: true
+            config:
+              client_roles: null
+              allowed_iss:
+                - https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos
+              run_on_preflight: true
+              iss_key_grace_period: 10
+              maximum_expiration: 0
+              claims_to_verify:
+                - exp
+              consumer_match_claim_custom_id: false
+              cookie_names: []
+              scope: null
+              uri_param_names:
+                - jwt
+              roles: null
+              consumer_match: false
+              well_known_template: https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos/.well-known/openid-configuration
+              consumer_match_ignore_not_found: false
+              anonymous: null
+              algorithm: RS256
+              realm_roles: null
+              consumer_match_claim: azp
     tags:
       - OAS3_import
       - ns.ppm-vs1
@@ -253,31 +253,31 @@ services:
           - OAS3_import
           - ns.ppm-vs1
         plugins:
-        - name: jwt-keycloak
-          tags: [ ns.ppm-vs1 ]
-          enabled: true
-          config:
-            client_roles: null
-            allowed_iss:
-            - https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos
-            run_on_preflight: true
-            iss_key_grace_period: 10
-            maximum_expiration: 0
-            claims_to_verify:
-            - exp
-            consumer_match_claim_custom_id: false
-            cookie_names: []
-            scope: null
-            uri_param_names:
-            - jwt
-            roles: null
-            consumer_match: false
-            well_known_template: https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos/.well-known/openid-configuration
-            consumer_match_ignore_not_found: false
-            anonymous: null
-            algorithm: RS256
-            realm_roles: null
-            consumer_match_claim: azp                 
+          - name: jwt-keycloak
+            tags: [ns.ppm-vs1]
+            enabled: true
+            config:
+              client_roles: null
+              allowed_iss:
+                - https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos
+              run_on_preflight: true
+              iss_key_grace_period: 10
+              maximum_expiration: 0
+              claims_to_verify:
+                - exp
+              consumer_match_claim_custom_id: false
+              cookie_names: []
+              scope: null
+              uri_param_names:
+                - jwt
+              roles: null
+              consumer_match: false
+              well_known_template: https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos/.well-known/openid-configuration
+              consumer_match_ignore_not_found: false
+              anonymous: null
+              algorithm: RS256
+              realm_roles: null
+              consumer_match_claim: azp
     tags:
       - OAS3_import
       - ns.ppm-vs1
@@ -300,31 +300,31 @@ services:
           - OAS3_import
           - ns.ppm-vs1
         plugins:
-        - name: jwt-keycloak
-          tags: [ ns.ppm-vs1 ]
-          enabled: true
-          config:
-            client_roles: null
-            allowed_iss:
-            - https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos
-            run_on_preflight: true
-            iss_key_grace_period: 10
-            maximum_expiration: 0
-            claims_to_verify:
-            - exp
-            consumer_match_claim_custom_id: false
-            cookie_names: []
-            scope: null
-            uri_param_names:
-            - jwt
-            roles: null
-            consumer_match: false
-            well_known_template: https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos/.well-known/openid-configuration
-            consumer_match_ignore_not_found: false
-            anonymous: null
-            algorithm: RS256
-            realm_roles: null
-            consumer_match_claim: azp                 
+          - name: jwt-keycloak
+            tags: [ns.ppm-vs1]
+            enabled: true
+            config:
+              client_roles: null
+              allowed_iss:
+                - https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos
+              run_on_preflight: true
+              iss_key_grace_period: 10
+              maximum_expiration: 0
+              claims_to_verify:
+                - exp
+              consumer_match_claim_custom_id: false
+              cookie_names: []
+              scope: null
+              uri_param_names:
+                - jwt
+              roles: null
+              consumer_match: false
+              well_known_template: https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos/.well-known/openid-configuration
+              consumer_match_ignore_not_found: false
+              anonymous: null
+              algorithm: RS256
+              realm_roles: null
+              consumer_match_claim: azp
     tags:
       - OAS3_import
       - ns.ppm-vs1
@@ -347,31 +347,31 @@ services:
           - OAS3_import
           - ns.ppm-vs1
         plugins:
-        - name: jwt-keycloak
-          tags: [ ns.ppm-vs1 ]
-          enabled: true
-          config:
-            client_roles: null
-            allowed_iss:
-            - https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos
-            run_on_preflight: true
-            iss_key_grace_period: 10
-            maximum_expiration: 0
-            claims_to_verify:
-            - exp
-            consumer_match_claim_custom_id: false
-            cookie_names: []
-            scope: null
-            uri_param_names:
-            - jwt
-            roles: null
-            consumer_match: false
-            well_known_template: https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos/.well-known/openid-configuration
-            consumer_match_ignore_not_found: false
-            anonymous: null
-            algorithm: RS256
-            realm_roles: null
-            consumer_match_claim: azp                 
+          - name: jwt-keycloak
+            tags: [ns.ppm-vs1]
+            enabled: true
+            config:
+              client_roles: null
+              allowed_iss:
+                - https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos
+              run_on_preflight: true
+              iss_key_grace_period: 10
+              maximum_expiration: 0
+              claims_to_verify:
+                - exp
+              consumer_match_claim_custom_id: false
+              cookie_names: []
+              scope: null
+              uri_param_names:
+                - jwt
+              roles: null
+              consumer_match: false
+              well_known_template: https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos/.well-known/openid-configuration
+              consumer_match_ignore_not_found: false
+              anonymous: null
+              algorithm: RS256
+              realm_roles: null
+              consumer_match_claim: azp
     tags:
       - OAS3_import
       - ns.ppm-vs1
@@ -380,7 +380,7 @@ services:
     host: practitionerservice.2f77cb-test.svc
     port: 8080
     protocol: http
-    path: /api/v1/practitionerservice
+    path: /api/v1/practitioner
     routes:
       - name: VS1-PractitionerService
         methods:
@@ -394,31 +394,31 @@ services:
           - OAS3_import
           - ns.ppm-vs1
         plugins:
-        - name: jwt-keycloak
-          tags: [ ns.ppm-vs1 ]
-          enabled: true
-          config:
-            client_roles: null
-            allowed_iss:
-            - https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos
-            run_on_preflight: true
-            iss_key_grace_period: 10
-            maximum_expiration: 0
-            claims_to_verify:
-            - exp
-            consumer_match_claim_custom_id: false
-            cookie_names: []
-            scope: null
-            uri_param_names:
-            - jwt
-            roles: null
-            consumer_match: false
-            well_known_template: https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos/.well-known/openid-configuration
-            consumer_match_ignore_not_found: false
-            anonymous: null
-            algorithm: RS256
-            realm_roles: null
-            consumer_match_claim: azp                 
+          - name: jwt-keycloak
+            tags: [ns.ppm-vs1]
+            enabled: true
+            config:
+              client_roles: null
+              allowed_iss:
+                - https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos
+              run_on_preflight: true
+              iss_key_grace_period: 10
+              maximum_expiration: 0
+              claims_to_verify:
+                - exp
+              consumer_match_claim_custom_id: false
+              cookie_names: []
+              scope: null
+              uri_param_names:
+                - jwt
+              roles: null
+              consumer_match: false
+              well_known_template: https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos/.well-known/openid-configuration
+              consumer_match_ignore_not_found: false
+              anonymous: null
+              algorithm: RS256
+              realm_roles: null
+              consumer_match_claim: azp
     tags:
       - OAS3_import
       - ns.ppm-vs1
