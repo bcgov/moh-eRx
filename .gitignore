@@ -23,7 +23,7 @@
 .vs/
 
 # Local settings files
-*.local.json
+//*.local.json
 
 # Additional Apple macOS and iCloud
 .AppleDesktop
