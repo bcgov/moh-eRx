@@ -36,6 +36,5 @@ export let Medication = [
             "ZCA||70|00|KC|13|\r" +
             "ZCB|BC00000F07|111205|149966\r" +
             "ZPC|122858||||||N|ZPC1^FDB^ADIMONOG^0\r"
-
-    },
+    }
 ];
