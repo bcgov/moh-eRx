@@ -30,7 +30,7 @@ namespace Health.PharmaNet.Controllers
     using Microsoft.Extensions.Logging;
 
     /// <summary>
-    /// The MedicationService controller.
+    /// The MedicationService controller.  For medication product information.
     /// </summary>
     [ApiVersion("1.0")]
     [Route("/api/v{version:apiVersion}/MedicationStatement/")]
