@@ -17,19 +17,22 @@ namespace PharmaNet.Client.Services
 {
     using System;
 
- using System.Net.Http;
+    using System.Net.Http;
     using System.Net.Http.Headers;
     using System.Threading.Tasks;
 
     using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.Logging;
 
     public class AuthService : IAuthService
     {
         private readonly IConfiguration configuration;
+        private readonly ILogger<AuthService> logger;
 
-        public AuthService(IConfiguration configuration)
+        public AuthService(IConfiguration configuration, ILogger<AuthService> logger)
         {
-            this.configuration  = configuration;
+            this.configuration = configuration;
+            this.logger = logger;
         }
         public string Authenticate()
         {
