@@ -98,7 +98,8 @@ export function authenticateClient(client, scopes) {
         case 'dev':
             tokenUrl = TokenEndpointUrl_Dev;
             break;
-        case 'sb1':
+        case 'vs1':
+        case 'vs2':
             tokenUrl = TokenEndpointUrl_Test;
             break;
         default:

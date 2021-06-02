@@ -25,6 +25,8 @@ Our smoke tests uses by default 1 virtual user and executes the API call iterati
 
 Any errors here are an indication of functionality not working under basic load.
 
+The choices for ERX_ENV are 'dev' or 'vs1' (vendor staging 1)
+
 ```bash
 export ERX_ENV=dev
 ERX_CLIENT_SECRET=<client_credentials_grant_secret> bash smoke.sh ./src/MedicationRequest.js
