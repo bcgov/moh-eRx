@@ -29,7 +29,9 @@ export let refreshTokenSuccess = new Rate('auth_refresh_successful');
 
 export let environment = (__ENV.ERX_ENV) ? __ENV.ERX_ENV : 'dev'; // default to test environment
 
-export let TokenEndpointUrl = "https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos/protocol/openid-connect/token";
+export let TokenEndpointUrl_Dev = "https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos/protocol/openid-connect/token";
+export let TokenEndpointUrl_Test = "https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications";
+
 
 export let baseUrl = "https://pnet-" + environment + ".api.gov.bc.ca/api/v1/";
 
@@ -88,7 +90,23 @@ export function authenticateClient(client, scopes) {
         scope: scopes,
         client_secret: client.client_secret
     };
-    var res = http.post(TokenEndpointUrl, auth_form_data);
+
+    var tokenUrl = TokenEndpointUrl_Dev;
+
+    switch (environment)
+    {
+        case 'dev':
+            tokenUrl = TokenEndpointUrl_Dev;
+            break;
+        case 'sb1':
+            tokenUrl = TokenEndpointUrl_Test;
+            break;
+        default:
+            tokenUrl = TokenEndpointUrl_Dev;
+            break;
+    }
+
+    var res = http.post(tokenUrl, auth_form_data);
     if (res.status == 200) {
         var res_json = JSON.parse(res.body);
         client.token = res_json["access_token"];

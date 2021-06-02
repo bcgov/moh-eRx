@@ -24,7 +24,7 @@ services:
             config:
               client_roles: null
               allowed_iss:
-                - https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos
+                - https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications
               run_on_preflight: true
               iss_key_grace_period: 10
               maximum_expiration: 0
@@ -37,7 +37,7 @@ services:
                 - jwt
               roles: null
               consumer_match: false
-              well_known_template: https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos/.well-known/openid-configuration
+              well_known_template: https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications/.well-known/openid-configuration
               consumer_match_ignore_not_found: false
               anonymous: null
               algorithm: RS256
