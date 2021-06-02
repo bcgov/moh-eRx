@@ -12,6 +12,9 @@
 .Trashes
 .VolumeIcon.icns
 
+# local kong environment files
+.env
+
 ## VSCode including workspaces
 .vscode/*
 !.vscode/launch.json
