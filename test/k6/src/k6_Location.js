@@ -21,7 +21,7 @@ import * as examples from './inc/examples/Location.js';
 export default function() {
 
     var url = common.LocationServiceUrl;
-    var scopes = "openid audience system/Location.read";
+    var scopes = "system/Location.read";
     common.authorizeClient(scopes);
     common.submitMessage(url, examples.Location[0]);
 }

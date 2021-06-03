@@ -22,7 +22,7 @@ export default function() {
 
     var url = common.ClaimServiceUrl;
     var example = examples.Claim[0];
-    var scopes = "openid audience system/Claim.write system/Claim.read";
+    var scopes = "system/Claim.write system/Claim.read";
 
     common.authorizeClient(scopes);
     common.submitMessage(url, example);

@@ -21,7 +21,7 @@ import * as examples from './inc/examples/MedicationDispense.js';
 export default function() {
 
     var url = common.MedicationDispenseServiceUrl;
-    var scopes = "openid audience system/MedicationDispense.write system/MedicationDispense.read";
+    var scopes = "system/MedicationDispense.write system/MedicationDispense.read";
     common.authorizeClient(scopes);
 
     var example = examples.MedicationDispense[0];

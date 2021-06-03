@@ -30,7 +30,7 @@ export let refreshTokenSuccess = new Rate('auth_refresh_successful');
 export let environment = (__ENV.ERX_ENV) ? __ENV.ERX_ENV : 'dev'; // default to test environment
 
 export let TokenEndpointUrl_Dev = "https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos/protocol/openid-connect/token";
-export let TokenEndpointUrl_Test = "https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications";
+export let TokenEndpointUrl_Test = "https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications/protocol/openid-connect/token";
 
 
 export let baseUrl = "https://pnet-" + environment + ".api.gov.bc.ca/api/v1/";
@@ -87,7 +87,7 @@ export function authenticateClient(client, scopes) {
         grant_type: "client_credentials",
         client_id: client.client_id,
         audience: "pharmanet",
-        scope: scopes,
+        scope: "openid audience " + scopes,
         client_secret: client.client_secret
     };
 
@@ -116,6 +116,7 @@ export function authenticateClient(client, scopes) {
         client.expires = getExpiresTime(seconds);
         authSuccess.add(1);
         console.log("Authenticated client: " + auth_form_data.client_id);
+        console.log("Token: " + client.token);
     }
     else {
         console.log("Authentication Error for client= " + client.client_id + 

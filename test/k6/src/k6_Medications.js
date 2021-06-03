@@ -21,7 +21,7 @@ import * as examples from './inc/examples/Medication.js';
 export default function() {
 
     var url = common.MedicationServiceUrl;
-    var scopes = "openid audience system/Medication.read";
+    var scopes = "system/Medication.read";
     common.authorizeClient(scopes);
 
     examples.Medication.forEach(msg => {
