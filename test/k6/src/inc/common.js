@@ -235,6 +235,10 @@ export function submitMessage(url, example) {
     return this.postMessage(url, payload);
 }
 
+export function submitHL7MessageBase64(url, b64Payload) {
+    return this.postMessage(url, b64Payload);
+}
+
 function encode(hl7Message) {
     console.log(hl7Message);
     return b64encode(hl7Message, 'std');
