@@ -69,7 +69,11 @@ Load testing is primarily concerned with assessing the systems performance, the 
 
 ```bash
 export ERX_ENV=dev
+<<<<<<< HEAD
 export ERX_CLIENT_SECRET=<client_credentials_grant_secret> 
+=======
+export ERX_CLIENT_SECRET=<client_credentials_grant_secret>
+>>>>>>> 5c5b1865c19af96f92bdbe9999226008292f00d5
 bash load.sh ./src/k6_Patient.js
 ```
 
