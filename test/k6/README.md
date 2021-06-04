@@ -29,7 +29,8 @@ The choices for ERX_ENV are 'dev' or 'vs1' (vendor staging 1)
 
 ```bash
 export ERX_ENV=dev
-ERX_CLIENT_SECRET=<client_credentials_grant_secret> bash smoke.sh ./src/MedicationRequest.js
+export ERX_CLIENT_SECRET=<client_credentials_grant_secret> 
+bash smoke.sh ./src/k6_MedicationRequest.js
 ```
 
 ### When to run the smoke test
@@ -42,7 +43,8 @@ Load testing is primarily concerned with assessing the systems performance, the 
 
 ```bash
 export ERX_ENV=dev
-ERX_CLIENT_SECRET=<client_credentials_grant_secret> bash load.sh ./src/Patient.js
+export ERX_CLIENT_SECRET=<client_credentials_grant_secret>
+bash load.sh ./src/k6_Patient.js
 ```
 Future: Add more sophisticated load test script that includes ramp up time and groups logical sequences of api calls mimicking real world flow.
 
