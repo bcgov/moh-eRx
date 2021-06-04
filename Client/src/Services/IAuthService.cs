@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------
-// Copyright © 2021 Province of British Columbia
+// Copyright © 2020 Province of British Columbia
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,14 +13,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
+namespace PharmaNet.Client.Services
+{
+    public interface IAuthService
+    {
+        public string Authenticate();
+        public string AuthenticateWithSignedJWT();
 
-import { sleep } from 'k6';
-import * as common from './inc/common.js';
-import * as examples from './inc/examples/Consent.js';
+    }
 
-export default function() {
-    var url = common.ConsentServiceUrl;
-    var scopes = "system/Consent.write system/Consent.read";
-    common.authorizeClient(scopes);
-    common.submitMessage(url, examples.Consent[0]);
 }

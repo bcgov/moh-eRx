@@ -21,7 +21,7 @@ import * as examples from './inc/examples/MedicationStatement.js';
 export default function() {
 
     var url = common.MedicationStatementServiceUrl;
-    var scopes = "openid audience system/MedicationStatement.read";
+    var scopes = "system/MedicationStatement.read";
     common.authorizeClient(scopes);
     common.submitMessage(url, examples.MedicationStatement[1]);  // Original Request
     sleep(1);

@@ -21,7 +21,7 @@ import * as examples from './inc/examples/Patient.js';
 export default function() {
 
     var url = common.PatientServiceUrl;
-    var scopes = "openid audience system/Patient.read";
+    var scopes = "system/Patient.read";
     common.authorizeClient(scopes);
 
     common.submitMessage(url, examples.Patient[0]);

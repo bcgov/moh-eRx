@@ -29,7 +29,9 @@ export let refreshTokenSuccess = new Rate('auth_refresh_successful');
 
 export let environment = (__ENV.ERX_ENV) ? __ENV.ERX_ENV : 'dev'; // default to test environment
 
-export let TokenEndpointUrl = "https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos/protocol/openid-connect/token";
+export let TokenEndpointUrl_Dev = "https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos/protocol/openid-connect/token";
+export let TokenEndpointUrl_Test = "https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications/protocol/openid-connect/token";
+
 
 export let baseUrl = "https://pnet-" + environment + ".api.gov.bc.ca/api/v1/";
 
@@ -85,10 +87,27 @@ export function authenticateClient(client, scopes) {
         grant_type: "client_credentials",
         client_id: client.client_id,
         audience: "pharmanet",
-        scope: scopes,
+        scope: "openid audience " + scopes,
         client_secret: client.client_secret
     };
-    var res = http.post(TokenEndpointUrl, auth_form_data);
+
+    var tokenUrl = TokenEndpointUrl_Dev;
+
+    switch (environment)
+    {
+        case 'dev':
+            tokenUrl = TokenEndpointUrl_Dev;
+            break;
+        case 'vs1':
+        case 'vs2':
+            tokenUrl = TokenEndpointUrl_Test;
+            break;
+        default:
+            tokenUrl = TokenEndpointUrl_Dev;
+            break;
+    }
+
+    var res = http.post(tokenUrl, auth_form_data);
     if (res.status == 200) {
         var res_json = JSON.parse(res.body);
         client.token = res_json["access_token"];
@@ -97,6 +116,7 @@ export function authenticateClient(client, scopes) {
         client.expires = getExpiresTime(seconds);
         authSuccess.add(1);
         console.log("Authenticated client: " + auth_form_data.client_id);
+        console.log("Token: " + client.token);
     }
     else {
         console.log("Authentication Error for client= " + client.client_id + 
@@ -213,6 +233,10 @@ export function submitMessage(url, example) {
     console.log("Request: " + example.name + ' [' + example.version + '] ' +  example.purpose);
     var payload = Hl7v2Encoded(example.message); // Returns Base64 encoded hl7v2 message
     return this.postMessage(url, payload);
+}
+
+export function submitHL7MessageBase64(url, b64Payload) {
+    return this.postMessage(url, b64Payload);
 }
 
 function encode(hl7Message) {

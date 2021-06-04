@@ -1,5 +1,31 @@
 # K6 moh-eRx Non-Functional (Performance) Tests
 
+k6 is a modern load testing tool, building on Load Impact's years of experience in the load and performance testing industry. It provides a clean, approachable scripting API, local and cloud execution, and flexible configuration.
+
+## Installing K6
+
+If you don't have Docker, go to docker.com and download Docker on your computer. Make sure the command line  tool, docker, is in your PATH.
+
+```bash
+docker pull loadimpact/k6`
+```
+
+For more information on getting started with K6, see [k6 Getting Started](https://k6.io/docs/getting-started/installation)
+
+## General K6 Usage
+
+Once installed, you can run an ES6 JavaScript load test by executing this way:
+
+```code
+docker run -v <local_path>:<in_docker_path> -a STDOUT -a STDERR -i loadimpact/k6 run -e <env_variable> <k6_script>.js
+```
+
+For specifics on running the k6 scripts for the APIs, see documentation below. 
+
+### See also
+
+[Running k6](https://k6.io/docs/getting-started/running-k6)
+
 k6 is a free and open-source load testing tool written in Go language with tests scripted in JavaScript.
 
 ## Virtual Users (vus)
@@ -25,9 +51,12 @@ Our smoke tests uses by default 1 virtual user and executes the API call iterati
 
 Any errors here are an indication of functionality not working under basic load.
 
+The choices for ERX_ENV are 'dev' or 'vs1' (vendor staging 1)
+
 ```bash
 export ERX_ENV=dev
-ERX_CLIENT_SECRET=<client_credentials_grant_secret> bash smoke.sh ./src/MedicationRequest.js
+export ERX_CLIENT_SECRET=<client_credentials_grant_secret> 
+bash smoke.sh ./src/k6_MedicationRequest.js
 ```
 
 ### When to run the smoke test
@@ -40,8 +69,10 @@ Load testing is primarily concerned with assessing the systems performance, the 
 
 ```bash
 export ERX_ENV=dev
-ERX_CLIENT_SECRET=<client_credentials_grant_secret> bash load.sh ./src/Patient.js
+export ERX_CLIENT_SECRET=<client_credentials_grant_secret> 
+bash load.sh ./src/k6_Patient.js
 ```
+
 Future: Add more sophisticated load test script that includes ramp up time and groups logical sequences of api calls mimicking real world flow.
 
 ## Stress Testing
@@ -54,25 +85,31 @@ The web service is deployed to DEV and it is ready for your team to submit the t
 
 ```bash
 REQUEST :
-MSH|^~\&|TRXTOOL|PCARESUP|PNP|PP|||ZPN^^|3362|P|2.1||ZZZ|TID||3362|P1|6H2O2||ZCA||03|00|KC|13ZCB|BC00007007|200916|3362|ZCC||||||||||0009433498542|
+MSH|^~\&|TRXTOOL|PCARESUP|PNP|PP|||ZPN^^|3362|P|2.1||
+ZZZ|TID||3362|P1|6H2O2||
+ZCA||03|00|KC|13ZCB|BC00007007|200916|3362|
+ZCC||||||||||0009433498542|
 
 RESPONSE :
-   MSH|^~\&|TRXTOOL|PCARESUP|TRXTOOL|PCARESUP|||ZPN|003362|P|2.1|
-   ZCB|BC00007007|200916|3362
-   ZZZ|TID|0|3362|P1|6H2O2||0 Operation successful|
-   ZCC|||||19450705|||||0009433498542|F
-   ZPA|FYGZC|KJUON|W|ZPA1^^^604^1599209|ZPA2^M^^^^^WVROHFSVCSIX^^SURREY^CAN^V4A3B0^^BC^^^^^^^^^
+MSH|^~\&|TRXTOOL|PCARESUP|TRXTOOL|PCARESUP|||ZPN|003362|P|2.1|
+ZCB|BC00007007|200916|3362
+ZZZ|TID|0|3362|P1|6H2O2||0 Operation successful|
+ZCC|||||19450705|||||0009433498542|F
+ZPA|FYGZC|KJUON|W|ZPA1^^^604^1599209|ZPA2^M^^^^^WVROHFSVCSIX^^SURREY^CAN^V4A3B0^^BC^^^^^^^^^
  
  
 REQUEST :
-MSH|^~\&|TRXTOOL|PCARESUP|PNP|PP|||ZPN^^|3365|P|2.1||ZZZ|TRP||3365|P1|3E9V1|||PHSVE105|ZCA||03|00|KC|13|ZCB|BC00007007|200916|3365|ZCC||||||||||0009388880284|
+MSH|^~\&|TRXTOOL|PCARESUP|PNP|PP|||ZPN^^|3365|P|2.1||
+ZZZ|TRP||3365|P1|3E9V1|||PHSVE105|ZCA||03|00|KC|13|
+ZCB|BC00007007|200916|3365|
+ZCC||||||||||0009388880284|
 
 RESPONSE :
-   MSH|^~\&|TRXTOOL|PCARESUP|TRXTOOL|PCARESUP|||ZPN|003365|P|2.1
-   ZCB|BC00007007|200916|3365
-  ZZZ|TRP|0|3365|P1|3E9V1||0 Operation successful|PHSVE105
-   ZCC||||||||||0009388880284
-   ZPB|
+MSH|^~\&|TRXTOOL|PCARESUP|TRXTOOL|PCARESUP|||ZPN|003365|P|2.1
+ZCB|BC00007007|200916|3365
+ZZZ|TRP|0|3365|P1|3E9V1||0 Operation successful|PHSVE105
+ZCC||||||||||0009388880284
+ZPB|
  
  
 REQUEST :
@@ -82,10 +119,9 @@ ZCA||03|00|KC|13|ZCB|BC00007007|200916|3371|
 ZCC||||||||||0009427405543|
 
 RESPONSE :
-   MSH|^~\&|TRXTOOL|PCARESUP|TRXTOOL|PCARESUP|||ZPN|003371|P|2.1
-   ZCB|BC00007007|200916|3371
-   ZZZ|TRS|0|3371|P1|1D5T2||3049 Operation Successful: Rx's not filled here.|RAHIMAN
-   ZCC||||||||||0009427405543
-   ZPB|
+MSH|^~\&|TRXTOOL|PCARESUP|TRXTOOL|PCARESUP|||ZPN|003371|P|2.1
+ZCB|BC00007007|200916|3371
+ZZZ|TRS|0|3371|P1|1D5T2||3049 Operation Successful: Rx's not filled here.|RAHIMAN
+ZCC||||||||||0009427405543
+ZPB|
  ```
-

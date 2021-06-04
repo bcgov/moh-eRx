@@ -21,7 +21,7 @@ import * as examples from './inc/examples/Claim.js';
 export default function() {
 
     var url = common.ClaimServiceUrl;
-    var scopes = "openid audience system/Claim.write system/Claim.read";
+    var scopes = "system/Claim.write system/Claim.read";
     common.authorizeClient(scopes);
 
     examples.Claim.forEach(msg => {

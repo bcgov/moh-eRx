@@ -21,7 +21,7 @@ import * as examples from './inc/examples/Patient.js';
 export default function() {
 
     var url = common.PatientServiceUrl;
-    var scopes = "openid audience system/Patient.read system/Patient.write";
+    var scopes = "system/Patient.read system/Patient.write";
     common.authorizeClient(scopes);
 
     examples.Patient.forEach(msg => {

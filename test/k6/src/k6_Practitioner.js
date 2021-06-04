@@ -21,7 +21,7 @@ import * as examples from './inc/examples/Practitioner.js';
 export default function() {
 
     var url = common.PractitionerServiceUrl;
-    var scopes = "openid audience system/Practitioner.read";
+    var scopes = "system/Practitioner.read";
     common.authorizeClient(scopes);
     common.submitMessage(url, examples.Practitioner[0]);
 }
