@@ -18,7 +18,7 @@ import * as common from './inc/common.js';
 
 export default function() {
 
-    var payload = 'TVNIfF5+XCZ8VFJYVE9PTHxQQ0FSRVNVUHxQTlB8UFB8MjAyMS8wNi8wNCAwMToxMDoxMHx8WlBOfDkyODZ8UHwyLjF8fA1aWlp8VERSfHw5Mjg2fFAxfDJGM1AyfHx8fA1aQ0F8fDAzfDAwfEtDfDEzfA1aQ0J8QkMwMDAwNzAwN3wyMDEyMjJ8OTI4Ng1aUEN8MjI0MDU3OXx8fHx8fFl8WlBDMV5eXjc2NjcyMA0N';
+    var payload = 'TVNIfF5-XCZ8REVTS1RPUHxCQzAxNDAwNTAzfFBOUHxJUHx8RFJCOjIxNi4yMzIuMTMyLjEzN3xaUE58MTAzODQ5fFB8Mi4xDVpaWnxURFJ8fDEwMzg0OXxQMXwxMjM0NXx8fA1aQ0F8MDAwMDAxfDcwfDAwfEFSfDA3DVpDQnxCQzAwMDAwWlpafDIxMDYwM3wxMDM4NDkNWlBDfDMzNzczMHx8fHx8fE58WlBDMV5GREJeRURVQ0xPTkcNDQ';
 
     var url = common.MedicationServiceUrl;
     var scopes = "system/Medication.read";
