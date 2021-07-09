@@ -18,8 +18,7 @@ namespace PharmaNet.Client.Services
     public interface IAuthService
     {
         public string Authenticate();
-        public string AuthenticateWithSignedJWT();
-
+        public string AuthenticateUsingSignedJWT();
     }
 
 }

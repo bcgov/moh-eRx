@@ -49,7 +49,7 @@ namespace PharmaNet.Client
 
             IAuthService authService = serviceProvider.GetService<IAuthService>();
 
-            string token = authService.Authenticate();
+            string token = authService.AuthenticateUsingSignedJWT();
 
             await host.RunAsync();
         }
