@@ -27,7 +27,6 @@ namespace PharmaNet.Client.Services
     using System.Threading.Tasks;
 
     using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.Logging;
     using Microsoft.IdentityModel.Tokens;
 
     using PharmaNet.Client.Models;
@@ -41,13 +40,10 @@ namespace PharmaNet.Client.Services
     public class AuthService : IAuthService
     {
         private readonly IConfiguration configuration;
-        private readonly ILogger<AuthService> logger;
 
-        public AuthService(IConfiguration configuration, ILogger<AuthService> logger)
+        public AuthService(IConfiguration configuration)
         {
             this.configuration = configuration;
-
-            this.logger = logger;
         }
         public string Authenticate()
         {
@@ -98,7 +94,6 @@ namespace PharmaNet.Client.Services
                 Token = token,
                 ExpiresAt = unixTimeSeconds,
             };
-
         }
     }
 

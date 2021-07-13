@@ -37,13 +37,15 @@ namespace PharmaNet.Client
         {
             using IHost host = CreateHostBuilder(args).Build();
 
+            IConfiguration configuration = InitConfig();
+
             // Application code should start here.
 
             IServiceProvider serviceProvider = new ServiceCollection()
                 .AddSingleton<IAuthService, AuthService>()
                 .AddSingleton<IPharmanetService, PharmanetService>()
+                .AddSingleton<IConfiguration>(configuration)
                 .BuildServiceProvider();
-
 
             Console.WriteLine("Running Example Pharmanet API Client.");
 
@@ -55,26 +57,18 @@ namespace PharmaNet.Client
         }
 
         static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureLogging(logging => 
-                {
-                    logging.ClearProviders();
-                    logging.AddConsole();
-                })
-                .ConfigureAppConfiguration((hostingContext, configuration) =>
-                {
-                    configuration.Sources.Clear();
+            Host.CreateDefaultBuilder(args);
 
-                    IHostEnvironment env = hostingContext.HostingEnvironment;
+        private static IConfigurationRoot InitConfig()
+        {
+            var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            var configuration = new ConfigurationBuilder()
+                .AddJsonFile($"appsettings.json", true, true)
+                .AddJsonFile($"appsettings.{env}.json", true, true)
+                .AddEnvironmentVariables()
+                .Build();
 
-                    configuration
-                        .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                        .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
-                        .AddJsonFile("appsettings.local.json", optional: true, reloadOnChange: true)
-                        .AddEnvironmentVariables()
-                        .AddCommandLine(args)
-                        .Build();
-
-                });
+            return configuration;
+        }
     }
 }

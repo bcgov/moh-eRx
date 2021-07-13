@@ -1,4 +1,4 @@
-# Example API Client Application written in C# .Net Core
+# Example API Client Console Application written in C# .Net Core 5
 
 This example is meant for developer's to view the source code to understand how to:
 
@@ -6,12 +6,19 @@ This example is meant for developer's to view the source code to understand how 
 - authenticate using signed JWT
 - See how to invoke an example service
 
+This uses .NET 5, which you can use to create server apps, command line apps, or WinForms desktop apps.
+
 ## Build
 
 ```bash
 cd src \
 dotnet build
 ```
+
+## Debug
+
+The .vscode/launch.json file is included in this repo to show you how you configure debugging
+this console app.
 
 ## Run
 
