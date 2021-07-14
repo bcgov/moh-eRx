@@ -17,6 +17,7 @@ namespace PharmaNet.Client.Services
 {
     using System;
 
+    using System.Collections.Generic;
     using System.IdentityModel.Tokens.Jwt;
     using System.IdentityModel.Tokens;
     using System.IO;
@@ -43,6 +44,7 @@ namespace PharmaNet.Client.Services
 
     public class AuthService : IAuthService
     {
+        private OpenIdConnectConfig oidcConfig;
         private readonly IConfiguration configuration;
 
         private readonly HttpClient client = new HttpClient();
@@ -50,34 +52,94 @@ namespace PharmaNet.Client.Services
         public AuthService(IConfiguration configuration)
         {
             this.configuration = configuration;
+            oidcConfig = new OpenIdConnectConfig();
+            this.configuration.Bind(OpenIdConnectConfig.ConfigSectionName, oidcConfig);
         }
         public string AuthenticateUsingClientCredentials()
         {
-            return string.Empty;
-
+            Task<string> result = this.ClientCredentialsGrant();
+            return result.Result;
         }
 
         public string AuthenticateUsingSignedJWT()
         {
-            OpenIdConnectConfig oidcConfig = new OpenIdConnectConfig();
-            this.configuration.Bind(OpenIdConnectConfig.ConfigSectionName, oidcConfig);
+            Task<string> result = this.SignedJwtAssertion();
+            return result.Result;
+        }
+
+        private async Task<string> SignedJwtAssertion()
+        {
+            string accessTokenResponse = string.Empty;
 
             // 1. Fetch Json response from OpenID Connect Discovery Endpoint, aka well-known endpoint of the Authority (Keycloak IAM)
             //   We need this to obtain the Token Endpoint Value  used as the 'aud' or Audience of the JWT.
-           string audience = this.GetTokenEndpoint(oidcConfig.Authority);
+            string tokenUrl = this.GetTokenEndpoint(oidcConfig.Authority);
 
-            // 2. Using the pfx file configured, create a signed Json Web Token.
-            JwtResponse jwtResponse = this.CreateSignedJsonWebToken(oidcConfig.Authority, audience, oidcConfig.ClientId);
+            // 2. Using the pfx file specified in the app settings config, create a signed Json Web Token.
+            JwtResponse jwtResponse = this.CreateSignedJsonWebToken(oidcConfig.Authority, tokenUrl, oidcConfig.ClientId);
 
-            // 2. Now using OIDC flow, authenticate using the SignedJWT as the client credential.
-            //Task<string> task =  Task.Run<string>(async() => await 
+            // 3. Now using OIDC client assertion direct flow, authenticate using the SignedJWT as the client credential.
+            try
+            {
+                IEnumerable<KeyValuePair<string, string>> oauthParams = new[]
+                    {
+                    new KeyValuePair<string, string>(@"client_id", oidcConfig.ClientId),
+                    new KeyValuePair<string, string>(@"client_assertion", jwtResponse.Token), // the signed JWT
+                    new KeyValuePair<string, string>(@"audience", oidcConfig.Audience),
+                    new KeyValuePair<string, string>(@"client_assertion_type", "urn:ietf:params:oauth:client-assertion-type:jwt-bearer"),
+                    new KeyValuePair<string, string>(@"scope", oidcConfig.Scope),
+                };
+                using var content = new FormUrlEncodedContent(oauthParams);
+                content.Headers.Clear();
+                content.Headers.Add(@"Content-Type", @"application/x-www-form-urlencoded");
 
+                using HttpResponseMessage response = await client.PostAsync(tokenUrl, content).ConfigureAwait(true);
 
-            // 3. Return the Access Token for subsequent use as the Bearer Token for Pharmanet API Calls.
-            return string.Empty;
+                accessTokenResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
+                Console.WriteLine($"JWT Token response: {accessTokenResponse}");
+                response.EnsureSuccessStatusCode();
+            }
+            catch (HttpRequestException e)
+            {
+                Console.WriteLine($"Error Message {e.Message}");
+            }
+
+            // 4. Return the Access Token for subsequent use as the Bearer Token for Pharmanet API Calls.
+            return accessTokenResponse;
         }
 
+        private async Task<string> ClientCredentialsGrant()
+        {
+            string accessTokenResponse = string.Empty;
 
+            string tokenUrl = this.GetTokenEndpoint(oidcConfig.Authority);
+            try
+            {
+                IEnumerable<KeyValuePair<string, string>> oauthParams = new[]
+                {
+                    new KeyValuePair<string, string>(@"client_id", oidcConfig.ClientId),
+                    new KeyValuePair<string, string>(@"client_secret", oidcConfig.ClientSecret),
+                    new KeyValuePair<string, string>(@"audience", oidcConfig.Audience),
+                    new KeyValuePair<string, string>(@"scope", oidcConfig.Scope),
+                    new KeyValuePair<string, string>(@"grant_type", @"client_credentials"),
+                };
+                using var content = new FormUrlEncodedContent(oauthParams);
+                content.Headers.Clear();
+                content.Headers.Add(@"Content-Type", @"application/x-www-form-urlencoded");
+
+                using HttpResponseMessage response = await client.PostAsync(tokenUrl, content).ConfigureAwait(true);
+
+                accessTokenResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
+                Console.WriteLine($"JWT Token response: {accessTokenResponse}");
+                response.EnsureSuccessStatusCode();
+            }
+            catch (HttpRequestException e)
+            {
+                Console.WriteLine($"Error Message {e.Message}");
+            }
+
+            return accessTokenResponse;
+        }
         private JwtResponse CreateSignedJsonWebToken(string issuer, string audience, string subject)
         {
             RSA rsa = this.GetRSAFromPfxCertificate();
@@ -92,12 +154,12 @@ namespace PharmaNet.Client.Services
                 expires: now.AddMinutes(15),
                 signingCredentials: signingCredentials,
                 claims: new Claim[] {
-                    new Claim(JwtRegisteredClaimNames.Nbf, unixTimeSeconds.ToString()),
-                    new Claim(JwtRegisteredClaimNames.Sub, subject),
+                    //new Claim(JwtRegisteredClaimNames.Nbf, unixTimeSeconds.ToString()),
                     new Claim(JwtRegisteredClaimNames.Iss, issuer),
+                    new Claim(JwtRegisteredClaimNames.Sub, subject),
                     new Claim(JwtRegisteredClaimNames.Aud, audience),
-                    new Claim(JwtRegisteredClaimNames.Iat, unixTimeSeconds.ToString(), ClaimValueTypes.Integer64),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    new Claim(JwtRegisteredClaimNames.Iat, unixTimeSeconds.ToString(), ClaimValueTypes.Integer64),
                 }
             );
 
@@ -122,7 +184,8 @@ namespace PharmaNet.Client.Services
                 RSA rsa = (RSA)cert.GetRSAPrivateKey();
                 return rsa;
             }
-            else {
+            else
+            {
                 Console.WriteLine("Certificate used has no private key.");
             }
             return null;
@@ -133,8 +196,8 @@ namespace PharmaNet.Client.Services
             try
             {
                 string wkEndPointPath = "/.well-known/openid-configuration";
-                Task<string> task =  Task.Run<string>(async() => await client.GetStringAsync(authorityUrl + wkEndPointPath));
-                OidcConfiguration config =  JsonSerializer.Deserialize<OidcConfiguration>(task.Result);
+                Task<string> task = Task.Run<string>(async () => await client.GetStringAsync(authorityUrl + wkEndPointPath));
+                OidcConfiguration config = JsonSerializer.Deserialize<OidcConfiguration>(task.Result);
                 return config.token_endpoint;
             }
             catch (HttpRequestException e)
@@ -147,5 +210,4 @@ namespace PharmaNet.Client.Services
         }
 
     }
-
 }

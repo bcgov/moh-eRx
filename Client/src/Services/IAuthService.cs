@@ -22,5 +22,4 @@ namespace PharmaNet.Client.Services
         public string AuthenticateUsingClientCredentials();
         public string AuthenticateUsingSignedJWT();
     }
-
 }
