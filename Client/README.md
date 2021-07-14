@@ -1,4 +1,4 @@
-# Example API Client Console Application written in C# .Net Core 5
+# Example API Client Console Application written in C# .Net 5
 
 This example is meant for developer's to view the source code to understand how to:
 
@@ -38,16 +38,27 @@ In this example client, the Keycloak administrator provided us with a keystore.j
 
 Here are the steps, assuming that the private key is created by the Keycloak administrator for you.
 
-## Step 1 - Convert the JKS to a pkcs12 file format
+## Convert the JKS to a pkcs12 (pfx) certificate file format
 
-You will need to know the JKS source password, but first you will be prompted to enter a destination password for the p12 file. It will need to be at least 6 characters long.  
+If Keycloak is supplying your client's private key, it will hang onto the public key to verify your client authentication. Keycloak provides a JKS file format for your private keys. It will need to be converted to a pfx certificate file in order to use it with the Client code provided here.  
+
+You will need to know the JKS source password, but first you will be prompted to enter a destination password for the pfx file. It will need to be at least 6 characters long.  
 
 ```bash
 keytool -importkeystore -srckeystore keystore.jks \
- -destkeystore keystore.p12 -srcstoretype jks -deststoretype pkcs12
+ -destkeystore keystore.pfx -srcstoretype jks -deststoretype pkcs12
 ```
 
-## Step 2 - Convert the PKCS file to a PEM file
+You can now use this pfx file in the Client example, and its private key will be used to sign the JWT
+used for OAuth 2.0 authentication against Keycloak. You will use the password you set in the appsettings.json configuration file as well.
+
+- you will want to read up on how to store certificates privately and available to the app configurations.
+
+## Getting the public key from your PFX file - in case you want to check your signing.
+
+If you want to check the signing of the JWT using your public key, you can create a public key file and then use it to check the signing.  In this case, follow these steps.
+
+### Step 1 - Convert the PKCS file to a PEM file
 
 Using openssl, you will now convert the p12 file to pem format. The pem will also require a passphrase to be set.
 
@@ -55,17 +66,13 @@ Using openssl, you will now convert the p12 file to pem format. The pem will als
 openssl pkcs12 -in keystore.p12 -out keystore.pem
 ```
 
-## Step 3 - Extract the RSA256 Public Key Output
+### Step 2 - Extract the RSA256 Public Key Output
 ```bash
 openssl rsa -in keystore.pem -RSAPublicKey_out > keystore_public.txt
 ```
 
-## Step 4 - Set the appsettings.json values for the RSA Public and Private keys
 
-a. Paste the Base64 private key string form the keystore.pem file into the RSAPrivateKey setting.
-b. Paste the Base64 public key string from the keystore_public.txt file into the RSAPublicKey setting.
-
-## Warning
+# Warning
 
 The above method of using appsettings.json to store the private key is not recommended for production.
 You will want to store your private key in a vault or secure area, and retrieve it in code to sign the JWT.

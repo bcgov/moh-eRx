@@ -89,7 +89,7 @@
       "request": "launch",
       "console": "integratedTerminal",
       "preLaunchTask": "build",
-      "cwd": "${workspaceFolder}/Client/src/",
+      "cwd": "${fileDirname}",
       "program": "${workspaceFolder}/Client/src/bin/Debug/net5.0/Client.dll",
       "args": [],
       "stopAtEntry": false,
