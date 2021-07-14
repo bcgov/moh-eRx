@@ -56,7 +56,7 @@ namespace PharmaNet.Client.Services
             OpenIdConnectConfig oidcConfig = new OpenIdConnectConfig();
             this.configuration.Bind(OpenIdConnectConfig.ConfigSectionName, oidcConfig);
 
-            JwtResponse jwtResponse = this.CreateToken(oidcConfig.Issuer, oidcConfig.Audience, oidcConfig.ClientId);
+            JwtResponse jwtResponse = this.CreateToken(oidcConfig.Authority, oidcConfig.Audience, oidcConfig.ClientId);
 
             return string.Empty;
         }

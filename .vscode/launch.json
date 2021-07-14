@@ -89,9 +89,9 @@
       "request": "launch",
       "console": "integratedTerminal",
       "preLaunchTask": "build",
+      "cwd": "${workspaceFolder}/Client/src/",
       "program": "${workspaceFolder}/Client/src/bin/Debug/net5.0/Client.dll",
       "args": [],
-      "cwd": "${workspaceFolder}/Client/src/",
       "stopAtEntry": false,
       "env": {
          "ASPNETCORE_ENVIRONMENT": "Development"

@@ -240,3 +240,6 @@ _Pvt_Extensions
 
 # MacOS
 .DS_Store
+
+# Dot Net App Settings
+appsettings.Development.json
