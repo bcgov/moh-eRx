@@ -76,10 +76,7 @@ namespace PharmaNet.Client.Services
 
         private JwtResponse CreateSignedJsonWebToken(string issuer, string audience, string subject)
         {
-            RSACryptoServiceProvider rsaCryptoSP = this.GetRSAFromPfxCertificate();
-            using RSA rsa = RSA.Create();
-
-            rsa.ImportRSAPrivateKey(rsaCryptoSP.ExportRSAPrivateKey(), out _);
+            RSA rsa = this.GetRSAFromPfxCertificate();
 
             SigningCredentials signingCredentials = new SigningCredentials(new RsaSecurityKey(rsa), SecurityAlgorithms.RsaSha256);
 
@@ -108,16 +105,22 @@ namespace PharmaNet.Client.Services
             };
         }
 
-        private RSACryptoServiceProvider GetRSAFromPfxCertificate()
+        private RSA GetRSAFromPfxCertificate()
         {
             JwtSigningConfig jwtConfig = new JwtSigningConfig();
             this.configuration.Bind(JwtSigningConfig.ConfigSectionName, jwtConfig);
 
             X509KeyStorageFlags flags = X509KeyStorageFlags.Exportable;
             X509Certificate2 cert = new X509Certificate2(jwtConfig.CertificatePfxFile, jwtConfig.CertificatePassword, flags);
-
-            RSACryptoServiceProvider rsa = (RSACryptoServiceProvider)cert.PrivateKey;
-            return rsa;
+            if (cert.HasPrivateKey)
+            {
+                RSA rsa = (RSA)cert.GetRSAPrivateKey();
+                return rsa;
+            }
+            else {
+                Console.WriteLine("Certificate used has no private key.");
+            }
+            return null;
         }
 
         private string GetTokenEndpoint(string authorityUrl)
