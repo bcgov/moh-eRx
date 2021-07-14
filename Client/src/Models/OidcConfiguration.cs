@@ -13,14 +13,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
-namespace PharmaNet.Client.Services
+namespace PharmaNet.Client.Models
 {
-    using System.Threading.Tasks;
-
-    public interface IAuthService
+    public partial class OidcConfiguration
     {
-        public string Authenticate();
-        public string AuthenticateUsingSignedJWT();
-    }
+        public string issuer { get; set; }
+        public string authorization_endpoint { get; set; }
 
+        public string token_endpoint { get; set; }
+
+        public string token_introspection_endpoint { get; set; }
+
+        public string userinfo_endpoint { get; set; }
+
+        public string jwks_uri { get; set; }
+    }
 }

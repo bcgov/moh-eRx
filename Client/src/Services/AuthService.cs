@@ -27,6 +27,8 @@ namespace PharmaNet.Client.Services
     using System.Security.Cryptography;
     using System.Security.Cryptography.X509Certificates;
     using System.Threading.Tasks;
+    using System.Text.Json;
+    using System.Text.Json.Serialization;
 
     using Microsoft.Extensions.Configuration;
     using Microsoft.IdentityModel.Tokens;
@@ -58,15 +60,19 @@ namespace PharmaNet.Client.Services
             OpenIdConnectConfig oidcConfig = new OpenIdConnectConfig();
             this.configuration.Bind(OpenIdConnectConfig.ConfigSectionName, oidcConfig);
 
-            // 1. Using the pfx file configured, create a signed Json Web Token.
-            JwtResponse jwtResponse = this.CreateSignedJsonWebToken(oidcConfig.Authority, oidcConfig.Audience, oidcConfig.ClientId);
+            // 1. Fetch Json response from OpenID Connect Discovery Endpoint, aka well-known endpoint of the Authority (Keycloak IAM)
+            //   We need this to obtain the Token Endpoint Value  used as the 'aud' or Audience of the JWT.
+           string audience = this.GetTokenEndpoint(oidcConfig.Authority);
+
+            // 2. Using the pfx file configured, create a signed Json Web Token.
+            JwtResponse jwtResponse = this.CreateSignedJsonWebToken(oidcConfig.Authority, audience, oidcConfig.ClientId);
 
             // 2. Now using OIDC flow, authenticate using the SignedJWT as the client credential.
 
             // 3. Return the Access Token for subsequent use as the Bearer Token for Pharmanet API Calls.
             return string.Empty;
         }
-        
+
 
         private JwtResponse CreateSignedJsonWebToken(string issuer, string audience, string subject)
         {
@@ -108,11 +114,31 @@ namespace PharmaNet.Client.Services
             this.configuration.Bind(JwtSigningConfig.ConfigSectionName, jwtConfig);
 
             X509KeyStorageFlags flags = X509KeyStorageFlags.Exportable;
-            X509Certificate2 cert = new X509Certificate2( jwtConfig.CertifcatePfxFile, jwtConfig.CertificatePassword, flags);
+            X509Certificate2 cert = new X509Certificate2(jwtConfig.CertifcatePfxFile, jwtConfig.CertificatePassword, flags);
 
             RSACryptoServiceProvider rsa = (RSACryptoServiceProvider)cert.PrivateKey;
             return rsa;
         }
+
+        private string GetTokenEndpoint(string authorityUrl)
+        {
+            try
+            {
+                string wkEndPointPath = "/.well-known/openid-configuration";
+                HttpClient client = new HttpClient();
+                Task<string> task =  Task.Run<string>(async() => await client.GetStringAsync(authorityUrl + wkEndPointPath));
+                OidcConfiguration config =  JsonSerializer.Deserialize<OidcConfiguration>(task.Result);
+                return config.token_endpoint;
+            }
+            catch (HttpRequestException e)
+            {
+                Console.WriteLine("\nException Caught!");
+                Console.WriteLine("Message :{0} ", e.Message);
+                return "";
+            }
+
+        }
+
     }
 
 }
