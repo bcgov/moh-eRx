@@ -45,11 +45,13 @@ namespace PharmaNet.Client.Services
     {
         private readonly IConfiguration configuration;
 
+        private readonly HttpClient client = new HttpClient();
+
         public AuthService(IConfiguration configuration)
         {
             this.configuration = configuration;
         }
-        public string Authenticate()
+        public string AuthenticateUsingClientCredentials()
         {
             return string.Empty;
 
@@ -68,6 +70,8 @@ namespace PharmaNet.Client.Services
             JwtResponse jwtResponse = this.CreateSignedJsonWebToken(oidcConfig.Authority, audience, oidcConfig.ClientId);
 
             // 2. Now using OIDC flow, authenticate using the SignedJWT as the client credential.
+            //Task<string> task =  Task.Run<string>(async() => await 
+
 
             // 3. Return the Access Token for subsequent use as the Bearer Token for Pharmanet API Calls.
             return string.Empty;
@@ -129,7 +133,6 @@ namespace PharmaNet.Client.Services
             try
             {
                 string wkEndPointPath = "/.well-known/openid-configuration";
-                HttpClient client = new HttpClient();
                 Task<string> task =  Task.Run<string>(async() => await client.GetStringAsync(authorityUrl + wkEndPointPath));
                 OidcConfiguration config =  JsonSerializer.Deserialize<OidcConfiguration>(task.Result);
                 return config.token_endpoint;
