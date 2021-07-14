@@ -67,7 +67,7 @@ namespace PharmaNet.Client.Services
             return string.Empty;
         }
         
-        
+
         private JwtResponse CreateSignedJsonWebToken(string issuer, string audience, string subject)
         {
             RSACryptoServiceProvider rsaCryptoSP = this.GetRSAFromPfxCertificate();
@@ -108,7 +108,7 @@ namespace PharmaNet.Client.Services
             this.configuration.Bind(JwtSigningConfig.ConfigSectionName, jwtConfig);
 
             X509KeyStorageFlags flags = X509KeyStorageFlags.Exportable;
-            X509Certificate2 cert = new X509Certificate2( jwtConfig.PrivateKeyFile, jwtConfig.PrivateKeyPassword, flags);
+            X509Certificate2 cert = new X509Certificate2( jwtConfig.CertifcatePfxFile, jwtConfig.CertificatePassword, flags);
 
             RSACryptoServiceProvider rsa = (RSACryptoServiceProvider)cert.PrivateKey;
             return rsa;
