@@ -18,7 +18,7 @@ namespace PharmaNet.Client.Models
     public class JwtSigningConfig
     {
         public static string ConfigSectionName = "JwtSigning";
-        public string CertifcatePfxFile { get; set; }
+        public string CertificatePfxFile { get; set; }
         public string CertificatePassword { get; set; }
     }
 }

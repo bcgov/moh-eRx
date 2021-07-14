@@ -14,6 +14,7 @@
 // limitations under the License.
 //-------------------------------------------------------------------------
 using System;
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -61,10 +62,13 @@ namespace PharmaNet.Client
 
         private static IConfiguration InitConfig()
         {
+            var cwd = Directory.GetCurrentDirectory();
+            Console.WriteLine("cwd = {0}", cwd);
             var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             var builder = new ConfigurationBuilder()
-                .AddJsonFile($"appsettings.json", true, true)
-                .AddJsonFile($"appsettings.{env}.json", true, true)
+                .AddJsonFile(cwd + $"/appsettings.json", true, true)
+                .AddJsonFile(cwd + $"/appsettings.{env}.json", true, true)
+                .AddJsonFile(cwd + $"/appsettings.local.json", true, true)
                 .AddEnvironmentVariables();
 
             return builder.Build();

@@ -114,7 +114,7 @@ namespace PharmaNet.Client.Services
             this.configuration.Bind(JwtSigningConfig.ConfigSectionName, jwtConfig);
 
             X509KeyStorageFlags flags = X509KeyStorageFlags.Exportable;
-            X509Certificate2 cert = new X509Certificate2(jwtConfig.CertifcatePfxFile, jwtConfig.CertificatePassword, flags);
+            X509Certificate2 cert = new X509Certificate2(jwtConfig.CertificatePfxFile, jwtConfig.CertificatePassword, flags);
 
             RSACryptoServiceProvider rsa = (RSACryptoServiceProvider)cert.PrivateKey;
             return rsa;
