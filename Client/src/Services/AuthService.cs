@@ -86,6 +86,7 @@ namespace PharmaNet.Client.Services
             JwtSecurityToken jwt = new JwtSecurityToken(
                 issuer: issuer,
                 expires: now.AddMinutes(15),
+                signingCredentials: signingCredentials,
                 claims: new Claim[] {
                     new Claim(JwtRegisteredClaimNames.Nbf, unixTimeSeconds.ToString()),
                     new Claim(JwtRegisteredClaimNames.Sub, subject),
