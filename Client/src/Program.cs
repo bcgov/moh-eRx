@@ -59,16 +59,15 @@ namespace PharmaNet.Client
         static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args);
 
-        private static IConfigurationRoot InitConfig()
+        private static IConfiguration InitConfig()
         {
             var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-            var configuration = new ConfigurationBuilder()
+            var builder = new ConfigurationBuilder()
                 .AddJsonFile($"appsettings.json", true, true)
                 .AddJsonFile($"appsettings.{env}.json", true, true)
-                .AddEnvironmentVariables()
-                .Build();
+                .AddEnvironmentVariables();
 
-            return configuration;
+            return builder.Build();
         }
     }
 }
