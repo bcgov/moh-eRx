@@ -19,11 +19,13 @@ namespace PharmaNet.Client.Services
 
     using System.IdentityModel.Tokens.Jwt;
     using System.IdentityModel.Tokens;
+    using System.IO;
 
     using System.Net.Http;
     using System.Net.Http.Headers;
     using System.Security.Claims;
     using System.Security.Cryptography;
+    using System.Security.Cryptography.X509Certificates;
     using System.Threading.Tasks;
 
     using Microsoft.Extensions.Configuration;
@@ -56,19 +58,23 @@ namespace PharmaNet.Client.Services
             OpenIdConnectConfig oidcConfig = new OpenIdConnectConfig();
             this.configuration.Bind(OpenIdConnectConfig.ConfigSectionName, oidcConfig);
 
-            JwtResponse jwtResponse = this.CreateToken(oidcConfig.Authority, oidcConfig.Audience, oidcConfig.ClientId);
+            // 1. Using the pfx file configured, create a signed Json Web Token.
+            JwtResponse jwtResponse = this.CreateSignedJsonWebToken(oidcConfig.Authority, oidcConfig.Audience, oidcConfig.ClientId);
 
+            // 2. Now using OIDC flow, authenticate using the SignedJWT as the client credential.
+
+            // 3. Return the Access Token for subsequent use as the Bearer Token for Pharmanet API Calls.
             return string.Empty;
         }
-        private JwtResponse CreateToken(string issuer, string audience, string subject)
+        
+        
+        private JwtResponse CreateSignedJsonWebToken(string issuer, string audience, string subject)
         {
-            JwtSigningConfig jwtConfig = new JwtSigningConfig();
-            this.configuration.Bind(JwtSigningConfig.ConfigSectionName, jwtConfig);
-
-            var privateKey = jwtConfig.RsaPrivateKey.ToByteArray();
-
+            RSACryptoServiceProvider rsaCryptoSP = this.GetRSAFromPfxCertificate();
             using RSA rsa = RSA.Create();
-            rsa.ImportRSAPrivateKey(privateKey, out _);
+
+            rsa.ImportRSAPrivateKey(rsaCryptoSP.ExportRSAPrivateKey(), out _);
+
             SigningCredentials signingCredentials = new SigningCredentials(new RsaSecurityKey(rsa), SecurityAlgorithms.RsaSha256);
 
             DateTime now = DateTime.Now;
@@ -94,6 +100,18 @@ namespace PharmaNet.Client.Services
                 Token = token,
                 ExpiresAt = unixTimeSeconds,
             };
+        }
+
+        private RSACryptoServiceProvider GetRSAFromPfxCertificate()
+        {
+            JwtSigningConfig jwtConfig = new JwtSigningConfig();
+            this.configuration.Bind(JwtSigningConfig.ConfigSectionName, jwtConfig);
+
+            X509KeyStorageFlags flags = X509KeyStorageFlags.Exportable;
+            X509Certificate2 cert = new X509Certificate2( jwtConfig.PrivateKeyFile, jwtConfig.PrivateKeyPassword, flags);
+
+            RSACryptoServiceProvider rsa = (RSACryptoServiceProvider)cert.PrivateKey;
+            return rsa;
         }
     }
 

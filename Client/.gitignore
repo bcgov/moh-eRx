@@ -240,3 +240,8 @@ _Pvt_Extensions
 
 # MacOS
 .DS_Store
+
+# App settings
+appsettings.Development.json
+appsettings.local.json
+
