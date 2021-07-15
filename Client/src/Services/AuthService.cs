@@ -155,7 +155,7 @@ namespace PharmaNet.Client.Services
                 Byte[] keyBytes = clientSecret.ToByteArray();
 
                 var symmetricKey = new SymmetricSecurityKey(keyBytes);
-                signingCredentials = new SigningCredentials(symmetricKey, SecurityAlgorithms.HmacSha256Signature);
+                signingCredentials = new SigningCredentials(symmetricKey, SecurityAlgorithms.HmacSha256);
 
             }
             else
@@ -164,7 +164,7 @@ namespace PharmaNet.Client.Services
                 // We use asymmetric key with public/private key pair from certificate.
                 RSA rsa = this.GetRSAFromPfxCertificate();
                 RsaSecurityKey rsaSecurityKey = new RsaSecurityKey(rsa);
-                signingCredentials = new SigningCredentials(rsaSecurityKey, SecurityAlgorithms.RsaSha256Signature);
+                signingCredentials = new SigningCredentials(rsaSecurityKey, SecurityAlgorithms.RsaSha256);
             }
 
             DateTime now = DateTime.Now;
