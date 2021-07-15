@@ -78,13 +78,13 @@ namespace PharmaNet.Client.Services
             // 2. "Signed Jwt" - Using the pfx file specified in the app settings config, create a signed Json Web Token.
             JwtResponse jwtResponse = this.CreateSignedJsonWebToken(oidcConfig.ClientId, tokenUrl);
 
-            // 3. Now using OIDC client assertion direct flow, authenticate using the SignedJWT as the client credential.
+            // 3. Now using OIDC client assertion direct flow, authenticate using the Signed JWT as the client credential.
+            //    This is client credentials grant but with a Signed JWT, so no need to supply the client_id or client_secret
+            //    parameters.
             try
             {
                 IEnumerable<KeyValuePair<string, string>> oauthParams = new[]
                     {
-                    new KeyValuePair<string, string>(@"client_id", oidcConfig.ClientId),
-                    new KeyValuePair<string, string>(@"client_secret", oidcConfig.ClientSecret),
                     new KeyValuePair<string, string>(@"grant_type", @"client_credentials"),
                     new KeyValuePair<string, string>(@"client_assertion", jwtResponse.Token), // the signed JWT
                     new KeyValuePair<string, string>(@"audience", oidcConfig.Audience),
