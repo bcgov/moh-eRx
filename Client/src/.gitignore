@@ -243,3 +243,10 @@ _Pvt_Extensions
 
 # Dot Net App Settings
 appsettings.Development.json
+
+# Keys
+*.jks
+*.pfx
+*.pem
+*.p12
+
