@@ -76,7 +76,7 @@ namespace PharmaNet.Client.Services
             string tokenUrl = this.GetTokenEndpoint(oidcConfig.Authority);
 
             // 2. Using the pfx file specified in the app settings config, create a signed Json Web Token.
-            JwtResponse jwtResponse = this.CreateSignedJsonWebToken(oidcConfig.Authority, tokenUrl, oidcConfig.ClientId);
+            JwtResponse jwtResponse = this.CreateSignedJsonWebToken(oidcConfig.ClientId, tokenUrl);
 
             // 3. Now using OIDC client assertion direct flow, authenticate using the SignedJWT as the client credential.
             try
@@ -84,6 +84,8 @@ namespace PharmaNet.Client.Services
                 IEnumerable<KeyValuePair<string, string>> oauthParams = new[]
                     {
                     new KeyValuePair<string, string>(@"client_id", oidcConfig.ClientId),
+                    new KeyValuePair<string, string>(@"client_secret", oidcConfig.ClientSecret),
+                    new KeyValuePair<string, string>(@"grant_type", @"client_credentials"),
                     new KeyValuePair<string, string>(@"client_assertion", jwtResponse.Token), // the signed JWT
                     new KeyValuePair<string, string>(@"audience", oidcConfig.Audience),
                     new KeyValuePair<string, string>(@"client_assertion_type", "urn:ietf:params:oauth:client-assertion-type:jwt-bearer"),
@@ -140,23 +142,29 @@ namespace PharmaNet.Client.Services
 
             return accessTokenResponse;
         }
-        private JwtResponse CreateSignedJsonWebToken(string issuer, string audience, string subject)
+        private JwtResponse CreateSignedJsonWebToken(string clientId, string audience)
         {
-            RSA rsa = this.GetRSAFromPfxCertificate();
+            //RSA rsa = this.GetRSAFromPfxCertificate();
+            //RsaSecurityKey rsaSecurityKey = new RsaSecurityKey(rsa);
+            
+            // According to Need to generate an HS256 (HMAC with SHA-256) symmetric signing
+            // keycloak only supports symmetric algorithms HS256, HS384 and HS512 for signed JWTs for AuthN.
+            Byte[] keyBytes = this.GetKeyFromCert();
+            var symmetricKey = new SymmetricSecurityKey(keyBytes);
 
-            SigningCredentials signingCredentials = new SigningCredentials(new RsaSecurityKey(rsa), SecurityAlgorithms.RsaSha256);
+            SigningCredentials signingCredentials = new SigningCredentials(symmetricKey, SecurityAlgorithms.HmacSha256);
 
             DateTime now = DateTime.Now;
             long unixTimeSeconds = new DateTimeOffset(now).ToUnixTimeSeconds();
 
             JwtSecurityToken jwt = new JwtSecurityToken(
-                issuer: issuer,
+                issuer: clientId,
                 expires: now.AddMinutes(15),
                 signingCredentials: signingCredentials,
                 claims: new Claim[] {
                     //new Claim(JwtRegisteredClaimNames.Nbf, unixTimeSeconds.ToString()),
-                    new Claim(JwtRegisteredClaimNames.Iss, issuer),
-                    new Claim(JwtRegisteredClaimNames.Sub, subject),
+                    new Claim(JwtRegisteredClaimNames.Iss, clientId),
+                    new Claim(JwtRegisteredClaimNames.Sub, clientId),
                     new Claim(JwtRegisteredClaimNames.Aud, audience),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     new Claim(JwtRegisteredClaimNames.Iat, unixTimeSeconds.ToString(), ClaimValueTypes.Integer64),
@@ -183,6 +191,27 @@ namespace PharmaNet.Client.Services
             {
                 RSA rsa = (RSA)cert.GetRSAPrivateKey();
                 return rsa;
+            }
+            else
+            {
+                Console.WriteLine("Certificate used has no private key.");
+            }
+            return null;
+        }
+
+        private Byte[] GetKeyFromCert()
+        {
+            JwtSigningConfig jwtConfig = new JwtSigningConfig();
+            this.configuration.Bind(JwtSigningConfig.ConfigSectionName, jwtConfig);
+
+            X509KeyStorageFlags flags = X509KeyStorageFlags.Exportable;
+            X509Certificate2 cert = new X509Certificate2(jwtConfig.CertificatePfxFile, jwtConfig.CertificatePassword, flags);
+            if (cert.HasPrivateKey)
+            {
+
+                Byte[] keyBytes = cert.PrivateKey.ExportPkcs8PrivateKey();
+                return keyBytes;
+
             }
             else
             {
