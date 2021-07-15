@@ -63,7 +63,7 @@ If you want to check the signing of the JWT using your public key, you can creat
 Using openssl, you will now convert the p12 file to pem format. The pem will also require a passphrase to be set.
 
 ```bash
-openssl pkcs12 -in keystore.p12 -out keystore.pem
+openssl pkcs12 -in keystore.pfx -out keystore.pem
 ```
 
 ### Step 2 - Extract the RSA256 Public Key Output

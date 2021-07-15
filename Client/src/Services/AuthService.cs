@@ -75,7 +75,7 @@ namespace PharmaNet.Client.Services
             //   We need this to obtain the Token Endpoint Value  used as the 'aud' or Audience of the JWT.
             string tokenUrl = this.GetTokenEndpoint(oidcConfig.Authority);
 
-            // 2. Using the pfx file specified in the app settings config, create a signed Json Web Token.
+            // 2. "Signed Jwt" - Using the pfx file specified in the app settings config, create a signed Json Web Token.
             JwtResponse jwtResponse = this.CreateSignedJsonWebToken(oidcConfig.ClientId, tokenUrl);
 
             // 3. Now using OIDC client assertion direct flow, authenticate using the SignedJWT as the client credential.
@@ -142,30 +142,42 @@ namespace PharmaNet.Client.Services
 
             return accessTokenResponse;
         }
-        private JwtResponse CreateSignedJsonWebToken(string clientId, string audience)
-        {
-            //RSA rsa = this.GetRSAFromPfxCertificate();
-            //RsaSecurityKey rsaSecurityKey = new RsaSecurityKey(rsa);
-            
-            // According to Need to generate an HS256 (HMAC with SHA-256) symmetric signing
-            // keycloak only supports symmetric algorithms HS256, HS384 and HS512 for signed JWTs for AuthN.
-            Byte[] keyBytes = this.GetKeyFromCert();
-            var symmetricKey = new SymmetricSecurityKey(keyBytes);
 
-            SigningCredentials signingCredentials = new SigningCredentials(symmetricKey, SecurityAlgorithms.HmacSha256);
+
+        private JwtResponse CreateSignedJsonWebToken(string clientId, string tokenUrl, string clientSecret = null)
+        {
+            SigningCredentials signingCredentials;
+
+            if (clientSecret != null)
+            {
+                //  This is when Keycloak client Credentials are configured as "Signed Jwt with Client Secret"
+                // HS256 symmetric algorithm with shared secret (the client_secret) for this client_id
+                Byte[] keyBytes = clientSecret.ToByteArray();
+
+                var symmetricKey = new SymmetricSecurityKey(keyBytes);
+                signingCredentials = new SigningCredentials(symmetricKey, SecurityAlgorithms.HmacSha256Signature);
+
+            }
+            else
+            {
+                // This is when the Keycloak client credentials are configured as "Signed Jwt"
+                // We use asymmetric key with public/private key pair from certificate.
+                RSA rsa = this.GetRSAFromPfxCertificate();
+                RsaSecurityKey rsaSecurityKey = new RsaSecurityKey(rsa);
+                signingCredentials = new SigningCredentials(rsaSecurityKey, SecurityAlgorithms.RsaSha256Signature);
+            }
 
             DateTime now = DateTime.Now;
             long unixTimeSeconds = new DateTimeOffset(now).ToUnixTimeSeconds();
 
             JwtSecurityToken jwt = new JwtSecurityToken(
-                issuer: clientId,
+                issuer: oidcConfig.ClientId,
                 expires: now.AddMinutes(15),
                 signingCredentials: signingCredentials,
                 claims: new Claim[] {
-                    //new Claim(JwtRegisteredClaimNames.Nbf, unixTimeSeconds.ToString()),
-                    new Claim(JwtRegisteredClaimNames.Iss, clientId),
-                    new Claim(JwtRegisteredClaimNames.Sub, clientId),
-                    new Claim(JwtRegisteredClaimNames.Aud, audience),
+                    new Claim(JwtRegisteredClaimNames.Iss, oidcConfig.ClientId),
+                    new Claim(JwtRegisteredClaimNames.Sub, oidcConfig.ClientId),
+                    new Claim(JwtRegisteredClaimNames.Aud, tokenUrl),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     new Claim(JwtRegisteredClaimNames.Iat, unixTimeSeconds.ToString(), ClaimValueTypes.Integer64),
                 }
