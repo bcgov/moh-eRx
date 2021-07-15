@@ -82,6 +82,20 @@
       "sourceFileMap": {
          "/Views": "${workspaceFolder}/"
       }
-   }
-   ]
+   },
+   {
+      "name": "Debug Client (console app)",
+      "type": "coreclr",
+      "cwd": "${workspaceFolder}/Client/src",
+      "request": "launch",
+      "console": "integratedTerminal",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/Client/src/bin/Debug/net5.0/Client.dll",
+      "args": [],
+      "stopAtEntry": false,
+      "env": {
+         "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "internalConsoleOptions": "openOnSessionStart"
+   }]
 }

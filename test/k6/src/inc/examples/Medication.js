@@ -14,6 +14,19 @@
 // limitations under the License.
 //-------------------------------------------------------------------------
 export let Medication = [
+
+    {
+        name: "TDR_50_REQUEST - R3",
+        purpose: "Drug Monograph Information request message",
+        version: "PNet-R3",
+        message:
+            "MSH|^~\\&|DESKTOP|BC01400503|PNP|IP||DRB:216.232.132.137|ZPN|103849|P|2.1\r" +
+        "ZZZ|TDR||103849|P1|12345|||\r" +
+        "ZCA|000001|70|00|AR|07\r" +
+        "ZCB|BC00000ZZZ|210603|103849\r" +
+        "ZPC|337730||||||N|ZPC1^FDB^EDUCLONG\r"
+    },
+
     {
         name: "TDR_50_REQUEST - R3",
         purpose: "Drug Monograph Information request message",

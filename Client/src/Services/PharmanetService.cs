@@ -21,21 +21,17 @@ namespace PharmaNet.Client.Services
     using System.Threading.Tasks;
 
     using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.Logging;
 
     public class PharmanetService : IPharmanetService
     {
         private readonly IConfiguration configuration;
-        private readonly ILogger<PharmanetService> logger;
         private readonly IAuthService authService;
 
 
         public PharmanetService(IConfiguration configuration,
-            IAuthService authService,
-            ILogger<PharmanetService> logger)
+            IAuthService authService)
         {
             this.configuration = configuration;
-            this.logger = logger;
             this.authService = authService;
         }
 

@@ -15,11 +15,11 @@
 //-------------------------------------------------------------------------
 namespace PharmaNet.Client.Services
 {
+    using System.Threading.Tasks;
+
     public interface IAuthService
     {
-        public string Authenticate();
-        public string AuthenticateWithSignedJWT();
-
+        public string AuthenticateUsingClientCredentials();
+        public string AuthenticateUsingSignedJWT();
     }
-
 }

@@ -7,7 +7,7 @@ k6 is a modern load testing tool, building on Load Impact's years of experience 
 If you don't have Docker, go to docker.com and download Docker on your computer. Make sure the command line  tool, docker, is in your PATH.
 
 ```bash
-docker pull loadimpact/k6`
+docker pull loadimpact/k6
 ```
 
 For more information on getting started with K6, see [k6 Getting Started](https://k6.io/docs/getting-started/installation)

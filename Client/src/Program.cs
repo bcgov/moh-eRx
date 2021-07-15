@@ -14,6 +14,7 @@
 // limitations under the License.
 //-------------------------------------------------------------------------
 using System;
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -37,44 +38,40 @@ namespace PharmaNet.Client
         {
             using IHost host = CreateHostBuilder(args).Build();
 
+            IConfiguration configuration = InitConfig();
+
             // Application code should start here.
 
             IServiceProvider serviceProvider = new ServiceCollection()
                 .AddSingleton<IAuthService, AuthService>()
                 .AddSingleton<IPharmanetService, PharmanetService>()
+                .AddSingleton<IConfiguration>(configuration)
                 .BuildServiceProvider();
-
 
             Console.WriteLine("Running Example Pharmanet API Client.");
 
             IAuthService authService = serviceProvider.GetService<IAuthService>();
 
-            string token = authService.Authenticate();
+            string token = authService.AuthenticateUsingSignedJWT();
 
             await host.RunAsync();
         }
 
         static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureLogging(logging => 
-                {
-                    logging.ClearProviders();
-                    logging.AddConsole();
-                })
-                .ConfigureAppConfiguration((hostingContext, configuration) =>
-                {
-                    configuration.Sources.Clear();
+            Host.CreateDefaultBuilder(args);
 
-                    IHostEnvironment env = hostingContext.HostingEnvironment;
+        private static IConfiguration InitConfig()
+        {
+            var cwd = Directory.GetCurrentDirectory();
+            Console.WriteLine("cwd = {0}", cwd);
+            var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            var builder = new ConfigurationBuilder()
+                .AddJsonFile(cwd + $"/appsettings.json", true, true)
+                .AddJsonFile(cwd + $"/appsettings.{env}.json", true, true)
+                .AddJsonFile(cwd + $"/appsettings.local.json", true, true)
+                .AddEnvironmentVariables();
 
-                    configuration
-                        .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                        .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
-                        .AddJsonFile("appsettings.local.json", optional: true, reloadOnChange: true)
-                        .AddEnvironmentVariables()
-                        .AddCommandLine(args)
-                        .Build();
-
-                });
+            return builder.Build();
+        }
     }
 }

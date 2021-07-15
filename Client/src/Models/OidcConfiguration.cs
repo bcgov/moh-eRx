@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------
-// Copyright © 2021 Province of British Columbia
+// Copyright © 2020 Province of British Columbia
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,16 +13,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
+namespace PharmaNet.Client.Models
+{
+    public partial class OidcConfiguration
+    {
+        public string issuer { get; set; }
+        public string authorization_endpoint { get; set; }
 
-import * as common from './inc/common.js';
+        public string token_endpoint { get; set; }
 
-export default function() {
+        public string token_introspection_endpoint { get; set; }
 
-    var payload = 'TVNIfF5-XCZ8REVTS1RPUHxCQzAxNDAwNTAzfFBOUHxJUHx8RFJCOjIxNi4yMzIuMTMyLjEzN3xaUE58MTAzODQ5fFB8Mi4xDVpaWnxURFJ8fDEwMzg0OXxQMXwxMjM0NXx8fA1aQ0F8MDAwMDAxfDcwfDAwfEFSfDA3DVpDQnxCQzAwMDAwWlpafDIxMDYwM3wxMDM4NDkNWlBDfDMzNzczMHx8fHx8fE58WlBDMV5GREJeRURVQ0xPTkcNDQ';
+        public string userinfo_endpoint { get; set; }
 
-    var url = common.MedicationServiceUrl;
-    var scopes = "system/Medication.read";
-    common.authorizeClient(scopes);
-
-    common.submitHL7MessageBase64(url, payload);
+        public string jwks_uri { get; set; }
+    }
 }
