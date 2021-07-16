@@ -4,7 +4,7 @@ This example is meant for developer's to view the source code to understand how 
 
 - authenticate using client id and secret method (for non-production environements)
 - authenticate using signed JWT
-- See how to invoke an example service
+- See how to invoke an example service   (forthcoming)
 
 This uses .NET 5, which you can use to create server apps, command line apps, or WinForms desktop apps.
 
