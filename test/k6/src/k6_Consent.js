@@ -20,7 +20,7 @@ import * as examples from './inc/examples/Consent.js';
 
 export default function() {
     var url = common.ConsentServiceUrl;
-    var scopes = "system/Consent.write system/Consent.read";
+    var scopes = "system/Patient.read system/Consent.write system/Consent.read";
     common.authorizeClient(scopes);
     common.submitMessage(url, examples.Consent[0]);
 }
