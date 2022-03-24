@@ -78,6 +78,8 @@ namespace Health.PharmaNet.Services
                     this.logger.LogDebug($"Pharmanet Response: {message!.Hl7Message}");
                     ResourceReference reference = PharmanetDelegateAdapter.RelatedToDocumentReference(request);
                     response.Payload = PharmanetDelegateAdapter.ToDocumentReference(message!, reference);
+                    this.logger.LogDebug($"FHIR Response: {response!.Payload}");
+
                     response.IsSuccessStatusCode = true;
                 }
                 else
