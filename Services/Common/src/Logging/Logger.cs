@@ -21,13 +21,13 @@ namespace Health.PharmaNet.Common.Logging
     /// <summary>
     /// The LoggerMessage Extensions for .NET 6 optimized logging.
     /// </summary>
-#pragma warning disable CA1810, CS8625
+#pragma warning disable CA1810
     public static class Logger
     {
-        private static readonly Action<ILogger, string, Exception> InfoLogMessage;
-        private static readonly Action<ILogger, string, Exception> DebugLogMessage;
+        private static readonly Action<ILogger, string, Exception?> InfoLogMessage;
+        private static readonly Action<ILogger, string, Exception?> DebugLogMessage;
 
-        private static readonly Action<ILogger, string, Exception> ErrorMessage;
+        private static readonly Action<ILogger, string, Exception?> ErrorMessage;
 
         /// <summary>
         /// Initializes static members of the <see cref="Logger"/> class.
@@ -91,5 +91,5 @@ namespace Health.PharmaNet.Common.Logging
             ErrorMessage(logger, message, ex);
         }
     }
-#pragma warning restore CA1810, CS8625
+#pragma warning restore CA1810
 }
