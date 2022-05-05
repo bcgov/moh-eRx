@@ -3,7 +3,7 @@
     <Description>Lightweight HL7 2.x library compatible with .Net Standard and .Net Core</Description>
     <Copyright>(c) Efferent Health, LLC</Copyright>
     <VersionPrefix>2.19.1.1</VersionPrefix>
-    <TargetFrameworks>net5.0</TargetFrameworks>
+    <TargetFrameworks>net6.0</TargetFrameworks>
     <AssemblyName>HL7-dotnetcore</AssemblyName>
     <PackageId>HL7-dotnetcore</PackageId>
     <PackageTags>hl7;dotnetcore</PackageTags>

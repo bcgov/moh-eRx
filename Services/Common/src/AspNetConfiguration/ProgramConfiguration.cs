@@ -20,7 +20,6 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
-    using Microsoft.Extensions.Logging.Console;
 
     /// <summary>
     /// The program configuration class.

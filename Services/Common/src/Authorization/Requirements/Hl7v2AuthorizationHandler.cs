@@ -20,6 +20,7 @@ namespace Health.PharmaNet.Authorization
     using System.Threading.Tasks;
 
     using Health.PharmaNet.Common.Authorization.Claims;
+    using Health.PharmaNet.Common.Logging;
     using HL7.Dotnetcore;
 
     using Microsoft.AspNetCore.Authorization;
@@ -56,7 +57,7 @@ namespace Health.PharmaNet.Authorization
             // If user does not have the scope claim, get out of here
             if (!context.User.HasClaim(c => c.Type == PharmanetAPIClaims.Scope))
             {
-                this.logger.LogDebug("Missing scope claim in JWT");
+                Logger.LogError(this.logger, "Missing scope claim in JWT");
                 return Task.CompletedTask;
             }
 
@@ -71,18 +72,18 @@ namespace Health.PharmaNet.Authorization
 
                 if (HasCorrectScopes(scopesNeeded, scopes))
                 {
-                    this.logger.LogDebug("HL7v2 Authorization Success! Scope(s) provided are correct for the HL7v2 message");
+                    Logger.LogInformation(this.logger, "HL7v2 Authorization Success! Scope(s) provided are correct for the HL7v2 message");
                     context.Succeed(requirement);
                 }
                 else
                 {
                     if (scopesNeeded.Length > 0)
                     {
-                        this.logger.LogInformation("HL7v2 Authorization Failed! Scope(s) provided are NOT correct for the HL7v2 MessagType");
+                        Logger.LogInformation(this.logger, "HL7v2 Authorization Failed! Scope(s) provided are NOT correct for the HL7v2 MessagType");
                     }
                     else
                     {
-                        this.logger.LogInformation("HL7v2 Authorization Failed! The HL7v2 Message is not known/supported by this service.");
+                        Logger.LogError(this.logger, "HL7v2 Authorization Failed! The HL7v2 Message is not known/supported by this service.");
                     }
                 }
             }

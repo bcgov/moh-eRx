@@ -17,11 +17,10 @@ namespace Health.PharmaNet.Delegates
 {
     using System;
     using System.Net.Http;
-    using System.Text.Encodings.Web;
     using System.Text.Json;
-    using System.Text.Unicode;
     using System.Threading.Tasks;
 
+    using Health.PharmaNet.Common.Logging;
     using Health.PharmaNet.Models;
 
     using Microsoft.Extensions.Configuration;
@@ -71,7 +70,7 @@ namespace Health.PharmaNet.Delegates
             {
                 Uri delegateUri = new Uri(this.pharmanetDelegateConfig.Endpoint);
 
-                this.logger.LogDebug($"PharmanetDelegate Proxy POST {delegateUri}. Payload: {jsonOutput}");
+                Logger.LogDebug(this.logger, $"PharmanetDelegate Proxy POST {delegateUri}. Payload: {jsonOutput}");
 
                 HttpResponseMessage response = await this.httpClient.PostAsync(delegateUri, content).ConfigureAwait(true);
                 requestResult.IsSuccessStatusCode = response.IsSuccessStatusCode;
@@ -80,7 +79,7 @@ namespace Health.PharmaNet.Delegates
                 if (!requestResult.IsSuccessStatusCode)
                 {
                     string msg = "PharmanetDelegate Proxy call returned with StatusCode := " + response.StatusCode;
-                    this.logger.LogError(msg);
+                    Logger.LogDebug(this.logger, msg);
                     requestResult.ErrorMessage = msg;
                     return requestResult;
                 }
@@ -89,14 +88,14 @@ namespace Health.PharmaNet.Delegates
                     string? result = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
                     PharmanetMessageModel? responseMessage = JsonSerializer.Deserialize<PharmanetMessageModel>(result);
                     requestResult.Payload = responseMessage;
-                    this.logger.LogDebug($"PharmanetDelegate Proxy Response: {responseMessage}");
+                    Logger.LogDebug(this.logger, $"PharmanetDelegate Proxy Response: {responseMessage}");
                 }
             }
 #pragma warning disable CA1031 // Do not catch general exception types
             catch (Exception ex)
 #pragma warning restore CA1031 // Do not catch general exception types
             {
-                this.logger.LogError($"PharmanetDelegate Exception := {ex.Message}.");
+                Logger.LogException(this.logger, $"PharmanetDelegate Exception Occurred.", ex);
 
                 requestResult.IsSuccessStatusCode = false;
                 requestResult.ErrorMessage = ex.Message;

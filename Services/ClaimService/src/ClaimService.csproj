@@ -4,7 +4,7 @@
     <RootNamespace>Health.PharmaNet.ClaimService</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DocumentationFile>bin\Debug\net5.0\ClaimService.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\net6.0\ClaimService.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'MedicationRequestService' " />
   <ItemGroup>

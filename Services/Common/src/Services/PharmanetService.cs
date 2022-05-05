@@ -18,6 +18,7 @@ namespace Health.PharmaNet.Services
     using System;
     using System.Threading.Tasks;
 
+    using Health.PharmaNet.Common.Logging;
     using Health.PharmaNet.Delegates;
     using Health.PharmaNet.Models;
 
@@ -64,7 +65,7 @@ namespace Health.PharmaNet.Services
 
             try
             {
-                this.logger.LogDebug($"Pharmanet Request: {requestMessage.Hl7Message}");
+                Logger.LogDebug(this.logger, $"Pharmanet Request: {requestMessage.Hl7Message}");
 
                 RequestResult<PharmanetMessageModel> result = await this.pharmanetDelegate.SubmitRequest(requestMessage).ConfigureAwait(true);
 
@@ -84,13 +85,15 @@ namespace Health.PharmaNet.Services
                 }
                 else
                 {
-                    this.logger.LogError($"Pharmanet Response Error: {result.ErrorMessage}");
+                    Logger.LogDebug(this.logger, $"Pharmanet Response Error: {result.ErrorMessage}");
                 }
             }
 #pragma warning disable CA1031 // Do not catch general exception types
             catch (Exception ex)
 #pragma warning restore CA1031 // Do not catch general exception types
             {
+                Logger.LogException(this.logger, "Pharmanet Exception.", ex);
+
                 response.IsSuccessStatusCode = false;
                 response.StatusCode = System.Net.HttpStatusCode.InternalServerError;
                 response.ErrorMessage = ex.Message;

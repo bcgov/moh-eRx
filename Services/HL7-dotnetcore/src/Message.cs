@@ -879,7 +879,7 @@ namespace HL7.Dotnetcore
                                 this.MessageStructure = msh9Comps[2];
                             }
                             else if (msh9Comps.Count > 0 && msh9Comps[0] != null
-                                && string.Compare(msh9Comps[0], "ACK", StringComparison.Ordinal) == 0)
+                                && string.Equals(msh9Comps[0], "ACK", StringComparison.Ordinal) == true)
                             {
                                 this.MessageStructure = "ACK";
                             }

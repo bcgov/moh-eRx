@@ -191,7 +191,7 @@ namespace HL7.Dotnetcore
                     default:
                         if (seq.StartsWith("X", System.StringComparison.Ordinal))
                         {
-                            result.Append((char)int.Parse(seq.Substring(1), NumberStyles.AllowHexSpecifier, NumberFormatInfo.CurrentInfo));
+                            result.Append((char)int.Parse(seq.AsSpan(1), NumberStyles.AllowHexSpecifier, NumberFormatInfo.CurrentInfo));
                         }
                         else
                         {
