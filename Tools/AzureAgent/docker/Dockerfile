@@ -1,5 +1,5 @@
 FROM docker.io/ubuntu:20.04
-ARG NODE_VERSION=v14.15.0
+ARG NODE_VERSION=v16.13.0
 ARG DOTNET_VERSION=6.0
 ARG OPENSHIFT_VERSION=v3.11.0-0cbc58b
 
@@ -22,7 +22,6 @@ RUN  export DEBIAN_FRONTEND=noninteractive && \
     rm packages-microsoft-prod.deb && \
     apt-get update -y && \ 
     apt-get install -y dotnet-sdk-${DOTNET_VERSION} && \
-    apt-get install -y postgresql-client && \
     apt-get install -y dh-autoreconf && \
     ln -fs /usr/share/zoneinfo/America/Vancouver /etc/localtime && \
     dpkg-reconfigure --frontend noninteractive tzdata
