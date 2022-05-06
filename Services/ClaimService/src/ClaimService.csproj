@@ -3,6 +3,9 @@
   <PropertyGroup>
     <RootNamespace>Health.PharmaNet.ClaimService</RootNamespace>
   </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DocumentationFile>bin\Debug\net6.0\ClaimService.xml</DocumentationFile>
   </PropertyGroup>
