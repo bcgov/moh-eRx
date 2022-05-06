@@ -4,7 +4,7 @@
     <RootNamespace>Health.PharmaNet.MedicationDispenseService</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DocumentationFile>bin\Debug\net5.0\MedicationDispenseService.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\net6.0\MedicationDispenseService.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Content Include=".vscode\launch.json" />

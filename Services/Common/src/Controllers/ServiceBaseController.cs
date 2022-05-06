@@ -126,6 +126,7 @@ namespace Health.PharmaNet.Controllers
 #pragma warning restore CA1031 // Do not catch general exception types
             {
                 // Return Bad Message Http Error since the HL7 payload could not be parsed.
+                Logger.LogException(this.logger, "PharmanetRequest() Bad Request", ex);
                 return this.StatusCode((int)HttpStatusCode.BadRequest, ex.Message);
             }
 

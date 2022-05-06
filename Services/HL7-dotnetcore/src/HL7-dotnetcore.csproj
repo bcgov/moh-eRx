@@ -4,6 +4,7 @@
     <Copyright>(c) Efferent Health, LLC</Copyright>
     <VersionPrefix>2.19.1.1</VersionPrefix>
     <TargetFrameworks>net6.0</TargetFrameworks>
+    <Nullable>enable</Nullable>
     <AssemblyName>HL7-dotnetcore</AssemblyName>
     <PackageId>HL7-dotnetcore</PackageId>
     <PackageTags>hl7;dotnetcore</PackageTags>
