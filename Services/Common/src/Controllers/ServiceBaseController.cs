@@ -158,7 +158,7 @@ namespace Health.PharmaNet.Controllers
             return new ContentResult()
             {
                 Content = serializer.SerializeToString(docRef),
-                ContentType = "application/fhir+json",
+                ContentType = "application/fhir+json; charset=utf-8",
             };
         }
 
