@@ -45,22 +45,22 @@ namespace Health.PharmaNet.Delegates
         // <returns>The resulting corrected base64 encoded message</returns>
         private PharmanetMessageModel TrimBadCharactersInMessage(PharmanetMessageModel? message)
         {
-            Logger.LogDebug(this.logger, "Checking if need to trim extraneous characters from end of HL7v2 Response...");
             byte[] bytes = Convert.FromBase64String(message!.Hl7Message);
+            string hl7v2 = Encoding.UTF8.GetString(bytes);
+            int origLen = hl7v2.Length;
 
-            for (int i=(bytes.Length-1); i>=0; i--)
+            char[] charsToTrim = { '\xBD', '\xBF', '\xEF'}; 
+
+            string trimmed = hl7v2.TrimStart(charsToTrim);
+
+            if (hl7v2.Length != trimmed.Length) 
             {
-                Logger.LogDebug(this.logger, $"Checking bytes[{i}] = {bytes[i]}");
-                if (bytes[i] == 0x0d || bytes[i] == 0x0a)  // trim back to last 'nl' or 'cr' character
-                {
-                    Logger.LogDebug(this.logger, $"Trimming completed at {i}");
-                    break;
-                }
-                Logger.LogDebug(this.logger, $"Trimmed out of band byte from HL7v2: '{bytes[i]}'");
-                bytes[i] = 0x00; // null out the character to terminate string length.
+                Logger.LogInformation(this.logger, "Trimmed unusual extended characters from HL7v2 Response.");
             }
+
+            bytes = Encoding.UTF8.GetBytes(trimmed);
             message!.Hl7Message = Convert.ToBase64String(bytes);
-            Logger.LogInformation(this.logger, "Trimmed any extraneous characters from end of HL7v2 Response.");
+
             return message;
         }
 
@@ -115,7 +115,7 @@ namespace Health.PharmaNet.Delegates
                 {
                     string? result = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
                     PharmanetMessageModel? responseMessage = JsonSerializer.Deserialize<PharmanetMessageModel>(result);
-                    
+
                     responseMessage = TrimBadCharactersInMessage(responseMessage!); // Workaround stray chars from Delegate
                     requestResult.Payload = responseMessage;
                     Logger.LogDebug(this.logger, $"PharmanetDelegate Proxy Response: {responseMessage}");
