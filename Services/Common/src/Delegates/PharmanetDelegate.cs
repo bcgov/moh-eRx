@@ -50,8 +50,10 @@ namespace Health.PharmaNet.Delegates
 
             for (int i=(bytes.Length-1); i>=0; i--)
             {
+                Logger.LogDebug(this.logger, $"Checking bytes[{i}] = {bytes[i]}");
                 if (bytes[i] == 0x0d || bytes[i] == 0x0a)  // trim back to last 'nl' or 'cr' character
                 {
+                    Logger.LogDebug(this.logger, $"Trimming completed at {i}");
                     break;
                 }
                 Logger.LogDebug(this.logger, $"Trimmed out of band byte from HL7v2: '{bytes[i]}'");
