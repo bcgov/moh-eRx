@@ -19,6 +19,7 @@ namespace Health.PharmaNet.Delegates
     using System.Net.Http;
     using System.Text;
     using System.Text.Json;
+    using System.Text.RegularExpressions;
     using System.Threading.Tasks;
 
     using Health.PharmaNet.Common.Logging;
@@ -49,14 +50,8 @@ namespace Health.PharmaNet.Delegates
             string hl7v2 = Encoding.UTF8.GetString(bytes);
             int origLen = hl7v2.Length;
 
-            char[] charsToTrim = { '\x00BD', '\x00BF', '\x0EF' }; 
-            Span<char> span = charsToTrim;
-
-            foreach (char badChar in span)
-            {
-                hl7v2 = hl7v2.Replace(badChar.ToString(), String.Empty, StringComparison.Ordinal);
-            }
-
+            hl7v2 = Regex.Replace(hl7v2, "[\xBD\xBF\xEF]", String.Empty); 
+  
             if (hl7v2.Length != origLen) 
             {
                 Logger.LogInformation(this.logger, "Trimmed unusual extended characters from HL7v2 Response.");
