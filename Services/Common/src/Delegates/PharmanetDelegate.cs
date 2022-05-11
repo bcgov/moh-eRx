@@ -50,15 +50,18 @@ namespace Health.PharmaNet.Delegates
             int origLen = hl7v2.Length;
 
             char[] charsToTrim = { '\xBD', '\xBF', '\xEF'}; 
+            Span<char> span = charsToTrim;
+            foreach (char badChar in span)
+            {
+                hl7v2 = hl7v2.Replace(badChar.ToString(), String.Empty, StringComparison.Ordinal);
+            }
 
-            string trimmed = hl7v2.TrimEnd(charsToTrim);
-
-            if (hl7v2.Length != trimmed.Length) 
+            if (hl7v2.Length != origLen) 
             {
                 Logger.LogInformation(this.logger, "Trimmed unusual extended characters from HL7v2 Response.");
             }
 
-            bytes = Encoding.UTF8.GetBytes(trimmed);
+            bytes = Encoding.UTF8.GetBytes(hl7v2);
             message!.Hl7Message = Convert.ToBase64String(bytes);
 
             return message;
