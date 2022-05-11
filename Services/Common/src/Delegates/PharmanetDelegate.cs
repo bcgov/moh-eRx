@@ -50,7 +50,8 @@ namespace Health.PharmaNet.Delegates
             string b64 = message!.Hl7Message;
             byte[] bytes = Convert.FromBase64String(b64);
             string str = Encoding.UTF8.GetString(bytes);
-            int idx = str.LastIndexOf('\x0a');   // New line character, as used by Pharmanet, instead of Carriage Return as per HL7v2 spec
+            Logger.LogDebug(this.logger, $"Scanning '{str}'");
+            int idx = str.LastIndexOf('\n');   // New line character, as used by Pharmanet, instead of Carriage Return as per HL7v2 spec
             if (idx != -1)
             {
                 string trimmed = str.Substring(0, idx+1);
@@ -60,6 +61,9 @@ namespace Health.PharmaNet.Delegates
                 message.Hl7Message = b64;
                 Logger.LogInformation(this.logger, "Trimmed extraneous characters from end of HL7v2 Response.");
 
+            }
+            else {
+                Logger.LogDebug(this.logger, "No newline characters in message!");
             }
             return message;
         }
