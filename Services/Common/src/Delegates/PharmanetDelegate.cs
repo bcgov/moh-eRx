@@ -45,12 +45,12 @@ namespace Health.PharmaNet.Delegates
         // <returns>The resulting corrected base64 encoded message</returns>
         private PharmanetMessageModel TrimBadCharactersInMessage(PharmanetMessageModel? message)
         {
-            Logger.LogDebug(logger, "Checking if need to trim extraneous characters from end of HL7v2 Response...");
+            Logger.LogDebug(this.logger, "Checking if need to trim extraneous characters from end of HL7v2 Response...");
 
             string b64 = message!.Hl7Message;
             byte[] bytes = Convert.FromBase64String(b64);
             string str = Encoding.UTF8.GetString(bytes);
-            int idx = str.LastIndexOf('\r');
+            int idx = str.LastIndexOf('\n');   // New line character, as used by Pharmanet, instead of Carriage Return as per HL7v2 spec
             int hl7v2MessageLength = idx+1;
             if (str.Length > hl7v2MessageLength)
             {
@@ -58,7 +58,7 @@ namespace Health.PharmaNet.Delegates
                 bytes = Encoding.UTF8.GetBytes(trimmed);
                 b64 = Convert.ToBase64String(bytes);
                 message.Hl7Message = b64;
-                Logger.LogInformation(logger, "Trimmed extraneous characters from end of HL7v2 Response.");
+                Logger.LogInformation(this.logger, "Trimmed extraneous characters from end of HL7v2 Response.");
 
             }
             return message;
