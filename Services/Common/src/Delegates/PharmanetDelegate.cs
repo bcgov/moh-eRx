@@ -51,7 +51,7 @@ namespace Health.PharmaNet.Delegates
 
             char[] charsToTrim = { '\xBD', '\xBF', '\xEF'}; 
 
-            string trimmed = hl7v2.TrimStart(charsToTrim);
+            string trimmed = hl7v2.TrimEnd(charsToTrim);
 
             if (hl7v2.Length != trimmed.Length) 
             {
