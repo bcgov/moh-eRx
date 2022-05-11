@@ -50,11 +50,11 @@ namespace Health.PharmaNet.Delegates
             string b64 = message!.Hl7Message;
             byte[] bytes = Convert.FromBase64String(b64);
             string str = Encoding.UTF8.GetString(bytes);
-            int idx = str.LastIndexOf('\n');   // New line character, as used by Pharmanet, instead of Carriage Return as per HL7v2 spec
-            int hl7v2MessageLength = idx+1;
-            if (str.Length > hl7v2MessageLength)
+            int idx = str.LastIndexOf('\x0a');   // New line character, as used by Pharmanet, instead of Carriage Return as per HL7v2 spec
+            if (idx != -1)
             {
-                string trimmed = str.Substring(0, hl7v2MessageLength);
+                string trimmed = str.Substring(0, idx+1);
+                Logger.LogDebug(this.logger, $"Trimmed HL7v2 Message: {trimmed}");
                 bytes = Encoding.UTF8.GetBytes(trimmed);
                 b64 = Convert.ToBase64String(bytes);
                 message.Hl7Message = b64;
