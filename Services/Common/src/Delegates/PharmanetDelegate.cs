@@ -48,7 +48,7 @@ namespace Health.PharmaNet.Delegates
             Logger.LogDebug(this.logger, "Checking if need to trim extraneous characters from end of HL7v2 Response...");
             byte[] bytes = Convert.FromBase64String(message!.Hl7Message);
 
-            for (int i=bytes.Length; i>=0; i--)
+            for (int i=(bytes.Length-1); i>=0; i--)
             {
                 if (bytes[i] == 0x0d || bytes[i] == 0x0a)  // trim back to last 'nl' or 'cr' character
                 {
