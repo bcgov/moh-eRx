@@ -46,25 +46,19 @@ namespace Health.PharmaNet.Delegates
         private PharmanetMessageModel TrimBadCharactersInMessage(PharmanetMessageModel? message)
         {
             Logger.LogDebug(this.logger, "Checking if need to trim extraneous characters from end of HL7v2 Response...");
+            byte[] bytes = Convert.FromBase64String(message!.Hl7Message);
 
-            string b64 = message!.Hl7Message;
-            byte[] bytes = Convert.FromBase64String(b64);
-            string str = Encoding.UTF8.GetString(bytes);
-            Logger.LogDebug(this.logger, $"Scanning '{str}'");
-            int idx = str.LastIndexOf('\n');   // New line character, as used by Pharmanet, instead of Carriage Return as per HL7v2 spec
-            if (idx != -1)
+            for (int i=bytes.Length; i>=0; i--)
             {
-                string trimmed = str.Substring(0, idx+1);
-                Logger.LogDebug(this.logger, $"Trimmed HL7v2 Message: {trimmed}");
-                bytes = Encoding.UTF8.GetBytes(trimmed);
-                b64 = Convert.ToBase64String(bytes);
-                message.Hl7Message = b64;
-                Logger.LogInformation(this.logger, "Trimmed extraneous characters from end of HL7v2 Response.");
-
+                if (bytes[i] == 0x0d || bytes[i] == 0x0a)  // trim back to last 'nl' or 'cr' character
+                {
+                    break;
+                }
+                Logger.LogDebug(this.logger, $"Trimmed out of band byte from HL7v2: '{bytes[i]}'");
+                bytes[i] = 0x00; // null out the character to terminate string length.
             }
-            else {
-                Logger.LogDebug(this.logger, "No newline characters in message!");
-            }
+            message!.Hl7Message = Convert.ToBase64String(bytes);
+            Logger.LogInformation(this.logger, "Trimmed any extraneous characters from end of HL7v2 Response.");
             return message;
         }
 
