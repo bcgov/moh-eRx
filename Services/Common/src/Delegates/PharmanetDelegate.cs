@@ -49,8 +49,9 @@ namespace Health.PharmaNet.Delegates
             string hl7v2 = Encoding.UTF8.GetString(bytes);
             int origLen = hl7v2.Length;
 
-            char[] charsToTrim = { '\xBD', '\xBF', '\xEF'}; 
+            char[] charsToTrim = { '\x00BD', '\x00BF', '\x0EF' }; 
             Span<char> span = charsToTrim;
+
             foreach (char badChar in span)
             {
                 hl7v2 = hl7v2.Replace(badChar.ToString(), String.Empty, StringComparison.Ordinal);
