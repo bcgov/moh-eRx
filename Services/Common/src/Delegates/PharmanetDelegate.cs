@@ -51,7 +51,8 @@ namespace Health.PharmaNet.Delegates
             int origLen = hl7v2.Length;
             string[] badChars = new string[] { "\x00BD", "\x00BF", "\x00EF"};
 
-            Logger.LogDebug(this.logger, hl7v2);
+            Logger.LogDebug(this.logger, $"RESPONSE B64='{hl7base64Message}'");
+            Logger.LogDebug(this.logger, $"RESPONSE HL7v2='{hl7v2}'");
 
             foreach (string badCharStr in badChars)
             {
