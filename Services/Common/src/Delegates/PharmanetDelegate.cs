@@ -47,30 +47,17 @@ namespace Health.PharmaNet.Delegates
         private string TrimBadCharactersInMessage(string hl7base64Message = @"")
         {
             byte[] bytes = Convert.FromBase64String(hl7base64Message);
-            string hl7v2 = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
-            int origLen = hl7v2.Length;
-            string[] badChars = new string[] { "\x00BD", "\x00BF", "\x00EF"};
+            string hl7v2 = Encoding.UTF8.GetString(bytes);
 
             Logger.LogDebug(this.logger, $"RESPONSE B64='{hl7base64Message}'");
             Logger.LogDebug(this.logger, $"RESPONSE HL7v2='{hl7v2}'");
-
-            foreach (string badCharStr in badChars)
-            {
-                hl7v2 = hl7v2.Replace(badCharStr, String.Empty, StringComparison.OrdinalIgnoreCase);
-            }
-  
-            if (hl7v2.Length != origLen) 
-            {
-                int trimmed = origLen - hl7v2.Length;
-                Logger.LogInformation(this.logger, $"Trimmed {trimmed} extended characters from HL7v2 Response.");
-            }
-            else 
-            {
-                Logger.LogDebug(this.logger, "No characters trimmmed from HL7v2 Response.");
-            }
+            Logger.LogDebug(this.logger, $"message Len={hl7v2.Length}");
 
             bytes = Encoding.UTF8.GetBytes(hl7v2, 0, hl7v2.Length);
-            string b64ResultStr = Convert.ToBase64String(bytes);
+            Logger.LogDebug(this.logger, $"bytes Len={bytes.Length}");
+
+            string b64ResultStr = Convert.ToBase64String(bytes, 0, hl7v2.Length);
+            Logger.LogDebug(this.logger, $"UPDATED RESPONSE B64='{hl7base64Message}'");
 
             return b64ResultStr;
         }
