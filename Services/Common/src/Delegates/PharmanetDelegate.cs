@@ -53,10 +53,10 @@ namespace Health.PharmaNet.Delegates
             Logger.LogDebug(this.logger, $"RESPONSE HL7v2='{hl7v2}'");
             Logger.LogDebug(this.logger, $"message Len={hl7v2.Length}");
 
-            bytes = Encoding.UTF8.GetBytes(hl7v2, 0, hl7v2.Length);
+            bytes = Encoding.ASCII.GetBytes(hl7v2);
+            string b64ResultStr = Convert.ToBase64String(bytes);
+            
             Logger.LogDebug(this.logger, $"bytes Len={bytes.Length}");
-
-            string b64ResultStr = Convert.ToBase64String(bytes, 0, hl7v2.Length);
             Logger.LogDebug(this.logger, $"UPDATED RESPONSE B64='{hl7base64Message}'");
 
             return b64ResultStr;
