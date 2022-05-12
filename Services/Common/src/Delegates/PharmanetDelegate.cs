@@ -49,7 +49,7 @@ namespace Health.PharmaNet.Delegates
             byte[] bytes = Convert.FromBase64String(hl7base64Message);
             string hl7v2 = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
             int origLen = hl7v2.Length;
-            string[] badChars = { "\x00BD", "\x00BF", "\x00EF"};
+            string[] badChars = new string[] { "\x00BD", "\x00BF", "\x00EF"};
 
             Logger.LogDebug(this.logger, hl7v2);
 
