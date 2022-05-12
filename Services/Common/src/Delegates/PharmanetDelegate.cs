@@ -47,9 +47,11 @@ namespace Health.PharmaNet.Delegates
         private string TrimBadCharactersInMessage(string hl7base64Message = @"")
         {
             byte[] bytes = Convert.FromBase64String(hl7base64Message);
-            string hl7v2 = Encoding.UTF8.GetString(bytes);
+            string hl7v2 = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
             int origLen = hl7v2.Length;
             string[] badChars = { "\x00BD", "\x00BF", "\x00EF"};
+
+            Logger.LogDebug(this.logger, hl7v2);
 
             foreach (string badCharStr in badChars)
             {
@@ -66,7 +68,7 @@ namespace Health.PharmaNet.Delegates
                 Logger.LogDebug(this.logger, "No characters trimmmed from HL7v2 Response.");
             }
 
-            bytes = Encoding.UTF8.GetBytes(hl7v2);
+            bytes = Encoding.UTF8.GetBytes(hl7v2, 0, hl7v2.Length);
             string b64ResultStr = Convert.ToBase64String(bytes);
 
             return b64ResultStr;
