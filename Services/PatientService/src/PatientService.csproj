@@ -3,10 +3,13 @@
   <PropertyGroup>
     <RootNamespace>Health.PharmaNet.PatientService</RootNamespace>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DocumentationFile>bin\Debug\net5.0\PatientService.xml</DocumentationFile>
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(RunConfiguration)' == 'MedicationRequestService' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DocumentationFile>bin\Debug\net6.0\PatientService.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'PatientService' " />
   <ItemGroup>
     <Content Include=".vscode\launch.json" />
   </ItemGroup>

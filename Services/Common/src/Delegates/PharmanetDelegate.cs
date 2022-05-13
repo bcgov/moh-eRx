@@ -17,11 +17,12 @@ namespace Health.PharmaNet.Delegates
 {
     using System;
     using System.Net.Http;
-    using System.Text.Encodings.Web;
+    using System.Text;
     using System.Text.Json;
-    using System.Text.Unicode;
+    using System.Text.RegularExpressions;
     using System.Threading.Tasks;
 
+    using Health.PharmaNet.Common.Logging;
     using Health.PharmaNet.Models;
 
     using Microsoft.Extensions.Configuration;
@@ -36,6 +37,39 @@ namespace Health.PharmaNet.Delegates
         private readonly ILogger logger;
         private readonly HttpClient httpClient;
         private readonly PharmanetDelegateConfig pharmanetDelegateConfig;
+
+
+        // <summary>
+        //  Trims Bad (out of band) characters from the UTF-8 HL7v2 Message.
+        // </summary>
+        // <param name="hl7base64Message">The base64 encoded HL7v2 Message</param>
+        // <returns>The resulting corrected base64 encoded message</returns>
+        private string TrimBadCharactersInMessage(string hl7base64Message = @"")
+        {
+            byte[] bytes = Convert.FromBase64String(hl7base64Message);
+            byte[] newBytes = new byte[bytes.Length];
+
+            Logger.LogDebug(this.logger, $"RESPONSE B64='{hl7base64Message}'");
+
+            Span<byte> span = bytes;
+            int i = 0;
+            foreach(byte aByte in span)
+            {
+                newBytes[i] = 0x00;
+                if ((aByte > 0x00) && (aByte <= 0xff))  // only bytes in UTF8 range
+                {
+                    newBytes[i] = aByte;
+                    i++;
+                }
+                else {
+                    Logger.LogInformation(this.logger, $"WORKAROUND: Removed {aByte:X4} character from HL7v2 response.");
+                }
+            }
+            string b64ResultStr = Convert.ToBase64String(newBytes, 0, i);
+            Logger.LogDebug(this.logger, $"UPDATED RESPONSE B64='{b64ResultStr}'");
+
+            return b64ResultStr;
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PharmanetDelegate"/> class.
@@ -71,7 +105,7 @@ namespace Health.PharmaNet.Delegates
             {
                 Uri delegateUri = new Uri(this.pharmanetDelegateConfig.Endpoint);
 
-                this.logger.LogDebug($"PharmanetDelegate Proxy POST {delegateUri}. Payload: {jsonOutput}");
+                Logger.LogDebug(this.logger, $"PharmanetDelegate Proxy POST {delegateUri}. Payload: {jsonOutput}");
 
                 HttpResponseMessage response = await this.httpClient.PostAsync(delegateUri, content).ConfigureAwait(true);
                 requestResult.IsSuccessStatusCode = response.IsSuccessStatusCode;
@@ -80,7 +114,7 @@ namespace Health.PharmaNet.Delegates
                 if (!requestResult.IsSuccessStatusCode)
                 {
                     string msg = "PharmanetDelegate Proxy call returned with StatusCode := " + response.StatusCode;
-                    this.logger.LogError(msg);
+                    Logger.LogDebug(this.logger, msg);
                     requestResult.ErrorMessage = msg;
                     return requestResult;
                 }
@@ -88,15 +122,17 @@ namespace Health.PharmaNet.Delegates
                 {
                     string? result = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
                     PharmanetMessageModel? responseMessage = JsonSerializer.Deserialize<PharmanetMessageModel>(result);
+
+                    responseMessage!.Hl7Message = TrimBadCharactersInMessage(responseMessage!.Hl7Message); // Workaround stray chars from Delegate
                     requestResult.Payload = responseMessage;
-                    this.logger.LogDebug($"PharmanetDelegate Proxy Response: {responseMessage}");
+                    Logger.LogDebug(this.logger, $"PharmanetDelegate Proxy Response: {responseMessage}");
                 }
             }
 #pragma warning disable CA1031 // Do not catch general exception types
             catch (Exception ex)
 #pragma warning restore CA1031 // Do not catch general exception types
             {
-                this.logger.LogError($"PharmanetDelegate Exception := {ex.Message}.");
+                Logger.LogException(this.logger, $"PharmanetDelegate Exception Occurred.", ex);
 
                 requestResult.IsSuccessStatusCode = false;
                 requestResult.ErrorMessage = ex.Message;

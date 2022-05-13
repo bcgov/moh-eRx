@@ -3,10 +3,13 @@
   <PropertyGroup>
     <RootNamespace>Health.PharmaNet.LocationService</RootNamespace>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DocumentationFile>bin\Debug\net5.0\LocationService.xml</DocumentationFile>
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(RunConfiguration)' == 'MedicationRequestService' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DocumentationFile>bin\Debug\net6.0\LocationService.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'LocationService' " />
   <ItemGroup>
     <Content Include=".vscode\launch.json" />
   </ItemGroup>

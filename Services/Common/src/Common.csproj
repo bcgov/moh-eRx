@@ -1,14 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <PropertyGroup>
     <RootNamespace>Health.PharmaNet.Common</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DocumentationFile>bin\Debug\net5.0\Common.xml</DocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(MSBuildThisFileName).xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Macross.Json.Extensions" Version="1.5.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.9" />
     <PackageReference Include="Microsoft.AspNetCore.HttpOverrides" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="4.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
@@ -38,26 +42,7 @@
     <Content Include="Swagger\ConfigureSwaggerUiOptions.cs" />
     <Content Include="Swagger\ConfigureSwaggerGenOptions.cs" />
     <Content Include="obj\project.assets.json" />
-    <Content Include="obj\Debug\netcoreapp3.1\Common.assets.cache" />
-    <Content Include="obj\Debug\netcoreapp3.1\Common.csproj.FileListAbsolute.txt" />
-    <Content Include="obj\Debug\netcoreapp3.1\Common.AssemblyInfoInputs.cache" />
-    <Content Include="obj\Debug\netcoreapp3.1\.NETCoreApp,Version=v3.1.AssemblyAttributes.cs" />
-    <Content Include="obj\Debug\netcoreapp3.1\Common.csproj.CoreCompileInputs.cache" />
-    <Content Include="obj\Debug\netcoreapp3.1\Common.pdb" />
     <Content Include="Http\HttpRequestExtension.cs" />
-    <Content Include="obj\Debug\netcoreapp3.1\Common.dll" />
-    <Content Include="obj\Debug\netcoreapp3.1\Common.csprojAssemblyReference.cache" />
-    <Content Include="obj\Debug\netcoreapp3.1\Common.AssemblyInfo.cs" />
-    <Content Include="obj\Common.csproj.nuget.dgspec.json" />
-    <Content Include="obj\project.nuget.cache" />
-    <Content Include="obj\Common.csproj.nuget.g.props" />
-    <Content Include="obj\Common.csproj.nuget.g.targets" />
-    <Content Include="obj\netcoreapp3.1\Common.assets.cache" />
-    <Content Include="obj\netcoreapp3.1\Common.csprojAssemblyReference.cache" />
-    <Content Include="bin\Debug\netcoreapp3.1\Common.deps.json" />
-    <Content Include="bin\Debug\netcoreapp3.1\Common.xml" />
-    <Content Include="bin\Debug\netcoreapp3.1\Common.pdb" />
-    <Content Include="bin\Debug\netcoreapp3.1\Common.dll" />
   </ItemGroup>
  <ItemGroup>
     <ProjectReference Include="..\..\HL7-dotnetcore\src\HL7-dotnetcore.csproj" />

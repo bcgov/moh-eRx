@@ -22,6 +22,7 @@ namespace Health.PharmaNet.Controllers
 
     using Health.PharmaNet.Authorization.Policy;
     using Health.PharmaNet.Common.Http;
+    using Health.PharmaNet.Common.Logging;
     using Health.PharmaNet.Models;
     using Health.PharmaNet.Parsers;
     using Health.PharmaNet.Services;
@@ -30,7 +31,6 @@ namespace Health.PharmaNet.Controllers
     using Hl7.Fhir.Model;
     using Hl7.Fhir.Serialization;
 
-    using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
@@ -126,6 +126,7 @@ namespace Health.PharmaNet.Controllers
 #pragma warning restore CA1031 // Do not catch general exception types
             {
                 // Return Bad Message Http Error since the HL7 payload could not be parsed.
+                Logger.LogException(this.logger, "PharmanetRequest() Bad Request", ex);
                 return this.StatusCode((int)HttpStatusCode.BadRequest, ex.Message);
             }
 
@@ -141,7 +142,7 @@ namespace Health.PharmaNet.Controllers
             RequestResult<DocumentReference> response = await this.service.SubmitRequest(fhirRequest).ConfigureAwait(true);
             if (response.IsSuccessStatusCode == false)
             {
-                this.logger.LogError($"An Error occurred while invoking Pharmanet endpoint: {response.ErrorMessage}");
+                Logger.LogError(this.logger, $"An Error occurred while invoking Pharmanet endpoint: {response.ErrorMessage}");
                 this.StatusCode((int)response.StatusCode);
                 return new JsonResult(response)
                 {
@@ -157,7 +158,7 @@ namespace Health.PharmaNet.Controllers
             return new ContentResult()
             {
                 Content = serializer.SerializeToString(docRef),
-                ContentType = "application/fhir+json",
+                ContentType = "application/fhir+json; charset=utf-8",
             };
         }
 

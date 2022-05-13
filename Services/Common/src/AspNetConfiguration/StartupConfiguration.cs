@@ -21,13 +21,12 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
     using System.Net;
     using System.Net.Http;
     using System.Reflection;
-    using System.Text.Encodings.Web;
     using System.Text.Json;
-    using System.Text.Unicode;
     using System.Threading.Tasks;
 
     using Health.PharmaNet.Common.Authorization;
     using Health.PharmaNet.Common.Authorization.Policy;
+    using Health.PharmaNet.Common.Logging;
     using Health.PharmaNet.Common.Swagger;
 
     using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -36,7 +35,6 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.HttpOverrides;
-    using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.ResponseCompression;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -57,6 +55,8 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
         private readonly IWebHostEnvironment environment;
         private readonly IConfiguration configuration;
 
+        private readonly ILogger<StartupConfiguration> logger;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="StartupConfiguration"/> class.
         /// </summary>
@@ -64,15 +64,16 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
         /// <param name="env">The environment variables provider.</param>
         public StartupConfiguration(IConfiguration config, IWebHostEnvironment env)
         {
+            using ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.SetMinimumLevel(LogLevel.Debug);
+                builder.AddConsole();
+                builder.AddEventSourceLogger();
+            });
+            this.logger = loggerFactory.CreateLogger<StartupConfiguration>();
             this.environment = env;
             this.configuration = config;
-            this.Logger = this.GetStartupLogger();
         }
-
-        /// <summary>
-        /// Gets the Startup Logger.
-        /// </summary>
-        public ILogger Logger { get; private set; }
 
         /// <summary>
         /// Configures the http services.
@@ -80,7 +81,7 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
         /// <param name="services">The service collection provider.</param>
         public void ConfigureHttpServices(IServiceCollection services)
         {
-            this.Logger.LogDebug("Configure Http Services...");
+            this.logger.LogDebug("Configure Http Services...");
 
             services.AddControllers();
 
@@ -105,11 +106,10 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
 
             services
                 .AddRazorPages()
-                .SetCompatibilityVersion(CompatibilityVersion.Latest)
                 .AddJsonOptions(options =>
                 {
                     options.JsonSerializerOptions.WriteIndented = true;
-                    options.JsonSerializerOptions.IgnoreNullValues = true;
+                    options.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
                 });
         }
 
@@ -120,7 +120,7 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
         public void ConfigureAuthServicesForJwtBearer(IServiceCollection services)
         {
             bool debugEnabled = this.environment.IsDevelopment() || this.configuration.GetValue<bool>("EnableDebug", true);
-            this.Logger.LogDebug($"Debug configuration is {debugEnabled}");
+            Logger.LogDebug(this.logger, $"Debug configuration is {debugEnabled}");
 
             // Displays sensitive data from the jwt if the environment is development only
             IdentityModelEventSource.ShowPII = debugEnabled;
@@ -196,10 +196,10 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
         {
             IConfigurationSection section = this.configuration.GetSection("ForwardProxies");
             bool enabled = section.GetValue<bool>("Enabled");
-            this.Logger.LogInformation($"Forward Proxies enabled: {enabled}");
+            Logger.LogDebug(this.logger, $"Forward Proxies enabled: {enabled}");
             if (enabled)
             {
-                this.Logger.LogDebug("Configuring Forward Headers");
+                Logger.LogDebug(this.logger, "Configuring Forward Headers");
                 IPAddress[] proxyIPs = section.GetSection("KnownProxies").Get<IPAddress[]>() ?? Array.Empty<IPAddress>();
                 services.Configure<ForwardedHeadersOptions>(options =>
                 {
@@ -222,9 +222,8 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
         /// <param name="app">The application builder provider.</param>
         public void UseAuth(IApplicationBuilder app)
         {
-            this.Logger.LogDebug("Use Auth...");
-
             // Enable jwt authentication
+            Logger.LogDebug(this.logger, "UseAuth...");
             app.UseAuthentication();
             app.UseAuthorization();
         }
@@ -237,14 +236,14 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
         {
             IConfigurationSection section = this.configuration.GetSection("ForwardProxies");
             bool enabled = section.GetValue<bool>("Enabled");
-            this.Logger.LogInformation($"Forward Proxies enabled: {enabled}");
+            Logger.LogInformation(this.logger, $"Forward Proxies enabled: {enabled}");
             if (enabled)
             {
-                this.Logger.LogDebug("Using Forward Headers");
+                Logger.LogDebug(this.logger, "Using Forward Headers");
                 string basePath = section.GetValue<string>("BasePath");
                 if (!string.IsNullOrEmpty(basePath))
                 {
-                    this.Logger.LogInformation($"Forward BasePath is set to {basePath}, setting PathBase for app");
+                    Logger.LogInformation(this.logger, $"Forward BasePath is set to {basePath}, setting PathBase for app");
                     app.UsePathBase(basePath);
                     app.Use(async (context, next) =>
                     {
@@ -254,7 +253,7 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
                     app.UsePathBase(basePath);
                 }
 
-                this.Logger.LogInformation("Enabling Use Forward Header");
+                Logger.LogInformation(this.logger, "Enabling Use Forward Header");
                 app.UseForwardedHeaders();
             }
         }
@@ -327,7 +326,7 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
         /// <param name="app">The application builder provider.</param>
         public void UseSwagger(IApplicationBuilder app)
         {
-            this.Logger.LogDebug("Use Swagger...");
+            Logger.LogDebug(this.logger, "UseSwagger...");
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
             app.UseSwaggerDocuments();
@@ -339,7 +338,7 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
         /// <param name="app">The application builder provider.</param>
         public void UseRest(IApplicationBuilder app)
         {
-            this.Logger.LogDebug("Use Rest...");
+            Logger.LogDebug(this.logger, "UseRest...");
             app.UseEndpoints(routes =>
             {
                 routes.MapControllers();
@@ -364,7 +363,7 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
         /// <returns>An async task.</returns>
         private Task OnAuthenticationFailed(AuthenticationFailedContext context)
         {
-            this.Logger.LogDebug("OnAuthenticationFailed...");
+            Logger.LogDebug(this.logger, "OnAuthenticationFailed...");
             context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
             context.Response.ContentType = "application/json";
             return context.Response.WriteAsync(JsonSerializer.Serialize(new
