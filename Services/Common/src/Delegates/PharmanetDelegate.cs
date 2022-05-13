@@ -44,22 +44,34 @@ namespace Health.PharmaNet.Delegates
         // </summary>
         // <param name="b64Message">The base64 encoded HL7v2 Message</param>
         // <returns>The resulting corrected base64 encoded message</returns>
-        private string TrimBadCharactersInMessage(string hl7base64Message = @"")
+        private string TrimBadCharactersInMessage(byte b, string hl7base64Message = @"")
         {
             byte[] bytes = Convert.FromBase64String(hl7base64Message);
-            string hl7v2 = Encoding.ASCII.GetString(bytes);
 
             Logger.LogDebug(this.logger, $"RESPONSE B64='{hl7base64Message}'");
+
+            byte[] newBytes = new byte[bytes.Length];
+
+            Span<byte> span = bytes;
+            int i = 0;
+            foreach(byte aByte in span)
+            {
+                newBytes[i] = 0x00;
+                if ((aByte > 0x00) && (aByte <= 0x7f))  // ascii range
+                {
+                    newBytes[i] = aByte;
+                    i++;
+                }
+            }
+            string b64ResultStr = Convert.ToBase64String(newBytes, 0, i+1);
+
+            string hl7v2 = Encoding.ASCII.GetString(newBytes);
             Logger.LogDebug(this.logger, $"RESPONSE HL7v2='{hl7v2}'");
             Logger.LogDebug(this.logger, $"message Len={hl7v2.Length}");
 
-            bytes = Encoding.ASCII.GetBytes(hl7v2);
-            string hexStr = BitConverter.ToString(bytes);
-
-            string b64ResultStr = Convert.ToBase64String(bytes);
-            
-            Logger.LogDebug(this.logger, $"HL7v2 in HEX = {hexStr}");
-            Logger.LogDebug(this.logger, $"bytes Len={bytes.Length}");
+            Logger.LogDebug(this.logger, $"bytes Len={newBytes.Length}");
+            string hexStr = BitConverter.ToString(newBytes);
+            Logger.LogDebug(this.logger, $"trimmed in HEX = {hexStr}");
             Logger.LogDebug(this.logger, $"UPDATED RESPONSE B64='{hl7base64Message}'");
 
             return b64ResultStr;
@@ -117,7 +129,7 @@ namespace Health.PharmaNet.Delegates
                     string? result = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
                     PharmanetMessageModel? responseMessage = JsonSerializer.Deserialize<PharmanetMessageModel>(result);
 
-                    responseMessage!.Hl7Message = TrimBadCharactersInMessage(responseMessage!.Hl7Message); // Workaround stray chars from Delegate
+                    responseMessage!.Hl7Message = TrimBadCharactersInMessage(b, responseMessage!.Hl7Message); // Workaround stray chars from Delegate
                     requestResult.Payload = responseMessage;
                     Logger.LogDebug(this.logger, $"PharmanetDelegate Proxy Response: {responseMessage}");
                 }
