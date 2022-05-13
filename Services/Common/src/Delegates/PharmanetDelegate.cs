@@ -61,11 +61,9 @@ namespace Health.PharmaNet.Delegates
                     newBytes[i] = aByte;
                     i++;
                 }
-            }
-            int pruned = bytes.Length - i;
-            if (pruned > 0)
-            {
-                Logger.LogInformation(this.logger, $"WORKAROUND: Removed {pruned} out of band characters from HL7v2 response.");
+                else {
+                    Logger.LogInformation(this.logger, $"WORKAROUND: Removed {aByte} from HL7v2 response.");
+                }
             }
             string b64ResultStr = Convert.ToBase64String(newBytes, 0, i);
             Logger.LogDebug(this.logger, $"UPDATED RESPONSE B64='{b64ResultStr}'");
