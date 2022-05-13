@@ -42,7 +42,7 @@ namespace Health.PharmaNet.Delegates
         // <summary>
         //  Trims Bad (out of band) characters from the UTF-8 HL7v2 Message.
         // </summary>
-        // <param name="b64Message">The base64 encoded HL7v2 Message</param>
+        // <param name="hl7base64Message">The base64 encoded HL7v2 Message</param>
         // <returns>The resulting corrected base64 encoded message</returns>
         private string TrimBadCharactersInMessage(string hl7base64Message = @"")
         {
