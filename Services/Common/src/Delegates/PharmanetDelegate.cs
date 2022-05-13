@@ -47,15 +47,18 @@ namespace Health.PharmaNet.Delegates
         private string TrimBadCharactersInMessage(string hl7base64Message = @"")
         {
             byte[] bytes = Convert.FromBase64String(hl7base64Message);
-            string hl7v2 = Encoding.UTF8.GetString(bytes);
+            string hl7v2 = Encoding.ASCII.GetString(bytes);
 
             Logger.LogDebug(this.logger, $"RESPONSE B64='{hl7base64Message}'");
             Logger.LogDebug(this.logger, $"RESPONSE HL7v2='{hl7v2}'");
             Logger.LogDebug(this.logger, $"message Len={hl7v2.Length}");
 
             bytes = Encoding.ASCII.GetBytes(hl7v2);
+            string hexStr = BitConverter.ToString(bytes);
+
             string b64ResultStr = Convert.ToBase64String(bytes);
             
+            Logger.LogDebug(this.logger, $"HL7v2 in HEX = {hexStr}");
             Logger.LogDebug(this.logger, $"bytes Len={bytes.Length}");
             Logger.LogDebug(this.logger, $"UPDATED RESPONSE B64='{hl7base64Message}'");
 
