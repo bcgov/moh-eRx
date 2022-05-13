@@ -47,10 +47,9 @@ namespace Health.PharmaNet.Delegates
         private string TrimBadCharactersInMessage(string hl7base64Message = @"")
         {
             byte[] bytes = Convert.FromBase64String(hl7base64Message);
+            byte[] newBytes = new byte[bytes.Length];
 
             Logger.LogDebug(this.logger, $"RESPONSE B64='{hl7base64Message}'");
-
-            byte[] newBytes = new byte[bytes.Length];
 
             Span<byte> span = bytes;
             int i = 0;
@@ -63,10 +62,13 @@ namespace Health.PharmaNet.Delegates
                     i++;
                 }
             }
-            string b64ResultStr = Convert.ToBase64String(newBytes, 0, i);
+            int lenDiff = bytes.Length - newBytes.Length;
 
-            string hl7v2 = Encoding.UTF8.GetString(newBytes);
-            Logger.LogDebug(this.logger, $"RESPONSE HL7v2='{hl7v2}'");
+            if (lenDiff > 0)
+            {
+                Logger.LogInformation(this.logger, $"WORKAROUND: Removed {lenDiff} out of band characters from HL7v2 response.");
+            }
+            string b64ResultStr = Convert.ToBase64String(newBytes, 0, i);
             Logger.LogDebug(this.logger, $"UPDATED RESPONSE B64='{b64ResultStr}'");
 
             return b64ResultStr;
