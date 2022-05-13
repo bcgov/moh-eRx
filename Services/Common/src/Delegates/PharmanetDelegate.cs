@@ -62,7 +62,7 @@ namespace Health.PharmaNet.Delegates
                     i++;
                 }
                 else {
-                    Logger.LogInformation(this.logger, $"WORKAROUND: Removed {aByte} from HL7v2 response.");
+                    Logger.LogInformation(this.logger, $"WORKAROUND: Removed {aByte:X4} character from HL7v2 response.");
                 }
             }
             string b64ResultStr = Convert.ToBase64String(newBytes, 0, i);
