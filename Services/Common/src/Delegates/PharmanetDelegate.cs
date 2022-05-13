@@ -57,7 +57,7 @@ namespace Health.PharmaNet.Delegates
             foreach(byte aByte in span)
             {
                 newBytes[i] = 0x00;
-                if ((aByte > 0x00) && (aByte <= 0x7f))  // only ascii range
+                if ((aByte > 0x00) && (aByte <= 0xff))  // only UTF8 range
                 {
                     newBytes[i] = aByte;
                     i++;
