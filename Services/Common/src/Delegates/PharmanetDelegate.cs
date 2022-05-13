@@ -44,7 +44,7 @@ namespace Health.PharmaNet.Delegates
         // </summary>
         // <param name="b64Message">The base64 encoded HL7v2 Message</param>
         // <returns>The resulting corrected base64 encoded message</returns>
-        private string TrimBadCharactersInMessage(byte b, string hl7base64Message = @"")
+        private string TrimBadCharactersInMessage(string hl7base64Message = @"")
         {
             byte[] bytes = Convert.FromBase64String(hl7base64Message);
 
@@ -129,7 +129,7 @@ namespace Health.PharmaNet.Delegates
                     string? result = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
                     PharmanetMessageModel? responseMessage = JsonSerializer.Deserialize<PharmanetMessageModel>(result);
 
-                    responseMessage!.Hl7Message = TrimBadCharactersInMessage(b, responseMessage!.Hl7Message); // Workaround stray chars from Delegate
+                    responseMessage!.Hl7Message = TrimBadCharactersInMessage(responseMessage!.Hl7Message); // Workaround stray chars from Delegate
                     requestResult.Payload = responseMessage;
                     Logger.LogDebug(this.logger, $"PharmanetDelegate Proxy Response: {responseMessage}");
                 }
