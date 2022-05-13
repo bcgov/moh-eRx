@@ -62,11 +62,10 @@ namespace Health.PharmaNet.Delegates
                     i++;
                 }
             }
-            int lenDiff = bytes.Length - newBytes.Length;
-
-            if (lenDiff > 0)
+            int pruned = bytes.Length - i;
+            if (pruned > 0)
             {
-                Logger.LogInformation(this.logger, $"WORKAROUND: Removed {lenDiff} out of band characters from HL7v2 response.");
+                Logger.LogInformation(this.logger, $"WORKAROUND: Removed {pruned} out of band characters from HL7v2 response.");
             }
             string b64ResultStr = Convert.ToBase64String(newBytes, 0, i);
             Logger.LogDebug(this.logger, $"UPDATED RESPONSE B64='{b64ResultStr}'");
