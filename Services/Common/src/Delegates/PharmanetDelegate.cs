@@ -57,22 +57,17 @@ namespace Health.PharmaNet.Delegates
             foreach(byte aByte in span)
             {
                 newBytes[i] = 0x00;
-                if ((aByte > 0x00) && (aByte <= 0x7f))  // ascii range
+                if ((aByte > 0x00) && (aByte <= 0x7f))  // only ascii range
                 {
                     newBytes[i] = aByte;
                     i++;
                 }
             }
-            string b64ResultStr = Convert.ToBase64String(newBytes, 0, i+1);
+            string b64ResultStr = Convert.ToBase64String(newBytes, 0, i);
 
             string hl7v2 = Encoding.ASCII.GetString(newBytes);
             Logger.LogDebug(this.logger, $"RESPONSE HL7v2='{hl7v2}'");
-            Logger.LogDebug(this.logger, $"message Len={hl7v2.Length}");
-
-            Logger.LogDebug(this.logger, $"bytes Len={newBytes.Length}");
-            string hexStr = BitConverter.ToString(newBytes);
-            Logger.LogDebug(this.logger, $"trimmed in HEX = {hexStr}");
-            Logger.LogDebug(this.logger, $"UPDATED RESPONSE B64='{hl7base64Message}'");
+            Logger.LogDebug(this.logger, $"UPDATED RESPONSE B64='{b64ResultStr}'");
 
             return b64ResultStr;
         }
