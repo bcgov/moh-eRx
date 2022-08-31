@@ -17,6 +17,7 @@ namespace Health.PharmaNet.Authorization.Requirements.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Text.Json.Serialization;
 
     /// <summary>
@@ -24,12 +25,25 @@ namespace Health.PharmaNet.Authorization.Requirements.Models
     /// </summary>
     public class SegmentField
     {
-        /// <summary>Gets or sets the SegmentField Index.</summary>
+        /// <summary>Gets or sets the SegmentField Index. Set to -1 to match any segment.</summary>
         [JsonPropertyName("Index")]
-        public int Index { get; set; }
+        public int Index { get; set; } = -1;
 
         /// <summary>Gets or sets the SegmentField Value.</summary>
         [JsonPropertyName("Value")]
         public string Value { get; set; } = string.Empty;
+
+        /// <summary>Gets or sets whether the SegmentField Value is exact match, or startsWith.</summary>
+        public MatchType? ValueMatchType { get; set; } = MatchType.Exact;
+    }
+
+    /// <summary>Choice of match types for the value in the segment.</summary>
+    public enum MatchType { 
+        ///<summary>When an exact match in the segment is required.</summary>
+        Exact, 
+        ///<summary>When the value must be contained (found) in the segment is required.</summary>
+        Contains, 
+         ///<summary>When the segment must start with the Value is required.</summary>
+       StartsWith 
     }
 }

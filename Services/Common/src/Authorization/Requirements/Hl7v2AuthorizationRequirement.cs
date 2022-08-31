@@ -83,9 +83,56 @@ namespace Health.PharmaNet.Authorization
                     bool fieldsMatch = false;
                     bool firstField = true;
 
+                    // For all segment fields, check whether they contain the fields needed and what values the fields must 
+                    // match against, and how - choice of exact match, contains match, or starts-with match. Scan all fields
+                    // in the segment when the index for that value is set to magic number of -1; otherwise only match the value
+                    // on the specific field by index provided.
+
                     foreach (SegmentField sf in ms.SegmentFields)
                     {
-                        bool found = segment.FieldAt(sf.Index).Value.Equals(sf.Value, StringComparison.Ordinal);
+                        bool found = false;
+
+                        if (sf.Index != -1) // scan all Segment Fields for the value.
+                        {
+                            switch (sf.ValueMatchType)
+                            {
+
+                                case MatchType.Contains:
+                                    found = segment.FieldAt(sf.Index).Value.Contains(sf.Value, StringComparison.Ordinal);
+                                    break;
+                                case MatchType.StartsWith:
+                                    found = segment.FieldAt(sf.Index).Value.StartsWith(sf.Value, StringComparison.Ordinal);
+                                    break;
+                                case MatchType.Exact:
+                                default:
+                                    found = segment.FieldAt(sf.Index).Value.Equals(sf.Value, StringComparison.Ordinal);
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            foreach (Field f in segment.Fields)
+                            {
+                                if (found == true)
+                                {
+                                    break;
+                                }
+                                switch (sf.ValueMatchType)
+                                {
+
+                                    case MatchType.Contains:
+                                        found = f.Value.Contains(sf.Value, StringComparison.Ordinal);
+                                        break;
+                                    case MatchType.StartsWith:
+                                        found = f.Value.StartsWith(sf.Value, StringComparison.Ordinal);
+                                        break;
+                                    case MatchType.Exact:
+                                    default:
+                                        found = f.Value.Equals(sf.Value, StringComparison.Ordinal);
+                                        break;
+                                }
+                            }
+                        }
                         if (firstField == true)
                         {
                             fieldsMatch = found;
