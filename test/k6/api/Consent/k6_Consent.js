@@ -15,13 +15,15 @@
 //-------------------------------------------------------------------------
 
 import { sleep } from 'k6';
-import * as common from './inc/common.js';
-import * as examples from './inc/examples/Practitioner.js';
+import * as common from '../../inc/common.js';
+import * as examples from '../../inc/examples/Consent.js';
 
 export default function() {
-
-    var url = common.PractitionerServiceUrl;
-    var scopes = "system/Practitioner.read";
+    var url = common.ConsentServiceUrl;
+    var scopes = "system/Patient.read system/Consent.write system/Consent.read";
     common.authorizeClient(scopes);
-    common.submitMessage(url, examples.Practitioner[0]);
+    examples.Consent.forEach(msg => {
+        common.submitMessage(url, msg);
+        sleep(1);
+    });
 }

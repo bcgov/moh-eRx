@@ -19,8 +19,16 @@ import { check, fail, group, sleep } from 'k6';
 import { Rate, Trend } from 'k6/metrics';
 import * as uuid from './uuid.js';
 
+let virtualUsers = __ENV.ERX_VUS ? __ENV.ERX_VUS : 1;
+let nIterations = __ENV.ERX_ITERATIONS ? __ENV.ERX_ITERATIONS : 1;
+
+export let options = {
+    vus: virtualUsers,
+    iterations: nIterations
+};
+
 export let client_secret = __ENV.ERX_CLIENT_SECRET;
-export let client_id = __ENV.ERX_CLIENT;
+export let ClientId = __ENV.ERX_CLIENT ? __ENV.ERX_CLIENT : 'erx_development';
 
 export let authSuccess = new Rate('authentication_successful');
 export let errorRate = new Rate('errors');
@@ -31,7 +39,6 @@ export let environment = (__ENV.ERX_ENV) ? __ENV.ERX_ENV : 'dev'; // default to 
 
 export let TokenEndpointUrl_Dev = "https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos/protocol/openid-connect/token";
 export let TokenEndpointUrl_Test = "https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications/protocol/openid-connect/token";
-
 
 export let baseUrl = "https://pnet-" + environment + ".api.gov.bc.ca/api/v1/";
 
@@ -45,15 +52,14 @@ export let MedicationStatementServiceUrl = baseUrl + "MedicationStatement";
 export let PatientServiceUrl = baseUrl + "Patient";
 export let PractitionerServiceUrl = baseUrl + "Practitioner";
 
-export let ClientId = __ENV.ERX_CLIENT ? __ENV.ERX_CLIENT : 'erx_development';
 
 export let client =
 {
-        client_id: ClientId,
-        client_secret: __ENV.ERX_CLIENT_SECRET,
-        token: null,
-        refresh: null,
-        expires: null
+    client_id: ClientId,
+    client_secret: __ENV.ERX_CLIENT_SECRET,
+    token: null,
+    refresh: null,
+    expires: null
 };
 
 function parseJwt(jwt) {
@@ -73,8 +79,7 @@ export function authorizeClient(scopes) {
         let loginRes = authenticateClient(client, scopes);
         if (!check(loginRes, {
             'Authenticated successfully': loginRes === 200
-        })) 
-        {
+        })) {
             fail("Authentication Failed. Result is *not* 200 OK");
         }
     }
@@ -87,14 +92,13 @@ export function authenticateClient(client, scopes) {
         grant_type: "client_credentials",
         client_id: client.client_id,
         audience: "pharmanet",
-        scope: "openid audience " + scopes,
+        scope: "openid " + scopes,
         client_secret: client.client_secret
     };
 
     var tokenUrl = TokenEndpointUrl_Dev;
 
-    switch (environment)
-    {
+    switch (environment) {
         case 'dev':
             tokenUrl = TokenEndpointUrl_Dev;
             break;
@@ -119,11 +123,11 @@ export function authenticateClient(client, scopes) {
         console.log("Token: " + client.token);
     }
     else {
-        console.log("Authentication Error for client= " + client.client_id + 
-        ", client_secret='" + client.client_secret + "'" +
-        ", scope='" + client.scope + 
-        "', ResponseCode='" + res.status + 
-        "' " + res.error);
+        console.log("Authentication Error for client= " + client.client_id +
+            ", client_secret='" + client.client_secret + "'" +
+            ", scope='" + client.scope +
+            "', ResponseCode='" + res.status +
+            "' " + res.error);
         authSuccess.add(0);
         client.token = null;
     }
@@ -188,7 +192,7 @@ export function postMessage(url, payload) {
 
     var params = this.params(common.client);
 
-    var msgId = "urn:uuid:" + uuid.v4(); 
+    var msgId = "urn:uuid:" + uuid.v4();
 
     var timestamp = now.toISOString().replace("Z", "");
     var timestamp = timestamp.substr(0, 19) + "+00:00";
@@ -212,7 +216,8 @@ export function postMessage(url, payload) {
     };
 
     console.log("Payload:= " + payload);
-    console.log("[ERX_ENV= " + environment +  "] POST " + url);
+    console.log("[ERX_ENV= " + environment + "] POST " + url);
+
 
     var res = http.post(url, JSON.stringify(fhirPayload), params);
     if (res.status == 200) {
@@ -230,7 +235,7 @@ export function postMessage(url, payload) {
 }
 
 export function submitMessage(url, example) {
-    console.log("Request: " + example.name + ' [' + example.version + '] ' +  example.purpose);
+    console.log("Request: " + example.name + ' [' + example.version + '] ' + example.purpose);
     var payload = Hl7v2Encoded(example.message); // Returns Base64 encoded hl7v2 message
     return this.postMessage(url, payload);
 }

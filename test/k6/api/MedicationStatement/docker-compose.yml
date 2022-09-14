@@ -1,0 +1,13 @@
+version: '3.4'
+services:
+  k6:
+    image: grafana/k6:latest
+    command: run /api/MedicationStatement/k6_MedicationStatement.js
+    volumes:
+      - "../../api/MedicationStatement:/api/MedicationStatement"
+      - "../../inc:/inc"
+    environment: 
+      - "ERX_ENV=${ERX_ENV}"
+      - "ERX_VUS=${ERX_VUS}"
+      - "ERX_ITERATIONS=${ERX_ITERATIONS}"
+      - "ERX_CLIENT_SECRET=${ERX_CLIENT_SECRET}"

@@ -14,15 +14,18 @@
 // limitations under the License.
 //-------------------------------------------------------------------------
 
-import * as common from './inc/common.js';
+import { sleep } from 'k6';
+import * as common from '../../inc/common.js';
+import * as examples from '../../inc/examples/MedicationDispense.js';
 
-export default function() {
+export default function () {
 
-    var payload = 'TVNIfF5-XCZ8REVTS1RPUHxCQzAxNDAwNTAzfFBOUHxJUHx8RFJCOjIxNi4yMzIuMTMyLjEzN3xaUE58MTAzODQ5fFB8Mi4xDVpaWnxURFJ8fDEwMzg0OXxQMXwxMjM0NXx8fA1aQ0F8MDAwMDAxfDcwfDAwfEFSfDA3DVpDQnxCQzAwMDAwWlpafDIxMDYwM3wxMDM4NDkNWlBDfDMzNzczMHx8fHx8fE58WlBDMV5GREJeRURVQ0xPTkcNDQ';
-
-    var url = common.MedicationServiceUrl;
-    var scopes = "system/Medication.read";
+    var url = common.MedicationDispenseServiceUrl;
+    var scopes = "system/MedicationDispense.write system/MedicationDispense.read";
     common.authorizeClient(scopes);
 
-    common.submitHL7MessageBase64(url, payload);
+    examples.MedicationDispense.forEach(msg => {
+        common.submitMessage(url, msg);
+        sleep(1);
+    });
 }

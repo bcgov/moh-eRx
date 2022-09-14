@@ -65,5 +65,17 @@ export let MedicationDispense = [
             "ZCC||||||||||000nnnnnnnnnn|\r" +
             "ZCD||||58709||58709|120375||1000|100|91|nnnnnnnnnn||||NK||||||||nnnnnn\r" +
             "ZPJ|ZPJ1^^^^^^|ZPJ2^^~ZPJ2^^~ZPJ2^^|ZPJ3^^|ZPJ4^TMU01\r"
-    }
+    },
+    {
+        name: "TPI_00_REQUEST - 150146",
+        purpose: "Patient Medication Profile Update request message",
+        version: "PNet-R70",
+        message:
+            "MSH|^~\&|DESKTOP|EMR|DESKTOP|EMRMD|2014/09/09 12:22:22|userID:192.168.0.1|ZPN|150146|P|2.1||\r" +
+            "ZZZ|TPI||150146|P1|nnnnnnnnnn||||\r" +
+            "ZCA||70|00|MA|01|\r" +
+            "ZCB|LDJQQ|140910|150146\r" +
+            "ZCC||||||||||000nnnnnnnnnn|\r" +
+            "ZPB|ZPB3^120898^^^^^^^\r"
+    },
 ];
