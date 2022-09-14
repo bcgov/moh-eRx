@@ -1,0 +1,10 @@
+version: '3.4'
+services:
+  k6:
+    image: loadimpact/k6:latest
+    command: run /k6_Consent.js
+    volumes:
+      - "./src/k6_Consent.js:/k6_Consent.js"
+    environment: 
+      - "ERX_ENV=${ERX_ENV}"
+      - "ERX_CLIENT_SECRET=${ERX_CLIENT_SECRET}"
