@@ -15,8 +15,8 @@
 //-------------------------------------------------------------------------
 
 import { sleep } from 'k6';
-import * as common from './inc/common.js';
-import * as examples from './inc/examples/Patient.js';
+import * as common from '../../inc/common.js';
+import * as examples from '../../inc/examples/Patient.js';
 
 export default function() {
 

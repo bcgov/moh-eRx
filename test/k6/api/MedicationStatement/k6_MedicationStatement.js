@@ -15,16 +15,17 @@
 //-------------------------------------------------------------------------
 
 import { sleep } from 'k6';
-import * as common from './inc/common.js';
-import * as examples from './inc/examples/MedicationStatement.js';
+import * as common from '../../inc/common.js';
+import * as examples from '../../inc/examples/MedicationStatement.js';
 
 export default function() {
 
     var url = common.MedicationStatementServiceUrl;
     var scopes = "system/MedicationStatement.read";
     common.authorizeClient(scopes);
-    common.submitMessage(url, examples.MedicationStatement[1]);  // Original Request
-    sleep(1);
-    common.submitMessage(url, examples.MedicationStatement[2]); // The NEXT Example
 
+    examples.MedicationStatement.forEach(msg => {
+        common.submitMessage(url, msg);
+        sleep(1);
+    });
 }

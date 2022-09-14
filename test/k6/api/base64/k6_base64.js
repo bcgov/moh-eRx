@@ -14,13 +14,15 @@
 // limitations under the License.
 //-------------------------------------------------------------------------
 
-import { sleep } from 'k6';
-import * as common from './inc/common.js';
-import * as examples from './inc/examples/Consent.js';
+import * as common from './inc/common.js.js.js';
 
 export default function() {
-    var url = common.ConsentServiceUrl;
-    var scopes = "system/Patient.read system/Consent.write system/Consent.read";
+
+    var payload = 'TVNIfF5-XCZ8REVTS1RPUHxCQzAxNDAwNTAzfFBOUHxJUHx8RFJCOjIxNi4yMzIuMTMyLjEzN3xaUE58MTAzODQ5fFB8Mi4xDVpaWnxURFJ8fDEwMzg0OXxQMXwxMjM0NXx8fA1aQ0F8MDAwMDAxfDcwfDAwfEFSfDA3DVpDQnxCQzAwMDAwWlpafDIxMDYwM3wxMDM4NDkNWlBDfDMzNzczMHx8fHx8fE58WlBDMV5GREJeRURVQ0xPTkcNDQ';
+
+    var url = common.MedicationServiceUrl;
+    var scopes = "system/Medication.read";
     common.authorizeClient(scopes);
-    common.submitMessage(url, examples.Consent[0]);
+
+    common.submitHL7MessageBase64(url, payload);
 }
