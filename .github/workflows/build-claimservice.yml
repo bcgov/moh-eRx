@@ -1,0 +1,42 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+  push:
+    branches:
+      - "dev"
+    paths: 
+      - 'Services/ClaimService/**'
+  pull_request:
+    branches: 
+      - "dev"
+    paths: 
+      - 'Services/ClaimService/**'
+    
+  workflow_dispatch:
+env:
+  APP: ClaimService
+  SRC: $GITHUB_WORKSPACE/Services/$APP/src
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout source"
+        uses: actions/checkout@v3
+          
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v2.1.0
+        
+      - name: Build Claims Service
+        run: |
+          buildid=$(date +"%Y%m%d").$GITHUB_RUN_ID.$GITHUB_RUN_NUMBER.$GITHUB_RUN_ATTEMPT
+          echo Starting C# Build as $buildid
+          dotnet publish $SRC/$APP.csproj -o $RUNNER_TEMP -c Release
+          echo Starting Docker Build
+          docker build -f $SRC/Dockerfile $RUNNER_TEMP
+
+          
+      
