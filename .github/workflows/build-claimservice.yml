@@ -18,7 +18,7 @@ on:
   workflow_dispatch:
 env:
   APP: ClaimService
-  SRC: $GITHUB_WORKSPACE/Services/$APP/src
+  SRC: ${{ GITHUB_WORKSPACE }}/Services/${{ APP }}/src
 
 jobs:
   build:
