@@ -15,6 +15,7 @@ on:
 
 env:
   APP: ClaimService
+  SRC: ${{ github.GITHUB_WORKSPACE }}/Services/${{ env.APP }}/src
 
 jobs:
   build:
@@ -26,13 +27,13 @@ jobs:
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v2.1.0
         
-      - name: Building $APP
+      - name: Building ${{ env.APP }}
         run: |
           buildid=$(date +"%Y%m%d").$GITHUB_RUN_ID.$GITHUB_RUN_NUMBER.$GITHUB_RUN_ATTEMPT
           echo Starting C# Build as $buildid
-          dotnet publish $GITHUB_WORKSPACE/Services/$APP/src/$APP.csproj -o $RUNNER_TEMP -c Release
+          dotnet publish $SRC/$APP.csproj -o $RUNNER_TEMP -c Release
           echo Starting Docker Build
-          docker build -f $GITHUB_WORKSPACE/Services/$APP/src/Dockerfile $RUNNER_TEMP
+          docker build -f $SRC/Dockerfile $RUNNER_TEMP
 
           
       
