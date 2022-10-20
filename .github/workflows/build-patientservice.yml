@@ -1,20 +1,20 @@
-name: CI-ClaimsService
+name: CI-PatientService
 on:
   push:
     branches:
       - "dev"
     paths: 
-      - 'Services/ClaimService/**'
+      - 'Services/PatientService/**'
   pull_request:
     branches: 
       - "dev"
     paths: 
-      - 'Services/ClaimService/**'
+      - 'Services/PatientService/**'
     
   workflow_dispatch:
 
 env:
-  APP: ClaimService
+  APP: PatientService
 
 jobs:
   build:

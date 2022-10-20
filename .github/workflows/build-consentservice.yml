@@ -1,20 +1,20 @@
-name: CI-ClaimsService
+name: CI-ConsentService
 on:
   push:
     branches:
       - "dev"
     paths: 
-      - 'Services/ClaimService/**'
+      - 'Services/ConsentService/**'
   pull_request:
     branches: 
       - "dev"
     paths: 
-      - 'Services/ClaimService/**'
+      - 'Services/ConsentService/**'
     
   workflow_dispatch:
 
 env:
-  APP: ClaimService
+  APP: ConsentService
 
 jobs:
   build:
