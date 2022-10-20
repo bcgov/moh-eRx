@@ -15,7 +15,6 @@ on:
 
 env:
   APP: ClaimService
-  SRC: ${{ github.GITHUB_WORKSPACE }}/Services/${{ env.APP }}/src
 
 jobs:
   build:
@@ -31,9 +30,9 @@ jobs:
         run: |
           buildid=$(date +"%Y%m%d").$GITHUB_RUN_ID.$GITHUB_RUN_NUMBER.$GITHUB_RUN_ATTEMPT
           echo Starting C# Build as $buildid
-          dotnet publish $SRC/$APP.csproj -o $RUNNER_TEMP -c Release
+          dotnet publish $GITHUB_WORKSPACE/Services/$APP/src/$APP.csproj -o $RUNNER_TEMP -c Release
           echo Starting Docker Build
-          docker build -f $SRC/Dockerfile $RUNNER_TEMP
+          docker build -f $GITHUB_WORKSPACE/Services/$APP/src/Dockerfile $RUNNER_TEMP
 
           
       
