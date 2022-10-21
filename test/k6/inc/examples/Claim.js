@@ -15,6 +15,18 @@
 //-------------------------------------------------------------------------
 export let Claim = [
     {
+        name: "TDT_30_REQUEST",
+        purpose: "Accumulated Totals Request",
+        version: "PNet-R03",
+        message: 
+            "MSH|^~\&|PHARMACY|VENDOR_BC01000971|PNP|PP||RB:69.11.119.122|ZPN|180736|D|2.1||\r" +
+            "ZZZ|TDT||180736|P1|XXBSK||||\r" +
+            "ZCA|000001|03|30|KC|16|\r" +
+            "ZCB|BC000001ED|220823|180736\r" +
+            "ZCC|||||||||||\r" +
+            "ZCF|220823|000000000|999999999\r"
+    },
+    {
         name: "TACTDU_0104_REQUEST-319233",
         purpose: "Adjudicate a Dispense Claim request message",
         version: "PNet-R70",
