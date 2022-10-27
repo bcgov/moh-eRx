@@ -60,11 +60,11 @@ jobs:
         run: |
           srcImageName=${{ secrets.GOLD_IMAGE_REPOSITORY }}/${{ secrets.GOLD_TOOLS_NAMESPACE }}/$(echo $APP | tr '[:upper:]' '[:lower:]')
           dstImageName=${{ secrets.GOLDDR_IMAGE_REPOSITORY }}/${{ secrets.GOLDDR_TOOLS_NAMESPACE }}/$(echo $APP | tr '[:upper:]' '[:lower:]')
-          docker tag srcImage:dev dstImageName:dev
-          docker tag srcImage:vs1 dstImageName:vs1
+          docker tag $srcImage:dev $dstImageName:dev
+          docker tag $srcImage:vs1 $dstImageName:vs1
           docker login -u ${{ secrets.OPENSHIFT_USER }} -p `oc whoami --show-token` ${{ secrets.GOLDDR_IMAGE_REPOSITORY }}
-          docker push dstImageName:dev
-          docker push dstImageName:vs1
+          docker push $dstImageName:dev
+          docker push $dstImageName:vs1
 
           
       
