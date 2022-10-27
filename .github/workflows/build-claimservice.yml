@@ -31,7 +31,7 @@ jobs:
           echo Starting C# Build
           dotnet publish $GITHUB_WORKSPACE/Services/$APP/src/$APP.csproj -o $RUNNER_TEMP -c Release
           echo Starting Docker Build
-          imageName=${{ secrets.GOLD_IMAGE_REPOSITORY }}/${{ secrets.GOLD_TOOLS_NAMESPACE }}/${{ lowercase($APP) }}
+          imageName=${{ secrets.GOLD_IMAGE_REPOSITORY }}/${{ secrets.GOLD_TOOLS_NAMESPACE }}/$(echo $APP | tr '[:upper:]' '[:lower:]')
           docker build -f $GITHUB_WORKSPACE/Services/$APP/src/Dockerfile $RUNNER_TEMP -t imageName:dev -t imageName:vs1
 
       - name: OpenShift Gold Login
@@ -43,7 +43,7 @@ jobs:
         
       - name: Pushing ${{ env.APP }} to Gold
         run: |
-          imageName=${{ secrets.GOLD_IMAGE_REPOSITORY }}/${{ secrets.GOLD_TOOLS_NAMESPACE }}/${{ lowercase($APP) }}
+          imageName=${{ secrets.GOLD_IMAGE_REPOSITORY }}/${{ secrets.GOLD_TOOLS_NAMESPACE }}/$(echo $APP | tr '[:upper:]' '[:lower:]')
           docker login -u ${{ secrets.OPENSHIFT_USER }} -p `oc whoami --show-token` ${{ secrets.GOLD_IMAGE_REPOSITORY }}
           docker push imageName:dev
           docker push imageName:vs1
