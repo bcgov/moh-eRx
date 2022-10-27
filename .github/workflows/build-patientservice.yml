@@ -49,21 +49,22 @@ jobs:
           docker push $imageName:dev
           docker push $imageName:vs1
       
-      # - name: OpenShift Gold DR Login
-      #   uses: redhat-actions/oc-login@v1.1
-      #   with:
-      #     openshift_server_url: ${{ secrets.GOLDDR_URI }}
-      #     openshift_token: ${{ secrets.GOLDDR_TOKEN }}
-      #     namespace: ${{ secrets.GOLD_TOOLSDR_NAMSPACE }}
+      - name: OpenShift Gold DR Login
+        uses: redhat-actions/oc-login@v1.1
+        with:
+          openshift_server_url: ${{ secrets.GOLDDR_URI }}
+          openshift_token: ${{ secrets.GOLDDR_TOKEN }}
+          namespace: ${{ secrets.GOLD_TOOLSDR_NAMSPACE }}
 
-      # - name: Tag and Push ${{ env.APP }} to Gold DR
-      #   run: |
-      #     srcImageName=${{ secrets.GOLD_IMAGE_REPOSITORY }}/${{ secrets.GOLD_TOOLS_NAMESPACE }}/$(echo $APP | tr '[:upper:]' '[:lower:]')
-      #     dstImageName=${{ secrets.GOLDDR_IMAGE_REPOSITORY }}/${{ secrets.GOLDDR_TOOLS_NAMESPACE }}/$(echo $APP | tr '[:upper:]' '[:lower:]')
-      #     docker tag srcImage:dev dstImageName:dev
-      #     docker tag srcImage:vs1 dstImageName:vs1
-      #     docker push dstImageName:dev
-      #     docker push dstImageName:vs1
+      - name: Tag and Push ${{ env.APP }} to Gold DR
+        run: |
+          srcImageName=${{ secrets.GOLD_IMAGE_REPOSITORY }}/${{ secrets.GOLD_TOOLS_NAMESPACE }}/$(echo $APP | tr '[:upper:]' '[:lower:]')
+          dstImageName=${{ secrets.GOLDDR_IMAGE_REPOSITORY }}/${{ secrets.GOLDDR_TOOLS_NAMESPACE }}/$(echo $APP | tr '[:upper:]' '[:lower:]')
+          docker tag $srcImageName:dev $dstImageName:dev
+          docker tag $srcImageName:vs1 $dstImageName:vs1
+          docker login -u ${{ secrets.OPENSHIFT_USER }} -p `oc whoami --show-token` ${{ secrets.GOLDDR_IMAGE_REPOSITORY }}
+          docker push $dstImageName:dev
+          docker push $dstImageName:vs1
 
           
       
