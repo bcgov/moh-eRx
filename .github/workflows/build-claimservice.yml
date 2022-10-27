@@ -28,11 +28,36 @@ jobs:
         
       - name: Building ${{ env.APP }}
         run: |
-          buildid=$(date +"%Y%m%d").$GITHUB_RUN_ID.$GITHUB_RUN_NUMBER.$GITHUB_RUN_ATTEMPT
-          echo Starting C# Build as $buildid
+          echo Starting C# Build
           dotnet publish $GITHUB_WORKSPACE/Services/$APP/src/$APP.csproj -o $RUNNER_TEMP -c Release
           echo Starting Docker Build
-          docker build -f $GITHUB_WORKSPACE/Services/$APP/src/Dockerfile $RUNNER_TEMP
+          imageName=${{ secrets.GOLD_IMAGE_REPOSITORY }}/${{ secrets.GOLD_TOOLS_NAMESPACE }}/${{ lowercase($APP) }}
+          docker build -f $GITHUB_WORKSPACE/Services/$APP/src/Dockerfile $RUNNER_TEMP -t imageName:dev -t imageName:vs1
 
-          
+      - name: OpenShift Gold Login
+        uses: redhat-actions/oc-login@v1.1
+        with:
+          openshift_server_url: ${{ secrets.GOLD_URI }}
+          openshift_token: ${{ secrets.GOLD_TOKEN }}
+          namespace: ${{ secrets.GOLD_TOOLS_NAMSPACE }} 
+        
+      - name: Pushing ${{ env.APP }} to Gold
+        run: |
+          imageName=${{ secrets.GOLD_IMAGE_REPOSITORY }}/${{ secrets.GOLD_TOOLS_NAMESPACE }}/${{ lowercase($APP) }}
+          docker login -u ${{ secrets.OPENSHIFT_USER }} -p `oc whoami --show-token` ${{ secrets.GOLD_IMAGE_REPOSITORY }}
+          docker push imageName:dev
+          docker push imageName:vs1
       
+      # - name: OpenShift Gold DR Login
+      #   uses: redhat-actions/oc-login@v1.1
+      #   with:
+      #     openshift_server_url: ${{ secrets.GOLDDR_URI }}
+      #     openshift_token: ${{ secrets.GOLDDR_TOKEN }}
+      #     namespace: ${{ secrets.GOLD_TOOLSDR_NAMSPACE }}
+
+      # - name: Tag and Push ${{ env.APP }} to Gold DR
+      #   run: |
+      #     docker tag ${{ secrets.GOLD_IMAGE_REPOSITORY }}/${{ secrets.GOLD_TOOLS_NAMESPACE }}/${{ lowercase($APP) }}:dev ${{ secrets.GOLDDR_IMAGE_REPOSITORY }}/${{ secrets.GOLDDR_TOOLS_NAMESPACE }}/${{ lowercase($APP) }}:dev
+      #     docker tag ${{ secrets.GOLD_IMAGE_REPOSITORY }}/${{ secrets.GOLD_TOOLS_NAMESPACE }}/${{ lowercase($APP) }}:vs1 ${{ secrets.GOLDDR_IMAGE_REPOSITORY }}/${{ secrets.GOLDDR_TOOLS_NAMESPACE }}/${{ lowercase($APP) }}:vs1
+      #     docker push ${{ secrets.GOLDDR_IMAGE_REPOSITORY }}/${{ secrets.GOLDDR_TOOLS_NAMESPACE }}/${{ lowercase($APP) }}:dev
+      #     docker push ${{ secrets.GOLDDR_IMAGE_REPOSITORY }}/${{ secrets.GOLDDR_TOOLS_NAMESPACE }}/${{ lowercase($APP) }}:vs1
