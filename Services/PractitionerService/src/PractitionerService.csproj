@@ -2,12 +2,8 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <RootNamespace>Health.PharmaNet.PractitionerService</RootNamespace>
-  </PropertyGroup>
-  <PropertyGroup>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(MSBuildThisFileName).xml</DocumentationFile>
     <TargetFramework>net6.0</TargetFramework>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DocumentationFile>bin\Debug\net6.0\PractitionerService.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'PractitionerService' " />
   <ItemGroup>

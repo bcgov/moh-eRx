@@ -2,12 +2,8 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <RootNamespace>Health.PharmaNet.MedicationStatementService</RootNamespace>
-  </PropertyGroup>
-  <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DocumentationFile>bin\Debug\net6.0\MedicationStatementService.xml</DocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(MSBuildThisFileName).xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'MedicationRequestService' " />
   <ItemGroup>
