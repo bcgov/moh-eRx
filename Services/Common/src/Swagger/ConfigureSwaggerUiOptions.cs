@@ -1,5 +1,4 @@
-﻿//-------------------------------------------------------------------------
-// Copyright © 2020 Province of British Columbia
+﻿// Copyright © 2020 Province of British Columbia
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -23,7 +22,7 @@ namespace Health.PharmaNet.Common.Swagger
     using Microsoft.Extensions.Options;
     using Swashbuckle.AspNetCore.SwaggerUI;
 
-    /// <inheritdoc cref="SwaggerUIOptions"/>>
+    /// <inheritdoc cref="SwaggerUIOptions"/>
     [ExcludeFromCodeCoverage]
     public sealed class ConfigureSwaggerUiOptions : IConfigureOptions<SwaggerUIOptions>
     {
@@ -41,7 +40,7 @@ namespace Health.PharmaNet.Common.Swagger
             Debug.Assert(settings != null, $"{nameof(versionDescriptionProvider)} != null");
 
             this.provider = versionDescriptionProvider;
-            this.settings = settings?.Value ?? new SwaggerSettings();
+            this.settings = settings.Value;
         }
 
         /// <summary>
@@ -52,16 +51,16 @@ namespace Health.PharmaNet.Common.Swagger
         {
             if (options != null)
             {
-                options.RoutePrefix = string.Empty; // put swagger as top level path.
                 this.provider
                     .ApiVersionDescriptions
                     .ToList()
-                    .ForEach(description =>
-                    {
-                        options.SwaggerEndpoint(
-                            $"/{this.settings.RoutePrefixWithSlash}{description.GroupName}/swagger.json",
-                            description.GroupName.ToUpperInvariant());
-                    });
+                    .ForEach(
+                        description =>
+                        {
+                            options.SwaggerEndpoint(
+                                $"/{this.settings.RoutePrefixWithSlash}{description.GroupName}/swagger.json",
+                                description.GroupName.ToUpperInvariant());
+                        });
             }
         }
     }

@@ -1,5 +1,4 @@
-﻿//-------------------------------------------------------------------------
-// Copyright © 2020 Province of British Columbia
+﻿// Copyright © 2020 Province of British Columbia
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -37,17 +36,19 @@ namespace Health.PharmaNet.Common.Swagger
         public static IServiceCollection AddApiVersionWithExplorer(this IServiceCollection services)
         {
             return services
-                .AddVersionedApiExplorer(options =>
-                {
-                    options.GroupNameFormat = "'v'VVV";
-                    options.SubstituteApiVersionInUrl = true;
-                })
-                .AddApiVersioning(options =>
-                {
-                    options.AssumeDefaultVersionWhenUnspecified = true;
-                    options.ReportApiVersions = true;
-                    options.DefaultApiVersion = new ApiVersion(1, 0);
-                });
+                .AddVersionedApiExplorer(
+                    options =>
+                    {
+                        options.GroupNameFormat = "'v'VVV";
+                        options.SubstituteApiVersionInUrl = true;
+                    })
+                .AddApiVersioning(
+                    options =>
+                    {
+                        options.AssumeDefaultVersionWhenUnspecified = true;
+                        options.ReportApiVersions = true;
+                        options.DefaultApiVersion = new ApiVersion(1, 0);
+                    });
         }
 
         /// <summary>

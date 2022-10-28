@@ -1,5 +1,4 @@
-﻿//-------------------------------------------------------------------------
-// Copyright © 2020 Province of British Columbia
+﻿// Copyright © 2020 Province of British Columbia
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,7 +20,7 @@ namespace Health.PharmaNet.Common.Swagger
     using Microsoft.OpenApi.Models;
     using Swashbuckle.AspNetCore.Swagger;
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     [ExcludeFromCodeCoverage]
     public sealed class ConfigureSwaggerOptions : IConfigureOptions<SwaggerOptions>
     {
@@ -36,7 +35,7 @@ namespace Health.PharmaNet.Common.Swagger
             this.settings = settings?.Value ?? new SwaggerSettings();
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void Configure(SwaggerOptions options)
         {
             if (options != null)
@@ -44,10 +43,11 @@ namespace Health.PharmaNet.Common.Swagger
                 options.RouteTemplate = this.settings.RouteTemplatePrefix + "/{documentName}/swagger.json";
                 if (!string.IsNullOrEmpty(this.settings.BasePath))
                 {
-                    options.PreSerializeFilters.Add((swaggerDoc, httpReq) =>
-                    {
-                        swaggerDoc.Servers = new List<OpenApiServer> { new OpenApiServer { Url = $"{httpReq.Scheme}://{httpReq.Host.Value}{this.settings.BasePath}" } };
-                    });
+                    options.PreSerializeFilters.Add(
+                        (swaggerDoc, httpReq) => swaggerDoc.Servers = new List<OpenApiServer>
+                        {
+                            new() { Url = $"{httpReq.Scheme}://{httpReq.Host.Value}{this.settings.BasePath}" },
+                        });
                 }
             }
         }

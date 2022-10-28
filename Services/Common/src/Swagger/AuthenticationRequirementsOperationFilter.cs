@@ -1,4 +1,3 @@
-//-------------------------------------------------------------------------
 // Copyright © 2020 Province of British Columbia
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,7 +14,9 @@
 //-------------------------------------------------------------------------
 namespace Health.PharmaNet.Common.Swagger
 {
+    using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc.Controllers;
@@ -32,15 +33,12 @@ namespace Health.PharmaNet.Common.Swagger
         /// </summary>
         /// <param name="operation">The swagger operation.</param>
         /// <param name="context">The filter context.</param>
+        [ExcludeFromCodeCoverage]
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
-            if (operation.Security == null)
-            {
-                operation.Security = new List<OpenApiSecurityRequirement>();
-            }
+            operation.Security ??= new List<OpenApiSecurityRequirement>();
 
-            ControllerActionDescriptor? cad = context.ApiDescription.ActionDescriptor as ControllerActionDescriptor;
-            if (cad != null)
+            if (context.ApiDescription.ActionDescriptor is ControllerActionDescriptor cad)
             {
                 bool controllerAuth = cad.ControllerTypeInfo.GetCustomAttributes(true).Any(t => t is AuthorizeAttribute);
                 bool methodAuth = cad.MethodInfo.GetCustomAttributes(false).Any(t => t is AuthorizeAttribute);
@@ -48,11 +46,16 @@ namespace Health.PharmaNet.Common.Swagger
 
                 if ((controllerAuth && !methodAnonymous) || (!controllerAuth && methodAuth))
                 {
-                    var scheme = new OpenApiSecurityScheme { Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "bearer" } };
-                    operation.Security.Add(new OpenApiSecurityRequirement
+                    OpenApiSecurityScheme securityScheme = new()
                     {
-                        [scheme] = new List<string>(),
-                    });
+                        Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "bearer" },
+                    };
+
+                    operation.Security.Add(
+                        new()
+                        {
+                            { securityScheme, Array.Empty<string>() },
+                        });
                 }
             }
         }

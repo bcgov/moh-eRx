@@ -1,4 +1,3 @@
-//-------------------------------------------------------------------------
 // Copyright © 2020 Province of British Columbia
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,21 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
-
 namespace Health.PharmaNet.Common.Swagger
 {
-    using System;
     using System.Diagnostics;
     using System.Diagnostics.CodeAnalysis;
-    using System.IO;
-    using System.Reflection;
     using Microsoft.AspNetCore.Mvc.ApiExplorer;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Options;
     using Microsoft.OpenApi.Models;
     using Swashbuckle.AspNetCore.SwaggerGen;
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     /// <summary>
     /// Implementation of IConfigureOptions&lt;SwaggerGenOptions&gt;.
     /// </summary>
@@ -43,31 +38,34 @@ namespace Health.PharmaNet.Common.Swagger
         /// <param name="versionDescriptionProvider">IApiVersionDescriptionProvider.</param>
         /// <param name="swaggerSettings">App Settings for Swagger.</param>
         public ConfigureSwaggerGenOptions(
-            IApiVersionDescriptionProvider versionDescriptionProvider, IOptions<SwaggerSettings> swaggerSettings)
+            IApiVersionDescriptionProvider versionDescriptionProvider,
+            IOptions<SwaggerSettings> swaggerSettings)
         {
             Debug.Assert(versionDescriptionProvider != null, $"{nameof(versionDescriptionProvider)} != null");
             Debug.Assert(swaggerSettings != null, $"{nameof(swaggerSettings)} != null");
 
             this.provider = versionDescriptionProvider;
-            this.settings = swaggerSettings?.Value ?? new SwaggerSettings();
+            this.settings = swaggerSettings.Value;
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void Configure(SwaggerGenOptions options)
         {
             options.OperationFilter<SwaggerDefaultValues>();
             options.IgnoreObsoleteActions();
             options.IgnoreObsoleteProperties();
 
-            options.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
-            {
-                Name = "Authorization",
-                Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
-                Type = SecuritySchemeType.Http,
-                BearerFormat = "JWT",
-                In = ParameterLocation.Header,
-                Scheme = "bearer",
-            });
+            options.AddSecurityDefinition(
+                "bearer",
+                new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                    Type = SecuritySchemeType.Http,
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Scheme = "bearer",
+                });
 
             // Add auth header filter
             options.OperationFilter<AuthenticationRequirementsOperationFilter>();
@@ -77,7 +75,7 @@ namespace Health.PharmaNet.Common.Swagger
 
         private void AddSwaggerDocumentForEachDiscoveredApiVersion(SwaggerGenOptions options)
         {
-            foreach (var description in this.provider.ApiVersionDescriptions)
+            foreach (ApiVersionDescription description in this.provider.ApiVersionDescriptions)
             {
                 this.settings.Info!.Version = description.ApiVersion.ToString();
 
