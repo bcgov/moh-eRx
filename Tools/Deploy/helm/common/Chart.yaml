@@ -1,0 +1,6 @@
+apiVersion: v2
+name: common
+description: Deploys the common secrets and config for PPM to OpenShift.
+type: application
+version: 0.1.0
+appVersion: "1.0.0"

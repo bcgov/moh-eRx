@@ -1,0 +1,19 @@
+#Used to configure the common secret
+Secrets:
+  PharmaNet_PharmanetProxy__ClientCertificatePassword: ${certPassword}
+  PharmaNet_PharmanetProxy__Endpoint: ${endpoint}
+  PharmaNet_PharmanetProxy__Password: ${password}
+  PharmaNet_PharmanetProxy__Username: ${username}
+
+#Used to load the certificate file into the common config map
+Configuration:
+  Certificate_File: ${cert.pfx}
+
+nameOverride: ""
+fullnameOverride: ""
+
+podAnnotations: {}
+
+nodeSelector: {}
+tolerations: []
+affinity: {}

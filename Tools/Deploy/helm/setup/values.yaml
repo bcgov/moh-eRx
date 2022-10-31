@@ -1,0 +1,26 @@
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: "github-ppm"
+  role: "edit"
+
+pullAccess:
+  source: d027a8-tools
+  account: default
+  namespaces:
+    - d027a8-dev
+    - d027a8-test
+    - d027a8-prod
+
+nameOverride: ""
+fullnameOverride: ""
+
+podAnnotations: {}
+
+nodeSelector: {}
+tolerations: []
+affinity: {}

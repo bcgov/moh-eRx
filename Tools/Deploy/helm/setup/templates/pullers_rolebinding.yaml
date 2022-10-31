@@ -1,0 +1,22 @@
+kind: RoleBinding
+apiVersion: authorization.openshift.io/v1
+metadata:
+  name: {{ .Values.pullAccess.source }}:image-pullers
+  labels:
+    {{- include "setup.labels" . | nindent 4 }}
+groupNames:
+  - system:serviceaccounts:{{ .Values.pullAccess.source }}
+roleRef:
+  name: system:image-puller
+subjects:
+  - kind: SystemGroup
+    name: system:serviceaccounts:{{ .Values.pullAccess.source }}
+  {{- range $namespace := .Values.pullAccess.namespaces }}
+  - kind: ServiceAccount
+    name: {{ $.Values.pullAccess.account }}
+    namespace: {{ $namespace }}
+  {{- end }}
+userNames:
+{{- range $namespace := .Values.pullAccess.namespaces }}
+  - system:serviceaccount:{{ $namespace }}:{{ $.Values.pullAccess.account }}
+{{- end }}

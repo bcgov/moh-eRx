@@ -1,0 +1,9 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: pharmanet-{{ .Values.Configuration.Environment }}-cert
+  labels:
+    {{- include "common.labels" . | nindent 4 }}
+binaryData:
+  {{ .Values.Configuration.Certificate_File }}: >-
+    {{ .Files.Get .Values.Configuration.Certificate_File | b64enc | indent 4 }}

@@ -1,0 +1,61 @@
+replicaCount: 1
+
+Application:
+  Port: 8080
+  Configuration: {}
+  Secrets:
+    PharmaNet_PharmanetProxy__Endpoint: ${common-secrets}
+    PharmaNet_PharmanetProxy__Username: ${common-secrets}
+    PharmaNet_PharmanetProxy__Password: ${common-secrets}
+    PharmaNet_PharmanetProxy__ClientCertificatePassword: ${common-secrets}
+  Environment:
+    ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT}
+
+OpenShift:
+  Environment: ${ENVIRONMENT}
+  ImageProject: ${tools-namespace}
+
+image:
+  stream: ${stream}
+  pullPolicy: Always
+
+nameOverride: ""
+fullnameOverride: ""
+
+podAnnotations: {}
+
+service:
+  port: 8080
+
+deployment:
+  strategy:
+    resources:
+      limits:
+        cpu: 500m
+        memory: 512Mi
+    rollingParams:
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+    type: Rolling
+
+resources: 
+  limits:
+    cpu: ${CPU.LIMIT}
+    memory: ${MEMORY.LIMIT}
+  requests:
+    cpu: ${CPU.REQUEST}
+    memory: ${MEMORY.REQUEST}
+
+autoscaling:
+  enabled: false
+  podDisruptionMin: 2
+  minReplicas: 3
+  maxReplicas: 6
+  targetCPUUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

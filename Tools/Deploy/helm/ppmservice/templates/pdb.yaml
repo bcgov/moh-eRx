@@ -1,0 +1,13 @@
+{{- if .Values.autoscaling.enabled }}
+kind: PodDisruptionBudget
+apiVersion: policy/v1
+metadata:
+  name: {{ include "ppmservice.fullname" . }}
+  labels:
+    {{- include "ppmservice.labels" . | nindent 4 }}
+spec:
+  minAvailable: {{ .Values.autoscaling.podDisruptionMin }} 
+  selector:  
+    matchLabels:
+      deploymentconfig: {{ include "ppmservice.fullname" . }}
+{{- end }}
