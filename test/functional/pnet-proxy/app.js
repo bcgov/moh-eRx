@@ -11,12 +11,13 @@ const responseJson = '{ "transactionUUID": "22c263c9-1903-4cbf-8eb2-c43fa7b9dfa7
     ' }';
 
 app.post('/submit', function (req, res) {
-    console.log(req.body);
+    console.log("http://" + host + ":" + port + "/submit: " + req);
     res.contentType = 'application/json';
     res.send(responseJson);
 });
 
 app.get('/', function (req, res) {
+    console.log("http://" + host + ":" + port + "/: " + req);
     res.contentType = 'application/json';
     res.send(responseJson);
 });

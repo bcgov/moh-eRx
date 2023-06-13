@@ -112,8 +112,9 @@ export function authenticateClient(client, scopes) {
     }
 
     var res = http.post(tokenUrl, auth_form_data);
+    var res_json = JSON.parse(res.body);
+
     if (res.status == 200) {
-        var res_json = JSON.parse(res.body);
         client.token = res_json["access_token"];
         client.refresh = res_json["refresh_token"];
         var seconds = res_json["expires_in"];
@@ -123,11 +124,12 @@ export function authenticateClient(client, scopes) {
         console.log("Token: " + client.token);
     }
     else {
-        console.log("Authentication Error for client= " + client.client_id +
+        console.log("Authentication Error for client=" + client.client_id +
             ", client_secret='" + client.client_secret + "'" +
-            ", scope='" + client.scope +
+            ", scope='" + scopes +
             "', ResponseCode='" + res.status +
-            "' " + res.error);
+            "', error='" + res_json.error +
+            ": " + res_json.error_description + "'");
         authSuccess.add(0);
         client.token = null;
     }
@@ -190,8 +192,6 @@ export function params(client) {
 export function postMessage(url, payload) {
     var now = new Date(Date.now());
 
-    var params = this.params(common.client);
-
     var msgId = "urn:uuid:" + uuid.v4();
 
     var timestamp = now.toISOString().replace("Z", "");
@@ -219,7 +219,7 @@ export function postMessage(url, payload) {
     console.log("[ERX_ENV= " + environment + "] POST " + url);
 
 
-    var res = http.post(url, JSON.stringify(fhirPayload), params);
+    var res = http.post(url, JSON.stringify(fhirPayload), params(client));
     if (res.status == 200) {
         var res_json = JSON.parse(res.body);
         //console.log(JSON.stringify(res_json));
@@ -237,11 +237,11 @@ export function postMessage(url, payload) {
 export function submitMessage(url, example) {
     console.log("Request: " + example.name + ' [' + example.version + '] ' + example.purpose);
     var payload = Hl7v2Encoded(example.message); // Returns Base64 encoded hl7v2 message
-    return this.postMessage(url, payload);
+    return postMessage(url, payload);
 }
 
 export function submitHL7MessageBase64(url, b64Payload) {
-    return this.postMessage(url, b64Payload);
+    return postMessage(url, b64Payload);
 }
 
 function encode(hl7Message) {
