@@ -18,7 +18,7 @@ Now the PharmaNet proxy is listening on localhost:8080. If you map the ports dif
 
 ### Setting up a service in Docker
 1. Modify the property assignment of `options.RequireHttpsMetadata` in `Services/Common/src/AspNetConfiguration/StartupConfiguration.cs` at line 135 to `false`. The k6 program is only configured to send HTTP requests, not HTTPS, so the program needs to accept those requests. Don't forget to revert this change when you're done with testing!
-2. In the service's appsettings.json file, update the Claims Issuer and Authority endpoints under the OpenIdConnect section. These should both be set to the URL that the program is fetching the access token from. Since this set up is for running tests, the URL will probably be either the Dev endpoint (https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos) or the Test endpoint (https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications).
+2. In the service's appsettings.json file, update the Claims Issuer and Authority endpoints under the OpenIdConnect section. These should both be set to the URL that the program is fetching the access token from. Since this set up is for running tests, the URL will probably be either the Dev endpoint (`https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos`) or the Test endpoint (`https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications`).
 3. Also in appsettings.json, make sure the PharmaNet proxy endpoint is set to the PharmaNet URL you want the API to make requests to. If you're using a local PharmaNet proxy, this URL should be `http://host.docker.internal:8080/submit`. If the PharmaNet system requires additional properties such as Username, Password, or a Client Certificate file, set those fields to the appropriate values.
 4. Build the service you want to test by running `dotnet build` in the command line from `Services/{name-of-service}/src/`, which contains the services .csproj file.
 5. Build the Docker image for the service by running `docker build -t {name-of-service}/image .` from the same directory, which also contains the service's Dockerfile.
@@ -32,11 +32,11 @@ Before running a test on a service, make sure the API is running and mapped to t
 
 The test program will need some values as environment variables in order to authenticate the client to the API. There are three that are required for authentication:
 1. ERX_ENV
-    The environment in which the API exists. This value can be either "dev", "vs1", or "vs2", and defaults to "dev" if left blank. The "dev" environment corresponds to a URL endpoint the program fetches the access token from, and "vs1" and "vs2" correspond to another.
+The environment in which the API exists. This value can be either "dev", "vs1", or "vs2", and defaults to "dev" if left blank. The "dev" environment corresponds to a URL endpoint the program fetches the access token from, and "vs1" and "vs2" correspond to another.
 2. ERX_CLIENT
-    The client ID used to get the access token. This value should be "erx_development" if the environment is "dev" or "ppm_development" if the environment is "vs1" or "vs2". If left blank, the default value is "erx_development".
+The client ID used to get the access token. This value should be "erx_development" if the environment is "dev" or "ppm_development" if the environment is "vs1" or "vs2". If left blank, the default value is "erx_development".
 3. ERX_CLIENT_SECRET
-    The client secret used to get the access token. This value can be retrieved from Keycloak and should correspond directly to the client ID. This variable has no default value and must always be set.
+The client secret used to get the access token. This value can be retrieved from Keycloak and should correspond directly to the client ID. This variable has no default value and must always be set.
 
 There are also two testing parameters, ERX_VUS and ERX_ITERATIONS, which both have a default value of 1. See below for more information about what these values mean.
 
