@@ -1,39 +1,25 @@
-# Example API Client Console Application written in C# .Net 5
+# Example API Client Console Application
 
-This example is meant for developer's to view the source code to understand how to:
+This example client application helps developers understand and debug:
+- authentication using a client id and a client secret (for non-production environements)
+- authentication using a signed JWT
+- invoking an example service (forthcoming)
 
-- authenticate using client id and secret method (for non-production environements)
-- authenticate using signed JWT
-- See how to invoke an example service   (forthcoming)
-
-This uses .NET 5, which you can use to create server apps, command line apps, or WinForms desktop apps.
+This example client uses .NET 6.0, which you can use to create server apps, command line apps, or WinForms desktop apps.
 
 ## Build
-
-```bash
-cd src \
-dotnet build
-```
+Build the project by running `dotnet build` in the command line from `Client/src/`.
 
 ## Debug
-
-The .vscode/launch.json file is included in this repo to show you how you configure debugging
-this console app.
+The .vscode/launch.json file is included in this repo to show you how tp configure debugging this console app.
 
 ## Run
+Fill out the fields in `Client/src/appsettings.json` with the appropriate configuration values. Run the project by running `dotnet run` in the command line from `Client/src/`.
 
-- Configure settings in appsettings.local.json
-- Run:
-
-```bash
-dotnet run
-```
-
-# Keycloak and generating and using Signed JWT for Client Authentication
+# Generating and Using Signed JWT for Client Authentication with Keycloak
 
 Keycloak can generate a keystore.jks file containing the private key for the client application.
-It can also accept the upload of a JKS or PFX certificate or PEM for validating the signed JWT provided by the client during authentication. You can also have Keycloak point to a Url where you keep your public keys, in a JWKS file, and then you are responsible for generating/maintaining your certificates and their corresponding public/private key pairs.  This might be attractive for all to minimize configurations needed at Keycloak.
-
+It can also accept the upload of a JKS or PFX certificate or PEM for validating the signed JWT provided by the client during authentication. You can also have Keycloak point to a Url where you keep your public keys, in a JWKS file, and then you are responsible for generating/maintaining your certificates and their corresponding public/private key pairs. This might be attractive for all to minimize configurations needed at Keycloak.
 
 In this example client, the Keycloak administrator provides us with a keystore.jks file and its password.  We need to convert this file to a pfx certificate file to allow us to sign the JWT.
 
@@ -78,9 +64,3 @@ If you paste your base64 encoded Signed Jwt into https://jwt.io, you can then pa
 
 The above method of using appsettings.json to store the private key is not recommended for production.
 You will want to store your private key in a vault or secure area, and retrieve it in code to sign the JWT.
-
-
-
-
-
-
