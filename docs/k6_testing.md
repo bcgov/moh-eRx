@@ -31,16 +31,13 @@ The k6 test suite included with this repo acts as a client to the API Services. 
 Before running a test on a service, make sure the API is running and mapped to the correct port. Follow the steps above to configure it if you haven't yet, and check the values for the service URLs in `test/k6/inc/common.js` to make sure they are pointed to the right server (`host.docker.internal` if you are running them locally) and the right port.
 
 The test program will need some values as environment variables in order to authenticate the client to the API. There are three that are required for authentication:
-1. ERX_ENV
-The environment in which the API exists. This value can be either "dev", "vs1", or "vs2", and defaults to "dev" if left blank. The "dev" environment corresponds to a URL endpoint the program fetches the access token from, and "vs1" and "vs2" correspond to another.
-2. ERX_CLIENT
-The client ID used to get the access token. This value should be "erx_development" if the environment is "dev" or "ppm_development" if the environment is "vs1" or "vs2". If left blank, the default value is "erx_development".
-3. ERX_CLIENT_SECRET
-The client secret used to get the access token. This value can be retrieved from Keycloak and should correspond directly to the client ID. This variable has no default value and must always be set.
+1. ERX_ENV: The environment in which the API exists. This value can be either "dev", "vs1", or "vs2", and defaults to "dev" if left blank. The "dev" environment corresponds to one URL endpoint the program fetches the access token from, and "vs1" and "vs2" correspond to another.
+2. ERX_CLIENT: The client ID used to get the access token. This value should be "erx_development" if the environment is "dev" or "ppm_development" if the environment is "vs1" or "vs2". If left blank, the default value is "erx_development".
+3. ERX_CLIENT_SECRET: The client secret used to get the access token. This value can be retrieved from Keycloak and should correspond directly to the client ID. This variable has no default value and must always be set.
 
 There are also two testing parameters, ERX_VUS and ERX_ITERATIONS, which both have a default value of 1. See below for more information about what these values mean.
 
-Finally, to execute the test, navigate to `test/k6/api/{name-of-service}/` and execute the command `docker compose up`, prefixed with assignments to the environment variables you want to set. You may need to execute the command in a bash terminal.
+Finally, to execute the test, navigate to `test/k6/api/{name-of-service}/` and execute the command `docker compose up`. Prefix the command with assignments to the environment variables you want to set. You may need to execute the command in a bash terminal for the prefixed variables to be read properly. You can also export the values into global environment variables, but be careful about storing the client secret this way.
 
 ### Example
 ```bash

@@ -385,11 +385,11 @@ catch
 This is a fork from Jayant Singh's HL7 parser. Since then, it has been modified fundamentally, with respect to features, code quality, bugs and typos. 
 For more information about the original implementation read:
 - https://github.com/j4jayant/hl7-cSharp-parser
-- http://j4jayant.com/articles/hl7/31-hl7-parsing-lib
+- http://www.j4jayant.com/2013/05/hl7-parsing-in-csharp.html
 
 The field encoding and decoding methods have been based on https://github.com/elomagic/hl7inspector
 
 ## Breaking changes
-Since version 2.9, the MSH segment will have an extra field at the beginning of the segment list, containing the field separator. This is according to [the HL7 standard]( https://www.hl7.org/documentcenter/public_temp_CACD15D9-1C23-BA17-0C050D19F5A35765/wg/conf/HL7MSH.htm), as mentioned in Issue #26. Every field index in that segment should be increased by one.
+Since version 2.9, the MSH segment will have an extra field at the beginning of the segment list, containing the field separator. This is according to [the HL7 standard](https://www.hl7.org/documentcenter/public/wg/conf/HL7MSH.htm), as mentioned in Issue #26. Every field index in that segment should be increased by one.
 
 Since version 2.9, some previously deprecated methods starting with lowercase have been removed. The replacement methods starting with uppercase shall be used instead.
