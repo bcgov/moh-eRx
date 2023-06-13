@@ -28,7 +28,4 @@ The PharmaNet API is a secure, modern, RESTful interface that allows developers 
 To use the PharmaNet API, you must comply with the PharmaNet API Agreement. In addition, in order to access Production-level PharmaNet APIs, your application must pass [conformance](https://www2.gov.bc.ca/gov/content/health/practitioner-professional-resources/software/conformance-standards).
 
 ## Documentation
-For more information about this project, see the [documentation](docs/README.md).
-
-## Load Testing
-Included in this repo is a k6 test suite for load testing. [Read about how to use it](test/k6/README.md).
+For more information about this project, see the [documentation](docs/moh-eRx_documentation.md).

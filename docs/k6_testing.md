@@ -1,4 +1,4 @@
-# k6 moh-eRx Non-Functional (Performance) Tests
+# k6 Non-Functional (Performance) Tests
 
 k6 is a modern load testing tool, building on Load Impact's years of experience in the load and performance testing industry. It provides a clean and approachable scripting API, local and cloud execution, and flexible configuration.
 
