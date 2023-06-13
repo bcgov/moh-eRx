@@ -14,16 +14,16 @@ When running smoke tests, it may be easier to run the test scripts on local vers
 1. Build the PharmaNet proxy by running `dotnet build` in the command line from `moh-eRx/test/functional/pnet-proxy/`, which contains the proxy's .csproj file and Dockerfile.
 2. Build the Docker image for the proxy by running `docker build -t pnet-proxy/image .` from the command line in the same directory. If you are running the command from somewhere else, replace `.` with the absolute path to the directory.
 3. Run the Docker container with the command `docker run --name pnet-proxy -p 8080:8080 pnet-proxy/image`.
-4. For each service you'll be testing with, update the PharmaNet proxy endpoint to `http://host.docker.internal:8080/submit` in `moh-eRx/Services/{name-of-service}Service/src/appsettings.json`. It's important to use `host.docker.internal` here, since `localhost` maps to Docker from within Docker containers, not to the machine running Docker. If you've already compiled your services, you'll need to recompile them to apply the change.
-Now the PharmaNet proxy is listening on `localhost:8080`. If you map the ports differently, be sure to make the same change everywhere.
+4. For each service you'll be testing with, update the PharmaNet proxy endpoint to "http://host.docker.internal:8080/submit" in `moh-eRx/Services/{name-of-service}Service/src/appsettings.json`. It's important to use "host.docker.internal" here, since "localhost" maps to Docker from within Docker containers, not to the machine running Docker. If you've already compiled your services, you'll need to recompile them to apply the change.
+Now the PharmaNet proxy is listening on localhost:8080. If you map the ports differently, be sure to make the same change everywhere.
 
 ### Setting up a service in Docker
-1. Modify the property assignment of `options.RequireHttpsMetadata = true;` in `moh-eRx/Services/Common/src/AspNetConfiguration/StartupConfiguration.cs` at line 135 to `false`. The k6 program is only configured to send HTTP requests, not HTTPS. Don't forget to revert this change when you're done with testing!
-2. In the service's `appsettings.json` file, update the Claims Issuer and Authority endpoints under the OpenIDConnect section. These should both be the URL that the program is fetching the access token from.
-1. Build the service you want to test by running `dotnet build` from the command line in the same directory as the service's .csproj file (under `moh-eRx/Services/{name-of-service}Service/src/`).
+1. Modify the property assignment of `options.RequireHttpsMetadata = true;` in `moh-eRx/Services/Common/src/AspNetConfiguration/StartupConfiguration.cs` at line 135 to `false`. The k6 program is only configured to send HTTP requests, not HTTPS, so the program needs to accept those requests. Don't forget to revert this change when you're done with testing!
+2. In the service's `appsettings.json` file, update the Claims Issuer and Authority endpoints under the OpenIDConnect section. These should both be set to the URL that the program is fetching the access token from.
+1. Build the service you want to test by running `dotnet build` in the command line from `moh-eRx/Services/{name-of-service}Service/src/`.
 2. Build the Docker image for the service by running `docker build -t {name-of-service}/image .` from the same directory, which also contains the service's Dockerfile.
 3. Run the Docker container with the command `docker run --name {name-of-service} -p {unused-port}:8080 {name-of-service}/image`.
-Now the API is listening on `localhost` at the chosen port.
+Now the API is listening on localhost at the chosen port.
 
 ## Running k6 Tests
 The k6 test suite included with this repo acts as a client to the API Services. Given an environment, a client ID, and a client secret, it retrieves a signed JWT access token that it passes to the API with the request. Each API service has a corresponding JavaScript program and docker-compose.yaml file to run the k6 test suite.
