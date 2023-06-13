@@ -14,7 +14,7 @@ When running smoke tests, it may be easier to run the test scripts on local vers
 1. Build the PharmaNet proxy by running `dotnet build` in the command line from `moh-eRx/test/functional/pnet-proxy/`, which contains the proxy's .csproj file and Dockerfile.
 2. Build the Docker image for the proxy by running `docker build -t pnet-proxy/image .` from the command line in the same directory. If you are running the command from somewhere else, replace `.` with the absolute path to the directory.
 3. Run the Docker container with the command `docker run --name pnet-proxy -p 8080:8080 pnet-proxy/image`.
-4. For each service you'll be testing with, update the PharmaNet proxy endpoint to "http://host.docker.internal:8080/submit" in `moh-eRx/Services/{name-of-service}Service/src/appsettings.json`. It's important to use "host.docker.internal" here, since "localhost" maps to Docker from within Docker containers, not to the machine running Docker. If you've already compiled your services, you'll need to recompile them to apply the change.
+4. For each service you'll be testing with, update the PharmaNet proxy endpoint to `http://host.docker.internal:8080/submit` in `moh-eRx/Services/{name-of-service}Service/src/appsettings.json`. It's important to use host.docker.internal here, since localhost maps to Docker from within Docker containers, not to the machine running Docker. If you've already compiled your services, you'll need to recompile them to apply the change.
 Now the PharmaNet proxy is listening on localhost:8080. If you map the ports differently, be sure to make the same change everywhere.
 
 ### Setting up a service in Docker
