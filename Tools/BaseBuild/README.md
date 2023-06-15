@@ -1,6 +1,6 @@
 # Application Build and Deployment
 
-Documents our OpenShift Build and Deployment process templates.
+Documents relating to our OpenShift Build and Deployment process templates.
 
 ## Prerequisites
 
@@ -22,13 +22,13 @@ Please ensure that the AzureAgents have been deployed into the OpenShift tools n
 
 ### Common Secrets
 
-The Pharmanet proxy requires 4 secrets be defined
+The Pharmanet proxy requires 4 secrets be defined.
 
 ```console
-  oc process -f ./commonSecrets.yaml --parameters
+oc process -f ./commonSecrets.yaml --parameters
 ```
 
-Create the common config
+Create the common config.
 
 ```console
 oc process -f ./commonSecrets.yaml -p PROXY_ENDPOINT=[ENDPOINT] -p PROXY_USERNAME=[USERNAME] -p PROXY_PASSWORD=[PASSWORD] -p PROXY_CERT_PASSWORD=[CERT PASSWORD]| oc apply -f -
@@ -36,7 +36,7 @@ oc process -f ./commonSecrets.yaml -p PROXY_ENDPOINT=[ENDPOINT] -p PROXY_USERNAM
 
 ### Certificates
 
-The Pharmanet backing service requires a certificate for system to system authentication
+The PharmaNet backing service requires a certificate for system to system authentication.
 
 ```console
 oc create configmap pharmanet-cert --from-file=path/cert
@@ -44,7 +44,7 @@ oc create configmap pharmanet-cert --from-file=path/cert
 
 ### Services
 
-To create the services for a given namespace do the following
+To create the services for a given namespace execute the following command.
 
 ```console
 ./deploy_services.sh 2f77cb dev dev
