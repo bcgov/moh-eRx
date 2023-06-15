@@ -27,7 +27,11 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
 using PharmaNet.Client.Services;
+using PharmaNet.Client.Models;
 
 namespace PharmaNet.Client
 {
@@ -52,7 +56,25 @@ namespace PharmaNet.Client
 
             IAuthService authService = serviceProvider.GetService<IAuthService>();
 
-            string token = authService.AuthenticateUsingSignedJWT();
+            Boolean useKeyFile = configuration.GetValue<Boolean>("UseKeyFile");
+
+            string token = string.Empty;
+
+            // Choose to authenticate with key file or with ID and secret
+            if (useKeyFile) {
+                token = authService.AuthenticateUsingSignedJWT();
+            }
+            else {
+                token = authService.AuthenticateUsingClientCredentials();
+            }
+
+            // Parse the access token
+            token = JsonSerializer.Deserialize<AccessTokenResponse>(token).access_token;
+
+            // Make the request to the API
+            PostService postService = new PostService(configuration, token);
+
+            Console.WriteLine(postService.PostRequest().Result);
 
             await host.RunAsync();
         }
