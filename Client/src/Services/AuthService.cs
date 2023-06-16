@@ -221,7 +221,7 @@ namespace PharmaNet.Client.Services
             if (cert.HasPrivateKey)
             {
 
-                Byte[] keyBytes = cert.PrivateKey.ExportPkcs8PrivateKey();
+                Byte[] keyBytes = RSACertificateExtensions.GetRSAPrivateKey(cert).ExportPkcs8PrivateKey();
                 return keyBytes;
 
             }
