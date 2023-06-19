@@ -98,7 +98,7 @@ namespace PharmaNet.Client.Services
                 using HttpResponseMessage response = await client.PostAsync(tokenUrl, content).ConfigureAwait(true);
 
                 accessTokenResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
-                Console.WriteLine($"JWT Token response: {accessTokenResponse}");
+                //Console.WriteLine($"JWT Token response: {accessTokenResponse}");
                 response.EnsureSuccessStatusCode();
             }
             catch (HttpRequestException e)
@@ -132,7 +132,7 @@ namespace PharmaNet.Client.Services
                 using HttpResponseMessage response = await client.PostAsync(tokenUrl, content).ConfigureAwait(true);
 
                 accessTokenResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
-                Console.WriteLine($"JWT Token response: {accessTokenResponse}");
+                //Console.WriteLine($"JWT Token response: {accessTokenResponse}");
                 response.EnsureSuccessStatusCode();
             }
             catch (HttpRequestException e)
@@ -221,7 +221,7 @@ namespace PharmaNet.Client.Services
             if (cert.HasPrivateKey)
             {
 
-                Byte[] keyBytes = cert.PrivateKey.ExportPkcs8PrivateKey();
+                Byte[] keyBytes = RSACertificateExtensions.GetRSAPrivateKey(cert).ExportPkcs8PrivateKey();
                 return keyBytes;
 
             }

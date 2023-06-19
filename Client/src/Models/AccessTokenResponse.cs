@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------
-// Copyright © 2021 Province of British Columbia
+// Copyright © 2020 Province of British Columbia
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,15 +13,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
+namespace PharmaNet.Client.Models
+{
+    using System.Text.Json.Serialization;
 
-import { sleep } from 'k6';
-import * as common from '../../inc/common.js';
-import * as examples from '../../inc/examples/Location.js';
+    public partial class AccessTokenResponse
+    {
+        public string access_token { get; set; }
 
-export default function() {
+        public long expires_in { get; set; }
 
-    var url = common.LocationServiceUrl;
-    var scopes = "system/Location.read";
-    common.authorizeClient(scopes);
-    common.submitMessage(url, examples.Location[0]);
+        public long refresh_expires_in { get; set; }
+
+        public string token_type { get; set; }
+
+        public string id_token { get; set; }
+
+        [JsonPropertyName("not-before-policy")]
+        public long not_before_policy { get; set; }
+
+        public string scope { get; set; }
+    }
 }

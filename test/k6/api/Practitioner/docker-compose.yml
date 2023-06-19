@@ -11,3 +11,4 @@ services:
       - "ERX_VUS=${ERX_VUS}"
       - "ERX_ITERATIONS=${ERX_ITERATIONS}"
       - "ERX_CLIENT_SECRET=${ERX_CLIENT_SECRET}"
+      - "ERX_CLIENT=${ERX_CLIENT}"
