@@ -2,11 +2,11 @@
 
 Creates and deploys the Azure Agent in the OpenShift environment.
 
-Microsoft Azure Agent [documentation](https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/docker?view=azure-devops) was very helpful.
+Microsoft Azure Agent [documentation](https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/docker?view=azure-devops) is a helpful resource.
 
 ## Prerequise Image
 
-As Docker Hub has recently put in place pull limits, a pull secret needs to be defined in the namespace that you're deploying to.  We would typically do this in tools
+As Docker Hub has recently put in place pull limits, a pull secret needs to be defined in the namespace that you're deploying to. We would typically do this in tools.
 
 ```console
 oc project 2f77cb-tools
@@ -20,7 +20,7 @@ A Personal Access Token (PAT) is an authentication method similar to using a pas
 
 An Azure DevOps Administrator will have to:
 
-* Open up a web browser and in the Azure DevOps portal, click user settings where the PAT settings exist.
+* Open up a web browser and in the Azure DevOps portal, click user settings where the PAT settings exist
 * Click on New Token
 * Give it a name and pick an expiry out the maximum
 * In the scopes section Custom defined is selected
@@ -30,12 +30,11 @@ An Azure DevOps Administrator will have to:
 
 ## Deployment
 
-You need to ensure that the Network Security Policy has been applied to the namespace.  Our reference NSP is located at:
-/Tools/BaseBuild
+You need to ensure that the Network Security Policy has been applied to the namespace. Our reference NSP is located at `/Tools/BaseBuild/nsp.yaml`.
 
 Please reference the [README.md](../BaseBuild/README.md) for detailed deployment instructions.
 
-To review the parameters execute:
+To review the parameters, execute:
 
 ```console
 oc process -f ./openshift/AzureAgent.yaml --parameters
@@ -62,7 +61,7 @@ deploymentconfig.apps.openshift.io/azure-agent created
 horizontalpodautoscaler.autoscaling/azure-agent created
 ```
 
-Note:  if you run the script more than once you may see
+Note: if you run the script more than once you may see
 
 ```console
 error: map: map[] does not contain declared merge key: name
@@ -70,7 +69,7 @@ error: map: map[] does not contain declared merge key: name
 
 This is simply the the Service Account not being re-recreated.
 
-You then need to run two additional role bindings to allow tools to view Dev deployments
+You then need to run two additional role bindings to allow tools to view Dev deployments:
 
 ```console
 oc process -f ./openshift/rb-dev.yaml -p NAMESPACE=2f77cb | oc apply -f -
@@ -79,7 +78,7 @@ oc process -f ./openshift/rb-tools.yaml -p NAMESPACE=2f77cb | oc apply -f -
 
 ## Removing AzureAgent
 
-List all resources created
+List all resources created:
 
 ```console
 oc get serviceaccount,rolebinding,en,nsp,cm,secret,is,bc,dc --selector app=azure-agent -o name
@@ -93,10 +92,10 @@ oc delete serviceaccount,rolebinding,en,nsp,cm,secret,is,bc,dc --selector app=az
 
 ## Updating Agent Image
 
-If you need to update the base image that the Azure agent uses you would
+If you need to update the base image that the Azure agent uses you should
 
-* Update the docker/Dockerfile
-* Commit to the dev branch
-* Trigger a new build in OpenShift UI
+* update the docker/Dockerfile
+* commit to the dev branch
+* trigger a new build in OpenShift UI
 
 This is only required if software version need to change, the Azure Agent itself will update on each start.

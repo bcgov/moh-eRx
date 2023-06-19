@@ -2,13 +2,13 @@
 
 ## Pre-requisites
 
-You need to have the [OpenShift CLI tools](https://console.apps.gold.devops.gov.bc.ca/command-line-tools) installed
-You need to have [Helm](https://helm.sh/docs/intro/install/) installed
-You need to have the [GWA CLI tools](https://github.com/bcgov/gwa-cli) installed globally or available in the kong folder
-You need access to the OpenShift Gold/Gold DR Clusters
-You need to have the Helm environment zip expanded under the helm directory
-You need to have the Kong environment zip expanded under the kong directory
-You need to have the Certificate zip expanded under the helm/common directory
+* The [OpenShift CLI tools](https://console.apps.gold.devops.gov.bc.ca/command-line-tools) is installed
+* [Helm](https://helm.sh/docs/intro/install/) is installed
+* The [GWA CLI tools](https://github.com/bcgov/gwa-cli) are installed globally or are available in the kong folder
+* You have access to the OpenShift Gold/Gold DR Clusters
+* The Helm environment zip is expanded under the helm directory
+* The Kong environment zip is expanded under the kong directory
+* The Certificate zip is expanded under the helm/common directory
 
 ## OpenShift Setup
 
@@ -20,7 +20,7 @@ helm install -n d027a8-tools setup helm/setup
 
 If this script is uninstalled and re-installed the appropriate GitHub actions secrets will have to be updated.
 
-In each project (dev, test, prod) in Gold and Gold DR please apply the following for Kong Network Policy
+In each project (dev, test, prod) in Gold and Gold DR please apply the following for Kong Network Policy.
 
 ```console
 oc apply -n d027a8-dev -f kong/openshift/networkpolicy.yaml
@@ -47,7 +47,7 @@ helm install -n d027a8-dev -f helm/config/practitionerservice/dev-values.yaml pr
 
 A helper script is available to run each of the above commands but needs to be edited per environment.
 
-Please edit deploy.sh and set the variables at the top
+Edit `deploy.sh` and set the variables:
 
 ```console
 environment=
@@ -56,15 +56,15 @@ license=
 helmCommand=install
 ```
 
-to appropriate values then run
+to appropriate values then run.
 
 You can deploy more than one PPM environment into a single OpenShift project assuming sufficient quota exists.
 
 ## Kong Configuration
 
-Review the kong/generate.sh script and run it
+Review the `kong/generate.sh` script and run it.
 
-For each Kong environment generated extract the following variables from the xxx-pnet.env file and place into a .env file
+For each Kong environment generated, extract the following variables from the xxx-pnet.env file and place into a new .env file.
 
 ```console
 GWA_NAMESPACE=
@@ -73,10 +73,10 @@ CLIENT_SECRET=
 GWA_ENV=prod
 ```
 
-publish the environment configuration
+Publish the environment configuration:
 
 ```console
 ./gwa pg output/xxx-pnet.yaml
 ```
 
-and repeat
+and repeat.
