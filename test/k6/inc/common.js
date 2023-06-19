@@ -223,7 +223,7 @@ export function postMessage(url, payload) {
     if (res.status == 200) {
         var res_json = JSON.parse(res.body);
         //console.log(JSON.stringify(res_json));
-        console.log("HL7v2 Response = " + b64decode(res_json.content[0].attachment.data, "std"));
+        console.log("HL7v2 Response = " + b64decode(res_json.content[0].attachment.data, "std", "s"));
         errorRate.add(0);
     }
     else {
