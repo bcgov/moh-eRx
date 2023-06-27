@@ -19,9 +19,11 @@ import * as common from '../../inc/common.js';
 import * as examples from '../../inc/examples/Consent.js';
 
 export default function() {
+    
     var url = common.ConsentServiceUrl;
     var scopes = "system/Patient.read system/Consent.write system/Consent.read";
     common.authorizeClient(scopes);
+    
     examples.Consent.forEach(msg => {
         common.submitMessage(url, msg);
         sleep(1);

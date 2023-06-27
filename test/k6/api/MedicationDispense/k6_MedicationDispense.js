@@ -18,7 +18,7 @@ import { sleep } from 'k6';
 import * as common from '../../inc/common.js';
 import * as examples from '../../inc/examples/MedicationDispense.js';
 
-export default function () {
+export default function() {
 
     var url = common.MedicationDispenseServiceUrl;
     var scopes = "system/MedicationDispense.write system/MedicationDispense.read";

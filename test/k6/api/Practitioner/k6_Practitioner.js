@@ -23,5 +23,9 @@ export default function() {
     var url = common.PractitionerServiceUrl;
     var scopes = "system/Practitioner.read";
     common.authorizeClient(scopes);
-    common.submitMessage(url, examples.Practitioner[0]);
+
+    examples.Practitioner.forEach(msg => {
+        common.submitMessage(url, msg);
+        sleep(1);
+    });
 }

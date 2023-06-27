@@ -23,5 +23,9 @@ export default function() {
     var url = common.LocationServiceUrl;
     var scopes = "system/Location.read";
     common.authorizeClient(scopes);
-    common.submitMessage(url, examples.Location[0]);
+
+    examples.Location.forEach(msg => {
+        common.submitMessage(url, msg);
+        sleep(1);
+    });
 }
