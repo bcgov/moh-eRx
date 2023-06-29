@@ -28,7 +28,8 @@ jobs:
         
       - name: Building ${{ env.APP }}
         run: |
-          echo Starting C# Build
+          buildid=$(date +"%Y%m%d").$GITHUB_RUN_ID.$GITHUB_RUN_NUMBER.$GITHUB_RUN_ATTEMPT
+          echo Starting C# Build as $buildid
           dotnet publish $GITHUB_WORKSPACE/Services/$APP/src/$APP.csproj -o $RUNNER_TEMP -c Release
           echo Starting Docker Build
           imageName=${{ secrets.SILVER_IMAGE_REPOSITORY }}/${{ secrets.SILVER_TOOLS_NAMESPACE }}/$(echo $APP | tr '[:upper:]' '[:lower:]')
