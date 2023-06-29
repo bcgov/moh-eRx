@@ -3,9 +3,11 @@
 [![img](https://img.shields.io/badge/Lifecycle-Stable-97ca00)](https://github.com/bcgov/repomountie/blob/master/doc/lifecycle-badges.md)
 
 ## BC Ministry of Health PharmaNet Electronic Prescribing API
+
 This repository holds the architecture and components to enable PharmaNet electronic prescribing in British Columbia.
 
 ## Objectives
+
 This project has three primary objectives:
 
 1. Migrate away from the HN-Secure private network, removing the need for proprietary HN-Client software packages.
@@ -13,6 +15,7 @@ This project has three primary objectives:
 3. Add support for HL7 FHIR editions of the HL7-v2 PharmaNet Interactions.
 
 ## About PharmaNet
+
 Every prescription dispensed in community pharmacies in B.C. is entered into PharmaNet.
 
 PharmaNet, administered by the [Ministry of Health](https://www2.gov.bc.ca/health), was developed in consultation with health professionals and the public to improve prescription safety and support prescription claim processing.
@@ -22,10 +25,13 @@ PharmaNet users include community pharmacies, hospital pharmacies, emergency dep
 For more information about PharmaNet, see [PharmaNet](https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/pharmacare-for-bc-residents/pharmanet).
 
 ## The PharmaNet API
+
 The PharmaNet API is a secure, modern, RESTful interface that allows developers to access PharmaNet services. These APIs aim to replace the need for HNSecure networking, which is intended to be decommissioned.
 
 ## Agreement and Conformance
+
 To use the PharmaNet API, you must comply with the PharmaNet API Agreement. In addition, in order to access Production-level PharmaNet APIs, your application must pass [conformance](https://www2.gov.bc.ca/gov/content/health/practitioner-professional-resources/software/conformance-standards).
 
 ## Documentation
-For more information about this project, see the [wiki](https://github.com/bcgov/moh-eRx/wiki).
+
+For more information about this project, see the [wiki](https://github.com/bcgov/moh-eRx/wiki). Additional architecture documentation can also be found at the [Confluence page](https://proactionca.ent.cgi.com/confluence/display/BCMOHAM/PPM).
