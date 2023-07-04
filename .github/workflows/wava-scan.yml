@@ -7,7 +7,7 @@ jobs:
     name: Scan the webapplication
     steps:
       - name: ClaimService ZAP Scan
-        uses: zaproxy/action-baseline@v0.7.0
+        uses: zaproxy/action-baseline@v0.8.2
         with:
           target: 'https://pnet-vs1.api.gov.bc.ca/api/v1/Claim'
           artifact_name: claim_scan
@@ -18,7 +18,7 @@ jobs:
     name: Scan the webapplication
     steps:
       - name: ConsentService ZAP Scan
-        uses: zaproxy/action-baseline@v0.7.0
+        uses: zaproxy/action-baseline@v0.8.2
         with:
           target: 'https://pnet-vs1.api.gov.bc.ca/api/v1/Consent'
           artifact_name: consent_scan
@@ -29,7 +29,7 @@ jobs:
     name: Scan the webapplication
     steps:
       - name: LocationService ZAP Scan
-        uses: zaproxy/action-baseline@v0.7.0
+        uses: zaproxy/action-baseline@v0.8.2
         with:
           target: 'https://pnet-vs1.api.gov.bc.ca/api/v1/Location'
           artifact_name: location_scan
@@ -40,7 +40,7 @@ jobs:
     name: Scan the webapplication
     steps:
       - name: MedicationService ZAP Scan
-        uses: zaproxy/action-baseline@v0.7.0
+        uses: zaproxy/action-baseline@v0.8.2
         with:
           target: 'https://pnet-vs1.api.gov.bc.ca/api/v1/Medication'
           artifact_name: medication_scan
@@ -51,7 +51,7 @@ jobs:
     name: Scan the webapplication
     steps:
       - name: MedicationDispenceService ZAP Scan
-        uses: zaproxy/action-baseline@v0.7.0
+        uses: zaproxy/action-baseline@v0.8.2
         with:
           target: 'https://pnet-vs1.api.gov.bc.ca/api/v1/MedicationDispense'
           artifact_name: medicationdispense_scan
@@ -62,7 +62,7 @@ jobs:
     name: Scan the webapplication
     steps:
       - name: MedicationRequestService ZAP Scan
-        uses: zaproxy/action-baseline@v0.7.0
+        uses: zaproxy/action-baseline@v0.8.2
         with:
           target: 'https://pnet-vs1.api.gov.bc.ca/api/v1/MedicationRequest'
           artifact_name: medicationrequest_scan
@@ -73,7 +73,7 @@ jobs:
     name: Scan the webapplication
     steps:
       - name: MedicationStatementService ZAP Scan
-        uses: zaproxy/action-baseline@v0.7.0
+        uses: zaproxy/action-baseline@v0.8.2
         with:
           target: 'https://pnet-vs1.api.gov.bc.ca/api/v1/MedicationStatement'
           artifact_name: medicationstatement_scan
@@ -84,7 +84,7 @@ jobs:
     name: Scan the webapplication
     steps:
       - name: PatientService ZAP Scan
-        uses: zaproxy/action-baseline@v0.7.0
+        uses: zaproxy/action-baseline@v0.8.2
         with:
           target: 'https://pnet-vs1.api.gov.bc.ca/api/v1/Patient'
           artifact_name: patient_scan
@@ -95,7 +95,7 @@ jobs:
     name: Scan the webapplication
     steps:
       - name: PractitionerService ZAP Scan
-        uses: zaproxy/action-baseline@v0.7.0
+        uses: zaproxy/action-baseline@v0.8.2
         with:
           target: 'https://pnet-vs1.api.gov.bc.ca/api/v1/Practitioner'
           artifact_name: practitioner_scan
