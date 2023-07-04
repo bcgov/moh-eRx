@@ -1,3 +1,6 @@
+on:
+  workflow-dispatch:
+
 zap_scan:
     runs-on: ubuntu-latest
     permissions: write-all
