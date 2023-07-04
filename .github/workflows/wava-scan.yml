@@ -9,4 +9,6 @@ jobs:
       - name: ZAP Scan
         uses: zaproxy/action-baseline@v0.7.0
         with:
-          target: 'https://pnet-dev.api.gov.bc.ca/api/v1/Claim'
+          target: 'https://pnet-vs1.api.gov.bc.ca/api/v1/Claim'
+          target: 'https://pnet-vs1.api.gov.bc.ca/api/v1/Consent'
+
