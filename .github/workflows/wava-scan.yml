@@ -10,9 +10,7 @@ jobs:
         uses: zaproxy/action-baseline@v0.7.0
         with:
           target: 'https://pnet-vs1.api.gov.bc.ca/api/v1/Claim'
-    artifacts:
-      when: always
-      paths: claim_zap_scan
+          artifact_name: claim_scan
   
   consent_scan:
     runs-on: ubuntu-latest
@@ -23,9 +21,7 @@ jobs:
         uses: zaproxy/action-baseline@v0.7.0
         with:
           target: 'https://pnet-vs1.api.gov.bc.ca/api/v1/Consent'
-    artifacts:
-      when: always
-      paths: consent_zap_scan
+          artifact_name: consent_scan
   
   location_scan:
     runs-on: ubuntu-latest
@@ -36,6 +32,7 @@ jobs:
         uses: zaproxy/action-baseline@v0.7.0
         with:
           target: 'https://pnet-vs1.api.gov.bc.ca/api/v1/Location'
+          artifact_name: location_scan
   
   medication_scan:
     runs-on: ubuntu-latest
@@ -46,6 +43,7 @@ jobs:
         uses: zaproxy/action-baseline@v0.7.0
         with:
           target: 'https://pnet-vs1.api.gov.bc.ca/api/v1/Medication'
+          artifact_name: medication_scan
   
   medicationdispense_scan:
     runs-on: ubuntu-latest
@@ -56,6 +54,7 @@ jobs:
         uses: zaproxy/action-baseline@v0.7.0
         with:
           target: 'https://pnet-vs1.api.gov.bc.ca/api/v1/MedicationDispense'
+          artifact_name: medicationdispense_scan
   
   medicationrequest_scan:
     runs-on: ubuntu-latest
@@ -66,6 +65,7 @@ jobs:
         uses: zaproxy/action-baseline@v0.7.0
         with:
           target: 'https://pnet-vs1.api.gov.bc.ca/api/v1/MedicationRequest'
+          artifact_name: medicationrequest_scan
   
   medicationstatement_scan:
     runs-on: ubuntu-latest
@@ -76,6 +76,7 @@ jobs:
         uses: zaproxy/action-baseline@v0.7.0
         with:
           target: 'https://pnet-vs1.api.gov.bc.ca/api/v1/MedicationStatement'
+          artifact_name: medicationstatement_scan
   
   patient_scan:
     runs-on: ubuntu-latest
@@ -86,6 +87,7 @@ jobs:
         uses: zaproxy/action-baseline@v0.7.0
         with:
           target: 'https://pnet-vs1.api.gov.bc.ca/api/v1/Patient'
+          artifact_name: patient_scan
   
   practitioner_scan:
     runs-on: ubuntu-latest
@@ -96,3 +98,4 @@ jobs:
         uses: zaproxy/action-baseline@v0.7.0
         with:
           target: 'https://pnet-vs1.api.gov.bc.ca/api/v1/Practitioner'
+          artifact_name: practitioner_scan
