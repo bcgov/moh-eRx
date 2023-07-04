@@ -10,6 +10,9 @@ jobs:
         uses: zaproxy/action-baseline@v0.7.0
         with:
           target: 'https://pnet-vs1.api.gov.bc.ca/api/v1/Claim'
+    artifacts:
+      when: always
+      paths: claim_zap_scan
   
   consent_scan:
     runs-on: ubuntu-latest
@@ -20,6 +23,9 @@ jobs:
         uses: zaproxy/action-baseline@v0.7.0
         with:
           target: 'https://pnet-vs1.api.gov.bc.ca/api/v1/Consent'
+    artifacts:
+      when: always
+      paths: consent_zap_scan
   
   location_scan:
     runs-on: ubuntu-latest
