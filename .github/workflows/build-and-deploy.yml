@@ -2,15 +2,16 @@ name: build and deploy
 
 on:
   workflow_dispatch:
-    environment:
-      description: 'Deploy to'
-      required: true
-      default: 'vc1'
-      type: choice
-      options:
-        - vc1
-        - donotselect
-#        - prod
+    inputs:
+      environment:
+        description: 'Deploy to'
+        required: true
+        default: 'vc1'
+        type: choice
+        options:
+          - vc1
+          - donotselect
+  #        - prod
 
 jobs:
   build:
