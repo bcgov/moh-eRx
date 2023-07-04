@@ -91,12 +91,20 @@ namespace Health.PharmaNet.Models
             PharmanetMessageModel messageModel = new PharmanetMessageModel();
 
             // HL7 FHIR spec for GUID/UUID has this mandatory prefix in the value field.
-            foreach (Match? m in Regex.Matches(documentReference.MasterIdentifier.Value, MasterIdentifierPattern))
+            if (documentReference.MasterIdentifier != null)
             {
-                GroupCollection groups = m!.Groups;
-                string value = groups[1].Value;
-                messageModel.TransactionId = value; // The GUID/UUID
-                break;
+                foreach (Match? m in Regex.Matches(documentReference.MasterIdentifier.Value, MasterIdentifierPattern))
+                {
+                    GroupCollection groups = m!.Groups;
+                    string value = groups[1].Value;
+                    messageModel.TransactionId = value; // The GUID/UUID
+                    break;
+                }
+            }
+            else
+            {
+                // If no masterIdentifier is given, generate a new one
+                messageModel.TransactionId = System.Guid.NewGuid().ToString();
             }
 
             DocumentReference.ContentComponent[] content = documentReference.Content.ToArray();
@@ -117,7 +125,8 @@ namespace Health.PharmaNet.Models
         /// <returns>Returns a new ResourceReference mapped from the provided DocumentReference.</returns>
         public static ResourceReference RelatedToDocumentReference(DocumentReference documentReference)
         {
-            string transactionId = documentReference!.MasterIdentifier.Value;
+            // masterIdentifier may not be defined, create a new identifier if this is the case
+            string transactionId = documentReference.MasterIdentifier != null ? documentReference!.MasterIdentifier.Value : System.Guid.NewGuid().ToString();
             ResourceReference reference = new ResourceReference(transactionId);
             reference.Type = documentReference.GetType().Name;
             return reference;
