@@ -5,7 +5,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions: write-all
     name: Scan the webapplication
-    needs: terraform_apply
     steps:
       - name: ZAP Scan
         uses: zaproxy/action-baseline@v0.7.0
