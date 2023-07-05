@@ -43,6 +43,7 @@ export let Medication = [
         name: "TDR_50_REQUEST - 149966",
         purpose: "Drug Monograph Information request message",
         version: "PNet-R70",
+        includeIdentifier: false,
         message:
             "MSH|^~\\&|1234567|1234567||ERXPP|${{ timestamp }}|userID:192.168.0.1|ZPN|149966|P|2.1||\r" +
             "ZZZ|TDR||149966|P1|nnnnnnnnnn|||||ZZZ1^\r" +

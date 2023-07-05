@@ -44,6 +44,7 @@ export let MedicationDispense = [
         name: "TMU_01_REQUEST - 119908",
         purpose: "Medication Update request message",
         version: "PNet-R70",
+        includeIdentifier: false,
         message:
             "MSH|^~\\&|DESKTOP|EMR|DISMEDUPDATE|EMRMD|${{ timestamp }}|userID:192.168.0.1|ZPN|119908|P|2.1||\r" +
             "ZZZ|TMU||119908|91|nnnnnnnnnn|||||ZZZ1^\r" +

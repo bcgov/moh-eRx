@@ -44,6 +44,7 @@ export let Claim = [
         name: "TACTDU_0104_REQUEST-20334 (encrypted)",
         purpose: "Adjudicate a Dispense Claim request message (Encrypted)",
         version: "PNet-R70",
+        includeIdentifier: false,
         message:
             "MSH|^~\\&|123456|123456|MOH|PP|${{ timestamp }}||ZPN|20334|P|2.1|\r" +
             "ZZZ|TAC||020618|P1|nnnnnnnnnn|||\r" +
@@ -86,6 +87,7 @@ export let Claim = [
         name: "TACTDU_01_REQUEST-324232",
         purpose: "Adjudicate a Dispense Claim request message",
         version: "PNet-R70",
+        includeIdentifier: false,
         message:
             "MSH|^~\\&|DESKTOP|PHARMACY|PNP|ERXPP|${{ timestamp }}|userID:192.168.0.1|ZPN|324232|P|2.1||\r" +
             "ZCA|1|70|01|AR|05|\r" +
@@ -128,6 +130,7 @@ export let Claim = [
         name: "TACTDU_11_REQUEST-319233-1",
         purpose: "Adjudicate a Dispense Claim Reversal request message",
         version: "PNet-R70",
+        includeIdentifier: false,
         message:
             "MSH|^~\\&|123456|123456||ERXPP|${{ timestamp }}|userID:192.168.0.1|ZPN|319233|P|2.1||\r" +
             "ZZZ|TAC||319233|P1|nnnnnnnnnn|||||ZZZ1^\r" +
@@ -173,6 +176,7 @@ export let Claim = [
         name: "TACTDUTRP_01_REQUEST-324232",
         purpose: "Adjudicate a Dispense Claim TAC/TDU/TRP request message",
         version: "PNet-R70",
+        includeIdentifier: false,
         message:
             "MSH|^~\\&|DESKTOP|PHARMACY|PNP|ERXPP|${{ timestamp }}|userID:192.168.0.1|ZPN|324232|P|2.1||\r" +
             "ZCA|1|70|01|AR|05|\r" +
