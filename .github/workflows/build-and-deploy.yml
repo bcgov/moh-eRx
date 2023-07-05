@@ -1,4 +1,4 @@
-name: build and deploy
+name: Build and Deploy Services
 
 on:
   workflow_dispatch:
@@ -9,7 +9,7 @@ on:
         default: 'all'
         type: choice
         options:
-          - all
+#          - all
           - ClaimService
           - ConsentService
           - LocationService
@@ -26,8 +26,7 @@ on:
         type: choice
         options:
           - vc1
-          - donotselect
-  #        - prod
+#          - prod
 
 jobs:
   build:
