@@ -45,6 +45,7 @@ export let MedicationStatement = [
         name: "TDUTRR_00_REQUEST-332214",
         purpose: "DUE Inquiry TDU/TRR request message",
         version: "PNet-R3",
+        includeIdentifier: false,
         message:
             "MSH|^~\\&|1234567|1234567||ERXPP||userID:192.168.0.1|ZPN|332214|P|2.1||\r" +
             "ZZZ|TRR||332214|P1|nnnnnnnnnn||||\r" +
@@ -83,6 +84,7 @@ export let MedicationStatement = [
         name: "TRP_00_REQUEST - R3",
         purpose: "Patient Profile Request request message (NEXT initial request)",
         version: "PNet-R3",
+        includeIdentifier: false,
         message:
             "MSH|^~\\&|XXXXXXXXXXXXXXX|NA|PNP|PP||userID:192.168.0.1|ZPN|101159|P|2.1||\r" +
             "ZZZ|TRP||101159|P1|nnnnnnnnnn||||\r" +
@@ -111,6 +113,7 @@ export let MedicationStatement = [
         name: "TRP_00_REQUEST - 248875",
         purpose: "Patient Profile Request message",
         version: "PNet-R70",
+        includeIdentifier: false,
         message:
             "MSH|^~\\&|1234567|1234567||EMRMD|${{ timestamp }}|userID:192.168.0.1|ZPN|248875|P|2.1||\r" +
             "ZZZ|TRP||248876|91|nnnnnnnnnn|||||ZZZ1^\r" +
@@ -144,6 +147,7 @@ export let MedicationStatement = [
         name: "TRR_00_REQUEST-235348",
         purpose: "Patient Profile Most Recent Only Request message",
         version: "PNet-R70",
+        includeIdentifier: false,
         message:
             "MSH|^~\\&|1234567|1234567||ERXPP|${{ timestamp }}|userID:192.168.0.1|ZPN|235348|P|2.1||\r" +
             "ZZZ|TRR||235348|P1|nnnnnnnnnn|||||ZZZ1^\r" +

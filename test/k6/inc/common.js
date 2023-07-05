@@ -189,20 +189,16 @@ export function params(client) {
     return params;
 }
 
-export function postMessage(url, payload) {
+export function postMessage(url, payload, includeIdentifier = true) {
     var now = new Date(Date.now());
 
     var msgId = "urn:uuid:" + uuid.v4();
 
     var timestamp = now.toISOString().replace("Z", "");
-    var timestamp = timestamp.substr(0, 19) + "+00:00";
+    var timestamp = timestamp.substring(0, 19) + "+00:00";
 
     var fhirPayload = {
         "resourceType": "DocumentReference",
-        "masterIdentifier": {
-            "system": "urn:ietf:rfc:3986",
-            "value": msgId
-        },
         "status": "current",
         "date": timestamp,
         "content": [
@@ -214,6 +210,14 @@ export function postMessage(url, payload) {
             }
         ]
     };
+
+    if (includeIdentifier) {
+        fhirPayload["masterIdentifier"] = {
+            "system": "urn:ietf:rfc:3986",
+            "value": msgId
+        };
+        console.log("Generated identifier: " + msgId);
+    }
 
     console.log("Payload:= " + payload);
     console.log("[ERX_ENV= " + environment + "] POST " + url);
@@ -237,11 +241,11 @@ export function postMessage(url, payload) {
 export function submitMessage(url, example) {
     console.log("Request: " + example.name + ' [' + example.version + '] ' + example.purpose);
     var payload = Hl7v2Encoded(example.message); // Returns Base64 encoded hl7v2 message
-    return postMessage(url, payload);
+    return postMessage(url, payload, example.includeIdentifier);
 }
 
 export function submitHL7MessageBase64(url, b64Payload) {
-    return postMessage(url, b64Payload);
+    return postMessage(url, b64Payload, true);
 }
 
 function encode(hl7Message) {

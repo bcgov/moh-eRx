@@ -42,6 +42,7 @@ export let MedicationRequest = [
         name: "TRX_X0_REQUEST - 125",
         purpose: "Retrieve Patient Prescription request message",
         version: "PNet-R70",
+        includeIdentifier: false,
         message:
             "MSH|^~\\&|1234567|1234567||ERXPP|${{ timestamp }}|userID:192.168.0.1|ZPN|125|P|2.1||\r" +
             "ZCA||70|X0|M1|04|\r" +
@@ -78,6 +79,7 @@ export let MedicationRequest = [
         name: "TRX_X1_REQUEST - 195233",
         purpose: "Record a Prescription request message",
         version: "PNet-R70",
+        includeIdentifier: false,
         message:
             "MSH|^~\\&|1234567|1234567|1234567|ERXPP|${{ timestamp }}|userID:192.168.0.1|ZPN|195233|P|2.1||\r" +
             "ZCA|1|70|X1|AR|05|123456\r" +
@@ -114,6 +116,7 @@ export let MedicationRequest = [
         name: "TRX_X3_REQUEST - 100004",
         purpose: "Adapt a Prescription request message",
         version: "PNet-R70",
+        includeIdentifier: false,
         message:
             "MSH|^~\\&|DESKTOP|BC01111111|DESKTOP|ERXPP|${{ timestamp }}|userID:192.168.0.1|ZPN|100004|P|2.1|123456|\r" +
             "ZCA|123456|70|X3|AR|05|123456\r" +

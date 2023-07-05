@@ -41,6 +41,7 @@ export let Patient = [
         name: " TPH_00_REQUEST - 62028",
         purpose: "Patient PHN Assignment request message",
         version: "PNet-R70",
+        includeIdentifier: false,
         message:
             "MSH|^~\\&|1234567|1234567||ERXPP|${{ timestamp }}|userID:192.168.0.1|ZPN|62028|P|2.1||\r" +
             "ZZZ|TPH||62028|P1|nnnnnnnnnn|||||ZZZ1^\r" +

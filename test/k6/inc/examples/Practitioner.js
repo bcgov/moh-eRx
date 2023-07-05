@@ -24,5 +24,17 @@ export let Practitioner = [
             "ZCA||70|00|AR|05|\r" +
             "ZCB|BC00000I10|140819|449126\r" +
             "ZPH|P1|12615|||||||||||||||\r\r"
+    },
+    {
+        name: "TIP_00_REQUEST - R70",
+        purpose: "Prescriber Identification request message",
+        version: "PNet-R70",
+        includeIdentifier: false,
+        message:
+            "MSH|^~\\&|1234567|1234567||ERXPP|${{ timestamp }}|userID:192.168.0.1|ZPN|449126|P|2.1||\r" +
+            "ZZZ|TIP||449126|P1|nnnnnnnnnn|||||ZZZ1^\r" +
+            "ZCA||70|00|AR|05|\r" +
+            "ZCB|BC00000I10|140819|449126\r" +
+            "ZPH|P1|12615|||||||||||||||\r\r"
     }
 ];
