@@ -1,0 +1,28 @@
+name: Release Builds to Production
+
+on:
+  workflow_dispatch:
+    inputs:
+      service:
+        description: 'Select services to deploy'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - ClaimService
+          - ConsentService
+          - LocationService
+          - MedicationService
+          - MedicationDispenseService
+          - MedicationRequestService
+          - MedicationStatementService
+          - PatientService
+          - PractitionerService
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Do nothing
+        run: echo Hello World!
