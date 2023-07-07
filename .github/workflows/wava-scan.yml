@@ -1,101 +1,17 @@
 on: workflow_dispatch
 
 jobs:
-  claim_scan:
+  strategy:
+    matrix:
+      service: [Claim, Consent, Location, Medication, MedicationDispense, MedicationRequest, MedicationStatement, Patient, Practitioner]
+
+  scan:
     runs-on: ubuntu-latest
     permissions: write-all
     name: Scan the webapplication
     steps:
-      - name: ClaimService ZAP Scan
+      - name: ${{ matrix.service }}Service ZAP Scan
         uses: zaproxy/action-baseline@v0.8.2
         with:
-          target: 'https://pnet-vs1.api.gov.bc.ca/api/v1/Claim'
-          artifact_name: claim_scan
-  
-  consent_scan:
-    runs-on: ubuntu-latest
-    permissions: write-all
-    name: Scan the webapplication
-    steps:
-      - name: ConsentService ZAP Scan
-        uses: zaproxy/action-baseline@v0.8.2
-        with:
-          target: 'https://pnet-vs1.api.gov.bc.ca/api/v1/Consent'
-          artifact_name: consent_scan
-  
-  location_scan:
-    runs-on: ubuntu-latest
-    permissions: write-all
-    name: Scan the webapplication
-    steps:
-      - name: LocationService ZAP Scan
-        uses: zaproxy/action-baseline@v0.8.2
-        with:
-          target: 'https://pnet-vs1.api.gov.bc.ca/api/v1/Location'
-          artifact_name: location_scan
-  
-  medication_scan:
-    runs-on: ubuntu-latest
-    permissions: write-all
-    name: Scan the webapplication
-    steps:
-      - name: MedicationService ZAP Scan
-        uses: zaproxy/action-baseline@v0.8.2
-        with:
-          target: 'https://pnet-vs1.api.gov.bc.ca/api/v1/Medication'
-          artifact_name: medication_scan
-  
-  medicationdispense_scan:
-    runs-on: ubuntu-latest
-    permissions: write-all
-    name: Scan the webapplication
-    steps:
-      - name: MedicationDispenceService ZAP Scan
-        uses: zaproxy/action-baseline@v0.8.2
-        with:
-          target: 'https://pnet-vs1.api.gov.bc.ca/api/v1/MedicationDispense'
-          artifact_name: medicationdispense_scan
-  
-  medicationrequest_scan:
-    runs-on: ubuntu-latest
-    permissions: write-all
-    name: Scan the webapplication
-    steps:
-      - name: MedicationRequestService ZAP Scan
-        uses: zaproxy/action-baseline@v0.8.2
-        with:
-          target: 'https://pnet-vs1.api.gov.bc.ca/api/v1/MedicationRequest'
-          artifact_name: medicationrequest_scan
-  
-  medicationstatement_scan:
-    runs-on: ubuntu-latest
-    permissions: write-all
-    name: Scan the webapplication
-    steps:
-      - name: MedicationStatementService ZAP Scan
-        uses: zaproxy/action-baseline@v0.8.2
-        with:
-          target: 'https://pnet-vs1.api.gov.bc.ca/api/v1/MedicationStatement'
-          artifact_name: medicationstatement_scan
-  
-  patient_scan:
-    runs-on: ubuntu-latest
-    permissions: write-all
-    name: Scan the webapplication
-    steps:
-      - name: PatientService ZAP Scan
-        uses: zaproxy/action-baseline@v0.8.2
-        with:
-          target: 'https://pnet-vs1.api.gov.bc.ca/api/v1/Patient'
-          artifact_name: patient_scan
-  
-  practitioner_scan:
-    runs-on: ubuntu-latest
-    permissions: write-all
-    name: Scan the webapplication
-    steps:
-      - name: PractitionerService ZAP Scan
-        uses: zaproxy/action-baseline@v0.8.2
-        with:
-          target: 'https://pnet-vs1.api.gov.bc.ca/api/v1/Practitioner'
-          artifact_name: practitioner_scan
+          target: 'https://pnet-vs1.api.gov.bc.ca/api/v1/${{ matrix.service }}'
+          artifact_name: ${{ matrix.service }}_scan
