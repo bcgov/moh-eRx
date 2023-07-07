@@ -57,34 +57,34 @@ jobs:
           imageName=${{ secrets.GOLD_IMAGE_REPOSITORY }}/${{ secrets.GOLD_TOOLS_NAMESPACE }}/$(echo ${{ matrix.service }} | tr '[:upper:]' '[:lower:]')
           docker build -f $GITHUB_WORKSPACE/Services/${{ matrix.service }}/src/Dockerfile $RUNNER_TEMP -t $imageName:${{ inputs.environment }}
 
-      # - name: OpenShift Gold Login
-      #   if: inputs.service == 'all' || inputs.service == matrix.service
-      #   uses: redhat-actions/oc-login@v1.1
-      #   with:
-      #     openshift_server_url: ${{ secrets.GOLD_URI }}
-      #     openshift_token: ${{ secrets.GOLD_TOKEN }}
-      #     namespace: ${{ secrets.GOLD_TOOLS_NAMSPACE }}
+      - name: OpenShift Gold Login
+        if: inputs.service == 'all' || inputs.service == matrix.service
+        uses: redhat-actions/oc-login@v1.1
+        with:
+          openshift_server_url: ${{ secrets.GOLD_URI }}
+          openshift_token: ${{ secrets.GOLD_TOKEN }}
+          namespace: ${{ secrets.GOLD_TOOLS_NAMSPACE }}
 
-      # - name: Pushing ${{ matrix.service }} to Gold
-      #   if: inputs.service == 'all' || inputs.service == matrix.service
-      #   run: |
-      #     imageName=${{ secrets.GOLD_IMAGE_REPOSITORY }}/${{ secrets.GOLD_TOOLS_NAMESPACE }}/$(echo ${{ matrix.service }} | tr '[:upper:]' '[:lower:]')
-      #     docker login -u ${{ secrets.OPENSHIFT_USER }} -p `oc whoami --show-token` ${{ secrets.GOLD_IMAGE_REPOSITORY }}
-      #     docker push $imageName:${{ inputs.environment }}
+      - name: Pushing ${{ matrix.service }} to Gold
+        if: inputs.service == 'all' || inputs.service == matrix.service
+        run: |
+          imageName=${{ secrets.GOLD_IMAGE_REPOSITORY }}/${{ secrets.GOLD_TOOLS_NAMESPACE }}/$(echo ${{ matrix.service }} | tr '[:upper:]' '[:lower:]')
+          docker login -u ${{ secrets.OPENSHIFT_USER }} -p `oc whoami --show-token` ${{ secrets.GOLD_IMAGE_REPOSITORY }}
+          docker push $imageName:${{ inputs.environment }}
 
-      # - name: OpenShift Gold DR Login
-      #   if: inputs.service == 'all' || inputs.service == matrix.service
-      #   uses: redhat-actions/oc-login@v1.1
-      #   with:
-      #     openshift_server_url: ${{ secrets.GOLDDR_URI }}
-      #     openshift_token: ${{ secrets.GOLDDR_TOKEN }}
-      #     namespace: ${{ secrets.GOLDDR_TOOLS_NAMSPACE }}
+      - name: OpenShift Gold DR Login
+        if: inputs.service == 'all' || inputs.service == matrix.service
+        uses: redhat-actions/oc-login@v1.1
+        with:
+          openshift_server_url: ${{ secrets.GOLDDR_URI }}
+          openshift_token: ${{ secrets.GOLDDR_TOKEN }}
+          namespace: ${{ secrets.GOLDDR_TOOLS_NAMSPACE }}
 
-      # - name: Tag and Push ${{ matrix.service }} to Gold DR
-      #   if: inputs.service == 'all' || inputs.service == matrix.service
-      #   run: |
-      #     srcImageName=${{ secrets.GOLD_IMAGE_REPOSITORY }}/${{ secrets.GOLD_TOOLS_NAMESPACE }}/$(echo ${{ matrix.service }} | tr '[:upper:]' '[:lower:]')
-      #     dstImageName=${{ secrets.GOLDDR_IMAGE_REPOSITORY }}/${{ secrets.GOLDDR_TOOLS_NAMESPACE }}/$(echo ${{ matrix.service }} | tr '[:upper:]' '[:lower:]')
-      #     docker tag $srcImageName:${{ inputs.environment }} $dstImageName:${{ inputs.environment }}
-      #     docker login -u ${{ secrets.OPENSHIFT_USER }} -p `oc whoami --show-token` ${{ secrets.GOLDDR_IMAGE_REPOSITORY }}
-      #     docker push $dstImageName:${{ inputs.environment }}
+      - name: Tag and Push ${{ matrix.service }} to Gold DR
+        if: inputs.service == 'all' || inputs.service == matrix.service
+        run: |
+          srcImageName=${{ secrets.GOLD_IMAGE_REPOSITORY }}/${{ secrets.GOLD_TOOLS_NAMESPACE }}/$(echo ${{ matrix.service }} | tr '[:upper:]' '[:lower:]')
+          dstImageName=${{ secrets.GOLDDR_IMAGE_REPOSITORY }}/${{ secrets.GOLDDR_TOOLS_NAMESPACE }}/$(echo ${{ matrix.service }} | tr '[:upper:]' '[:lower:]')
+          docker tag $srcImageName:${{ inputs.environment }} $dstImageName:${{ inputs.environment }}
+          docker login -u ${{ secrets.OPENSHIFT_USER }} -p `oc whoami --show-token` ${{ secrets.GOLDDR_IMAGE_REPOSITORY }}
+          docker push $dstImageName:${{ inputs.environment }}
