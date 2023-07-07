@@ -6,4 +6,4 @@ RUN apt-get update -y && \
 WORKDIR /app
 COPY . .
 EXPOSE 8080
-ENTRYPOINT ["dotnet","/app/bin/Debug/net6.0/MedicationService.dll"]
+ENTRYPOINT ["dotnet","MedicationService.dll"]
