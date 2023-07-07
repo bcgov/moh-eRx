@@ -1,11 +1,10 @@
 on: workflow_dispatch
 
 jobs:
-  strategy:
-    matrix:
-      service: [Claim, Consent, Location, Medication, MedicationDispense, MedicationRequest, MedicationStatement, Patient, Practitioner]
-
   scan:
+    strategy:
+      matrix:
+        service: [Claim, Consent, Location, Medication, MedicationDispense, MedicationRequest, MedicationStatement, Patient, Practitioner]
     runs-on: ubuntu-latest
     permissions: write-all
     name: Scan the webapplication
