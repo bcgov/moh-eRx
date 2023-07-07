@@ -5,5 +5,6 @@ RUN apt-get update -y && \
     apt-get install -y curl telnet
 WORKDIR /app
 COPY . .
+RUN pwd
 EXPOSE 8080
 ENTRYPOINT ["dotnet","/app/bin/Debug/net6.0/ClaimService.dll"]
