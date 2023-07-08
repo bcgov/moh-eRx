@@ -52,6 +52,7 @@ jobs:
         if: inputs.service == 'all' || inputs.service == matrix.service
         run: |
           imageName=${{ secrets.GOLD_IMAGE_REPOSITORY }}/${{ secrets.GOLD_TOOLS_NAMESPACE }}/$(echo ${{ matrix.service }} | tr '[:upper:]' '[:lower:]')
+          echo $imageName:${{ inputs.environment }}
           docker tag $imageName:${{ inputs.environment }} $imageName:${{ env.PROD_TAG }}
           docker login -u ${{ secrets.OPENSHIFT_USER }} -p `oc whoami --show-token` ${{ secrets.GOLD_IMAGE_REPOSITORY }}
           docker push $imageName:${{ env.PROD_TAG }}
