@@ -19,10 +19,56 @@ on:
           - MedicationStatementService
           - PatientService
           - PractitionerService
+      environment:
+        description: 'Deploy from'
+        required: true
+        default: 'vc1'
+        type: choice
+        options:
+          - vc1
+
+env:
+  PROD_TAG: prod
 
 jobs:
   release:
     runs-on: ubuntu-latest
+    environment: review-required
+
+    strategy:
+      matrix:
+        service: [ClaimService, ConsentService, LocationService, MedicationService, MedicationDispenseService, MedicationRequestService, MedicationStatementService, PatientService, PractitionerService]
+
     steps:
-      - name: Do nothing
-        run: echo Hello World!
+      - name: OpenShift Gold Login
+        if: inputs.service == 'all' || inputs.service == matrix.service
+        uses: redhat-actions/oc-login@v1.1
+        with:
+          openshift_server_url: ${{ secrets.GOLD_URI }}
+          openshift_token: ${{ secrets.GOLD_TOKEN }}
+          namespace: ${{ secrets.GOLD_TOOLS_NAMSPACE }}
+
+      - name: Tag and Push ${{ matrix.service }} to Production in Gold
+        if: inputs.service == 'all' || inputs.service == matrix.service
+        run: |
+          imageName=${{ secrets.GOLD_IMAGE_REPOSITORY }}/${{ secrets.GOLD_TOOLS_NAMESPACE }}/$(echo ${{ matrix.service }} | tr '[:upper:]' '[:lower:]')
+          docker tag $imageName:${{ inputs.environment }} $imageName:${{ env.PROD_TAG }}
+          docker login -u ${{ secrets.OPENSHIFT_USER }} -p `oc whoami --show-token` ${{ secrets.GOLD_IMAGE_REPOSITORY }}
+          docker push $imageName:${{ env.PROD_TAG }}
+
+      - name: OpenShift Gold DR Login
+        if: inputs.service == 'all' || inputs.service == matrix.service
+        uses: redhat-actions/oc-login@v1.1
+        with:
+          openshift_server_url: ${{ secrets.GOLDDR_URI }}
+          openshift_token: ${{ secrets.GOLDDR_TOKEN }}
+          namespace: ${{ secrets.GOLDDR_TOOLS_NAMSPACE }}
+
+      - name: Tag and Push ${{ matrix.service }} to Production in Gold DR
+        if: inputs.service == 'all' || inputs.service == matrix.service
+        run: |
+          srcImageName=${{ secrets.GOLD_IMAGE_REPOSITORY }}/${{ secrets.GOLD_TOOLS_NAMESPACE }}/$(echo ${{ matrix.service }} | tr '[:upper:]' '[:lower:]')
+          dstImageName=${{ secrets.GOLDDR_IMAGE_REPOSITORY }}/${{ secrets.GOLDDR_TOOLS_NAMESPACE }}/$(echo ${{ matrix.service }} | tr '[:upper:]' '[:lower:]')
+          docker tag $srcImageName:${{ inputs.environment }} $dstImageName:${{ env.PROD_TAG }}
+          docker login -u ${{ secrets.OPENSHIFT_USER }} -p `oc whoami --show-token` ${{ secrets.GOLDDR_IMAGE_REPOSITORY }}
+          docker push $dstImageName:${{ env.PROD_TAG }}

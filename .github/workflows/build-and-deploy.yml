@@ -26,7 +26,6 @@ on:
         type: choice
         options:
           - vc1
-#          - prod
 
 jobs:
   #build services using a strategy.matrix property
