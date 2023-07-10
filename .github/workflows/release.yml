@@ -37,7 +37,7 @@ jobs:
     if: inputs.service != 'all'
     steps:
       - name: Prepare Matrix Values
-        run: ${{ env.MATRIX_VALUES }}=${{ inputs.service }}
+        run: export ${{ env.MATRIX_VALUES }}=${{ inputs.service }}
 
   release:
     runs-on: ubuntu-latest
