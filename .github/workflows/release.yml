@@ -48,7 +48,6 @@ jobs:
 
     strategy:
       matrix: ${{ fromJSON(needs.prepare-matrix.outputs.matrix) }}
-        # service: [ClaimService, ConsentService, LocationService, MedicationService, MedicationDispenseService, MedicationRequestService, MedicationStatementService, PatientService, PractitionerService]
 
     steps:
       - name: OpenShift Gold Login
