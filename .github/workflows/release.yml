@@ -38,7 +38,7 @@ jobs:
 
     steps:
       - id: set-matrix
-        run: echo "matrix={\"service\":\"[${{ inputs.service }}]\"}" >> $GITHUB_OUTPUT
+        run: echo "matrix={\"service\":[${{ inputs.service }}]}" >> $GITHUB_OUTPUT
 
   release:
     runs-on: ubuntu-latest
