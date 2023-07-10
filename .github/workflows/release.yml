@@ -28,7 +28,7 @@ on:
           - vc1
 
 env:
-  PROD_TAG: prod
+  PROD_TAG: prd
 
 jobs:
   release:
