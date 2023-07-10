@@ -29,15 +29,23 @@ on:
 
 env:
   PROD_TAG: prd
+  MATRIX_VALUES: [ClaimService, ConsentService, LocationService, MedicationService, MedicationDispenseService, MedicationRequestService, MedicationStatementService, PatientService, PractitionerService]
 
 jobs:
+  prepare-matrix:
+    runs-on: ubuntu-latest
+    if: inputs.service != 'all'
+    steps:
+      - name: Prepare Matrix Values
+        run: ${{ env.MATRIX_VALUES }}=${{ inputs.service }}
+
   release:
     runs-on: ubuntu-latest
     environment: review-required
 
     strategy:
       matrix:
-        service: [ClaimService, ConsentService, LocationService, MedicationService, MedicationDispenseService, MedicationRequestService, MedicationStatementService, PatientService, PractitionerService]
+        service: ${{ env.MATRIX_VALUES }}
 
     steps:
       - name: OpenShift Gold Login
