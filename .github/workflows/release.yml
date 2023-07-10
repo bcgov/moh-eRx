@@ -31,13 +31,22 @@ env:
   PROD_TAG: prd
 
 jobs:
+  prepare-matrix:
+    runs-on: ubuntu-latest
+    outputs: ${{ steps.set-matrix.outputs.matrix }}
+
+    steps:
+      - id: set-matrix
+        run: echo "matrix={\"service\":\"[${{ inputs.service }}]\"}" >> $GITHUB_OUTPUT
+
   release:
     runs-on: ubuntu-latest
     environment: review-required
+    needs: prepare-matrix
 
     strategy:
-      matrix:
-        service: [ClaimService, ConsentService, LocationService, MedicationService, MedicationDispenseService, MedicationRequestService, MedicationStatementService, PatientService, PractitionerService]
+      matrix: ${{ fromJSON(needs.prepare-matrix.outputs.matrix) }}
+        # service: [ClaimService, ConsentService, LocationService, MedicationService, MedicationDispenseService, MedicationRequestService, MedicationStatementService, PatientService, PractitionerService]
 
     steps:
       - name: OpenShift Gold Login
