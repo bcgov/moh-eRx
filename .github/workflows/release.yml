@@ -53,6 +53,7 @@ jobs:
         run: |
           imageName=${{ secrets.GOLD_IMAGE_REPOSITORY }}/${{ secrets.GOLD_TOOLS_NAMESPACE }}/$(echo ${{ matrix.service }} | tr '[:upper:]' '[:lower:]')
           docker login -u ${{ secrets.OPENSHIFT_USER }} -p `oc whoami --show-token` ${{ secrets.GOLD_IMAGE_REPOSITORY }}
+          docker pull $imageName:${{ inputs.environment }}
           docker tag $imageName:${{ inputs.environment }} $imageName:${{ env.PROD_TAG }}
           docker push $imageName:${{ env.PROD_TAG }}
 
@@ -69,6 +70,6 @@ jobs:
         run: |
           srcImageName=${{ secrets.GOLD_IMAGE_REPOSITORY }}/${{ secrets.GOLD_TOOLS_NAMESPACE }}/$(echo ${{ matrix.service }} | tr '[:upper:]' '[:lower:]')
           dstImageName=${{ secrets.GOLDDR_IMAGE_REPOSITORY }}/${{ secrets.GOLDDR_TOOLS_NAMESPACE }}/$(echo ${{ matrix.service }} | tr '[:upper:]' '[:lower:]')
-          docker login -u ${{ secrets.OPENSHIFT_USER }} -p `oc whoami --show-token` ${{ secrets.GOLDDR_IMAGE_REPOSITORY }}
           docker tag $srcImageName:${{ inputs.environment }} $dstImageName:${{ env.PROD_TAG }}
+          docker login -u ${{ secrets.OPENSHIFT_USER }} -p `oc whoami --show-token` ${{ secrets.GOLDDR_IMAGE_REPOSITORY }}
           docker push $dstImageName:${{ env.PROD_TAG }}
