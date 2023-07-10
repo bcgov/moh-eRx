@@ -45,7 +45,7 @@ jobs:
 
     strategy:
       matrix:
-        service: $MATRIX_VALUES
+        service: ${{ MATRIX_VALUES }}
 
     steps:
       - name: OpenShift Gold Login
