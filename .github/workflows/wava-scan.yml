@@ -1,18 +1,30 @@
 name: WAVA Scan
 
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Select the environment to scan'
+        required: true
+        default: 'vs1'
+        type: choice
+        options:
+          - dev
+          - vs1
 
 jobs:
   scan:
-    strategy:
-      matrix:
-        service: [Claim, Consent, Location, Medication, MedicationDispense, MedicationRequest, MedicationStatement, Patient, Practitioner]
     runs-on: ubuntu-latest
     permissions: write-all
     name: Scan the webapplication
+
+    strategy:
+      matrix:
+        service: [Claim, Consent, Location, Medication, MedicationDispense, MedicationRequest, MedicationStatement, Patient, Practitioner]
+
     steps:
       - name: ${{ matrix.service }}Service ZAP Scan
         uses: zaproxy/action-baseline@v0.8.2
         with:
-          target: 'https://pnet-vs1.api.gov.bc.ca/api/v1/${{ matrix.service }}'
+          target: 'https://pnet-${{ inputs.environment }}.api.gov.bc.ca/api/v1/${{ matrix.service }}'
           artifact_name: ${{ matrix.service }}_scan
