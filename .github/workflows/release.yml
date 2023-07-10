@@ -52,9 +52,8 @@ jobs:
         if: inputs.service == 'all' || inputs.service == matrix.service
         run: |
           imageName=${{ secrets.GOLD_IMAGE_REPOSITORY }}/${{ secrets.GOLD_TOOLS_NAMESPACE }}/$(echo ${{ matrix.service }} | tr '[:upper:]' '[:lower:]')
-          echo $imageName:${{ inputs.environment }}
-          docker tag $imageName:${{ inputs.environment }} $imageName:${{ env.PROD_TAG }}
           docker login -u ${{ secrets.OPENSHIFT_USER }} -p `oc whoami --show-token` ${{ secrets.GOLD_IMAGE_REPOSITORY }}
+          docker tag $imageName:${{ inputs.environment }} $imageName:${{ env.PROD_TAG }}
           docker push $imageName:${{ env.PROD_TAG }}
 
       - name: OpenShift Gold DR Login
@@ -70,6 +69,6 @@ jobs:
         run: |
           srcImageName=${{ secrets.GOLD_IMAGE_REPOSITORY }}/${{ secrets.GOLD_TOOLS_NAMESPACE }}/$(echo ${{ matrix.service }} | tr '[:upper:]' '[:lower:]')
           dstImageName=${{ secrets.GOLDDR_IMAGE_REPOSITORY }}/${{ secrets.GOLDDR_TOOLS_NAMESPACE }}/$(echo ${{ matrix.service }} | tr '[:upper:]' '[:lower:]')
-          docker tag $srcImageName:${{ inputs.environment }} $dstImageName:${{ env.PROD_TAG }}
           docker login -u ${{ secrets.OPENSHIFT_USER }} -p `oc whoami --show-token` ${{ secrets.GOLDDR_IMAGE_REPOSITORY }}
+          docker tag $srcImageName:${{ inputs.environment }} $dstImageName:${{ env.PROD_TAG }}
           docker push $dstImageName:${{ env.PROD_TAG }}
