@@ -26,29 +26,33 @@ on:
         type: choice
         options:
           - vc1
-#          - prod
 
 jobs:
-  #build services using a strategy.matrix property
-  #determine whether to build a service based on dropdown selection
-  #can't use reusable workflows here because (at time of writing) there is a limit of 20 calls per workflow
-  #each iteration uses 4 resuable workflows already
+  prepare-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+
+    steps:
+      - id: set-matrix
+        # Creates the matrix values from the input, replacing the string "all" with a list of all services
+        run: echo "matrix={\"service\":[\"${{ inputs.service }}\"]}" | sed -r 's/\"all\"/\"ClaimService\", \"ConsentService\", \"LocationService\", \"MedicationService\", \"MedicationDispenseService\", \"MedicationRequestService\", \"MedicationStatementService\", \"PatientService\", \"PractitionerService\"/' >> $GITHUB_OUTPUT
+
   build:
     runs-on: ubuntu-latest
+    needs: prepare-matrix
+
     strategy:
-      matrix:
-        service: [ClaimService, ConsentService, LocationService, MedicationService, MedicationDispenseService, MedicationRequestService, MedicationStatementService, PatientService, PractitionerService]
+      matrix: ${{ fromJSON(needs.prepare-matrix.outputs.matrix) }}
+
     steps:
       - name: "Checkout source"
-        if: inputs.service == 'all' || inputs.service == matrix.service
         uses: actions/checkout@v3
 
       - name: Setup .NET Core SDK
-        if: inputs.service == 'all' || inputs.service == matrix.service
         uses: actions/setup-dotnet@v2.1.0
 
       - name: Building ${{ matrix.service }}
-        if: inputs.service == 'all' || inputs.service == matrix.service
         run: |
           buildid=$(date +"%Y%m%d").$GITHUB_RUN_ID.$GITHUB_RUN_NUMBER.$GITHUB_RUN_ATTEMPT
           echo Starting C# Build as $buildid
@@ -58,7 +62,6 @@ jobs:
           docker build -f $GITHUB_WORKSPACE/Services/${{ matrix.service }}/src/Dockerfile $RUNNER_TEMP -t $imageName:${{ inputs.environment }}
 
       - name: OpenShift Gold Login
-        if: inputs.service == 'all' || inputs.service == matrix.service
         uses: redhat-actions/oc-login@v1.1
         with:
           openshift_server_url: ${{ secrets.GOLD_URI }}
@@ -66,14 +69,12 @@ jobs:
           namespace: ${{ secrets.GOLD_TOOLS_NAMSPACE }}
 
       - name: Pushing ${{ matrix.service }} to Gold
-        if: inputs.service == 'all' || inputs.service == matrix.service
         run: |
           imageName=${{ secrets.GOLD_IMAGE_REPOSITORY }}/${{ secrets.GOLD_TOOLS_NAMESPACE }}/$(echo ${{ matrix.service }} | tr '[:upper:]' '[:lower:]')
           docker login -u ${{ secrets.OPENSHIFT_USER }} -p `oc whoami --show-token` ${{ secrets.GOLD_IMAGE_REPOSITORY }}
           docker push $imageName:${{ inputs.environment }}
 
       - name: OpenShift Gold DR Login
-        if: inputs.service == 'all' || inputs.service == matrix.service
         uses: redhat-actions/oc-login@v1.1
         with:
           openshift_server_url: ${{ secrets.GOLDDR_URI }}
@@ -81,7 +82,6 @@ jobs:
           namespace: ${{ secrets.GOLDDR_TOOLS_NAMSPACE }}
 
       - name: Tag and Push ${{ matrix.service }} to Gold DR
-        if: inputs.service == 'all' || inputs.service == matrix.service
         run: |
           srcImageName=${{ secrets.GOLD_IMAGE_REPOSITORY }}/${{ secrets.GOLD_TOOLS_NAMESPACE }}/$(echo ${{ matrix.service }} | tr '[:upper:]' '[:lower:]')
           dstImageName=${{ secrets.GOLDDR_IMAGE_REPOSITORY }}/${{ secrets.GOLDDR_TOOLS_NAMESPACE }}/$(echo ${{ matrix.service }} | tr '[:upper:]' '[:lower:]')
