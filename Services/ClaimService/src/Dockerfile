@@ -1,11 +1,11 @@
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
-RUN useradd --user-group --system --create-home --no-log-init claimservice
-USER claimservice
 ENV ASPNETCORE_URLS=http://+:8080
 ENV ASPNETCORE_ENVIRONMENT=Production
 RUN apt-get update -y && \ 
     apt-get install -y curl telnet
 WORKDIR /app
 COPY . .
+RUN useradd --user-group --system --create-home --no-log-init claimservice
+USER claimservice
 EXPOSE 8080
 ENTRYPOINT ["dotnet","ClaimService.dll"]
