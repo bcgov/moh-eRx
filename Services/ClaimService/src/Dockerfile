@@ -5,7 +5,7 @@ RUN apt-get update -y && \
     apt-get install -y curl telnet
 WORKDIR /app
 COPY . .
-RUN useradd --user-group --system --create-home --no-log-init claimservice
-USER claimservice
+RUN useradd --user-group --system --create-home --no-log-init app
+USER app
 EXPOSE 8080
 ENTRYPOINT ["dotnet","ClaimService.dll"]
