@@ -1,0 +1,26 @@
+Application:
+  Environment:
+    ASPNETCORE_ENVIRONMENT: vs1
+  Secrets:
+    PharmaNet_PharmanetProxy__Endpoint: common-vs1-secrets
+    PharmaNet_PharmanetProxy__Username: common-vs1-secrets
+    PharmaNet_PharmanetProxy__Password: common-vs1-secrets
+    PharmaNet_PharmanetProxy__ClientCertificatePassword: common-vs1-secrets
+
+OpenShift:
+  Environment: vs1
+  ImageProject: d027a8-tools
+
+image:
+  stream: medicationservice
+
+resources: 
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 20m
+    memory: 256Mi
+
+autoscaling:
+  enabled: false
