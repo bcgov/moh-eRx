@@ -8,13 +8,18 @@ secret=
 # Path to directory containing the repo
 homedir=
 
-services=('Claim' 'Consent' 'Location' 'MedicationDispense' 'MedicationRequest' 'Medication' 'MedicationStatement' 'Patient' 'Practitioner')
+services=('Claim' 'Consent' 'Location' 'Medication' 'MedicationDispense' 'MedicationRequest' 'MedicationStatement' 'Patient' 'Practitioner')
 
 for i in "${!services[@]}"; do
   echo Testing ${services[$i]}Service...
-  ERX_ENV=${env} ERX_CLIENT=${client} ERX_CLIENT_SECRET=${secret} docker compose --file ${homedir}/test/k6/api/${services[$i]}/docker-compose.yml up --detach
-  docker compose --file ${homedir}/test/k6/api/${services[$i]}/docker-compose.yml logs --follow > ${homedir}/test/k6/output/k6-${env}-${services[$i]}.txt
 
-  echo Deleting ${services[$i]}Service compose stack
-  docker compose --file ${homedir}/test/k6/api/${services[$i]}/docker-compose.yml rm --force
+  # Set the env variables for the command
+  # Compose up the test container
+  # Write the output to a file
+  ERX_ENV=${env} ERX_CLIENT=${client} ERX_CLIENT_SECRET=${secret} \
+  docker compose --file ${homedir}/test/k6/api/${services[$i]}/docker-compose.yml up \
+  > ${homedir}/test/k6/output/k6-${env}-${services[$i]}.txt 2>&1
+
+  # Quietly delete the compose stack
+  docker compose --file ${homedir}/test/k6/api/${services[$i]}/docker-compose.yml rm --force > /dev/null 2>&1
 done
