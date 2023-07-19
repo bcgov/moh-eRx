@@ -104,6 +104,8 @@ export function authenticateClient(client, scopes) {
             break;
         case 'vs1':
         case 'vs2':
+        case 'vc1':
+        case 'trn':
             tokenUrl = TokenEndpointUrl_Test;
             break;
         default:
