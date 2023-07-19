@@ -1,9 +1,9 @@
 #!/bin/bash
 
-environment=vs1
+environment=dev
 ocEnvironment=dev
-license=d027a8
-helmCommand=install
+license="2f77cb"
+helmCommand=upgrade
 
 services=('common' 'claimservice' 'consentservice' 'locationservice' 'medicationdispenseservice' 'medicationrequestservice'
           'medicationservice' 'medicationstatementservice' 'patientservice' 'practitionerservice')

@@ -8,10 +8,10 @@ spec:
     - from:
         - namespaceSelector:
             matchLabels:
-              environment: test
-              name: 264e6f
+              environment: dev
+              name: 2f77cb
     - from:
         - namespaceSelector:
             matchLabels:
-              environment: prod
-              name: 264e6f
+              environment: test
+              name: 2f77cb
