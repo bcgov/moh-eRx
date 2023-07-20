@@ -14,7 +14,7 @@ OpenShift:
 image:
   stream: medicationstatementservice
 
-resources: 
+resources:
   limits:
     cpu: 100m
     memory: 150Mi

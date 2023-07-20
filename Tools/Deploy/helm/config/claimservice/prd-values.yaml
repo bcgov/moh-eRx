@@ -14,7 +14,7 @@ OpenShift:
 image:
   stream: claimservice
 
-resources: 
+resources:
   limits:
     cpu: 100m
     memory: 150Mi

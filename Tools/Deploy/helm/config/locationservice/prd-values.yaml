@@ -13,8 +13,8 @@ OpenShift:
 
 image:
   stream: locationservice
-  
-resources: 
+
+resources:
   limits:
     cpu: 100m
     memory: 150Mi

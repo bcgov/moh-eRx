@@ -14,13 +14,13 @@ OpenShift:
 image:
   stream: medicationrequestservice
 
-resources: 
+resources:
   limits:
   # updated from 500m to 100m to test out start
     cpu: 100m
-  # updated from 1Gi to 100Mi to test out start    
+  # updated from 1Gi to 100Mi to test out start
     memory: 150Mi
   requests:
     cpu: 20m
-  # updated from 512Mi to 50Mi to test out start        
+  # updated from 512Mi to 50Mi to test out start
     memory: 50Mi
