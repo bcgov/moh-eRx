@@ -109,6 +109,7 @@ export function authenticateClient(client, scopes) {
             tokenUrl = TokenEndpointUrl_Test;
             break;
         default:
+            console.log("WARNING: \"" + environment + "\" is not a recognized environment. Defaulting to erx_development client ID.");
             tokenUrl = TokenEndpointUrl_Dev;
             break;
     }
