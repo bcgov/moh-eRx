@@ -1,4 +1,4 @@
-name: Build and Deploy Services
+name: Deploy Services to Gold and Gold DR
 
 on:
   workflow_dispatch:

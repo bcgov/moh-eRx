@@ -1,0 +1,77 @@
+name: Deploy Services to Silver
+
+on:
+  workflow_dispatch:
+    inputs:
+      service:
+        description: 'Select services to deploy'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - ClaimService
+          - ConsentService
+          - LocationService
+          - MedicationService
+          - MedicationDispenseService
+          - MedicationRequestService
+          - MedicationStatementService
+          - PatientService
+          - PractitionerService
+      environment:
+        description: 'Deploy to'
+        required: true
+        default: 'dev'
+        type: choice
+        options:
+          - dev
+          - vs1
+          - trn
+
+jobs:
+  prepare-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+
+    steps:
+      - id: set-matrix
+        # Creates the matrix values from the input, replacing the string "all" with a list of all services
+        run: echo "matrix={\"service\":[\"${{ inputs.service }}\"]}" | sed -r 's/\"all\"/\"ClaimService\", \"ConsentService\", \"LocationService\", \"MedicationService\", \"MedicationDispenseService\", \"MedicationRequestService\", \"MedicationStatementService\", \"PatientService\", \"PractitionerService\"/' >> $GITHUB_OUTPUT
+
+  build:
+    runs-on: ubuntu-latest
+    needs: prepare-matrix
+
+    strategy:
+      matrix: ${{ fromJSON(needs.prepare-matrix.outputs.matrix) }}
+
+    steps:
+      - name: "Checkout source"
+        uses: actions/checkout@v3
+
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v2.1.0
+
+      - name: Building ${{ matrix.service }}
+        run: |
+          buildid=$(date +"%Y%m%d").$GITHUB_RUN_ID.$GITHUB_RUN_NUMBER.$GITHUB_RUN_ATTEMPT
+          echo Starting C# Build as $buildid
+          dotnet publish $GITHUB_WORKSPACE/Services/${{ matrix.service }}/src/${{ matrix.service }}.csproj -o $RUNNER_TEMP -c Release
+          echo Starting Docker Build
+          imageName=${{ secrets.SILVER_IMAGE_REPOSITORY }}/${{ secrets.SILVER_TOOLS_NAMESPACE }}/$(echo ${{ matrix.service }} | tr '[:upper:]' '[:lower:]')
+          docker build -f $GITHUB_WORKSPACE/Services/${{ matrix.service }}/src/Dockerfile $RUNNER_TEMP -t $imageName:${{ inputs.environment }}
+
+      - name: OpenShift Silver Login
+        uses: redhat-actions/oc-login@v1.1
+        with:
+          openshift_server_url: ${{ secrets.SILVER_URI }}
+          openshift_token: ${{ secrets.SILVER_TOKEN }}
+          namespace: ${{ secrets.SILVER_TOOLS_NAMSPACE }}
+
+      - name: Pushing ${{ matrix.service }} to Silver
+        run: |
+          imageName=${{ secrets.SILVER_IMAGE_REPOSITORY }}/${{ secrets.SILVER_TOOLS_NAMESPACE }}/$(echo ${{ matrix.service }} | tr '[:upper:]' '[:lower:]')
+          docker login -u ${{ secrets.OPENSHIFT_USER }} -p `oc whoami --show-token` ${{ secrets.SILVER_IMAGE_REPOSITORY }}
+          docker push $imageName:${{ inputs.environment }}
