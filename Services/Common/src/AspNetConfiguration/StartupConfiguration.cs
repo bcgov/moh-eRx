@@ -132,7 +132,7 @@ namespace Health.PharmaNet.Common.AspNetConfiguration
             }).AddJwtBearer(options =>
             {
                 options.SaveToken = true;
-                options.RequireHttpsMetadata = false;
+                options.RequireHttpsMetadata = true;
                 options.IncludeErrorDetails = true;
 
                 this.configuration.GetSection(ConfigurationSections.OpenIdConnect).Bind(options);
