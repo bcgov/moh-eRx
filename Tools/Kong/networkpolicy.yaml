@@ -14,4 +14,4 @@ spec:
         - namespaceSelector:
             matchLabels:
               environment: prod
-              name: 26436f
+              name: 264e6f
