@@ -27,7 +27,7 @@ on:
         options:
           - dev
           - vs1
-          - trn
+          - vc2
 
 jobs:
   prepare-matrix:
