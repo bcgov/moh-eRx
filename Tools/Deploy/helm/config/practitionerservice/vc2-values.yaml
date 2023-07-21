@@ -9,7 +9,7 @@ Application:
 
 OpenShift:
   Environment: vc2
-  ImageProject: d027a8-tools
+  ImageProject: 2f77cb-tools
 
 image:
   stream: practitionerservice

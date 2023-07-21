@@ -1,25 +1,25 @@
 _format_version: "1.1"
 services:
-  - name: Health.PharmaNet.TRN.ClaimService
-    host: claimservice-trn-ppmservice.2f77cb-test.svc
+  - name: Health.PharmaNet.VC2.ClaimService
+    host: claimservice-vc2-ppmservice.2f77cb-test.svc
     port: 8080
     protocol: http
     path: /api/v1/claim
     routes:
-      - name: TRN-ClaimService
+      - name: VC2-ClaimService
         methods:
           - POST
         hosts:
-          - pnet-trn.api.gov.bc.ca
+          - pnet-vc2.api.gov.bc.ca
         paths:
           - /api/v1/Claim
         strip_path: true
         tags:
           - OAS3_import
-          - ns.ppm-trn
+          - ns.ppm-vc2
         plugins:
           - name: jwt-keycloak
-            tags: [ns.ppm-trn]
+            tags: [ns.ppm-vc2]
             enabled: true
             config:
               client_roles: null
@@ -45,28 +45,28 @@ services:
               consumer_match_claim: azp
     tags:
       - OAS3_import
-      - ns.ppm-trn
+      - ns.ppm-vc2
 
-  - name: Health.PharmaNet.TRN.ConsentService
-    host: consentservice-trn-ppmservice.2f77cb-test.svc
+  - name: Health.PharmaNet.VC2.ConsentService
+    host: consentservice-vc2-ppmservice.2f77cb-test.svc
     port: 8080
     protocol: http
     path: /api/v1/consent
     routes:
-      - name: TRN-ConsentService
+      - name: VC2-ConsentService
         methods:
           - POST
         hosts:
-          - pnet-trn.api.gov.bc.ca
+          - pnet-vc2.api.gov.bc.ca
         paths:
           - /api/v1/Consent
         strip_path: true
         tags:
           - OAS3_import
-          - ns.ppm-trn
+          - ns.ppm-vc2
         plugins:
           - name: jwt-keycloak
-            tags: [ns.ppm-trn]
+            tags: [ns.ppm-vc2]
             enabled: true
             config:
               client_roles: null
@@ -92,28 +92,28 @@ services:
               consumer_match_claim: azp
     tags:
       - OAS3_import
-      - ns.ppm-trn
+      - ns.ppm-vc2
 
-  - name: Health.PharmaNet.TRN.LocationService
-    host: locationservice-trn-ppmservice.2f77cb-test.svc
+  - name: Health.PharmaNet.VC2.LocationService
+    host: locationservice-vc2-ppmservice.2f77cb-test.svc
     port: 8080
     protocol: http
     path: /api/v1/location
     routes:
-      - name: TRN-LocationService
+      - name: VC2-LocationService
         methods:
           - POST
         hosts:
-          - pnet-trn.api.gov.bc.ca
+          - pnet-vc2.api.gov.bc.ca
         paths:
           - /api/v1/Location
         strip_path: true
         tags:
           - OAS3_import
-          - ns.ppm-trn
+          - ns.ppm-vc2
         plugins:
           - name: jwt-keycloak
-            tags: [ns.ppm-trn]
+            tags: [ns.ppm-vc2]
             enabled: true
             config:
               client_roles: null
@@ -139,28 +139,28 @@ services:
               consumer_match_claim: azp
     tags:
       - OAS3_import
-      - ns.ppm-trn
+      - ns.ppm-vc2
 
-  - name: Health.PharmaNet.TRN.MedicationDispenseService
-    host: medicationdispenseservice-trn-ppmservice.2f77cb-test.svc
+  - name: Health.PharmaNet.VC2.MedicationDispenseService
+    host: medicationdispenseservice-vc2-ppmservice.2f77cb-test.svc
     port: 8080
     protocol: http
     path: /api/v1/medicationdispense
     routes:
-      - name: TRN-MedicationDispenseService
+      - name: VC2-MedicationDispenseService
         methods:
           - POST
         hosts:
-          - pnet-trn.api.gov.bc.ca
+          - pnet-vc2.api.gov.bc.ca
         paths:
           - /api/v1/MedicationDispense
         strip_path: true
         tags:
           - OAS3_import
-          - ns.ppm-trn
+          - ns.ppm-vc2
         plugins:
           - name: jwt-keycloak
-            tags: [ns.ppm-trn]
+            tags: [ns.ppm-vc2]
             enabled: true
             config:
               client_roles: null
@@ -186,28 +186,28 @@ services:
               consumer_match_claim: azp
     tags:
       - OAS3_import
-      - ns.ppm-trn
+      - ns.ppm-vc2
 
-  - name: Health.PharmaNet.TRN.MedicationRequest
-    host: medicationrequestservice-trn-ppmservice.2f77cb-test.svc
+  - name: Health.PharmaNet.VC2.MedicationRequest
+    host: medicationrequestservice-vc2-ppmservice.2f77cb-test.svc
     port: 8080
     protocol: http
     path: /api/v1/medicationrequest
     routes:
-      - name: TRN-MedicationRequestService
+      - name: VC2-MedicationRequestService
         methods:
           - POST
         hosts:
-          - pnet-trn.api.gov.bc.ca
+          - pnet-vc2.api.gov.bc.ca
         paths:
           - /api/v1/MedicationRequest
         strip_path: true
         tags:
           - OAS3_import
-          - ns.ppm-trn
+          - ns.ppm-vc2
         plugins:
           - name: jwt-keycloak
-            tags: [ns.ppm-trn]
+            tags: [ns.ppm-vc2]
             enabled: true
             config:
               client_roles: null
@@ -233,28 +233,28 @@ services:
               consumer_match_claim: azp
     tags:
       - OAS3_import
-      - ns.ppm-trn
+      - ns.ppm-vc2
 
-  - name: Health.PharmaNet.TRN.Medication
-    host: medicationservice-trn-ppmservice.2f77cb-test.svc
+  - name: Health.PharmaNet.VC2.Medication
+    host: medicationservice-vc2-ppmservice.2f77cb-test.svc
     port: 8080
     protocol: http
     path: /api/v1/medication
     routes:
-      - name: TRN-MedicationService
+      - name: VC2-MedicationService
         methods:
           - POST
         hosts:
-          - pnet-trn.api.gov.bc.ca
+          - pnet-vc2.api.gov.bc.ca
         paths:
           - /api/v1/Medication
         strip_path: true
         tags:
           - OAS3_import
-          - ns.ppm-trn
+          - ns.ppm-vc2
         plugins:
           - name: jwt-keycloak
-            tags: [ns.ppm-trn]
+            tags: [ns.ppm-vc2]
             enabled: true
             config:
               client_roles: null
@@ -280,28 +280,28 @@ services:
               consumer_match_claim: azp
     tags:
       - OAS3_import
-      - ns.ppm-trn
+      - ns.ppm-vc2
 
-  - name: Health.PharmaNet.TRN.MedicationStatement
-    host: medicationstatementservice-trn-ppmservice.2f77cb-test.svc
+  - name: Health.PharmaNet.VC2.MedicationStatement
+    host: medicationstatementservice-vc2-ppmservice.2f77cb-test.svc
     port: 8080
     protocol: http
     path: /api/v1/medicationstatement
     routes:
-      - name: TRN-MedicationStatementService
+      - name: VC2-MedicationStatementService
         methods:
           - POST
         hosts:
-          - pnet-trn.api.gov.bc.ca
+          - pnet-vc2.api.gov.bc.ca
         paths:
           - /api/v1/MedicationStatement
         strip_path: true
         tags:
           - OAS3_import
-          - ns.ppm-trn
+          - ns.ppm-vc2
         plugins:
           - name: jwt-keycloak
-            tags: [ns.ppm-trn]
+            tags: [ns.ppm-vc2]
             enabled: true
             config:
               client_roles: null
@@ -327,28 +327,28 @@ services:
               consumer_match_claim: azp
     tags:
       - OAS3_import
-      - ns.ppm-trn
+      - ns.ppm-vc2
 
-  - name: Health.PharmaNet.TRN.PatientService
-    host: patientservice-trn-ppmservice.2f77cb-test.svc
+  - name: Health.PharmaNet.VC2.PatientService
+    host: patientservice-vc2-ppmservice.2f77cb-test.svc
     port: 8080
     protocol: http
     path: /api/v1/patient
     routes:
-      - name: TRN-PatientService
+      - name: VC2-PatientService
         methods:
           - POST
         hosts:
-          - pnet-trn.api.gov.bc.ca
+          - pnet-vc2.api.gov.bc.ca
         paths:
           - /api/v1/Patient
         strip_path: true
         tags:
           - OAS3_import
-          - ns.ppm-trn
+          - ns.ppm-vc2
         plugins:
           - name: jwt-keycloak
-            tags: [ns.ppm-trn]
+            tags: [ns.ppm-vc2]
             enabled: true
             config:
               client_roles: null
@@ -374,28 +374,28 @@ services:
               consumer_match_claim: azp
     tags:
       - OAS3_import
-      - ns.ppm-trn
+      - ns.ppm-vc2
 
-  - name: Health.PharmaNet.TRN.PractitionerService
-    host: practitionerservice-trn-ppmservice.2f77cb-test.svc
+  - name: Health.PharmaNet.VC2.PractitionerService
+    host: practitionerservice-vc2-ppmservice.2f77cb-test.svc
     port: 8080
     protocol: http
     path: /api/v1/practitioner
     routes:
-      - name: TRN-PractitionerService
+      - name: VC2-PractitionerService
         methods:
           - POST
         hosts:
-          - pnet-trn.api.gov.bc.ca
+          - pnet-vc2.api.gov.bc.ca
         paths:
           - /api/v1/Practitioner
         strip_path: true
         tags:
           - OAS3_import
-          - ns.ppm-trn
+          - ns.ppm-vc2
         plugins:
           - name: jwt-keycloak
-            tags: [ns.ppm-trn]
+            tags: [ns.ppm-vc2]
             enabled: true
             config:
               client_roles: null
@@ -421,4 +421,4 @@ services:
               consumer_match_claim: azp
     tags:
       - OAS3_import
-      - ns.ppm-trn
+      - ns.ppm-vc2
