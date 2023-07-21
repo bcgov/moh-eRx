@@ -1,7 +1,7 @@
 _format_version: "1.1"
 services:
   - name: Health.PharmaNet.VS1.ClaimService
-    host: claimservice.2f77cb-test.svc
+    host: claimservice-vs1-ppmservice.2f77cb-test.svc
     port: 8080
     protocol: http
     path: /api/v1/claim
@@ -48,7 +48,7 @@ services:
       - ns.ppm-vs1
 
   - name: Health.PharmaNet.VS1.ConsentService
-    host: consentservice.2f77cb-test.svc
+    host: consentservice-vs1-ppmservice.2f77cb-test.svc
     port: 8080
     protocol: http
     path: /api/v1/consent
@@ -95,7 +95,7 @@ services:
       - ns.ppm-vs1
 
   - name: Health.PharmaNet.VS1.LocationService
-    host: locationservice.2f77cb-test.svc
+    host: locationservice-vs1-ppmservice.2f77cb-test.svc
     port: 8080
     protocol: http
     path: /api/v1/location
@@ -142,7 +142,7 @@ services:
       - ns.ppm-vs1
 
   - name: Health.PharmaNet.VS1.MedicationDispenseService
-    host: medicationdispenseservice.2f77cb-test.svc
+    host: medicationdispenseservice-vs1-ppmservice.2f77cb-test.svc
     port: 8080
     protocol: http
     path: /api/v1/medicationdispense
@@ -189,7 +189,7 @@ services:
       - ns.ppm-vs1
 
   - name: Health.PharmaNet.VS1.MedicationRequest
-    host: medicationrequestservice.2f77cb-test.svc
+    host: medicationrequestservice-vs1-ppmservice.2f77cb-test.svc
     port: 8080
     protocol: http
     path: /api/v1/medicationrequest
@@ -236,7 +236,7 @@ services:
       - ns.ppm-vs1
 
   - name: Health.PharmaNet.VS1.Medication
-    host: medicationservice.2f77cb-test.svc
+    host: medicationservice-vs1-ppmservice.2f77cb-test.svc
     port: 8080
     protocol: http
     path: /api/v1/medication
@@ -283,7 +283,7 @@ services:
       - ns.ppm-vs1
 
   - name: Health.PharmaNet.VS1.MedicationStatement
-    host: medicationstatementservice.2f77cb-test.svc
+    host: medicationstatementservice-vs1-ppmservice.2f77cb-test.svc
     port: 8080
     protocol: http
     path: /api/v1/medicationstatement
@@ -330,7 +330,7 @@ services:
       - ns.ppm-vs1
 
   - name: Health.PharmaNet.VS1.PatientService
-    host: patientservice.2f77cb-test.svc
+    host: patientservice-vs1-ppmservice.2f77cb-test.svc
     port: 8080
     protocol: http
     path: /api/v1/patient
@@ -377,7 +377,7 @@ services:
       - ns.ppm-vs1
 
   - name: Health.PharmaNet.VS1.PractitionerService
-    host: practitionerservice.2f77cb-test.svc
+    host: practitionerservice-vs1-ppmservice.2f77cb-test.svc
     port: 8080
     protocol: http
     path: /api/v1/practitioner
