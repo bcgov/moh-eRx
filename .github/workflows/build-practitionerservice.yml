@@ -2,12 +2,12 @@ name: CI-PractitionerService
 on:
   push:
     branches:
-      - "dev"
+      - "main"
     paths: 
       - 'Services/PractitionerService/**'
   pull_request:
-    branches: 
-      - "dev"
+    branches:
+      - "main"
     paths: 
       - 'Services/PractitionerService/**'
     

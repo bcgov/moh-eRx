@@ -2,12 +2,12 @@ name: CI-LocationService
 on:
   push:
     branches:
-      - "dev"
+      - "main"
     paths: 
       - 'Services/LocationService/**'
   pull_request:
-    branches: 
-      - "dev"
+    branches:
+      - "main"
     paths: 
       - 'Services/LocationService/**'
     

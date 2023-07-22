@@ -2,12 +2,12 @@ name: CI-PatientService
 on:
   push:
     branches:
-      - "dev"
+      - "main"
     paths: 
       - 'Services/PatientService/**'
   pull_request:
-    branches: 
-      - "dev"
+    branches:
+      - "main"
     paths: 
       - 'Services/PatientService/**'
     

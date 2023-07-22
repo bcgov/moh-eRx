@@ -2,12 +2,12 @@ name: CI-MedicationStatementService
 on:
   push:
     branches:
-      - "dev"
+      - "main"
     paths: 
       - 'Services/MedicationStatementService/**'
   pull_request:
-    branches: 
-      - "dev"
+    branches:
+      - "main"
     paths: 
       - 'Services/MedicationStatementService/**'
     

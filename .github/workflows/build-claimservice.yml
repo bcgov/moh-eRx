@@ -2,12 +2,12 @@ name: CI-ClaimsService
 on:
   push:
     branches:
-      - "dev"
+      - "main"
     paths: 
       - 'Services/ClaimService/**'
   pull_request:
-    branches: 
-      - "dev"
+    branches:
+      - "main"
     paths: 
       - 'Services/ClaimService/**'
     
