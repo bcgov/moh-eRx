@@ -18,6 +18,8 @@ import { sleep } from 'k6';
 import * as common from '../../inc/common.js';
 import * as examples from '../../inc/examples/MedicationRequest.js';
 
+export const options = common.options;
+
 export default function() {
 
     var url = common.MedicationRequestServiceUrl;

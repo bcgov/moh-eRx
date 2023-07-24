@@ -19,12 +19,9 @@ import { check, fail, group, sleep } from 'k6';
 import { Rate, Trend } from 'k6/metrics';
 import * as uuid from './uuid.js';
 
-let virtualUsers = __ENV.ERX_VUS ? __ENV.ERX_VUS : 1;
-let nIterations = __ENV.ERX_ITERATIONS ? __ENV.ERX_ITERATIONS : 1;
-
-export let options = {
-    vus: virtualUsers,
-    iterations: nIterations
+export const options = {
+    vus: __ENV.ERX_VUS ? __ENV.ERX_VUS : 1,
+    iterations: __ENV.ERX_ITERATIONS ? __ENV.ERX_ITERATIONS : 1
 };
 
 export let client_secret = __ENV.ERX_CLIENT_SECRET;
