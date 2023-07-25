@@ -1,7 +1,7 @@
 _format_version: "1.1"
 services:
   - name: Health.PharmaNet.PRD.ClaimService
-    host: claimservice.d027a8-test.svc
+    host: claimservice-prd-ppmservice.d027a8-test.svc
     port: 8080
     protocol: http
     path: /api/v1/claim
@@ -16,10 +16,10 @@ services:
         strip_path: true
         tags:
           - OAS3_import
-          - ns.prd-pnet
+          - ns.ppm-gold-prd
         plugins:
           - name: jwt-keycloak
-            tags: [ns.prd-pnet]
+            tags: [ns.ppm-gold-prd]
             enabled: true
             config:
               client_roles: null
@@ -45,10 +45,10 @@ services:
               consumer_match_claim: azp
     tags:
       - OAS3_import
-      - ns.prd-pnet
+      - ns.ppm-gold-prd
 
   - name: Health.PharmaNet.PRD.ConsentService
-    host: consentservice.d027a8-test.svc
+    host: consentservice-prd-ppmservice.d027a8-test.svc
     port: 8080
     protocol: http
     path: /api/v1/consent
@@ -63,10 +63,10 @@ services:
         strip_path: true
         tags:
           - OAS3_import
-          - ns.prd-pnet
+          - ns.ppm-gold-prd
         plugins:
           - name: jwt-keycloak
-            tags: [ns.prd-pnet]
+            tags: [ns.ppm-gold-prd]
             enabled: true
             config:
               client_roles: null
@@ -92,10 +92,10 @@ services:
               consumer_match_claim: azp
     tags:
       - OAS3_import
-      - ns.prd-pnet
+      - ns.ppm-gold-prd
 
   - name: Health.PharmaNet.PRD.LocationService
-    host: locationservice.d027a8-test.svc
+    host: locationservice-prd-ppmservice.d027a8-test.svc
     port: 8080
     protocol: http
     path: /api/v1/location
@@ -110,10 +110,10 @@ services:
         strip_path: true
         tags:
           - OAS3_import
-          - ns.prd-pnet
+          - ns.ppm-gold-prd
         plugins:
           - name: jwt-keycloak
-            tags: [ns.prd-pnet]
+            tags: [ns.ppm-gold-prd]
             enabled: true
             config:
               client_roles: null
@@ -139,10 +139,10 @@ services:
               consumer_match_claim: azp
     tags:
       - OAS3_import
-      - ns.prd-pnet
+      - ns.ppm-gold-prd
 
   - name: Health.PharmaNet.PRD.MedicationDispenseService
-    host: medicationdispenseservice.d027a8-test.svc
+    host: medicationdispenseservice-prd-ppmservice.d027a8-test.svc
     port: 8080
     protocol: http
     path: /api/v1/medicationdispense
@@ -157,10 +157,10 @@ services:
         strip_path: true
         tags:
           - OAS3_import
-          - ns.prd-pnet
+          - ns.ppm-gold-prd
         plugins:
           - name: jwt-keycloak
-            tags: [ns.prd-pnet]
+            tags: [ns.ppm-gold-prd]
             enabled: true
             config:
               client_roles: null
@@ -186,10 +186,10 @@ services:
               consumer_match_claim: azp
     tags:
       - OAS3_import
-      - ns.prd-pnet
+      - ns.ppm-gold-prd
 
   - name: Health.PharmaNet.PRD.MedicationRequest
-    host: medicationrequestservice.d027a8-test.svc
+    host: medicationrequestservice-prd-ppmservice.d027a8-test.svc
     port: 8080
     protocol: http
     path: /api/v1/medicationrequest
@@ -204,10 +204,10 @@ services:
         strip_path: true
         tags:
           - OAS3_import
-          - ns.prd-pnet
+          - ns.ppm-gold-prd
         plugins:
           - name: jwt-keycloak
-            tags: [ns.prd-pnet]
+            tags: [ns.ppm-gold-prd]
             enabled: true
             config:
               client_roles: null
@@ -233,10 +233,10 @@ services:
               consumer_match_claim: azp
     tags:
       - OAS3_import
-      - ns.prd-pnet
+      - ns.ppm-gold-prd
 
   - name: Health.PharmaNet.PRD.Medication
-    host: medicationservice.d027a8-test.svc
+    host: medicationservice-prd-ppmservice.d027a8-test.svc
     port: 8080
     protocol: http
     path: /api/v1/medication
@@ -251,10 +251,10 @@ services:
         strip_path: true
         tags:
           - OAS3_import
-          - ns.prd-pnet
+          - ns.ppm-gold-prd
         plugins:
           - name: jwt-keycloak
-            tags: [ns.prd-pnet]
+            tags: [ns.ppm-gold-prd]
             enabled: true
             config:
               client_roles: null
@@ -280,10 +280,10 @@ services:
               consumer_match_claim: azp
     tags:
       - OAS3_import
-      - ns.prd-pnet
+      - ns.ppm-gold-prd
 
   - name: Health.PharmaNet.PRD.MedicationStatement
-    host: medicationstatementservice.d027a8-test.svc
+    host: medicationstatementservice-prd-ppmservice.d027a8-test.svc
     port: 8080
     protocol: http
     path: /api/v1/medicationstatement
@@ -298,10 +298,10 @@ services:
         strip_path: true
         tags:
           - OAS3_import
-          - ns.prd-pnet
+          - ns.ppm-gold-prd
         plugins:
           - name: jwt-keycloak
-            tags: [ns.prd-pnet]
+            tags: [ns.ppm-gold-prd]
             enabled: true
             config:
               client_roles: null
@@ -327,10 +327,10 @@ services:
               consumer_match_claim: azp
     tags:
       - OAS3_import
-      - ns.prd-pnet
+      - ns.ppm-gold-prd
 
   - name: Health.PharmaNet.PRD.PatientService
-    host: patientservice.d027a8-test.svc
+    host: patientservice-prd-ppmservice.d027a8-test.svc
     port: 8080
     protocol: http
     path: /api/v1/patient
@@ -345,10 +345,10 @@ services:
         strip_path: true
         tags:
           - OAS3_import
-          - ns.prd-pnet
+          - ns.ppm-gold-prd
         plugins:
           - name: jwt-keycloak
-            tags: [ns.prd-pnet]
+            tags: [ns.ppm-gold-prd]
             enabled: true
             config:
               client_roles: null
@@ -374,10 +374,10 @@ services:
               consumer_match_claim: azp
     tags:
       - OAS3_import
-      - ns.prd-pnet
+      - ns.ppm-gold-prd
 
   - name: Health.PharmaNet.PRD.PractitionerService
-    host: practitionerservice.d027a8-test.svc
+    host: practitionerservice-prd-ppmservice.d027a8-test.svc
     port: 8080
     protocol: http
     path: /api/v1/practitioner
@@ -392,10 +392,10 @@ services:
         strip_path: true
         tags:
           - OAS3_import
-          - ns.prd-pnet
+          - ns.ppm-gold-prd
         plugins:
           - name: jwt-keycloak
-            tags: [ns.prd-pnet]
+            tags: [ns.ppm-gold-prd]
             enabled: true
             config:
               client_roles: null
@@ -421,4 +421,4 @@ services:
               consumer_match_claim: azp
     tags:
       - OAS3_import
-      - ns.prd-pnet
+      - ns.ppm-gold-prd

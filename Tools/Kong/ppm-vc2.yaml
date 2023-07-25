@@ -16,10 +16,10 @@ services:
         strip_path: true
         tags:
           - OAS3_import
-          - ns.vc2-pnet
+          - ns.ppm-vc2
         plugins:
           - name: jwt-keycloak
-            tags: [ns.vc2-pnet]
+            tags: [ns.ppm-vc2]
             enabled: true
             config:
               client_roles: null
@@ -45,7 +45,7 @@ services:
               consumer_match_claim: azp
     tags:
       - OAS3_import
-      - ns.vc2-pnet
+      - ns.ppm-vc2
 
   - name: Health.PharmaNet.VC2.ConsentService
     host: consentservice-vc2-ppmservice.2f77cb-test.svc
@@ -63,10 +63,10 @@ services:
         strip_path: true
         tags:
           - OAS3_import
-          - ns.vc2-pnet
+          - ns.ppm-vc2
         plugins:
           - name: jwt-keycloak
-            tags: [ns.vc2-pnet]
+            tags: [ns.ppm-vc2]
             enabled: true
             config:
               client_roles: null
@@ -92,7 +92,7 @@ services:
               consumer_match_claim: azp
     tags:
       - OAS3_import
-      - ns.vc2-pnet
+      - ns.ppm-vc2
 
   - name: Health.PharmaNet.VC2.LocationService
     host: locationservice-vc2-ppmservice.2f77cb-test.svc
@@ -110,10 +110,10 @@ services:
         strip_path: true
         tags:
           - OAS3_import
-          - ns.vc2-pnet
+          - ns.ppm-vc2
         plugins:
           - name: jwt-keycloak
-            tags: [ns.vc2-pnet]
+            tags: [ns.ppm-vc2]
             enabled: true
             config:
               client_roles: null
@@ -139,7 +139,7 @@ services:
               consumer_match_claim: azp
     tags:
       - OAS3_import
-      - ns.vc2-pnet
+      - ns.ppm-vc2
 
   - name: Health.PharmaNet.VC2.MedicationDispenseService
     host: medicationdispenseservice-vc2-ppmservice.2f77cb-test.svc
@@ -157,10 +157,10 @@ services:
         strip_path: true
         tags:
           - OAS3_import
-          - ns.vc2-pnet
+          - ns.ppm-vc2
         plugins:
           - name: jwt-keycloak
-            tags: [ns.vc2-pnet]
+            tags: [ns.ppm-vc2]
             enabled: true
             config:
               client_roles: null
@@ -186,7 +186,7 @@ services:
               consumer_match_claim: azp
     tags:
       - OAS3_import
-      - ns.vc2-pnet
+      - ns.ppm-vc2
 
   - name: Health.PharmaNet.VC2.MedicationRequest
     host: medicationrequestservice-vc2-ppmservice.2f77cb-test.svc
@@ -204,10 +204,10 @@ services:
         strip_path: true
         tags:
           - OAS3_import
-          - ns.vc2-pnet
+          - ns.ppm-vc2
         plugins:
           - name: jwt-keycloak
-            tags: [ns.vc2-pnet]
+            tags: [ns.ppm-vc2]
             enabled: true
             config:
               client_roles: null
@@ -233,7 +233,7 @@ services:
               consumer_match_claim: azp
     tags:
       - OAS3_import
-      - ns.vc2-pnet
+      - ns.ppm-vc2
 
   - name: Health.PharmaNet.VC2.Medication
     host: medicationservice-vc2-ppmservice.2f77cb-test.svc
@@ -251,10 +251,10 @@ services:
         strip_path: true
         tags:
           - OAS3_import
-          - ns.vc2-pnet
+          - ns.ppm-vc2
         plugins:
           - name: jwt-keycloak
-            tags: [ns.vc2-pnet]
+            tags: [ns.ppm-vc2]
             enabled: true
             config:
               client_roles: null
@@ -280,7 +280,7 @@ services:
               consumer_match_claim: azp
     tags:
       - OAS3_import
-      - ns.vc2-pnet
+      - ns.ppm-vc2
 
   - name: Health.PharmaNet.VC2.MedicationStatement
     host: medicationstatementservice-vc2-ppmservice.2f77cb-test.svc
@@ -298,10 +298,10 @@ services:
         strip_path: true
         tags:
           - OAS3_import
-          - ns.vc2-pnet
+          - ns.ppm-vc2
         plugins:
           - name: jwt-keycloak
-            tags: [ns.vc2-pnet]
+            tags: [ns.ppm-vc2]
             enabled: true
             config:
               client_roles: null
@@ -327,7 +327,7 @@ services:
               consumer_match_claim: azp
     tags:
       - OAS3_import
-      - ns.vc2-pnet
+      - ns.ppm-vc2
 
   - name: Health.PharmaNet.VC2.PatientService
     host: patientservice-vc2-ppmservice.2f77cb-test.svc
@@ -345,10 +345,10 @@ services:
         strip_path: true
         tags:
           - OAS3_import
-          - ns.vc2-pnet
+          - ns.ppm-vc2
         plugins:
           - name: jwt-keycloak
-            tags: [ns.vc2-pnet]
+            tags: [ns.ppm-vc2]
             enabled: true
             config:
               client_roles: null
@@ -374,7 +374,7 @@ services:
               consumer_match_claim: azp
     tags:
       - OAS3_import
-      - ns.vc2-pnet
+      - ns.ppm-vc2
 
   - name: Health.PharmaNet.VC2.PractitionerService
     host: practitionerservice-vc2-ppmservice.2f77cb-test.svc
@@ -392,10 +392,10 @@ services:
         strip_path: true
         tags:
           - OAS3_import
-          - ns.vc2-pnet
+          - ns.ppm-vc2
         plugins:
           - name: jwt-keycloak
-            tags: [ns.vc2-pnet]
+            tags: [ns.ppm-vc2]
             enabled: true
             config:
               client_roles: null
@@ -421,4 +421,4 @@ services:
               consumer_match_claim: azp
     tags:
       - OAS3_import
-      - ns.vc2-pnet
+      - ns.ppm-vc2

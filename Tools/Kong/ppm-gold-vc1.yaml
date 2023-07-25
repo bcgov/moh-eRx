@@ -16,10 +16,10 @@ services:
         strip_path: true
         tags:
           - OAS3_import
-          - ns.vc1-pnet
+          - ns.ppm-gold-vc1
         plugins:
           - name: jwt-keycloak
-            tags: [ns.vc1-pnet]
+            tags: [ns.ppm-gold-vc1]
             enabled: true
             config:
               client_roles: null
@@ -45,7 +45,7 @@ services:
               consumer_match_claim: azp
     tags:
       - OAS3_import
-      - ns.vc1-pnet
+      - ns.ppm-gold-vc1
 
   - name: Health.PharmaNet.VC1.ConsentService
     host: consentservice-vc1-ppmservice.d027a8-test.svc
@@ -63,10 +63,10 @@ services:
         strip_path: true
         tags:
           - OAS3_import
-          - ns.vc1-pnet
+          - ns.ppm-gold-vc1
         plugins:
           - name: jwt-keycloak
-            tags: [ns.vc1-pnet]
+            tags: [ns.ppm-gold-vc1]
             enabled: true
             config:
               client_roles: null
@@ -92,7 +92,7 @@ services:
               consumer_match_claim: azp
     tags:
       - OAS3_import
-      - ns.vc1-pnet
+      - ns.ppm-gold-vc1
 
   - name: Health.PharmaNet.VC1.LocationService
     host: locationservice-vc1-ppmservice.d027a8-test.svc
@@ -110,10 +110,10 @@ services:
         strip_path: true
         tags:
           - OAS3_import
-          - ns.vc1-pnet
+          - ns.ppm-gold-vc1
         plugins:
           - name: jwt-keycloak
-            tags: [ns.vc1-pnet]
+            tags: [ns.ppm-gold-vc1]
             enabled: true
             config:
               client_roles: null
@@ -139,7 +139,7 @@ services:
               consumer_match_claim: azp
     tags:
       - OAS3_import
-      - ns.vc1-pnet
+      - ns.ppm-gold-vc1
 
   - name: Health.PharmaNet.VC1.MedicationDispenseService
     host: medicationdispenseservice-vc1-ppmservice.d027a8-test.svc
@@ -157,10 +157,10 @@ services:
         strip_path: true
         tags:
           - OAS3_import
-          - ns.vc1-pnet
+          - ns.ppm-gold-vc1
         plugins:
           - name: jwt-keycloak
-            tags: [ns.vc1-pnet]
+            tags: [ns.ppm-gold-vc1]
             enabled: true
             config:
               client_roles: null
@@ -186,7 +186,7 @@ services:
               consumer_match_claim: azp
     tags:
       - OAS3_import
-      - ns.vc1-pnet
+      - ns.ppm-gold-vc1
 
   - name: Health.PharmaNet.VC1.MedicationRequest
     host: medicationrequestservice-vc1-ppmservice.d027a8-test.svc
@@ -204,10 +204,10 @@ services:
         strip_path: true
         tags:
           - OAS3_import
-          - ns.vc1-pnet
+          - ns.ppm-gold-vc1
         plugins:
           - name: jwt-keycloak
-            tags: [ns.vc1-pnet]
+            tags: [ns.ppm-gold-vc1]
             enabled: true
             config:
               client_roles: null
@@ -233,7 +233,7 @@ services:
               consumer_match_claim: azp
     tags:
       - OAS3_import
-      - ns.vc1-pnet
+      - ns.ppm-gold-vc1
 
   - name: Health.PharmaNet.VC1.Medication
     host: medicationservice-vc1-ppmservice.d027a8-test.svc
@@ -251,10 +251,10 @@ services:
         strip_path: true
         tags:
           - OAS3_import
-          - ns.vc1-pnet
+          - ns.ppm-gold-vc1
         plugins:
           - name: jwt-keycloak
-            tags: [ns.vc1-pnet]
+            tags: [ns.ppm-gold-vc1]
             enabled: true
             config:
               client_roles: null
@@ -280,7 +280,7 @@ services:
               consumer_match_claim: azp
     tags:
       - OAS3_import
-      - ns.vc1-pnet
+      - ns.ppm-gold-vc1
 
   - name: Health.PharmaNet.VC1.MedicationStatement
     host: medicationstatementservice-vc1-ppmservice.d027a8-test.svc
@@ -298,10 +298,10 @@ services:
         strip_path: true
         tags:
           - OAS3_import
-          - ns.vc1-pnet
+          - ns.ppm-gold-vc1
         plugins:
           - name: jwt-keycloak
-            tags: [ns.vc1-pnet]
+            tags: [ns.ppm-gold-vc1]
             enabled: true
             config:
               client_roles: null
@@ -327,7 +327,7 @@ services:
               consumer_match_claim: azp
     tags:
       - OAS3_import
-      - ns.vc1-pnet
+      - ns.ppm-gold-vc1
 
   - name: Health.PharmaNet.VC1.PatientService
     host: patientservice-vc1-ppmservice.d027a8-test.svc
@@ -345,10 +345,10 @@ services:
         strip_path: true
         tags:
           - OAS3_import
-          - ns.vc1-pnet
+          - ns.ppm-gold-vc1
         plugins:
           - name: jwt-keycloak
-            tags: [ns.vc1-pnet]
+            tags: [ns.ppm-gold-vc1]
             enabled: true
             config:
               client_roles: null
@@ -374,7 +374,7 @@ services:
               consumer_match_claim: azp
     tags:
       - OAS3_import
-      - ns.vc1-pnet
+      - ns.ppm-gold-vc1
 
   - name: Health.PharmaNet.VC1.PractitionerService
     host: practitionerservice-vc1-ppmservice.d027a8-test.svc
@@ -392,10 +392,10 @@ services:
         strip_path: true
         tags:
           - OAS3_import
-          - ns.vc1-pnet
+          - ns.ppm-gold-vc1
         plugins:
           - name: jwt-keycloak
-            tags: [ns.vc1-pnet]
+            tags: [ns.ppm-gold-vc1]
             enabled: true
             config:
               client_roles: null
@@ -421,4 +421,4 @@ services:
               consumer_match_claim: azp
     tags:
       - OAS3_import
-      - ns.vc1-pnet
+      - ns.ppm-gold-vc1
