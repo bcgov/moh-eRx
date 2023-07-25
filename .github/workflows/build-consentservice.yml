@@ -33,7 +33,7 @@ jobs:
           dotnet publish $GITHUB_WORKSPACE/Services/$APP/src/$APP.csproj -o $RUNNER_TEMP -c Release
           echo Starting Docker Build
           imageName=${{ secrets.SILVER_IMAGE_REPOSITORY }}/${{ secrets.SILVER_TOOLS_NAMESPACE }}/$(echo $APP | tr '[:upper:]' '[:lower:]')
-          docker build -f $GITHUB_WORKSPACE/Services/$APP/src/Dockerfile $RUNNER_TEMP -t $imageName:dev -t $imageName:vs1 -t $imageName:vc2
+          docker build -f $GITHUB_WORKSPACE/Services/$APP/src/Dockerfile $RUNNER_TEMP -t $imageName:dev
 
       - name: OpenShift Silver Login
         uses: redhat-actions/oc-login@v1.1
@@ -47,5 +47,3 @@ jobs:
           imageName=${{ secrets.SILVER_IMAGE_REPOSITORY }}/${{ secrets.SILVER_TOOLS_NAMESPACE }}/$(echo $APP | tr '[:upper:]' '[:lower:]')
           docker login -u ${{ secrets.OPENSHIFT_USER }} -p `oc whoami --show-token` ${{ secrets.SILVER_IMAGE_REPOSITORY }}
           docker push $imageName:dev
-          docker push $imageName:vs1
-          docker push $imageName:vc2
