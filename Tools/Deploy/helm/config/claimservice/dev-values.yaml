@@ -1,0 +1,26 @@
+Application:
+  Environment:
+    ASPNETCORE_ENVIRONMENT: dev
+  Secrets:
+    PharmaNet_PharmanetProxy__Endpoint: common-dev-secrets
+    PharmaNet_PharmanetProxy__Username: common-dev-secrets
+    PharmaNet_PharmanetProxy__Password: common-dev-secrets
+    PharmaNet_PharmanetProxy__ClientCertificatePassword: common-dev-secrets
+
+OpenShift:
+  Environment: dev
+  ImageProject: 2f77cb-tools
+
+image:
+  stream: claimservice
+
+resources:
+  limits:
+    # updated from 500m to 100m to test out start
+    cpu: 100m
+  # updated from 1G to 100Mi to test out start
+    memory: 150Mi
+  requests:
+    cpu: 20m
+  # updated from 512Mi to 50Mi to test out start
+    memory: 50Mi

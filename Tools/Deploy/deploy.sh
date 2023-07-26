@@ -1,16 +1,19 @@
 #!/bin/bash
 
-environment=vs1
+environment=dev
 ocEnvironment=dev
-license=d027a8
-helmCommand=install
+license="2f77cb"
+helmCommand=upgrade
 
-services=('common' 'claimservice' 'consentservice' 'locationservice' 'medicationdispenseservice' 'medicationrequestservice'
-          'medicationservice' 'medicationstatementservice' 'patientservice' 'practitionerservice')
-helmScripts=('common' 'ppmservice' 'ppmservice' 'ppmservice' 'ppmservice' 'ppmservice'
-          'ppmservice' 'ppmservice' 'ppmservice' 'ppmservice')
+# Points to Tools/Deploy/helm
+BASEDIR=$(dirname $0)/helm
+
+services=('common' 'claimservice' 'consentservice' 'locationservice' 'medicationdispenseservice' 'medicationrequestservice' 'medicationservice' 'medicationstatementservice' 'patientservice' 'practitionerservice')
+
+helmScripts=('common' 'ppmservice' 'ppmservice' 'ppmservice' 'ppmservice' 'ppmservice' 'ppmservice' 'ppmservice' 'ppmservice' 'ppmservice')
+
 for i in "${!services[@]}"; do
   service=${services[$i]}
   helmScript=${helmScripts[$i]}
-  helm ${helmCommand} -n ${license}-${ocEnvironment} -f helm/config/${service}/${environment}-values.yaml ${service}-${environment} helm/${helmScript}
+  helm ${helmCommand} -n ${license}-${ocEnvironment} -f ${BASEDIR}/config/${service}/${environment}-values.yaml ${service}-${environment} ${BASEDIR}/${helmScript}
 done

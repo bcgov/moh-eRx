@@ -2,13 +2,13 @@
 
 ## Pre-requisites
 
-* The [OpenShift CLI tools](https://console.apps.gold.devops.gov.bc.ca/command-line-tools) is installed
+* The [OpenShift CLI tools](https://console.apps.gold.devops.gov.bc.ca/command-line-tools) are installed
 * [Helm](https://helm.sh/docs/intro/install/) is installed
 * The [GWA CLI tools](https://github.com/bcgov/gwa-cli) are installed globally or are available in the kong folder
-* You have access to the OpenShift Gold/Gold DR Clusters
-* The Helm environment zip is expanded under the helm directory
-* The Kong environment zip is expanded under the kong directory
-* The Certificate zip is expanded under the helm/common directory
+* You have access to the OpenShift Silver and Gold/Gold DR Clusters
+* The Helm common config values (yaml files) exist under Tools/Deploy/helm/config/common directory
+* The Kong .env files exist under the Tools/Kong directory
+* The certificates (pfx files) exist under the helm/common directory
 
 ## OpenShift Setup
 

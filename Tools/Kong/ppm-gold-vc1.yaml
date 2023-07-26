@@ -1,0 +1,424 @@
+_format_version: "1.1"
+services:
+  - name: Health.PharmaNet.VC1.ClaimService
+    host: claimservice-vc1-ppmservice.d027a8-test.svc
+    port: 8080
+    protocol: http
+    path: /api/v1/claim
+    routes:
+      - name: VC1-ClaimService
+        methods:
+          - POST
+        hosts:
+          - pnet-vc1.api.gov.bc.ca
+        paths:
+          - /api/v1/Claim
+        strip_path: true
+        tags:
+          - OAS3_import
+          - ns.ppm-gold-vc1
+        plugins:
+          - name: jwt-keycloak
+            tags: [ns.ppm-gold-vc1]
+            enabled: true
+            config:
+              client_roles: null
+              allowed_iss:
+                - https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications
+              run_on_preflight: true
+              iss_key_grace_period: 10
+              maximum_expiration: 0
+              claims_to_verify:
+                - exp
+              consumer_match_claim_custom_id: false
+              cookie_names: []
+              scope: null
+              uri_param_names:
+                - jwt
+              roles: null
+              consumer_match: false
+              well_known_template: https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications/.well-known/openid-configuration
+              consumer_match_ignore_not_found: false
+              anonymous: null
+              algorithm: RS256
+              realm_roles: null
+              consumer_match_claim: azp
+    tags:
+      - OAS3_import
+      - ns.ppm-gold-vc1
+
+  - name: Health.PharmaNet.VC1.ConsentService
+    host: consentservice-vc1-ppmservice.d027a8-test.svc
+    port: 8080
+    protocol: http
+    path: /api/v1/consent
+    routes:
+      - name: VC1-ConsentService
+        methods:
+          - POST
+        hosts:
+          - pnet-vc1.api.gov.bc.ca
+        paths:
+          - /api/v1/Consent
+        strip_path: true
+        tags:
+          - OAS3_import
+          - ns.ppm-gold-vc1
+        plugins:
+          - name: jwt-keycloak
+            tags: [ns.ppm-gold-vc1]
+            enabled: true
+            config:
+              client_roles: null
+              allowed_iss:
+                - https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications
+              run_on_preflight: true
+              iss_key_grace_period: 10
+              maximum_expiration: 0
+              claims_to_verify:
+                - exp
+              consumer_match_claim_custom_id: false
+              cookie_names: []
+              scope: null
+              uri_param_names:
+                - jwt
+              roles: null
+              consumer_match: false
+              well_known_template: https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications/.well-known/openid-configuration
+              consumer_match_ignore_not_found: false
+              anonymous: null
+              algorithm: RS256
+              realm_roles: null
+              consumer_match_claim: azp
+    tags:
+      - OAS3_import
+      - ns.ppm-gold-vc1
+
+  - name: Health.PharmaNet.VC1.LocationService
+    host: locationservice-vc1-ppmservice.d027a8-test.svc
+    port: 8080
+    protocol: http
+    path: /api/v1/location
+    routes:
+      - name: VC1-LocationService
+        methods:
+          - POST
+        hosts:
+          - pnet-vc1.api.gov.bc.ca
+        paths:
+          - /api/v1/Location
+        strip_path: true
+        tags:
+          - OAS3_import
+          - ns.ppm-gold-vc1
+        plugins:
+          - name: jwt-keycloak
+            tags: [ns.ppm-gold-vc1]
+            enabled: true
+            config:
+              client_roles: null
+              allowed_iss:
+                - https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications
+              run_on_preflight: true
+              iss_key_grace_period: 10
+              maximum_expiration: 0
+              claims_to_verify:
+                - exp
+              consumer_match_claim_custom_id: false
+              cookie_names: []
+              scope: null
+              uri_param_names:
+                - jwt
+              roles: null
+              consumer_match: false
+              well_known_template: https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications/.well-known/openid-configuration
+              consumer_match_ignore_not_found: false
+              anonymous: null
+              algorithm: RS256
+              realm_roles: null
+              consumer_match_claim: azp
+    tags:
+      - OAS3_import
+      - ns.ppm-gold-vc1
+
+  - name: Health.PharmaNet.VC1.MedicationDispenseService
+    host: medicationdispenseservice-vc1-ppmservice.d027a8-test.svc
+    port: 8080
+    protocol: http
+    path: /api/v1/medicationdispense
+    routes:
+      - name: VC1-MedicationDispenseService
+        methods:
+          - POST
+        hosts:
+          - pnet-vc1.api.gov.bc.ca
+        paths:
+          - /api/v1/MedicationDispense
+        strip_path: true
+        tags:
+          - OAS3_import
+          - ns.ppm-gold-vc1
+        plugins:
+          - name: jwt-keycloak
+            tags: [ns.ppm-gold-vc1]
+            enabled: true
+            config:
+              client_roles: null
+              allowed_iss:
+                - https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications
+              run_on_preflight: true
+              iss_key_grace_period: 10
+              maximum_expiration: 0
+              claims_to_verify:
+                - exp
+              consumer_match_claim_custom_id: false
+              cookie_names: []
+              scope: null
+              uri_param_names:
+                - jwt
+              roles: null
+              consumer_match: false
+              well_known_template: https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications/.well-known/openid-configuration
+              consumer_match_ignore_not_found: false
+              anonymous: null
+              algorithm: RS256
+              realm_roles: null
+              consumer_match_claim: azp
+    tags:
+      - OAS3_import
+      - ns.ppm-gold-vc1
+
+  - name: Health.PharmaNet.VC1.MedicationRequest
+    host: medicationrequestservice-vc1-ppmservice.d027a8-test.svc
+    port: 8080
+    protocol: http
+    path: /api/v1/medicationrequest
+    routes:
+      - name: VC1-MedicationRequestService
+        methods:
+          - POST
+        hosts:
+          - pnet-vc1.api.gov.bc.ca
+        paths:
+          - /api/v1/MedicationRequest
+        strip_path: true
+        tags:
+          - OAS3_import
+          - ns.ppm-gold-vc1
+        plugins:
+          - name: jwt-keycloak
+            tags: [ns.ppm-gold-vc1]
+            enabled: true
+            config:
+              client_roles: null
+              allowed_iss:
+                - https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications
+              run_on_preflight: true
+              iss_key_grace_period: 10
+              maximum_expiration: 0
+              claims_to_verify:
+                - exp
+              consumer_match_claim_custom_id: false
+              cookie_names: []
+              scope: null
+              uri_param_names:
+                - jwt
+              roles: null
+              consumer_match: false
+              well_known_template: https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications/.well-known/openid-configuration
+              consumer_match_ignore_not_found: false
+              anonymous: null
+              algorithm: RS256
+              realm_roles: null
+              consumer_match_claim: azp
+    tags:
+      - OAS3_import
+      - ns.ppm-gold-vc1
+
+  - name: Health.PharmaNet.VC1.Medication
+    host: medicationservice-vc1-ppmservice.d027a8-test.svc
+    port: 8080
+    protocol: http
+    path: /api/v1/medication
+    routes:
+      - name: VC1-MedicationService
+        methods:
+          - POST
+        hosts:
+          - pnet-vc1.api.gov.bc.ca
+        paths:
+          - /api/v1/Medication
+        strip_path: true
+        tags:
+          - OAS3_import
+          - ns.ppm-gold-vc1
+        plugins:
+          - name: jwt-keycloak
+            tags: [ns.ppm-gold-vc1]
+            enabled: true
+            config:
+              client_roles: null
+              allowed_iss:
+                - https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications
+              run_on_preflight: true
+              iss_key_grace_period: 10
+              maximum_expiration: 0
+              claims_to_verify:
+                - exp
+              consumer_match_claim_custom_id: false
+              cookie_names: []
+              scope: null
+              uri_param_names:
+                - jwt
+              roles: null
+              consumer_match: false
+              well_known_template: https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications/.well-known/openid-configuration
+              consumer_match_ignore_not_found: false
+              anonymous: null
+              algorithm: RS256
+              realm_roles: null
+              consumer_match_claim: azp
+    tags:
+      - OAS3_import
+      - ns.ppm-gold-vc1
+
+  - name: Health.PharmaNet.VC1.MedicationStatement
+    host: medicationstatementservice-vc1-ppmservice.d027a8-test.svc
+    port: 8080
+    protocol: http
+    path: /api/v1/medicationstatement
+    routes:
+      - name: VC1-MedicationStatementService
+        methods:
+          - POST
+        hosts:
+          - pnet-vc1.api.gov.bc.ca
+        paths:
+          - /api/v1/MedicationStatement
+        strip_path: true
+        tags:
+          - OAS3_import
+          - ns.ppm-gold-vc1
+        plugins:
+          - name: jwt-keycloak
+            tags: [ns.ppm-gold-vc1]
+            enabled: true
+            config:
+              client_roles: null
+              allowed_iss:
+                - https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications
+              run_on_preflight: true
+              iss_key_grace_period: 10
+              maximum_expiration: 0
+              claims_to_verify:
+                - exp
+              consumer_match_claim_custom_id: false
+              cookie_names: []
+              scope: null
+              uri_param_names:
+                - jwt
+              roles: null
+              consumer_match: false
+              well_known_template: https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications/.well-known/openid-configuration
+              consumer_match_ignore_not_found: false
+              anonymous: null
+              algorithm: RS256
+              realm_roles: null
+              consumer_match_claim: azp
+    tags:
+      - OAS3_import
+      - ns.ppm-gold-vc1
+
+  - name: Health.PharmaNet.VC1.PatientService
+    host: patientservice-vc1-ppmservice.d027a8-test.svc
+    port: 8080
+    protocol: http
+    path: /api/v1/patient
+    routes:
+      - name: VC1-PatientService
+        methods:
+          - POST
+        hosts:
+          - pnet-vc1.api.gov.bc.ca
+        paths:
+          - /api/v1/Patient
+        strip_path: true
+        tags:
+          - OAS3_import
+          - ns.ppm-gold-vc1
+        plugins:
+          - name: jwt-keycloak
+            tags: [ns.ppm-gold-vc1]
+            enabled: true
+            config:
+              client_roles: null
+              allowed_iss:
+                - https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications
+              run_on_preflight: true
+              iss_key_grace_period: 10
+              maximum_expiration: 0
+              claims_to_verify:
+                - exp
+              consumer_match_claim_custom_id: false
+              cookie_names: []
+              scope: null
+              uri_param_names:
+                - jwt
+              roles: null
+              consumer_match: false
+              well_known_template: https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications/.well-known/openid-configuration
+              consumer_match_ignore_not_found: false
+              anonymous: null
+              algorithm: RS256
+              realm_roles: null
+              consumer_match_claim: azp
+    tags:
+      - OAS3_import
+      - ns.ppm-gold-vc1
+
+  - name: Health.PharmaNet.VC1.PractitionerService
+    host: practitionerservice-vc1-ppmservice.d027a8-test.svc
+    port: 8080
+    protocol: http
+    path: /api/v1/practitioner
+    routes:
+      - name: VC1-PractitionerService
+        methods:
+          - POST
+        hosts:
+          - pnet-vc1.api.gov.bc.ca
+        paths:
+          - /api/v1/Practitioner
+        strip_path: true
+        tags:
+          - OAS3_import
+          - ns.ppm-gold-vc1
+        plugins:
+          - name: jwt-keycloak
+            tags: [ns.ppm-gold-vc1]
+            enabled: true
+            config:
+              client_roles: null
+              allowed_iss:
+                - https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications
+              run_on_preflight: true
+              iss_key_grace_period: 10
+              maximum_expiration: 0
+              claims_to_verify:
+                - exp
+              consumer_match_claim_custom_id: false
+              cookie_names: []
+              scope: null
+              uri_param_names:
+                - jwt
+              roles: null
+              consumer_match: false
+              well_known_template: https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications/.well-known/openid-configuration
+              consumer_match_ignore_not_found: false
+              anonymous: null
+              algorithm: RS256
+              realm_roles: null
+              consumer_match_claim: azp
+    tags:
+      - OAS3_import
+      - ns.ppm-gold-vc1
