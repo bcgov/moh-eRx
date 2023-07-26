@@ -50,7 +50,7 @@ export let Patient = [
             "ZCC|||||19681025||||||M\r" +
             "ZPA|ARNOLD|QATAR||ZPA1^^^^^|ZPA2^M^^^^^6615 VEDDER RD^^SARDIS^^V2R1C9^^BC^^^^^^^^^^\r"
     },
-    {
+    /*{
         // As of May 18, 2021, PharmaNet dev env does not reply to this.
         name: "TID_00_REQUEST - R3",
         purpose: "Patient Identification request message",
@@ -60,7 +60,7 @@ export let Patient = [
             "ZZZ|TID||3362|P1|6H2O2||\r" +
             "ZCA||03|00|KC|13ZCB|BC00007007|200916|3362|\r" +
             "ZCC||||||||||0009433498542|\r\r"
-    },
+    },*/
     {
         name: "TPI_00_REQUEST - 150146",
         purpose: "Patient Medication Profile Update request message",

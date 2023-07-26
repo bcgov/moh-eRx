@@ -70,7 +70,7 @@ export let MedicationStatement = [
             "ZCD||||319233|||2063735||||||||||||||||||912351177\r" +
             "ZPJ|ZPJ1^^^^^^|ZPJ2^^~ZPJ2^^~ZPJ2^^|ZPJ3^^|ZPJ4^\r"
     },
-    {
+    /*{
         name: "TRP_00_REQUEST - R3",
         purpose: "",
         version: "PNet-R3",
@@ -79,7 +79,7 @@ export let MedicationStatement = [
             "ZZZ|TRP||3365|P1|3E9V1|||PHSVE105|\r" +
             "ZCA||03|00|KC|13|ZCB|BC00007007|200916|3365|\r" +
             "ZCC||||||||||0009388880284|\r\r"
-    },
+    },*/
     {
         name: "TRP_00_REQUEST - R3",
         purpose: "Patient Profile Request request message (NEXT initial request)",
@@ -92,14 +92,14 @@ export let MedicationStatement = [
             "ZCB|BC00000HC4|110401|101159\r" +
             "ZCC||||||||||000nnnnnnnnnn|F\r\r"
     },
-    {
+    /*{
         name: "TRP_00_REQUEST - R3",
         purpose: "Patient Profile Request request message (NEXT part request)",
         version: "PNet-R3",
         message:
             "MSH|^~\\&|XXXXXXXXXXXXXXX|NA|PNP|PP||userID:192.168.0.1|ZPN|101159|P|2.1||NEXT^ZCB^BC00000HC4^110401^101159\r\r"
-    },
-    {
+    },*/
+    /*{
         name: "TRP_00_REQUEST",
         purpose: "",
         version: "PNet-R3",
@@ -108,7 +108,7 @@ export let MedicationStatement = [
             "ZZZ|TRS||3371|P1|1D5T2|||RAHIMAN|\r" +
             "ZCA||03|00|KC|13|ZCB|BC00007007|200916|3371|\r" +
             "ZCC||||||||||0009427405543|\r\r"
-    },
+    },*/
     {
         name: "TRP_00_REQUEST - 248875",
         purpose: "Patient Profile Request message",
