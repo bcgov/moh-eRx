@@ -7,7 +7,7 @@
 env=
 
 # Set client to be the keycloak client id, like erx_development or ppm_development
-# The dev environment requires the erx_development client, all others required ppm_development
+# The dev environment requires the erx_development client, all others require ppm_development
 client=
 
 # Set secret to be the client secret associated with the client id in keycloak
@@ -15,10 +15,12 @@ secret=
 
 # Set vus to the desired number of maximum concurrent users
 # See https://github.com/bcgov/moh-eRx/wiki/k6-Testing#virtual-users-vus for more info about virtual users
+# For a smoke test, 1 vu is sufficient
 vus=
 
 # Set iterations to the total desired number of iterations of the test scripts
 # The number of iterations is independent of the number of virtual users
+# For a smoke test, 1 iteration is sufficient
 iterations=
 
 # Points to test/k6
@@ -28,21 +30,20 @@ services=('Claim' 'Consent' 'Location' 'Medication' 'MedicationDispense' 'Medica
 
 mkdir ${BASEDIR}/output/${env}
 
-for service in "${services[@]}"; do
-  echo Starting ${service}Service
+# Set environment variables for docker compose stacks
+export ERX_ENV=${env} ERX_CLIENT=${client} ERX_CLIENT_SECRET=${secret} ERX_VUS=${vus} ERX_ITERATIONS=${iterations}
 
-  # Set the env variables for the command
-  # Compose up the test container in the background
-  ERX_ENV=${env} ERX_CLIENT=${client} ERX_CLIENT_SECRET=${secret} ERX_VUS=${vus} ERX_ITERATIONS=${iterations} \
-  docker compose --file ${BASEDIR}/api/${service}/docker-compose.yml up --detach 2> /dev/null
+for service in "${services[@]}"; do
+  # Compose up the test container in the background - this will run all nine containers concurrently
+  docker compose --file ${BASEDIR}/api/${service}/docker-compose.yml up --detach
 done
 
 for service in "${services[@]}"; do
   echo Logging ${service}Service...
 
-  # Capture the logs of the container
-  docker compose --file ${BASEDIR}/api/${service}/docker-compose.yml logs --follow > ${BASEDIR}/output/${env}/k6-${env}-${service}.txt 2> /dev/null
+  # Capture the logs of the container - logs are not read concurrently, but sequentially
+  docker compose --file ${BASEDIR}/api/${service}/docker-compose.yml logs --follow > ${BASEDIR}/output/${env}/k6-${env}-${service}.txt
 
-  # Delete the compose stack
-  docker compose --file ${BASEDIR}/api/${service}/docker-compose.yml rm --force 2> /dev/null
+  # Delete the compose stack after the logs are finished
+  docker compose --file ${BASEDIR}/api/${service}/docker-compose.yml rm --force
 done
