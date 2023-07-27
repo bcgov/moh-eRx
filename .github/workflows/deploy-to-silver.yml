@@ -28,6 +28,7 @@ on:
           - dev
           - vs1
           - vc2
+          - tr1
 
 jobs:
   prepare-matrix:
