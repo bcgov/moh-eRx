@@ -29,7 +29,6 @@ export default function() {
 
     examples.examples.forEach(message => {
         common.submitMessage(url, message);
-        // console.log(message);
         sleep(1);
     });
 }
