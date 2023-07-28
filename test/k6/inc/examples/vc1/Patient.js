@@ -39,7 +39,7 @@ export const examples = [
             "ZPA|AL|BRADFORD|L|ZPA1^^^^^|ZPA2^M^^^^^109 HAMSTEAD CLOSE NW^^VANCOUVER^^V9D4E5^^BC^^^^^^^^^^\r"
     },
     {
-        name: " TPH_00_REQUEST - 62028",
+        name: "TPH_00_REQUEST - 62028",
         purpose: "Patient PHN Assignment request message",
         version: "PNet-R70",
         includeIdentifier: false,

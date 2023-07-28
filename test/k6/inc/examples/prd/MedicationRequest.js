@@ -16,7 +16,7 @@
 
 export const examples = [
     {
-        name: "TRX_X0_REQUEST -  125",
+        name: "TRX_X0_REQUEST - 125",
         purpose: "Retrieve Patient Prescription request message",
         version: "PNet-R70",
         message:

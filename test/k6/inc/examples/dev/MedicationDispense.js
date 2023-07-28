@@ -57,7 +57,7 @@ export const examples = [
     },
     {
         name: "TMU_11_REQUEST - 58709",
-        purpose: " Medication Update Reversal request message",
+        purpose: "Medication Update Reversal request message",
         version: "PNet-R70",
         message:
             "MSH|^~\\&|1234567|1234567|1234567|OP|${{ timestamp }}|userID:192.168.0.1|ZPN|58709|P|2.1||\r" +
@@ -79,5 +79,5 @@ export const examples = [
             "ZCB|LDJQQ|140910|150146\r" +
             "ZCC||||||||||000nnnnnnnnnn|\r" +
             "ZPB|ZPB3^120898^^^^^^^\r"
-    },
+    }
 ];
