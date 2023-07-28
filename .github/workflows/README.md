@@ -4,7 +4,7 @@ This code repository performs CI/CD using Github Actions.
 
 ## Environments
 
-This project has five environments: dev, vs1, vc1, vc2, and prd. New images are automatically deployed to the dev namespace in the Silver cluster whenever a commit is pushed to the main branch of the repo.
+This project has six environments: dev, vs1, vc1, vc2, tr1, and prd. New images are automatically deployed to the dev environment in the Silver cluster whenever a commit is pushed to the main branch of the repo.
 
 ## Automated Pipelines
 
