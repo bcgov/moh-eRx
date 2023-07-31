@@ -19,16 +19,15 @@ import { check, fail, group, sleep } from 'k6';
 import { Rate, Trend } from 'k6/metrics';
 import * as uuid from './uuid.js';
 
-let virtualUsers = __ENV.ERX_VUS ? __ENV.ERX_VUS : 1;
-let nIterations = __ENV.ERX_ITERATIONS ? __ENV.ERX_ITERATIONS : 1;
-
-export let options = {
-    vus: virtualUsers,
-    iterations: nIterations
+export const options = {
+    vus: __ENV.ERX_VUS ? __ENV.ERX_VUS : 1,
+    iterations: __ENV.ERX_ITERATIONS ? __ENV.ERX_ITERATIONS : 1
 };
 
 export let client_secret = __ENV.ERX_CLIENT_SECRET;
 export let ClientId = __ENV.ERX_CLIENT ? __ENV.ERX_CLIENT : 'erx_development';
+
+export let service = __ENV.ERX_SERVICE;
 
 export let authSuccess = new Rate('authentication_successful');
 export let errorRate = new Rate('errors');
@@ -40,18 +39,30 @@ export let environment = (__ENV.ERX_ENV) ? __ENV.ERX_ENV : 'dev'; // default to 
 export let TokenEndpointUrl_Dev = "https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos/protocol/openid-connect/token";
 export let TokenEndpointUrl_Test = "https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications/protocol/openid-connect/token";
 
-export let baseUrl = "https://pnet-" + environment + ".api.gov.bc.ca/api/v1/";
+export let baseUrl = environment != "prd" ?
+                     "https://pnet-" + environment + ".api.gov.bc.ca/api/v1/" :
+                     "https://pnet.api.gov.bc.ca/api/v1/";
 
-export let ClaimServiceUrl = baseUrl + "Claim";
-export let ConsentServiceUrl = baseUrl + "Consent";
-export let LocationServiceUrl = baseUrl + "Location";
-export let MedicationDispenseServiceUrl = baseUrl + "MedicationDispense";
-export let MedicationRequestServiceUrl = baseUrl + "MedicationRequest";
-export let MedicationServiceUrl = baseUrl + "Medication";
-export let MedicationStatementServiceUrl = baseUrl + "MedicationStatement";
-export let PatientServiceUrl = baseUrl + "Patient";
-export let PractitionerServiceUrl = baseUrl + "Practitioner";
+export let scopes =
+{
+    "Claim": "system/Claim.write system/Claim.read",
+    "Consent": "system/Patient.read system/Consent.write system/Consent.read",
+    "Location": "system/Location.read",
+    "Medication": "system/Medication.read",
+    "MedicationDispense": "system/MedicationDispense.write system/MedicationDispense.read",
+    "MedicationRequest": "system/MedicationRequest.write system/MedicationRequest.read",
+    "MedicationStatement": "system/MedicationStatement.read",
+    "Patient": "system/Patient.read system/Patient.write",
+    "Practitioner": "system/Practitioner.read"
+};
 
+export function getUrl() {
+    return baseUrl + service;
+}
+
+export function getScopes() {
+    return scopes[service];
+}
 
 export let client =
 {
@@ -110,7 +121,7 @@ export function authenticateClient(client, scopes) {
             tokenUrl = TokenEndpointUrl_Test;
             break;
         default:
-            console.log("WARNING: \"" + environment + "\" is not a recognized environment. Defaulting to erx_development client ID.");
+            console.log("WARNING: \"" + environment + "\" is not a recognized environment. Using dev keycloak endpoint.");
             tokenUrl = TokenEndpointUrl_Dev;
             break;
     }
