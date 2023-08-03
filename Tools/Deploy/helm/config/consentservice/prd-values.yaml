@@ -21,3 +21,5 @@ resources:
   requests:
     cpu: 20m
     memory: 50Mi
+
+replicaCount: 2

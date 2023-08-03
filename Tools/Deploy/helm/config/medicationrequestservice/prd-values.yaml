@@ -22,5 +22,4 @@ resources:
     cpu: 20m
     memory: 50Mi
 
-autoscaling:
-  enabled: false
+replicaCount: 2
