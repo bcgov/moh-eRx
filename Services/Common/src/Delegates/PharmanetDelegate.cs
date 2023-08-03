@@ -49,8 +49,6 @@ namespace Health.PharmaNet.Delegates
             byte[] bytes = Convert.FromBase64String(hl7base64Message);
             byte[] newBytes = new byte[bytes.Length];
 
-            Logger.LogDebug(this.logger, $"RESPONSE B64='{hl7base64Message}'");
-
             Span<byte> span = bytes;
             int i = 0;
             foreach(byte aByte in span)
@@ -66,7 +64,6 @@ namespace Health.PharmaNet.Delegates
                 }
             }
             string b64ResultStr = Convert.ToBase64String(newBytes, 0, i);
-            Logger.LogDebug(this.logger, $"UPDATED RESPONSE B64='{b64ResultStr}'");
 
             return b64ResultStr;
         }
@@ -105,8 +102,6 @@ namespace Health.PharmaNet.Delegates
             {
                 Uri delegateUri = new Uri(this.pharmanetDelegateConfig.Endpoint);
 
-                Logger.LogDebug(this.logger, $"PharmanetDelegate Proxy POST {delegateUri}. Payload: {jsonOutput}");
-
                 HttpResponseMessage response = await this.httpClient.PostAsync(delegateUri, content).ConfigureAwait(true);
                 requestResult.IsSuccessStatusCode = response.IsSuccessStatusCode;
                 requestResult.StatusCode = response.StatusCode;
@@ -125,7 +120,6 @@ namespace Health.PharmaNet.Delegates
 
                     responseMessage!.Hl7Message = TrimBadCharactersInMessage(responseMessage!.Hl7Message); // Workaround stray chars from Delegate
                     requestResult.Payload = responseMessage;
-                    Logger.LogDebug(this.logger, $"PharmanetDelegate Proxy Response: {responseMessage}");
                 }
             }
 #pragma warning disable CA1031 // Do not catch general exception types

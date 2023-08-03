@@ -65,8 +65,6 @@ namespace Health.PharmaNet.Services
 
             try
             {
-                Logger.LogDebug(this.logger, $"Pharmanet Request: {requestMessage.Hl7Message}");
-
                 RequestResult<PharmanetMessageModel> result = await this.pharmanetDelegate.SubmitRequest(requestMessage).ConfigureAwait(true);
 
                 response.StatusCode = result.StatusCode;
@@ -76,10 +74,8 @@ namespace Health.PharmaNet.Services
                 {
                     PharmanetMessageModel? message = result.Payload;
 
-                    this.logger.LogDebug($"Pharmanet Response: {message!.Hl7Message}");
                     ResourceReference reference = PharmanetDelegateAdapter.RelatedToDocumentReference(request);
                     response.Payload = PharmanetDelegateAdapter.ToDocumentReference(message!, reference);
-                    this.logger.LogDebug($"FHIR Response: {response!.Payload.ToString()}");
 
                     response.IsSuccessStatusCode = true;
                 }
