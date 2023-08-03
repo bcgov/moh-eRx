@@ -3,14 +3,18 @@ on:
   push:
     branches:
       - "main"
-    paths: 
+    paths:
       - 'Services/MedicationStatementService/**'
+      - 'Services/Common/**'
+      - 'Services/HL7-dotnetcore/**'
   pull_request:
     branches:
       - "main"
-    paths: 
+    paths:
       - 'Services/MedicationStatementService/**'
-    
+      - 'Services/Common/**'
+      - 'Services/HL7-dotnetcore/**'
+
   workflow_dispatch:
 
 env:
@@ -22,10 +26,10 @@ jobs:
     steps:
       - name: "Checkout source"
         uses: actions/checkout@v3
-          
+
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v2.1.0
-        
+
       - name: Building ${{ env.APP }}
         run: |
           buildid=$(date +"%Y%m%d").$GITHUB_RUN_ID.$GITHUB_RUN_NUMBER.$GITHUB_RUN_ATTEMPT
@@ -40,8 +44,8 @@ jobs:
         with:
           openshift_server_url: ${{ secrets.SILVER_URI }}
           openshift_token: ${{ secrets.SILVER_TOKEN }}
-          namespace: ${{ secrets.SILVER_TOOLS_NAMSPACE }} 
-        
+          namespace: ${{ secrets.SILVER_TOOLS_NAMSPACE }}
+
       - name: Pushing ${{ env.APP }} to Silver
         run: |
           imageName=${{ secrets.SILVER_IMAGE_REPOSITORY }}/${{ secrets.SILVER_TOOLS_NAMESPACE }}/$(echo $APP | tr '[:upper:]' '[:lower:]')
