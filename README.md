@@ -34,4 +34,6 @@ To use the PharmaNet API, you must comply with the PharmaNet API Agreement. In a
 
 ## Documentation
 
-For more information about this project, see the [wiki](https://github.com/bcgov/moh-eRx/wiki). Additional architecture documentation can also be found at the [Confluence page](https://proactionca.ent.cgi.com/confluence/display/BCMOHAM/PPM).
+Information about the transactions offered by each API service and the associated HL7v2 or FHIR resources is available in the [wiki](https://github.com/bcgov/moh-eRx/wiki). The wiki also documents the GitHub Actions workflows and the sample client application contained in this project.
+
+Information about using Helm, Kong, the API gateway, gwa, Kibana, Red Hat Advanced Cluster Security, Sysdig, and the management of the OpenShift deployments is available at the [Confluence page](https://proactionca.ent.cgi.com/confluence/display/BCMOHAM/PPM).
