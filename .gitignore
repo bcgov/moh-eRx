@@ -5,7 +5,7 @@
 *.pfx
 
 # helm secrets
-**/helm/**/common/**
+tools/helm/config/common/**
 
 # output from k6 tests
 test/k6/output/**
