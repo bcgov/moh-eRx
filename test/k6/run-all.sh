@@ -31,7 +31,7 @@ BASEDIR=$(dirname $0)
 
 services=('Claim' 'Consent' 'Location' 'Medication' 'MedicationDispense' 'MedicationRequest' 'MedicationStatement' 'Patient' 'Practitioner')
 
-mkdir ${BASEDIR}/output/${env}
+mkdir --parents ${BASEDIR}/output/${env}
 
 # Set environment variables for docker compose stacks
 export ERX_ENV=${env} ERX_CLIENT=${client} ERX_CLIENT_SECRET=${secret} ERX_VUS=${vus} ERX_ITERATIONS=${iterations}
