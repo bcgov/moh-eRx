@@ -7,6 +7,9 @@
 # helm secrets
 **/helm/**/common/**
 
+# output from k6 tests
+test/k6/output/**
+
 ## Ignore these 
 # General
 .DS_Store
