@@ -1,0 +1,6 @@
+pullAccess:
+  source: d027a8-tools
+  namespaces:
+    - d027a8-dev
+    - d027a8-test
+    - d027a8-prod

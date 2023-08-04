@@ -9,12 +9,9 @@ serviceAccount:
   role: "edit"
 
 pullAccess:
-  source: d027a8-tools
+  source: {tools-namespace}
   account: default
-  namespaces:
-    - d027a8-dev
-    - d027a8-test
-    - d027a8-prod
+  namespaces: {namespaces}
 
 nameOverride: ""
 fullnameOverride: ""
