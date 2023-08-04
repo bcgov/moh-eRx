@@ -5,7 +5,7 @@
 *.pfx
 
 # helm secrets
-tools/helm/config/common/**
+**/helm/**/common/**
 
 ## Ignore these 
 # General
