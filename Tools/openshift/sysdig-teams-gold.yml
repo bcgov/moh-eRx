@@ -1,0 +1,17 @@
+apiVersion: ops.gov.bc.ca/v1alpha1
+kind: SysdigTeam
+metadata:
+  name: d027a8-sysdigteam
+  namespace: d027a8-tools
+spec:
+  team:
+    description: The Sysdig Team for the OpenShift Project Set d027a8 (PPM)
+    users:
+    - name: hyonkyu.kim@cgi.com
+      role: ROLE_TEAM_EDIT
+    - name: colin.hathorn@cgi.com
+      role: ROLE_TEAM_EDIT      
+    - name: pankaj.kathuria@cgi.com
+      role: ROLE_TEAM_EDIT
+    - name: arlowatts1@gmail.com
+      role: ROLE_TEAM_EDIT
