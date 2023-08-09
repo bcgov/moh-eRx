@@ -5,8 +5,8 @@ ocEnvironment=dev
 license="2f77cb"
 helmCommand=upgrade
 
-# Points to Tools/Deploy/helm
-BASEDIR=$(dirname $0)/helm
+# Points to tools/helm
+BASEDIR=$(dirname $0)
 
 services=('common' 'claimservice' 'consentservice' 'locationservice' 'medicationdispenseservice' 'medicationrequestservice' 'medicationservice' 'medicationstatementservice' 'patientservice' 'practitionerservice')
 

@@ -1,0 +1,6 @@
+pullAccess:
+  source: 2f77cb-tools
+  namespaces:
+    - 2f77cb-dev
+    - 2f77cb-test
+    - 2f77cb-prod

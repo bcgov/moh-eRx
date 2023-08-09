@@ -1,0 +1,17 @@
+apiVersion: ops.gov.bc.ca/v1alpha1
+kind: SysdigTeam
+metadata:
+  name: 2f77cb-sysdigteam
+  namespace: 2f77cb-tools
+spec:
+  team:
+    description: The Sysdig Team for the OpenShift Project Set 2f77cb (PPM)
+    users:
+    - name: hyonkyu.kim@cgi.com
+      role: ROLE_TEAM_EDIT
+    - name: colin.hathorn@cgi.com
+      role: ROLE_TEAM_EDIT      
+    - name: pankaj.kathuria@cgi.com
+      role: ROLE_TEAM_EDIT
+    - name: arlowatts1@gmail.com
+      role: ROLE_TEAM_EDIT      

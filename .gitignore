@@ -1,3 +1,15 @@
+# environment files
+*.env
+
+# certificate files
+*.pfx
+
+# helm secrets
+tools/helm/config/common/**
+
+# output from k6 tests
+test/k6/output/**
+
 ## Ignore these 
 # General
 .DS_Store
@@ -11,9 +23,6 @@
 .TemporaryItems
 .Trashes
 .VolumeIcon.icns
-
-# local kong environment files
-.env
 
 ## VSCode including workspaces
 .vscode/*
