@@ -1,7 +1,7 @@
 _format_version: "1.1"
 services:
   - name: Health.PharmaNet.PRD.ClaimService
-    host: claimservice-prd-ppmservice.d027a8-test.svc
+    host: claimservice-prd-ppmservice.d027a8-prod.svc
     port: 8080
     protocol: http
     path: /api/v1/claim
@@ -48,7 +48,7 @@ services:
       - ns.ppm-gold-prd
 
   - name: Health.PharmaNet.PRD.ConsentService
-    host: consentservice-prd-ppmservice.d027a8-test.svc
+    host: consentservice-prd-ppmservice.d027a8-prod.svc
     port: 8080
     protocol: http
     path: /api/v1/consent
@@ -95,7 +95,7 @@ services:
       - ns.ppm-gold-prd
 
   - name: Health.PharmaNet.PRD.LocationService
-    host: locationservice-prd-ppmservice.d027a8-test.svc
+    host: locationservice-prd-ppmservice.d027a8-prod.svc
     port: 8080
     protocol: http
     path: /api/v1/location
@@ -142,7 +142,7 @@ services:
       - ns.ppm-gold-prd
 
   - name: Health.PharmaNet.PRD.MedicationDispenseService
-    host: medicationdispenseservice-prd-ppmservice.d027a8-test.svc
+    host: medicationdispenseservice-prd-ppmservice.d027a8-prod.svc
     port: 8080
     protocol: http
     path: /api/v1/medicationdispense
@@ -189,7 +189,7 @@ services:
       - ns.ppm-gold-prd
 
   - name: Health.PharmaNet.PRD.MedicationRequest
-    host: medicationrequestservice-prd-ppmservice.d027a8-test.svc
+    host: medicationrequestservice-prd-ppmservice.d027a8-prod.svc
     port: 8080
     protocol: http
     path: /api/v1/medicationrequest
@@ -236,7 +236,7 @@ services:
       - ns.ppm-gold-prd
 
   - name: Health.PharmaNet.PRD.Medication
-    host: medicationservice-prd-ppmservice.d027a8-test.svc
+    host: medicationservice-prd-ppmservice.d027a8-prod.svc
     port: 8080
     protocol: http
     path: /api/v1/medication
@@ -283,7 +283,7 @@ services:
       - ns.ppm-gold-prd
 
   - name: Health.PharmaNet.PRD.MedicationStatement
-    host: medicationstatementservice-prd-ppmservice.d027a8-test.svc
+    host: medicationstatementservice-prd-ppmservice.d027a8-prod.svc
     port: 8080
     protocol: http
     path: /api/v1/medicationstatement
@@ -330,7 +330,7 @@ services:
       - ns.ppm-gold-prd
 
   - name: Health.PharmaNet.PRD.PatientService
-    host: patientservice-prd-ppmservice.d027a8-test.svc
+    host: patientservice-prd-ppmservice.d027a8-prod.svc
     port: 8080
     protocol: http
     path: /api/v1/patient
@@ -377,7 +377,7 @@ services:
       - ns.ppm-gold-prd
 
   - name: Health.PharmaNet.PRD.PractitionerService
-    host: practitionerservice-prd-ppmservice.d027a8-test.svc
+    host: practitionerservice-prd-ppmservice.d027a8-prod.svc
     port: 8080
     protocol: http
     path: /api/v1/practitioner
