@@ -17,7 +17,7 @@ client=
 secret=
 
 # Set vus to the desired number of maximum concurrent users
-# See https://github.com/bcgov/moh-eRx/wiki/k6-Testing#virtual-users-vus for more info about virtual users
+# See the confluence documentation for more information about virtual users
 # Defaults to 1 - for a smoke test, 1 vu is sufficient
 vus=
 
