@@ -38,6 +38,7 @@ export let environment = (__ENV.ERX_ENV) ? __ENV.ERX_ENV : 'dev'; // default to 
 
 export let TokenEndpointUrl_Dev = "https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos/protocol/openid-connect/token";
 export let TokenEndpointUrl_Test = "https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications/protocol/openid-connect/token";
+export let TokenEndpointUrl_Prod = "https://common-logon.hlth.gov.bc.ca/auth/realms/moh_applications/protocol/openid-connect/token";
 
 export let baseUrl = environment != "prd" ?
                      "https://pnet-" + environment + ".api.gov.bc.ca/api/v1/" :
@@ -119,6 +120,9 @@ export function authenticateClient(client, scopes) {
         case 'vc2':
         case 'tr1':
             tokenUrl = TokenEndpointUrl_Test;
+            break;
+        case 'prd':
+            tokenUrl = TokenEndpointUrl_Prod;
             break;
         default:
             console.log("WARNING: \"" + environment + "\" is not a recognized environment. Using dev keycloak endpoint.");
