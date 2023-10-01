@@ -1,8 +1,8 @@
 #!/bin/bash
 
-environment=dev
-ocEnvironment=dev
-license="2f77cb"
+environment=prd
+ocEnvironment=prod
+license="d027a8"
 helmCommand=upgrade
 
 # Points to tools/helm
