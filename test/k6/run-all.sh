@@ -46,7 +46,7 @@ for service in "${services[@]}"; do
 done
 
 for service in "${services[@]}"; do
-  echo Logging ${service}Service...
+  echo Logging ${service}Service to ${BASEDIR}/output/${env}/k6-${env}-${service}.txt
 
   # Capture the logs of the container - logs are not read concurrently, but sequentially
   docker compose --project-name $(echo ${service} | tr '[:upper:]' '[:lower:]') \
