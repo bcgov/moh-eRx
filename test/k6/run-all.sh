@@ -26,22 +26,26 @@ vus=
 # Defaults to 1 - for a smoke test, 1 iteration is sufficient
 iterations=
 
-# Points to test/k6
-BASEDIR=$(dirname $0)
+# Set the number of transactions per iteration
+# Set to -1 to run all the test transactions for the service
+# Defaults to 1 - for a smoke test, as many as 10 transaction may be better
+iterationLength=
 
+# To test fewer services with this script, simply remove them from this list
 services=('Claim' 'Consent' 'Location' 'Medication' 'MedicationDispense' 'MedicationRequest' 'MedicationStatement' 'Patient' 'Practitioner')
 
+BASEDIR=$(dirname $0) # Points to test/k6
 mkdir --parents ${BASEDIR}/output/${env}
 
 # Set environment variables for docker compose stacks
-export ERX_ENV=${env} ERX_CLIENT=${client} ERX_CLIENT_SECRET=${secret} ERX_VUS=${vus} ERX_ITERATIONS=${iterations}
+export ERX_ENV=${env} ERX_CLIENT=${client} ERX_CLIENT_SECRET=${secret} ERX_VUS=${vus} ERX_ITERATIONS=${iterations} ERX_ITERATION_LENGTH=${iterationLength}
 
 for service in "${services[@]}"; do
   # Compose up the test container in the background - this will run all nine containers concurrently
   # Runs the container from test/k6/api/docker-componse.yml with a lowercase name
   ERX_SERVICE=${service} \
   docker compose --project-name $(echo ${service} | tr '[:upper:]' '[:lower:]') \
-                 --file ${BASEDIR}/api/docker-compose.yml \
+                 --file ${BASEDIR}/docker-compose.yml \
                  up --detach
 done
 

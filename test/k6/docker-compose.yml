@@ -1,17 +1,17 @@
-version: '3.4'
+version: "3.4"
 services:
   k6:
     image: grafana/k6:latest
-    command: run /api/k6.js
+    command: run /common.js
     volumes:
-      - "../api/k6.js:/api/k6.js"
-      - "../inc/common.js:/inc/common.js"
-      - "../inc/uuid.js:/inc/uuid.js"
-      - "../inc/examples/${ERX_ENV}/${ERX_SERVICE}.js:/inc/examples.js"
-    environment: 
+      - "./common.js:/common.js"
+      - "./uuid.js:/uuid.js"
+      - "./examples/${ERX_ENV}/${ERX_SERVICE}.js:/examples.js"
+    environment:
       - "ERX_ENV=${ERX_ENV}"
       - "ERX_VUS=${ERX_VUS}"
       - "ERX_ITERATIONS=${ERX_ITERATIONS}"
       - "ERX_CLIENT_SECRET=${ERX_CLIENT_SECRET}"
       - "ERX_CLIENT=${ERX_CLIENT}"
       - "ERX_SERVICE=${ERX_SERVICE}"
+      - "ERX_ITERATION_LENGTH=${ERX_ITERATION_LENGTH}"
