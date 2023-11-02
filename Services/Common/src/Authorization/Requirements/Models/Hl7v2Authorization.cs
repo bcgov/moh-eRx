@@ -24,6 +24,12 @@ namespace Health.PharmaNet.Authorization.Requirements.Models
     public class Hl7v2Authorization
     {
         /// <summary>
+        /// Gets the list of segment fields that are allowed to be logged.
+        /// </summary>
+        [JsonPropertyName("MessageSegments")]
+        public IList<string> LoggableSegments { get; } = new List<string>();
+
+        /// <summary>
         /// Gets the Messages configured.
         /// </summary>
         [JsonPropertyName("MessageConfig")]

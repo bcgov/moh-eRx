@@ -16,6 +16,7 @@
 namespace Health.PharmaNet.Authorization
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -67,6 +68,22 @@ namespace Health.PharmaNet.Authorization
             if (scopeClaim != null)
             {
                 string[] scopes = scopeClaim.Value.Split(" ", StringSplitOptions.RemoveEmptyEntries);
+
+                // Get information from the configuration about which segments to log
+                IList<string> loggableSegments = requirement.LoggableSegments();
+                string loggedMessage = "Logged HL7v2 message:";
+
+                // Extract each matching segment of the message
+                foreach (string segmentName in loggableSegments)
+                {
+                    foreach (HL7.Dotnetcore.Segment segment in resource.Segments(segmentName))
+                    {
+                        loggedMessage += "\n" + segment.Value;
+                    }
+                }
+
+                // Log the extracted segments of the message
+                Logger.LogInformation(this.logger, loggedMessage);
 
                 string[] scopesNeeded = requirement.ScopesNeededForMessage(resource);
 
