@@ -4,31 +4,28 @@
 
 # Set env to be the three-letter name of the environment (such as dev, vs1, or vc1)
 # The tests invoke the APIs at https://pnet-{env}.api.gov.bc.ca
-# env must be set - it cannot be left blank
 env=
 
 # Set client to be the keycloak client id, like erx_development or ppm_development
 # The dev environment requires the erx_development client, all others require ppm_development
-# Defaults to erx_development
 client=
 
 # Set secret to be the client secret associated with the client id in keycloak
-# secret must be set - it cannot be left blank
 secret=
 
 # Set vus to the desired number of maximum concurrent users
 # See the confluence documentation for more information about virtual users
-# Defaults to 1 - for a smoke test, 1 vu is sufficient
+# Defaults to 1
 vus=
 
 # Set iterations to the total desired number of iterations of the test scripts
 # The number of iterations is independent of the number of virtual users
-# Defaults to 1 - for a smoke test, 1 iteration is sufficient
+# Defaults to 1, which is sufficient for a smoke test
 iterations=
 
 # Set the number of transactions per iteration
 # Set to -1 to run all the test transactions for the service
-# Defaults to 1 - for a smoke test, as many as 10 transaction may be better
+# Defaults to -1, which runs all tranasction types for a smoke test
 iterationLength=
 
 # To test fewer services with this script, simply remove them from this list
