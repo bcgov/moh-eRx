@@ -10,8 +10,10 @@ spec:
     - name: hyonkyu.kim@cgi.com
       role: ROLE_TEAM_EDIT
     - name: colin.hathorn@cgi.com
-      role: ROLE_TEAM_EDIT      
+      role: ROLE_TEAM_EDIT
     - name: dave.p.barrett@cgi.com
       role: ROLE_TEAM_EDIT
     - name: arlowatts1@gmail.com
-      role: ROLE_TEAM_EDIT      
+      role: ROLE_TEAM_EDIT
+    - name: gary.donoghue@cgi.com
+      role: ROLE_TEAM_EDIT
