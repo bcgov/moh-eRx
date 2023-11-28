@@ -26,7 +26,7 @@ namespace Health.PharmaNet.Authorization.Requirements.Models
         /// <summary>
         /// Gets the list of segment fields that are allowed to be logged.
         /// </summary>
-        [JsonPropertyName("MessageSegments")]
+        [JsonPropertyName("LoggableSegments")]
         public IList<string> LoggableSegments { get; } = new List<string>();
 
         /// <summary>
