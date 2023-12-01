@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Deploys changes to a PPM API environment's infrastructure in OpenShift
+# Deploys changes to a PPM API environment's infrastructure in OpenShift.
 #
 # Usage:
 #   deploy.sh COMMAND ENVIRONMENT
