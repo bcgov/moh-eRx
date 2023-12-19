@@ -35,8 +35,9 @@ if [ "$secret" = "" ]; then
   exit 1
 
 elif [ "$secret" = "stdin" ]; then
-  echo "Enter the client secret: "
-  read secret
+  echo -n "Enter the client secret: "
+  read -s secret
+  echo
 
 fi
 
