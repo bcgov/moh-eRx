@@ -41,26 +41,26 @@ The PharmaNet APIs are organized by HL7 FHIR Resource Type. Each HL7 FHIR Resour
 
 ### Medication Resources
 
-- [Medication](Medication) is a Medication product.
-- [MedicationDispense](MedicationDispense) is a medication dispense event record.
-- [MedicationRequest](MedicationRequest) is a prescription for a patient.
-- [MedicationStatement](MedicationStatement) is medication dispense history for a patient.
+- [Medication](https://github.com/bcgov/moh-eRx/wiki/Medication) is a Medication product.
+- [MedicationDispense](https://github.com/bcgov/moh-eRx/wiki/MedicationDispense) is a medication dispense event record.
+- [MedicationRequest](https://github.com/bcgov/moh-eRx/wiki/MedicationRequest) is a prescription for a patient.
+- [MedicationStatement](https://github.com/bcgov/moh-eRx/wiki/MedicationStatement) is medication dispense history for a patient.
 
 ### Additional PharmaNet Resources
 
 In addition to the core Medication Resources, PharmaNet supports additional resources and the corresponding HL7-v2 interactions.
 
-- [Consent](Consent) is a consent directive for managing the protected word.
-- [Claim](Claim) is claims related messaging about a prescription or dispense.
-- [Location](Location) is location of a healthcare facility.
-- [Patient](Patient) is information about the patient, including patient identity and demographics.
-- [Practitioner](Practitioner) is information about a healthcare practitioner (e.g. a pharmacist or doctor).
+- [Consent](https://github.com/bcgov/moh-eRx/wiki/Consent) is a consent directive for managing the protected word.
+- [Claim](https://github.com/bcgov/moh-eRx/wiki/Claim) is claims related messaging about a prescription or dispense.
+- [Location](https://github.com/bcgov/moh-eRx/wiki/Location) is location of a healthcare facility.
+- [Patient](https://github.com/bcgov/moh-eRx/wiki/Patient) is information about the patient, including patient identity and demographics.
+- [Practitioner](https://github.com/bcgov/moh-eRx/wiki/Practitioner) is information about a healthcare practitioner (e.g. a pharmacist or doctor).
 
 ## PharmaNet HL7-v2 Interactions
 
 The PharmaNet system supports a large number of message-based services that are based on the HL7 2.x Standard and the Canadian Pharmacists Association's [Pharmacy Claim Standard](https://www.pharmacists.ca/products-services/pharmacy-claim-standard/). The PharmaNet R70.5 Release of PharmaNet adds HL7-v2 Interactions for electronic prescribing.
 
-To cross-reference these HL7 version 2 interactions to the HL7 FHIR Resource URI, see [Pharmanet R70 Interactions](R70-Interactions).
+To cross-reference these HL7 version 2 interactions to the HL7 FHIR Resource URI, see [Pharmanet R70 Interactions](https://github.com/bcgov/moh-eRx/wiki/R70-Interactions).
 
 ## Permissions
 
@@ -74,4 +74,4 @@ To use the PharmaNet API, you must comply with the PharmaNet API Agreement. In a
 
 Information about the transactions offered by each API service and the associated HL7v2 or FHIR resources is available in the [wiki](https://github.com/bcgov/moh-eRx/wiki). The wiki also documents the GitHub Actions workflows and the sample client application contained in this project.
 
-Information about using Helm, Kong, the API gateway, gwa, Kibana, Red Hat Advanced Cluster Security, Sysdig, and the management of the OpenShift deployments is available at the [Confluence page](https://proactionca.ent.cgi.com/confluence/display/BCMOHAM/PPM).
+Information about using Helm, Kong, the API gateway, gwa, Kibana, Red Hat Advanced Cluster Security, Sysdig, and the management of the OpenShift deployments is available at the [Confluence page](https://proactionca.ent.cgi.com/confluence/display/BCMOHAM/PPM+API).
