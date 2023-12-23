@@ -1,0 +1,19 @@
+version: "3.4"
+services:
+  k6:
+    image: grafana/k6:latest
+    command: run /common.js
+    volumes:
+      - "./common.js:/common.js"
+      - "./auth.js:/auth.js"
+      - "./transaction.js:/transaction.js"
+      - "./uuid.js:/uuid.js"
+      - "./examples/${ERX_ENV}/${ERX_SERVICE}.js:/examples.js"
+    environment:
+      - "ERX_ENV=${ERX_ENV}"
+      - "ERX_CLIENT=${ERX_CLIENT}"
+      - "ERX_CLIENT_SECRET=${ERX_CLIENT_SECRET}"
+      - "ERX_SERVICE=${ERX_SERVICE}"
+      - "ERX_VUS=${ERX_VUS}"
+      - "ERX_ITERATIONS=${ERX_ITERATIONS}"
+      - "ERX_ITERATION_LENGTH=${ERX_ITERATION_LENGTH}"
