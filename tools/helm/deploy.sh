@@ -29,9 +29,11 @@ elif [ "$environment" = "vc2" ]; then
 
 elif [ "$environment" = "vc1" ]; then
   namespace="d027a8-test"
+  echo "You are making changes to a namespace that is replicated in the Gold and Gold DR clusters. Please ensure that you run this script in both clusters."
 
 elif [ "$environment" = "prd" ]; then
   namespace="d027a8-prod"
+  echo "You are making changes to a namespace that is replicated in the Gold and Gold DR clusters. Please ensure that you run this script in both clusters."
   echo "You are making changes to the live production environment of a critical health application. Type DEPLOY TO PRODUCTION to proceed."
   read confirm && [ "$confirm" = "DEPLOY TO PRODUCTION" ] || exit 1
 
