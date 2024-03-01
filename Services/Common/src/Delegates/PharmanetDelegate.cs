@@ -54,7 +54,7 @@ namespace Health.PharmaNet.Delegates
 
             Span<byte> span = bytes;
             int i = 0;
-            foreach(byte aByte in span)
+            foreach (byte aByte in span)
             {
                 newBytes[i] = 0x00;
                 if ((aByte > 0x00) && (aByte <= 0xff))  // only bytes in UTF8 range
@@ -62,7 +62,8 @@ namespace Health.PharmaNet.Delegates
                     newBytes[i] = aByte;
                     i++;
                 }
-                else {
+                else
+                {
                     Logger.LogInformation(this.logger, $"WORKAROUND: Removed {aByte:X4} character from HL7v2 response.");
                 }
             }
@@ -96,6 +97,7 @@ namespace Health.PharmaNet.Delegates
         /// <returns>A PharmanetMessage response.</returns>
         public async Task<RequestResult<PharmanetMessageModel>> SubmitRequest(PharmanetMessageModel request)
         {
+            Logger.LogInformation(this.logger, $"Transaction UUID: {request.TransactionId}: PharmanetDelegate.SubmitRequest start");
             RequestResult<PharmanetMessageModel> requestResult = new RequestResult<PharmanetMessageModel>();
 
             JsonSerializerOptions options = new JsonSerializerOptions();
@@ -108,10 +110,13 @@ namespace Health.PharmaNet.Delegates
             {
                 Uri delegateUri = new Uri(this.pharmanetDelegateConfig.Endpoint);
 
+                Logger.LogInformation(this.logger, $"Transaction UUID: {request.TransactionId}: PharmanetDelegate.SubmitRequest: Sending message to PharmaNet...");
+
                 // This log statement logs sensitive health information - use it only for debugging in a development environment
                 // Logger.LogDebug(this.logger, $"PharmanetDelegate Proxy POST {delegateUri}. Payload: {jsonOutput}");
 
                 HttpResponseMessage response = await this.httpClient.PostAsync(delegateUri, content).ConfigureAwait(true);
+                Logger.LogInformation(this.logger, $"Transaction UUID: {request.TransactionId}: PharmanetDelegate.SubmitRequest: Received response from PharmaNet with Status Code: {response.StatusCode}.");
                 requestResult.IsSuccessStatusCode = response.IsSuccessStatusCode;
                 requestResult.StatusCode = response.StatusCode;
 
@@ -124,13 +129,16 @@ namespace Health.PharmaNet.Delegates
                 }
                 else
                 {
+                    Logger.LogInformation(this.logger, $"Transaction UUID: {request.TransactionId}: PharmanetDelegate.SubmitRequest: Response success, extracting response content...");
                     string? result = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
+                    Logger.LogInformation(this.logger, $"Transaction UUID: {request.TransactionId}: PharmanetDelegate.SubmitRequest: Extracting response content. Deserializing message...");
                     PharmanetMessageModel? responseMessage = JsonSerializer.Deserialize<PharmanetMessageModel>(result);
+                    Logger.LogInformation(this.logger, $"Transaction UUID: {request.TransactionId}: PharmanetDelegate.SubmitRequest: Deserialized message. Building response...");
 
                     responseMessage!.Hl7Message = TrimBadCharactersInMessage(responseMessage!.Hl7Message); // Workaround stray chars from Delegate
                     requestResult.Payload = responseMessage;
                     // This log statement does not log sensitive health information, even though it looks like it might
-                    Logger.LogDebug(this.logger, $"PharmanetDelegate Proxy Response: {responseMessage}");
+                    Logger.LogDebug(this.logger, $"Transaction UUID: {request.TransactionId}: PharmanetDelegate Proxy Response: {responseMessage}");
                 }
             }
 #pragma warning disable CA1031 // Do not catch general exception types
@@ -146,6 +154,7 @@ namespace Health.PharmaNet.Delegates
                 return requestResult;
             }
 
+            Logger.LogInformation(this.logger, $"Transaction UUID: {request.TransactionId}: PharmanetDelegate.SubmitRequest end ");
             return requestResult;
         }
     }
