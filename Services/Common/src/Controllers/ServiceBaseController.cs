@@ -111,9 +111,16 @@ namespace Health.PharmaNet.Controllers
         [Authorize]
         protected async Task<ActionResult<DocumentReference>> PharmanetRequest()
         {
+            Logger.LogInformation(this.logger, $"ServiceBaseController.PharmanetRequest start");
+
             ClaimsPrincipal? user = this.HttpContext!.User;
 
+            var traceId = this.Request.Headers.TryGetValue("X-Amzn-Trace-Id", out var value) ? value.SingleOrDefault() : null;
+            Logger.LogInformation(this.logger, $"ServiceBaseController.PharmanetRequest: X-Amzn-Trace-Id header: {traceId}");
+
             string jsonString = await this.Request.GetRawBodyStringAsync().ConfigureAwait(true);
+            Logger.LogInformation(this.logger, $"ServiceBaseController.PharmanetRequest got the body from the request");
+
             DocumentReference fhirRequest;
             Message hl7v2Message;
             try
@@ -155,6 +162,7 @@ namespace Health.PharmaNet.Controllers
 
             FhirJsonSerializer serializer = new FhirJsonSerializer(new SerializerSettings() { Pretty = true });
 
+            Logger.LogInformation(this.logger, $"ServiceBaseController.PharmanetRequest: X-Amzn-Trace-Id header: {traceId} end");
             return new ContentResult()
             {
                 Content = serializer.SerializeToString(docRef),
