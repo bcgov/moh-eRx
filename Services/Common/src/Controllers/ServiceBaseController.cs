@@ -39,6 +39,10 @@ namespace Health.PharmaNet.Controllers
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
 
+    using System.Collections.Generic;
+    using Microsoft.Extensions.Primitives;
+    using System.Text;
+
     /// <summary>
     /// The Template controller.
     /// </summary>
@@ -117,7 +121,10 @@ namespace Health.PharmaNet.Controllers
 
             ClaimsPrincipal? user = this.HttpContext!.User;
 
-            var traceId = this.Request.Headers.TryGetValue("Kong-Request-Id", out var value) ? value.SingleOrDefault() : null;
+            string headers = ParseKeys(Request.Headers);
+            Logger.LogInformation(this.logger, $"ServiceBaseController.PharmanetRequest. Extracted headers: {headers}");
+
+            var traceId = this.Request.Headers.TryGetValue("Host", out var value) ? value.SingleOrDefault() : null;
             Logger.LogInformation(this.logger, $"X-Amzn-Trace-Id: {traceId}: ServiceBaseController.PharmanetRequest. Extracted X-Amzn-Trace-Id header.");
 
             string jsonString = await this.Request.GetRawBodyStringAsync().ConfigureAwait(true);
@@ -175,6 +182,16 @@ namespace Health.PharmaNet.Controllers
                 Content = serializer.SerializeToString(docRef),
                 ContentType = "application/fhir+json; charset=utf-8",
             };
+        }
+
+        private static string ParseKeys(IEnumerable<KeyValuePair<string, StringValues>> values)
+        {
+            var sb = new StringBuilder();
+            foreach (var value in values)
+            {
+                sb.AppendLine(value.Key + " = " + string.Join(", ", value.Value));
+            }
+            return sb.ToString();
         }
 
         private Message ExtractV2Message(DocumentReference request)
