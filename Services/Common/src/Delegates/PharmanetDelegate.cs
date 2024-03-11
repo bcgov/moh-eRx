@@ -98,6 +98,7 @@ namespace Health.PharmaNet.Delegates
         public async Task<RequestResult<PharmanetMessageModel>> SubmitRequest(PharmanetMessageModel request)
         {
             Logger.LogInformation(this.logger, $"Transaction UUID: {request.TransactionId}: PharmanetDelegate.SubmitRequest start");
+
             RequestResult<PharmanetMessageModel> requestResult = new RequestResult<PharmanetMessageModel>();
 
             JsonSerializerOptions options = new JsonSerializerOptions();
@@ -111,12 +112,13 @@ namespace Health.PharmaNet.Delegates
                 Uri delegateUri = new Uri(this.pharmanetDelegateConfig.Endpoint);
 
                 Logger.LogInformation(this.logger, $"Transaction UUID: {request.TransactionId}: PharmanetDelegate.SubmitRequest: Sending message to PharmaNet...");
-
                 // This log statement logs sensitive health information - use it only for debugging in a development environment
                 // Logger.LogDebug(this.logger, $"PharmanetDelegate Proxy POST {delegateUri}. Payload: {jsonOutput}");
 
                 HttpResponseMessage response = await this.httpClient.PostAsync(delegateUri, content).ConfigureAwait(true);
+
                 Logger.LogInformation(this.logger, $"Transaction UUID: {request.TransactionId}: PharmanetDelegate.SubmitRequest: Received response from PharmaNet with Status Code: {response.StatusCode}.");
+
                 requestResult.IsSuccessStatusCode = response.IsSuccessStatusCode;
                 requestResult.StatusCode = response.StatusCode;
 

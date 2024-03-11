@@ -16,6 +16,8 @@
 namespace Health.PharmaNet.Controllers
 {
     using System;
+
+    using System.Linq;
     using System.Net;
     using System.Security.Claims;
     using System.Threading.Tasks;
@@ -116,10 +118,11 @@ namespace Health.PharmaNet.Controllers
             ClaimsPrincipal? user = this.HttpContext!.User;
 
             var traceId = this.Request.Headers.TryGetValue("X-Amzn-Trace-Id", out var value) ? value.SingleOrDefault() : null;
-            Logger.LogInformation(this.logger, $"ServiceBaseController.PharmanetRequest: X-Amzn-Trace-Id header: {traceId}");
+            Logger.LogInformation(this.logger, $"X-Amzn-Trace-Id: {traceId}: ServiceBaseController.PharmanetRequest. Extracted X-Amzn-Trace-Id header.");
 
             string jsonString = await this.Request.GetRawBodyStringAsync().ConfigureAwait(true);
-            Logger.LogInformation(this.logger, $"ServiceBaseController.PharmanetRequest got the body from the request");
+
+            Logger.LogInformation(this.logger, $"X-Amzn-Trace-Id: {traceId}: ServiceBaseController.PharmanetRequest: Got the body from the request.");
 
             DocumentReference fhirRequest;
             Message hl7v2Message;
@@ -137,6 +140,8 @@ namespace Health.PharmaNet.Controllers
                 return this.StatusCode((int)HttpStatusCode.BadRequest, ex.Message);
             }
 
+
+            Logger.LogInformation(this.logger, $"X-Amzn-Trace-Id: {traceId}: ServiceBaseController.PharmanetRequest: Authorizing...");
             AuthorizationResult authResult = await this.authorizationService.AuthorizeAsync(
                     user,
                     hl7v2Message,
@@ -145,6 +150,7 @@ namespace Health.PharmaNet.Controllers
             {
                 return new ChallengeResult();
             }
+            Logger.LogInformation(this.logger, $"X-Amzn-Trace-Id: {traceId}: ServiceBaseController.PharmanetRequest: Authorization completed. Submitting request...");
 
             RequestResult<DocumentReference> response = await this.service.SubmitRequest(fhirRequest).ConfigureAwait(true);
             if (response.IsSuccessStatusCode == false)
@@ -157,12 +163,13 @@ namespace Health.PharmaNet.Controllers
                     ContentType = "application/json",
                 };
             }
+            Logger.LogInformation(this.logger, $"X-Amzn-Trace-Id: {traceId}: ServiceBaseController.PharmanetRequest: Request completed.");
 
             DocumentReference? docRef = response.Payload;
 
             FhirJsonSerializer serializer = new FhirJsonSerializer(new SerializerSettings() { Pretty = true });
 
-            Logger.LogInformation(this.logger, $"ServiceBaseController.PharmanetRequest: X-Amzn-Trace-Id header: {traceId} end");
+            Logger.LogInformation(this.logger, $"X-Amzn-Trace-Id: {traceId}: ServiceBaseController.PharmanetRequest end");
             return new ContentResult()
             {
                 Content = serializer.SerializeToString(docRef),
