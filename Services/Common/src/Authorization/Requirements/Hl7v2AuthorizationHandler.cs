@@ -64,7 +64,7 @@ namespace Health.PharmaNet.Authorization
             {
                 foreach (HL7.Dotnetcore.Segment segment in resource.Segments(segmentName))
                 {
-                    loggedMessage += " [ " + segment.Value + " ] " + System.Environment.NewLine;
+                    loggedMessage += " [ " + segment.Value + " ] ";
                 }
             }
 
