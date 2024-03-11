@@ -117,7 +117,7 @@ namespace Health.PharmaNet.Controllers
 
             ClaimsPrincipal? user = this.HttpContext!.User;
 
-            var traceId = this.Request.Headers.TryGetValue("X-Amzn-Trace-Id", out var value) ? value.SingleOrDefault() : null;
+            var traceId = this.Request.Headers.TryGetValue("Kong-Request-Id", out var value) ? value.SingleOrDefault() : null;
             Logger.LogInformation(this.logger, $"X-Amzn-Trace-Id: {traceId}: ServiceBaseController.PharmanetRequest. Extracted X-Amzn-Trace-Id header.");
 
             string jsonString = await this.Request.GetRawBodyStringAsync().ConfigureAwait(true);
