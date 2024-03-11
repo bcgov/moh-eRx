@@ -39,10 +39,6 @@ namespace Health.PharmaNet.Controllers
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
 
-    using System.Collections.Generic;
-    using Microsoft.Extensions.Primitives;
-    using System.Text;
-
     /// <summary>
     /// The Template controller.
     /// </summary>
@@ -121,15 +117,12 @@ namespace Health.PharmaNet.Controllers
 
             ClaimsPrincipal? user = this.HttpContext!.User;
 
-            string headers = ParseKeys(Request.Headers);
-            Logger.LogInformation(this.logger, $"ServiceBaseController.PharmanetRequest. Extracted headers: {headers}");
-
-            var traceId = this.Request.Headers.TryGetValue("Host", out var value) ? value.SingleOrDefault() : null;
-            Logger.LogInformation(this.logger, $"X-Amzn-Trace-Id: {traceId}: ServiceBaseController.PharmanetRequest. Extracted X-Amzn-Trace-Id header.");
+            var traceId = this.Request.Headers.TryGetValue("Kong-Request-ID", out var value) ? value.SingleOrDefault() : null;
+            Logger.LogInformation(this.logger, $"Trace ID: {traceId}: ServiceBaseController.PharmanetRequest. Extracted Kong-Request-ID header as the Trace ID.");
 
             string jsonString = await this.Request.GetRawBodyStringAsync().ConfigureAwait(true);
 
-            Logger.LogInformation(this.logger, $"X-Amzn-Trace-Id: {traceId}: ServiceBaseController.PharmanetRequest: Got the body from the request.");
+            Logger.LogInformation(this.logger, $"Trace ID: {traceId}: ServiceBaseController.PharmanetRequest: Got the body from the request.");
 
             DocumentReference fhirRequest;
             Message hl7v2Message;
@@ -148,7 +141,7 @@ namespace Health.PharmaNet.Controllers
             }
 
 
-            Logger.LogInformation(this.logger, $"X-Amzn-Trace-Id: {traceId}: ServiceBaseController.PharmanetRequest: Authorizing...");
+            Logger.LogInformation(this.logger, $"Trace ID: {traceId}: ServiceBaseController.PharmanetRequest: Authorizing...");
             AuthorizationResult authResult = await this.authorizationService.AuthorizeAsync(
                     user,
                     hl7v2Message,
@@ -157,7 +150,7 @@ namespace Health.PharmaNet.Controllers
             {
                 return new ChallengeResult();
             }
-            Logger.LogInformation(this.logger, $"X-Amzn-Trace-Id: {traceId}: ServiceBaseController.PharmanetRequest: Authorization completed. Submitting request...");
+            Logger.LogInformation(this.logger, $"Trace ID: {traceId}: ServiceBaseController.PharmanetRequest: Authorization completed. Submitting request...");
 
             RequestResult<DocumentReference> response = await this.service.SubmitRequest(fhirRequest).ConfigureAwait(true);
             if (response.IsSuccessStatusCode == false)
@@ -170,28 +163,18 @@ namespace Health.PharmaNet.Controllers
                     ContentType = "application/json",
                 };
             }
-            Logger.LogInformation(this.logger, $"X-Amzn-Trace-Id: {traceId}: ServiceBaseController.PharmanetRequest: Request completed.");
+            Logger.LogInformation(this.logger, $"Trace ID: {traceId}: ServiceBaseController.PharmanetRequest: Request completed.");
 
             DocumentReference? docRef = response.Payload;
 
             FhirJsonSerializer serializer = new FhirJsonSerializer(new SerializerSettings() { Pretty = true });
 
-            Logger.LogInformation(this.logger, $"X-Amzn-Trace-Id: {traceId}: ServiceBaseController.PharmanetRequest end");
+            Logger.LogInformation(this.logger, $"Trace ID: {traceId}: ServiceBaseController.PharmanetRequest end");
             return new ContentResult()
             {
                 Content = serializer.SerializeToString(docRef),
                 ContentType = "application/fhir+json; charset=utf-8",
             };
-        }
-
-        private static string ParseKeys(IEnumerable<KeyValuePair<string, StringValues>> values)
-        {
-            var sb = new StringBuilder();
-            foreach (var value in values)
-            {
-                sb.AppendLine(value.Key + " = " + string.Join(", ", value.Value));
-            }
-            return sb.ToString();
         }
 
         private Message ExtractV2Message(DocumentReference request)
