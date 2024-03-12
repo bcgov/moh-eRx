@@ -56,16 +56,17 @@ namespace Health.PharmaNet.Services
         /// Submit Request to Pharmanet.
         /// </summary>
         /// <param name="request">The DocumentReference to be submitted.</param>
+        /// <param name="traceId">The value used to track messages from API Gateway.</param>
         /// <returns>Returns a DocumentReference containing the response from PharmaNet.</returns>
-        public async Task<RequestResult<DocumentReference>> SubmitRequest(DocumentReference request)
+        public async Task<RequestResult<DocumentReference>> SubmitRequest(DocumentReference request, string traceId)
         {
-            Logger.LogInformation(this.logger, $"PharmanetService.SubmitRequest start");
+            Logger.LogInformation(this.logger, $"Trace ID: {traceId}: PharmanetService.SubmitRequest start");
 
             RequestResult<DocumentReference> response = new RequestResult<DocumentReference>();
             bool base64Encode = this.configuration.GetSection(PharmanetDelegateConfig.ConfigurationSectionKey).GetValue<bool>("Base64EncodeHl7Message");
-            Logger.LogInformation(this.logger, $"PharmanetService.SubmitRequest: UUID exists in FHIR? {request.MasterIdentifier != null} ");
+            Logger.LogInformation(this.logger, $"Trace ID: {traceId}: PharmanetService.SubmitRequest: UUID exists in FHIR? {request.MasterIdentifier != null} ");
             PharmanetMessageModel requestMessage = PharmanetDelegateAdapter.ToPharmanetMessageModel(request, base64Encode);
-            Logger.LogInformation(this.logger, $"Transaction UUID: {requestMessage.TransactionId}: PharmanetService.SubmitRequest: PharmanetMessageModel created.");
+            Logger.LogInformation(this.logger, $"Trace ID: {traceId}: Transaction UUID: {requestMessage.TransactionId}: PharmanetService.SubmitRequest: PharmanetMessageModel created.");
 
             try
             {
