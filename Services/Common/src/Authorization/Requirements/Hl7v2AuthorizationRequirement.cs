@@ -64,6 +64,15 @@ namespace Health.PharmaNet.Authorization
         }
 
         /// <summary>
+        /// Returns the list of segment names that are allowed to be logged.
+        /// </summary>
+        /// <returns>Returns an IList&lt;string&gt; of segment names, or empty array when the message was unknown/not supported.</returns>
+        public IList<string> LoggableSegments()
+        {
+            return this.hl7AuthConfig.Hl7v2Authorization.LoggableSegments;
+        }
+
+        /// <summary>
         /// Checks that the message passed has all the fields.
         /// </summary>
         /// <param name="messageConfig">The MessageConfig configuration from app settings.</param>

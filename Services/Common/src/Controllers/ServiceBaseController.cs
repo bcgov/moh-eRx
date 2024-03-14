@@ -16,6 +16,8 @@
 namespace Health.PharmaNet.Controllers
 {
     using System;
+
+    using System.Linq;
     using System.Net;
     using System.Security.Claims;
     using System.Threading.Tasks;
@@ -111,9 +113,17 @@ namespace Health.PharmaNet.Controllers
         [Authorize]
         protected async Task<ActionResult<DocumentReference>> PharmanetRequest()
         {
+            Logger.LogInformation(this.logger, $"ServiceBaseController.PharmanetRequest start");
+
             ClaimsPrincipal? user = this.HttpContext!.User;
 
+            var traceId = this.Request.Headers.TryGetValue("Kong-Request-ID", out var value) ? value.FirstOrDefault() : "";
+            Logger.LogInformation(this.logger, $"Trace ID: {traceId}: ServiceBaseController.PharmanetRequest. Extracted Kong-Request-ID header as the Trace ID.");
+
             string jsonString = await this.Request.GetRawBodyStringAsync().ConfigureAwait(true);
+
+            Logger.LogInformation(this.logger, $"Trace ID: {traceId}: ServiceBaseController.PharmanetRequest: Got the body from the request.");
+
             DocumentReference fhirRequest;
             Message hl7v2Message;
             try
@@ -130,6 +140,10 @@ namespace Health.PharmaNet.Controllers
                 return this.StatusCode((int)HttpStatusCode.BadRequest, ex.Message);
             }
 
+            HL7.Dotnetcore.Segment? mshSegment = hl7v2Message.Segments("MSH").FirstOrDefault();
+            Logger.LogInformation(this.logger, $"Trace ID: {traceId}: ServiceBaseController.PharmanetRequest: Message MSH: {mshSegment?.Value}");
+
+            Logger.LogInformation(this.logger, $"Trace ID: {traceId}: ServiceBaseController.PharmanetRequest: Authorizing...");
             AuthorizationResult authResult = await this.authorizationService.AuthorizeAsync(
                     user,
                     hl7v2Message,
@@ -138,8 +152,9 @@ namespace Health.PharmaNet.Controllers
             {
                 return new ChallengeResult();
             }
+            Logger.LogInformation(this.logger, $"Trace ID: {traceId}: ServiceBaseController.PharmanetRequest: Authorization completed. Submitting request...");
 
-            RequestResult<DocumentReference> response = await this.service.SubmitRequest(fhirRequest).ConfigureAwait(true);
+            RequestResult<DocumentReference> response = await this.service.SubmitRequest(fhirRequest, traceId + "").ConfigureAwait(true);
             if (response.IsSuccessStatusCode == false)
             {
                 Logger.LogError(this.logger, $"An Error occurred while invoking Pharmanet endpoint: {response.ErrorMessage}");
@@ -150,11 +165,13 @@ namespace Health.PharmaNet.Controllers
                     ContentType = "application/json",
                 };
             }
+            Logger.LogInformation(this.logger, $"Trace ID: {traceId}: ServiceBaseController.PharmanetRequest: Request completed.");
 
             DocumentReference? docRef = response.Payload;
 
             FhirJsonSerializer serializer = new FhirJsonSerializer(new SerializerSettings() { Pretty = true });
 
+            Logger.LogInformation(this.logger, $"Trace ID: {traceId}: ServiceBaseController.PharmanetRequest end");
             return new ContentResult()
             {
                 Content = serializer.SerializeToString(docRef),

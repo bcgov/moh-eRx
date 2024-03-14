@@ -82,5 +82,108 @@
     "_meta": {
       "savedObjectVersion": 2
     }
+  },
+  {
+    "_id": "e42aadc0-da5d-11ee-9b2c-53d7cdf1117d",
+    "_type": "search",
+    "_source": {
+      "title": "PPM API - Logged HL7v2 message",
+      "description": "Shows segments of the HL7v2 message that were logged.",
+      "hits": 0,
+      "columns": [
+        "_source"
+      ],
+      "sort": [
+        "@timestamp",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\n  \"index\": \"94b823f0-37b8-11ee-8e34-055faf92899d\",\n  \"highlightAll\": true,\n  \"version\": true,\n  \"query\": {\n    \"query\": \"message: Logged HL7v2 message:*\",\n    \"language\": \"lucene\"\n  },\n  \"filter\": [\n    {\n      \"meta\": {\n        \"index\": \"94b823f0-37b8-11ee-8e34-055faf92899d\",\n        \"negate\": false,\n        \"disabled\": false,\n        \"alias\": \"Logged HL7v2\",\n        \"type\": \"phrase\",\n        \"key\": \"message\",\n        \"value\": \"Logged HL7v2 message:\",\n        \"params\": {\n          \"query\": \"Logged HL7v2 message:\",\n          \"type\": \"phrase\"\n        }\n      },\n      \"query\": {\n        \"match\": {\n          \"message\": {\n            \"query\": \"Logged HL7v2 message:\",\n            \"type\": \"phrase\"\n          }\n        }\n      },\n      \"$state\": {\n        \"store\": \"appState\"\n      }\n    }\n  ]\n}"
+      }
+    }
+  },
+  {
+    "_id": "d910abe0-e009-11ee-9b2c-53d7cdf1117d",
+    "_type": "search",
+    "_source": {
+      "title": "PPM API - Full Message Path",
+      "description": "Shows all logging to trace a message through the critical path in PPM API",
+      "hits": 0,
+      "columns": [
+        "kubernetes.pod_name",
+        "message"
+      ],
+      "sort": [
+        "@timestamp",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"94b823f0-37b8-11ee-8e34-055faf92899d\",\"highlightAll\":true,\"version\":true,\"query\":{\"query\":\"\\\"ServiceBaseController.PharmanetRequest\\\" OR \\\"PharmanetService.SubmitRequest\\\" OR \\\"PharmanetDelegate.SubmitRequest\\\" or \\\"Logged HL7v2 message:\\\"\",\"language\":\"lucene\"},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "f6ebf410-d9e9-11ee-9b2c-53d7cdf1117d",
+    "_type": "search",
+    "_source": {
+      "title": "PPM API - Send Receive",
+      "description": "Logs when the message to PharmaNet was sent and a response received.",
+      "hits": 0,
+      "columns": [
+        "kubernetes.pod_name",
+        "message"
+      ],
+      "sort": [
+        "@timestamp",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\n  \"index\": \"94b823f0-37b8-11ee-8e34-055faf92899d\",\n  \"highlightAll\": true,\n  \"version\": true,\n  \"query\": {\n    \"query\": \"\",\n    \"language\": \"lucene\"\n  },\n  \"filter\": [\n    {\n      \"meta\": {\n        \"index\": \"94b823f0-37b8-11ee-8e34-055faf92899d\",\n        \"type\": \"phrases\",\n        \"key\": \"message\",\n        \"value\": \"PharmanetDelegate.SubmitRequest: Sending message to PharmaNet..., PharmanetDelegate.SubmitRequest: Response success, extracting response content...\",\n        \"params\": [\n          \"PharmanetDelegate.SubmitRequest: Sending message to PharmaNet...\",\n          \"PharmanetDelegate.SubmitRequest: Response success, extracting response content...\"\n        ],\n        \"negate\": false,\n        \"disabled\": false,\n        \"alias\": \"Send, Receive\"\n      },\n      \"query\": {\n        \"bool\": {\n          \"should\": [\n            {\n              \"match_phrase\": {\n                \"message\": \"PharmanetDelegate.SubmitRequest: Sending message to PharmaNet...\"\n              }\n            },\n            {\n              \"match_phrase\": {\n                \"message\": \"PharmanetDelegate.SubmitRequest: Response success, extracting response content...\"\n              }\n            }\n          ],\n          \"minimum_should_match\": 1\n        }\n      },\n      \"$state\": {\n        \"store\": \"appState\"\n      }\n    },\n    {\n      \"meta\": {\n        \"index\": \"94b823f0-37b8-11ee-8e34-055faf92899d\",\n        \"negate\": false,\n        \"disabled\": true,\n        \"alias\": null,\n        \"type\": \"phrase\",\n        \"key\": \"kubernetes.namespace_name\",\n        \"value\": \"2f77cb-dev\",\n        \"params\": {\n          \"query\": \"2f77cb-dev\",\n          \"type\": \"phrase\"\n        }\n      },\n      \"query\": {\n        \"match\": {\n          \"kubernetes.namespace_name\": {\n            \"query\": \"2f77cb-dev\",\n            \"type\": \"phrase\"\n          }\n        }\n      },\n      \"$state\": {\n        \"store\": \"appState\"\n      }\n    }\n  ]\n}"
+      }
+    }
+  },
+  {
+    "_id": "116c4300-d9c0-11ee-9b2c-53d7cdf1117d",
+    "_type": "search",
+    "_source": {
+      "title": "PPM API - Transaction UUID",
+      "description": "Shows logging that has the Transaction UUID field which can be used to track a single transaction's progress by adding a filter for the UUID value.",
+      "hits": 0,
+      "columns": [
+        "kubernetes.pod_name",
+        "message"
+      ],
+      "sort": [
+        "@timestamp",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\n  \"index\": \"94b823f0-37b8-11ee-8e34-055faf92899d\",\n  \"highlightAll\": true,\n  \"version\": true,\n  \"query\": {\n    \"query\": \"\",\n    \"language\": \"lucene\"\n  },\n  \"filter\": [\n    {\n      \"meta\": {\n        \"index\": \"94b823f0-37b8-11ee-8e34-055faf92899d\",\n        \"negate\": false,\n        \"disabled\": true,\n        \"alias\": null,\n        \"type\": \"phrase\",\n        \"key\": \"kubernetes.namespace_name\",\n        \"value\": \"2f77cb-dev\",\n        \"params\": {\n          \"query\": \"2f77cb-dev\",\n          \"type\": \"phrase\"\n        }\n      },\n      \"query\": {\n        \"match\": {\n          \"kubernetes.namespace_name\": {\n            \"query\": \"2f77cb-dev\",\n            \"type\": \"phrase\"\n          }\n        }\n      },\n      \"$state\": {\n        \"store\": \"appState\"\n      }\n    },\n    {\n      \"meta\": {\n        \"index\": \"94b823f0-37b8-11ee-8e34-055faf92899d\",\n        \"negate\": false,\n        \"disabled\": false,\n        \"alias\": \"Transaction UUID\",\n        \"type\": \"phrase\",\n        \"key\": \"message\",\n        \"value\": \"Transaction UUID\",\n        \"params\": {\n          \"query\": \"Transaction UUID\",\n          \"type\": \"phrase\"\n        }\n      },\n      \"query\": {\n        \"match\": {\n          \"message\": {\n            \"query\": \"Transaction UUID\",\n            \"type\": \"phrase\"\n          }\n        }\n      },\n      \"$state\": {\n        \"store\": \"appState\"\n      }\n    }\n  ]\n}"
+      }
+    }
+  },
+  {
+    "_id": "1b8945e0-e00a-11ee-9b2c-53d7cdf1117d",
+    "_type": "search",
+    "_source": {
+      "title": "PPM API - Trace ID",
+      "description": "Shows logging which contains a trace ID that is added as an HTTP Header in the API Gateway. This can be used to track messages between the API Gateway and PPM API.",
+      "hits": 0,
+      "columns": [
+        "_source"
+      ],
+      "sort": [
+        "@timestamp",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\n  \"index\": \"94b823f0-37b8-11ee-8e34-055faf92899d\",\n  \"highlightAll\": true,\n  \"version\": true,\n  \"query\": {\n    \"query\": \"\\\"Trace ID:\\\"\",\n    \"language\": \"lucene\"\n  },\n  \"filter\": []\n}"
+      }
+    }
   }
 ]
