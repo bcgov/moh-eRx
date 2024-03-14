@@ -108,7 +108,7 @@
       ],
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\n  \"index\": \"94b823f0-37b8-11ee-8e34-055faf92899d\",\n  \"highlightAll\": true,\n  \"version\": true,\n  \"query\": {\n    \"query\": \"\\\"ServiceBaseController.PharmanetRequest\\\" OR \\\"PharmanetService.SubmitRequest\\\" OR \\\"PharmanetDelegate.SubmitRequest\\\"\",\n    \"language\": \"lucene\"\n  },\n  \"filter\": []\n}"
+        "searchSourceJSON": "{\"index\":\"94b823f0-37b8-11ee-8e34-055faf92899d\",\"highlightAll\":true,\"version\":true,\"query\":{\"query\":\"\\\"ServiceBaseController.PharmanetRequest\\\" OR \\\"PharmanetService.SubmitRequest\\\" OR \\\"PharmanetDelegate.SubmitRequest\\\" or \\\"Logged HL7v2 message:\\\"\",\"language\":\"lucene\"},\"filter\":[]}"
       }
     }
   },
