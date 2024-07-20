@@ -19,7 +19,8 @@ import { sleep } from "k6";
 import { authorizeClient } from "./auth.js";
 import { submitMessage } from "./transaction.js";
 import { examples } from "./examples.js";
-import { options } from "./config.js";
+
+export { options } from "./config.js";
 
 // environment and service are defined by environment variables
 // their values are set when the k6 command to execute the test is run
