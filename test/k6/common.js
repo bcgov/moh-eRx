@@ -19,14 +19,7 @@ import { sleep } from "k6";
 import { authorizeClient } from "./auth.js";
 import { submitMessage } from "./transaction.js";
 import { examples } from "./examples.js";
-
-// these are the options that are read by the k6 test framework
-// here you can define the vus, iterations, duration, or stages
-// see https://k6.io/docs/using-k6/k6-options/ for more information
-export const options = {
-    vus: __ENV.ERX_VUS ? __ENV.ERX_VUS : 1,
-    iterations: __ENV.ERX_ITERATIONS ? __ENV.ERX_ITERATIONS : 1
-};
+import { options } from "./config.js";
 
 // environment and service are defined by environment variables
 // their values are set when the k6 command to execute the test is run

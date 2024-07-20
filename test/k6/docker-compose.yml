@@ -8,6 +8,7 @@ services:
       - "./transaction.js:/transaction.js"
       - "./uuid.js:/uuid.js"
       - "./examples/${ERX_ENV}/${ERX_SERVICE}.js:/examples.js"
+      - "./config/${ERX_SERVICE}.js:/config.js"
     environment:
       - "ERX_ENV=${ERX_ENV}"
       - "ERX_CLIENT=${ERX_CLIENT}"
