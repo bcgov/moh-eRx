@@ -4,7 +4,7 @@ const port = 8080;
 const host = "0.0.0.0";
 const app = express();
 
-const meanDelayMilliseconds = 500;
+const meanDelayMilliseconds = 250;
 
 const responseJson = {
     "transactionUUID": "22c263c9-1903-4cbf-8eb2-c43fa7b9dfa7",
