@@ -22,4 +22,4 @@ resources:
     cpu: 45m
     memory: 128Mi
 
-replicas: 8
+replicaCount: 8
