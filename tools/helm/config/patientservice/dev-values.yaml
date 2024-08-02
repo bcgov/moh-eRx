@@ -16,8 +16,10 @@ image:
 
 resources:
   limits:
-    cpu: 100m
-    memory: 200Mi
+    cpu: 24m
+    memory: 256Mi
   requests:
-    cpu: 1m
-    memory: 100Mi
+    cpu: 12m
+    memory: 128Mi
+
+replicas: 2
