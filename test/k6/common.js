@@ -19,6 +19,7 @@ import { sleep } from "k6";
 import { authorizeClient } from "./auth.js";
 import { submitMessage } from "./transaction.js";
 import { examples } from "./examples.js";
+import { meanDelaySeconds } from "./options.js";
 
 export { options } from "./options.js";
 
@@ -81,7 +82,7 @@ export default function() {
         let transaction = examples[Math.floor(Math.random() * examples.length)];
         submitMessage(client, serviceUrl, transaction);
 
-        sleep(1);
+        sleep(randomExp(meanDelaySeconds));
     }
 
     // run all test cases only when the user sets iterationLength to -1
@@ -91,7 +92,12 @@ export default function() {
 
             submitMessage(client, serviceUrl, transaction);
 
-            sleep(1);
+            sleep(randomExp(meanDelaySeconds));
         });
     }
+}
+
+// generate a random number, exponentially distributed with the given mean
+function randomExp(mean) {
+    return Math.log(1 - Math.random()) * -mean;
 }
