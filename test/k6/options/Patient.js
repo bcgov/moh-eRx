@@ -26,4 +26,4 @@ export const options = {
 };
 
 // the mean time delay in seconds between each transaction
-export const meanDelaySeconds = 0.25;
+export const meanDelaySeconds = 0.21;
