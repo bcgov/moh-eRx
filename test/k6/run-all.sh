@@ -70,3 +70,6 @@ for service in "${services[@]}"; do
   docker compose --project-name $(echo ${service} | tr '[:upper:]' '[:lower:]') \
                  rm --force
 done
+
+# Grab the summary from each log file and dump them in a new file
+tail -n 27 ${BASEDIR}/output/${env}/* > ${BASEDIR}/output/${env}.txt
