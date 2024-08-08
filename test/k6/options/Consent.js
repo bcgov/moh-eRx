@@ -19,9 +19,9 @@
 // see https://k6.io/docs/using-k6/k6-options/ for more information
 export const options = {
     stages: [
-        { duration: "1m", target: 1 },
-        { duration: "1m", target: 1 },
-        { duration: "1m", target: 0 },
+        { duration: "20m", target: 1 },
+        { duration: "20m", target: 1 },
+        { duration: "5m", target: 0 },
     ],
 };
 
