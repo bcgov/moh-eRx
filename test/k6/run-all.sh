@@ -72,4 +72,4 @@ for service in "${services[@]}"; do
 done
 
 # Grab the summary from each log file and dump them in a new file
-tail -n 27 ${BASEDIR}/output/${env}/* > ${BASEDIR}/output/${env}.txt
+tail -n 24 ${BASEDIR}/output/${env}/* > ${BASEDIR}/output/${env}.txt
