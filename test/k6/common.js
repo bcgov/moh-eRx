@@ -77,6 +77,8 @@ const client = {
 export default function() {
     // choose a random test message from the list for each transaction
     for (let i = 0; i < iterationLength; i++) {
+        // force the client to re-authenticate before each transaction
+        client.token = null;
         authorizeClient(client, tokenUrl);
 
         let transaction = examples[Math.floor(Math.random() * examples.length)];

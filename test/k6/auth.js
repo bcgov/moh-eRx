@@ -25,7 +25,7 @@ const refreshTokenSuccessRate = new Rate("auth_refresh_successful");
 // tries to ensure that the client is authorized
 // requests a new JWT or refreshes the current token if necessary
 export function authorizeClient(client, tokenUrl) {
-    if ((__ITER == 0) && (client.token == null)) {
+    if (client.token == null) {
         let responseCode = authenticateClient(client, tokenUrl);
 
         if (!check(responseCode, {"Authentication successful": responseCode === 200})) {
