@@ -64,12 +64,12 @@ for service in "${services[@]}"; do
 
   # Capture the logs of the container - logs are not read concurrently, but sequentially
   docker compose --project-name $(echo ${service} | tr '[:upper:]' '[:lower:]') \
-                 logs --follow > ${BASEDIR}/output/${env}/k6-${env}-${service}.txt
+                 logs --follow > ${BASEDIR}/output/${env}/${service}.txt
 
   # Delete the compose stack after the logs are finished
   docker compose --project-name $(echo ${service} | tr '[:upper:]' '[:lower:]') \
                  rm --force
 done
 
-# Grab the summary from each log file and dump them in a new file
-tail -n 24 ${BASEDIR}/output/${env}/* > ${BASEDIR}/output/${env}.txt
+# Grab the summaries from each log file and dump them in a new file
+tail -n 24 ${BASEDIR}/output/${env}/* > ${BASEDIR}/output/${env}/summary.txt
