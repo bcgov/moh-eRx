@@ -18,10 +18,8 @@
 // here you can define the vus, iterations, duration, or stages
 // see https://k6.io/docs/using-k6/k6-options/ for more information
 export const options = {
-    stages: [
-        { duration: "5m", target: 1 },
-        { duration: "5m", target: 0 },
-    ],
+    vus: __ENV.ERX_VUS ? __ENV.ERX_VUS : 1,
+    iterations: __ENV.ERX_ITERATIONS ? __ENV.ERX_ITERATIONS : 1
 };
 
 // the mean time delay in seconds between each transaction

@@ -27,7 +27,7 @@ export { options } from "./options.js";
 // their values are set when the k6 command to execute the test is run
 const environment = __ENV.ERX_ENV;
 const service = __ENV.ERX_SERVICE;
-const iterationLength = __ENV.ERX_ITERATION_LENGTH ? __ENV.ERX_ITERATION_LENGTH : -1;
+const iterationLength = __ENV.ERX_ITERATION_LENGTH ? __ENV.ERX_ITERATION_LENGTH : 1;
 
 // the services follow a common naming scheme by environment
 // they look like https://pnet-{env}.api.gov.bc.ca/api/v1/{service}

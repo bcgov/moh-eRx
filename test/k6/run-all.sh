@@ -10,7 +10,7 @@
 # Substitute CLIENT_SECRET for the client secret associated with the given client ID. Set to "stdin" to read the secret from standard input rather than command line arguments.
 # Substitute VUS for the maximum number of concurrent virtual users. Defaults to 1 if not set. See the confluence documentation for more information about virtual users.
 # Substitute ITERATIONS for the number of iterations to run on each service. Defaults to 1 if not set.
-# Substitute ITERATION_LENGTH for the number of transactions sent in each iteration. Set to -1 to run all available test transactions on every service. Defaults to -1 if not set.
+# Substitute ITERATION_LENGTH for the number of transactions sent in each iteration. Set to -1 to run all available test transactions on every service. Defaults to 1 if not set.
 #
 # Author: Arlo Watts
 # Date: 2023-30-11
@@ -31,7 +31,7 @@ if [ "$secret" = "" ]; then
   echo "Substitute CLIENT_SECRET for the client secret associated with the given client ID. Set to "stdin" to read the secret from standard input rather than command line arguments."
   echo "Substitute VUS for the maximum number of concurrent virtual users. Defaults to 1 if not set. See the confluence documentation for more information about virtual users."
   echo "Substitute ITERATIONS for the number of iterations to run on each service. Defaults to 1 if not set."
-  echo "Substitute ITERATION_LENGTH for the number of transactions sent in each iteration. Set to -1 to run all available test transactions on every service. Defaults to -1 if not set."
+  echo "Substitute ITERATION_LENGTH for the number of transactions sent in each iteration. Set to -1 to run all available test transactions on every service. Defaults to 1 if not set."
   exit 1
 
 elif [ "$secret" = "stdin" ]; then
