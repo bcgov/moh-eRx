@@ -20,10 +20,9 @@
 export const options = {
     stages: [
         { duration: "5m", target: 1 },
-        { duration: "20m", target: 1 },
         { duration: "5m", target: 0 },
     ],
 };
 
 // the mean time delay in seconds between each transaction
-export const meanDelaySeconds = 0.21;
+export const meanDelaySeconds = 1;
