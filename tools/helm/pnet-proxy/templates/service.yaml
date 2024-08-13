@@ -1,0 +1,11 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: pnet-proxy
+spec:
+  selector:
+    app: pnet-proxy
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080

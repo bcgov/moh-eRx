@@ -1,0 +1,22 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: pnet-proxy
+spec:
+  selector:
+    matchLabels:
+      app: pnet-proxy
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: pnet-proxy
+    spec:
+      containers:
+        - name: pnet-proxy
+          image: 'image-registry.openshift-image-registry.svc:5000/{{ .Release.Namespace }}/pnet-proxy:latest'
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+  strategy:
+    type: Recreate

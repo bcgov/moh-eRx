@@ -1,0 +1,16 @@
+kind: Build
+apiVersion: build.openshift.io/v1
+metadata:
+  name: pnet-proxy
+spec:
+  source:
+    git:
+      uri: {{ .Values.build.spec.source.git.uri }}
+      ref: {{ .Values.build.spec.source.git.ref }}
+    contextDir: {{ .Values.build.spec.source.contextDir }}
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'pnet-proxy:latest'
+  strategy:
+    type: Docker
