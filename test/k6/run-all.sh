@@ -46,6 +46,7 @@ services=('claim' 'consent' 'location' 'medication' 'medicationdispense' 'medica
 
 BASEDIR=$(dirname $0) # Points to test/k6
 mkdir --parents ${BASEDIR}/output/${env}
+rm --force ${BASEDIR}/output/${env}/*
 
 # Set environment variables for docker compose stacks
 export ERX_ENV=${env} ERX_CLIENT=${client} ERX_CLIENT_SECRET=${secret} ERX_VUS=${vus} ERX_ITERATIONS=${iterations} ERX_ITERATION_LENGTH=${iterationLength}
