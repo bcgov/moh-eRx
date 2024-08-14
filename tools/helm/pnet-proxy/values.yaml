@@ -1,7 +1,8 @@
-build:
-  spec:
-    source:
-      git:
-        uri: https://github.com/bcgov/moh-erx
-        ref: main
-      contextDir: test/pnet-proxy
+buildSourceGitUri: https://github.com/bcgov/moh-erx
+buildSourceGitRef: main
+buildSourceContextDir: test/pnet-proxy
+
+deploymentResourceLimitCpu: 128m
+deploymentResourceLimitMemory: 64Mi
+deploymentResourceRequestCpu: 64m
+deploymentResourceRequestMemory: 32Mi

@@ -5,9 +5,9 @@ metadata:
 spec:
   source:
     git:
-      uri: {{ .Values.build.spec.source.git.uri }}
-      ref: {{ .Values.build.spec.source.git.ref }}
-    contextDir: {{ .Values.build.spec.source.contextDir }}
+      uri: {{ .Values.buildSourceGitUri }}
+      ref: {{ .Values.buildSourceGitRef }}
+    contextDir: {{ .Values.buildSourceContextDir }}
   output:
     to:
       kind: ImageStreamTag

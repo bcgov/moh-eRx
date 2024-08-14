@@ -15,6 +15,13 @@ spec:
       containers:
         - name: pnet-proxy
           image: 'image-registry.openshift-image-registry.svc:5000/{{ .Release.Namespace }}/pnet-proxy:latest'
+          resources:
+            limits:
+              cpu: {{ .Values.deploymentResourceLimitCpu }}
+              memory:  {{ .Values.deploymentResourceLimitMemory }}
+            requests:
+              cpu:  {{ .Values.deploymentResourceRequestCpu }}
+              memory:  {{ .Values.deploymentResourceRequestMemory }}
           ports:
             - containerPort: 8080
               protocol: TCP
