@@ -65,7 +65,6 @@ const client = {
     id: __ENV.ERX_CLIENT,
     secret: __ENV.ERX_CLIENT_SECRET,
     token: null,
-    refresh: null,
     expires: null,
     scopes: scopes[service],
 };
