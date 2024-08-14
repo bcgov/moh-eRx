@@ -16,37 +16,35 @@
 
 import { sleep } from "k6";
 
-import { authorizeClient } from "./auth.js";
+import { authenticateClient } from "./auth.js";
 import { submitMessage } from "./transaction.js";
 import { examples } from "./examples.js";
 import { meanDelaySeconds } from "./options.js";
 
 export { options } from "./options.js";
 
-// environment and service are defined by environment variables
-// their values are set when the k6 command to execute the test is run
+// environment and service are defined by environment variables set when the k6
+// command to execute the test is run
 const environment = __ENV.ERX_ENV;
 const service = __ENV.ERX_SERVICE;
 const iterationLength = __ENV.ERX_ITERATION_LENGTH ? __ENV.ERX_ITERATION_LENGTH : 1;
 
-// the services follow a common naming scheme by environment
-// they look like https://pnet-{env}.api.gov.bc.ca/api/v1/{service}
-// except prod, which is https://pnet.api.gov.bc.ca/api/v1/{service}
-const baseUrl = environment == "prd" ?
-    "https://pnet.api.gov.bc.ca/api/v1/" :
-    "https://pnet-" + environment + ".api.gov.bc.ca/api/v1/";
+// the services follow a common naming scheme by environment, except prd which
+// uses the plain url
+const baseUrl = environment === "prd" ? "https://pnet.api.gov.bc.ca/api/v1/" : "https://pnet-" + environment + ".api.gov.bc.ca/api/v1/";
 
 const serviceUrl = baseUrl + service;
 
-// the keycloak url that will return the access token
-// the url to use depends on the environment
-// the dev environment uses the dev url, the prd environment uses the prod url,
-// and the other environments all use the test url
-const tokenUrl = environment == "dev" ?
-    "https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos/protocol/openid-connect/token" :                // dev
-    environment == "prd" ?
-        "https://common-logon.hlth.gov.bc.ca/auth/realms/moh_applications/protocol/openid-connect/token" :      // prod
-        "https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications/protocol/openid-connect/token";  // test
+// the keycloak url that will return the access token depends on the environment
+let tokenUrl = "";
+
+if (environment === "prd") {
+    tokenUrl = "https://common-logon.hlth.gov.bc.ca/auth/realms/moh_applications/protocol/openid-connect/token";
+} else if (environment === "dev") {
+    tokenUrl = "https://common-logon-dev.hlth.gov.bc.ca/auth/realms/v2_pos/protocol/openid-connect/token";
+} else {
+    tokenUrl = "https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications/protocol/openid-connect/token";
+}
 
 // each service requires different scopes from its users
 // the test framework uses these with its token requests to keycloak
@@ -64,33 +62,31 @@ const scopes = {
 
 // the client object stores information about the simulated client
 const client = {
-    clientId: __ENV.ERX_CLIENT,
-    clientSecret: __ENV.ERX_CLIENT_SECRET,
+    id: __ENV.ERX_CLIENT,
+    secret: __ENV.ERX_CLIENT_SECRET,
     token: null,
     refresh: null,
     expires: null,
-    scopes: scopes[service]
+    scopes: scopes[service],
 };
 
-// this is the function k6 runs for each vu
-// one execution of this function is one iteration
+// k6 runs this function once for each iteration
 export default function() {
     // choose a random test message from the list for each transaction
     for (let i = 0; i < iterationLength; i++) {
-        // force the client to re-authenticate before each transaction
-        client.token = null;
-        authorizeClient(client, tokenUrl);
+        authenticateClient(client, tokenUrl);
 
         let transaction = examples[Math.floor(Math.random() * examples.length)];
+
         submitMessage(client, serviceUrl, transaction);
 
         sleep(randomExp(meanDelaySeconds));
     }
 
-    // run all test cases only when the user sets iterationLength to -1
+    // when the user sets iterationLength to -1, run all available transactions
     if (iterationLength == -1) {
         examples.forEach(transaction => {
-            authorizeClient(client, tokenUrl);
+            authenticateClient(client, tokenUrl);
 
             submitMessage(client, serviceUrl, transaction);
 

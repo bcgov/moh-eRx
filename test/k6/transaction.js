@@ -20,8 +20,8 @@ import { Rate } from "k6/metrics";
 
 import { v4 } from "./uuid.js";
 
-// Rates provide additional statistics in the end-of-test summary
-const errorRate = new Rate("errors");
+// rates provide additional statistics in the end-of-test summary
+const transactionSuccessful = new Rate("_transaction_successful");
 
 // send a transaction to the appropriate service in the appropriate environment
 export function submitMessage(client, url, transaction) {
@@ -79,12 +79,12 @@ export function submitMessage(client, url, transaction) {
     if (response.status == 200) {
         console.log("Transaction success")
         console.log("HL7v2 Response: " + b64decode(responseJson.content[0].attachment.data, "std", "s"));
-        errorRate.add(0);
+        transactionSuccessful.add(1);
     }
     else {
         console.log("Transaction failure with response code " + response.status);
         console.log("Response body: " + response.body);
-        errorRate.add(1);
+        transactionSuccessful.add(0);
     }
 
     return response;
@@ -100,9 +100,7 @@ function getTimestamp() {
     let day = now.getDate();
     day = (day < 10) ? "0" + day : day
 
-    let str = now.getFullYear() + "/" +
-        mon + "/" + day + " " +
-        now.toLocaleTimeString("en-CA");
+    let str = now.getFullYear() + "/" + mon + "/" + day + " " + now.toLocaleTimeString("en-CA");
 
     return str;
 }
