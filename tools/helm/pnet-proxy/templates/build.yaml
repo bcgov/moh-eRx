@@ -1,16 +1,25 @@
-kind: Build
+kind: BuildConfig
 apiVersion: build.openshift.io/v1
 metadata:
   name: pnet-proxy
 spec:
+  triggers:
+    - type: ConfigChange
+  strategy:
+    type: Docker
   source:
     git:
       uri: {{ .Values.buildSourceGitUri }}
       ref: {{ .Values.buildSourceGitRef }}
     contextDir: {{ .Values.buildSourceContextDir }}
+  resources:
+    limits:
+      cpu: {{ .Values.buildResourceLimitCpu }}
+      memory:  {{ .Values.buildResourceLimitMemory }}
+    requests:
+      cpu:  {{ .Values.buildResourceRequestCpu }}
+      memory:  {{ .Values.buildResourceRequestMemory }}
   output:
     to:
       kind: ImageStreamTag
       name: 'pnet-proxy:latest'
-  strategy:
-    type: Docker

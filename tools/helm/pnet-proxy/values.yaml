@@ -2,6 +2,11 @@ buildSourceGitUri: https://github.com/bcgov/moh-erx
 buildSourceGitRef: main
 buildSourceContextDir: test/pnet-proxy
 
+buildResourceLimitCpu: 1024m
+buildResourceLimitMemory: 512Mi
+buildResourceRequestCpu: 512m
+buildResourceRequestMemory: 256Mi
+
 deploymentResourceLimitCpu: 128m
 deploymentResourceLimitMemory: 64Mi
 deploymentResourceRequestCpu: 64m
