@@ -1,7 +1,7 @@
-kind: BuildConfig
 apiVersion: build.openshift.io/v1
+kind: BuildConfig
 metadata:
-  name: pnet-proxy
+  name: {{ .Release.Name }}
 spec:
   triggers:
     - type: ConfigChange
@@ -22,4 +22,4 @@ spec:
   output:
     to:
       kind: ImageStreamTag
-      name: 'pnet-proxy:latest'
+      name: '{{ .Release.Name }}:latest'

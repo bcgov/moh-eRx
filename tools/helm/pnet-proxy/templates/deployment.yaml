@@ -1,20 +1,19 @@
-kind: Deployment
 apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: pnet-proxy
+  name: {{ .Release.Name }}
 spec:
   selector:
     matchLabels:
-      app: pnet-proxy
-  replicas: 1
+      app: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: pnet-proxy
+        app: {{ .Release.Name }}
     spec:
       containers:
-        - name: pnet-proxy
-          image: 'image-registry.openshift-image-registry.svc:5000/{{ .Release.Namespace }}/pnet-proxy:latest'
+        - name: {{ .Release.Name }}
+          image: 'image-registry.openshift-image-registry.svc:5000/{{ .Release.Namespace }}/{{ .Release.Name }}:latest'
           resources:
             limits:
               cpu: {{ .Values.deploymentResourceLimitCpu }}

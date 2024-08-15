@@ -1,10 +1,10 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: pnet-proxy
+  name: {{ .Release.Name }}
 spec:
   selector:
-    app: pnet-proxy
+    app: {{ .Release.Name }}
   ports:
     - name: http
       port: 80
