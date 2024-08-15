@@ -31,7 +31,7 @@ export function submitMessage(client, url, transaction) {
     let payload = transaction.message.replace("${{ timestamp }}", getTimestamp());
     payload = b64encode(payload, "std");
 
-    let timestamp = (new Date(Date.now())).toISOString().replace("Z", "").substring(0, 19) + "+00:00";
+    let timestamp = (new Date(Date.now())).toISOString();
 
     // assemble the fhir-formatted JSON payload
     let fhirPayload = {
@@ -49,7 +49,6 @@ export function submitMessage(client, url, transaction) {
     };
 
     // optionally include a uuid with the message
-    // the app should work whether or not this is present
     if (transaction.includeIdentifier) {
         let msgId = "urn:uuid:" + v4();
 
@@ -72,22 +71,26 @@ export function submitMessage(client, url, transaction) {
     console.log("Payload: " + payload);
     console.log("Endpoint: " + url);
 
-    // post the message and receive the response
+    // submit the request and receive the response
     let response = post(url, JSON.stringify(fhirPayload), params);
-    let responseJson = JSON.parse(response.body);
+    let body = JSON.parse(response.body);
 
-    if (response.status == 200) {
-        console.log("Transaction success")
-        console.log("HL7v2 Response: " + b64decode(responseJson.content[0].attachment.data, "std", "s"));
+    if (response.status === 200) {
+        // update the rate
         transactionSuccessful.add(1);
+        console.log("Transaction successful");
+
+        console.log("HL7v2 Response: " + b64decode(responseJson.content[0].attachment.data, "std", "s"));
     }
     else {
-        console.log("Transaction failure with response code " + response.status);
-        console.log("Response body: " + response.body);
+        // update the rate
         transactionSuccessful.add(0);
+        console.log("Transaction not successful: " + response.status);
+
+        console.log("error='" + body.error + "'");
     }
 
-    return response;
+    return response.status;
 }
 
 // return a formatted timestamp for an HL7v2 timestamp/date field
