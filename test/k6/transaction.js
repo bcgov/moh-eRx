@@ -87,7 +87,9 @@ export function submitMessage(client, url, transaction) {
         transactionSuccessful.add(0);
         console.log("Transaction not successful: " + response.status);
 
-        console.log("error='" + body.error + "'");
+        if (body) {
+            console.log("error='" + body.error + "'");
+        }
     }
 
     return response.status;
