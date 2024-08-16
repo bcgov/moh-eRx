@@ -44,7 +44,9 @@ fi
 # To test fewer services with this script, remove them from this list
 services=('claim' 'consent' 'location' 'medication' 'medicationdispense' 'medicationrequest' 'medicationstatement' 'patient' 'practitioner')
 
-BASEDIR=$(dirname $0) # Points to test/k6
+# Points to test/k6
+BASEDIR=$(dirname $0)
+
 mkdir --parents ${BASEDIR}/output/${env}
 rm --force ${BASEDIR}/output/${env}/*
 
@@ -58,7 +60,7 @@ for service in "${services[@]}"; do
 done
 
 for service in "${services[@]}"; do
-  echo Logging ${service}Service to ${BASEDIR}/output/${env}/${service}.txt
+  echo Logging ${service} to ${BASEDIR}/output/${env}/${service}.txt
 
   # Capture the logs of the container - logs are not read concurrently, but sequentially
   docker compose --project-name ${service} logs --follow > ${BASEDIR}/output/${env}/${service}.txt
