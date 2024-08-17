@@ -80,7 +80,7 @@ export function submitMessage(client, url, transaction) {
         transactionSuccessful.add(1);
         console.log("Transaction successful");
 
-        console.log("HL7v2 Response: " + b64decode(responseJson.content[0].attachment.data, "std", "s"));
+        console.log("HL7v2 Response: " + b64decode(body.content[0].attachment.data, "std", "s"));
     }
     else {
         // update the rate
