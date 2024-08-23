@@ -16,6 +16,7 @@
 namespace Health.PharmaNet.Authorization
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -54,6 +55,22 @@ namespace Health.PharmaNet.Authorization
         /// <returns>A context Task.</returns>
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, Hl7v2AuthorizationRequirement requirement, Message resource)
         {
+            // Get information from the configuration about which segments to log
+            IList<string> loggableSegments = requirement.LoggableSegments();
+            string loggedMessage = "Logged HL7v2 message:";
+
+            // Extract each matching segment of the message
+            foreach (string segmentName in loggableSegments)
+            {
+                foreach (HL7.Dotnetcore.Segment segment in resource.Segments(segmentName))
+                {
+                    loggedMessage += " [ " + segment.Value + " ] ";
+                }
+            }
+
+            // Log the extracted segments of the message
+            Logger.LogInformation(this.logger, loggedMessage);
+
             // If user does not have the scope claim, get out of here
             if (!context.User.HasClaim(c => c.Type == PharmanetAPIClaims.Scope))
             {
