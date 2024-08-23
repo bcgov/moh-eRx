@@ -27,11 +27,11 @@ service:
 
 deploymentSpec:
   replicas: 1
+  progressDeadlineSeconds: 21600
   strategy:
     rollingUpdate:
       maxSurge: 25%
       maxUnavailable: 25%
-    type: RollingUpdate
 
 resources: 
   limits:

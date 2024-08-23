@@ -10,12 +10,12 @@ spec:
     matchLabels:
       deployment: {{ include "ppmservice.fullname" . }}
       {{- include "ppmservice.selectorLabels" . | nindent 6 }}
-  progressDeadlineSeconds: 21600
+  progressDeadlineSeconds: {{ .Values.deploymentSpec.progressDeadlineSeconds }}
   strategy:
     rollingUpdate:
       maxSurge: {{ .Values.deploymentSpec.strategy.rollingUpdate.maxSurge }}
       maxUnavailable: {{ .Values.deploymentSpec.strategy.rollingUpdate.maxUnavailable }}
-    type: {{ .Values.deploymentSpec.strategy.type }}
+    type: RollingUpdate
   template:
     metadata:
       {{- with .Values.podAnnotations }}
