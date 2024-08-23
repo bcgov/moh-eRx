@@ -1,27 +1,21 @@
-kind: DeploymentConfig
-apiVersion: apps.openshift.io/v1
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: {{ include "ppmservice.fullname" . }}
   labels:
     {{- include "ppmservice.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.deploymentSpec.replicas }}
   selector:
-    deploymentconfig: {{ include "ppmservice.fullname" . }}
-    {{- include "ppmservice.selectorLabels" . | nindent 4 }}
+    matchLabels:
+      deployment: {{ include "ppmservice.fullname" . }}
+      {{- include "ppmservice.selectorLabels" . | nindent 6 }}
+  progressDeadlineSeconds: 21600
   strategy:
-    activeDeadlineSeconds: 21600
-    resources:
-      limits:
-        cpu: {{ .Values.deployment.strategy.resources.limits.cpu }}
-        memory: {{ .Values.deployment.strategy.resources.limits.memory }}
-    rollingParams:
-      intervalSeconds: 1
-      maxSurge: {{ .Values.deployment.strategy.rollingParams.maxSurge }}
-      maxUnavailable: {{ .Values.deployment.strategy.rollingParams.maxUnavailable }}
-      timeoutSeconds: {{ .Values.deployment.strategy.rollingParams.timeoutSeconds }}
-      updatePeriodSeconds: 1
-    type: {{ .Values.deployment.strategy.type }}
+    rollingUpdate:
+      maxSurge: {{ .Values.deploymentSpec.strategy.rollingUpdate.maxSurge }}
+      maxUnavailable: {{ .Values.deploymentSpec.strategy.rollingUpdate.maxUnavailable }}
+    type: {{ .Values.deploymentSpec.strategy.type }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -30,11 +24,12 @@ spec:
       {{- end }}
       labels:
         {{- include "ppmservice.selectorLabels" . | nindent 8 }}
-        deploymentconfig: {{ include "ppmservice.fullname" . }}
+        deployment: {{ include "ppmservice.fullname" . }}
     spec:
       automountServiceAccountToken: false
       containers:
         - name: {{ .Values.image.stream }}
+          image: 'image-registry.openshift-image-registry.svc:5000/{{ .Values.OpenShift.ImageProject }}/{{ .Values.image.stream }}:{{ .Values.OpenShift.Environment }}'
           resources:
             limits:
               cpu: {{ .Values.resources.limits.cpu }}
@@ -92,16 +87,3 @@ spec:
           configMap:
             name: pharmanet-{{ .Values.OpenShift.Environment }}-cert
             defaultMode: 420
-  test: false
-  triggers:
-    - type: ImageChange
-      imageChangeParams:
-        automatic: true
-        containerNames:
-          - {{ .Values.image.stream }}
-        from:
-          kind: ImageStreamTag
-          name: {{ .Values.image.stream }}:{{ .Values.OpenShift.Environment }}
-          namespace: {{ .Values.OpenShift.ImageProject }}
-    - type: ConfigChange
-    

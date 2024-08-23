@@ -1,5 +1,3 @@
-replicaCount: 1
-
 Application:
   Port: 8080
   Configuration: {}
@@ -27,17 +25,13 @@ podAnnotations: {}
 service:
   port: 8080
 
-deployment:
+deploymentSpec:
+  replicas: 1
   strategy:
-    resources:
-      limits:
-        cpu: 500m
-        memory: 512Mi
-    rollingParams:
+    rollingUpdate:
       maxSurge: 25%
       maxUnavailable: 25%
-      timeoutSeconds: 600
-    type: Rolling
+    type: RollingUpdate
 
 resources: 
   limits:

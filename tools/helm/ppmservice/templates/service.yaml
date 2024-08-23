@@ -13,4 +13,4 @@ spec:
       protocol: TCP
   selector:
     {{- include "ppmservice.selectorLabels" . | nindent 4 }}
-    deploymentconfig: {{ include "ppmservice.fullname" . }}
+    deployment: {{ include "ppmservice.fullname" . }}
