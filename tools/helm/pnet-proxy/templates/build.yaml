@@ -1,0 +1,25 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  triggers:
+    - type: ConfigChange
+  strategy:
+    type: Docker
+  source:
+    git:
+      uri: {{ .Values.buildSourceGitUri }}
+      ref: {{ .Values.buildSourceGitRef }}
+    contextDir: {{ .Values.buildSourceContextDir }}
+  resources:
+    limits:
+      cpu: {{ .Values.buildResourceLimitCpu }}
+      memory:  {{ .Values.buildResourceLimitMemory }}
+    requests:
+      cpu:  {{ .Values.buildResourceRequestCpu }}
+      memory:  {{ .Values.buildResourceRequestMemory }}
+  output:
+    to:
+      kind: ImageStreamTag
+      name: '{{ .Release.Name }}:latest'

@@ -14,127 +14,56 @@
 // limitations under the License.
 //-------------------------------------------------------------------------
 
-import { check, fail, sleep } from "k6";
 import { post } from "k6/http";
 import { Rate } from "k6/metrics";
 
-// Rates provide additional statistics in the end-of-test summary
-const authSuccessRate = new Rate("authentication_successful");
-const refreshTokenSuccessRate = new Rate("auth_refresh_successful");
+// rates provide additional statistics in the end-of-test summary
+const authenticationSuccessful = new Rate("_authentication_successful");
 
-// tries to ensure that the client is authorized
-// requests a new JWT or refreshes the current token if necessary
-export function authorizeClient(client, tokenUrl) {
-    if ((__ITER == 0) && (client.token == null)) {
-        let responseCode = authenticateClient(client, tokenUrl);
-
-        if (!check(responseCode, {"Authentication successful": responseCode === 200})) {
-            fail("Authentication failed with response code " + responseCode);
-        }
+// tries to ensure that the client is authenticated by requesting a new token if
+// the current token is expired or expires within 45 seconds
+export function authenticateClient(client, tokenUrl) {
+    // there is no need to refresh the token if there are at least 45 seconds
+    // until it expires
+    if (client.token !== null && client.expires >= Date.now() + 45000) {
+        return 200;
     }
 
-    refreshClientToken(client, tokenUrl);
-}
-
-// helper function to provide the client with a token
-function authenticateClient(client, tokenUrl) {
-    // assemble the data to be passed to the keycloak endpoint
-    let authFormData = {
+    // assemble the form data for the authentication request
+    let formData = {
         "grant_type": "client_credentials",
-        "client_id": client.clientId,
+        "client_id": client.id,
         "audience": "pharmanet",
         "scope": client.scopes,
-        "client_secret": client.clientSecret
+        "client_secret": client.secret
     };
 
     // submit the request and receive the response
-    let response = post(tokenUrl, authFormData);
-    let jsonResponse = JSON.parse(response.body);
+    let response = post(tokenUrl, formData);
+    let body = JSON.parse(response.body);
 
-    if (response.status == 200) {
-        // load the data into the client object
-        client.token = jsonResponse["access_token"];
-        client.refresh = jsonResponse["refresh_token"];
-        client.expires = getAbsoluteTime(jsonResponse["expires_in"]);
+    if (response.status === 200) {
+        // update the rate
+        authenticationSuccessful.add(1);
+        console.log("Client authentication successful");
 
-        // log and record the success
-        authSuccessRate.add(1);
-        console.log("Authenticated client: " + client.clientId);
-        console.log("Token: " + client.token);
+        // update the client object
+        client.token = body.access_token;
+        client.expires = Date.now() + 1000 * body.expires_in;
     }
     else {
-        console.log("Authentication failed with response code " + response.status);
-        console.log(
-            "clientId=\"" + client.clientId + "\", " +
-            "clientSecret=\"" + client.clientSecret + "\", " +
-            "scopes=\"" + client.scopes + "\", " +
-            "error=\"" + jsonResponse["error"] + ": " + jsonResponse["error_description"] + "\""
-        );
+        // update the rate
+        authenticationSuccessful.add(0);
+        console.log("Client authentication not successful: " + response.status);
 
-        authSuccessRate.add(0);
-        client.token = null;
+        console.log("error='" + body.error + ": " + body.error_description + "'");
+
+        console.log(
+            "client.id=" + client.id + ", " +
+            "client.secret=" + client.secret + ", " +
+            "client.scopes='" + client.scopes + "'"
+        );
     }
 
     return response.status;
-}
-
-// check if the token expires soon and refresh it if necessary
-// refresh 45 seconds before expiry
-// refresh the token by requesting a new JWT from keycloak
-function refreshClientToken(client, tokenUrl) {
-    if ((client.refresh == null) || (client.expires >= (Date.now() + 45000))) {
-        // don't need to refresh
-        return;
-    }
-
-    if (client.token == null) {
-        // previous refresh failed
-        return authenticateClient(client, tokenUrl);
-    }
-
-    let refreshFormData = {
-        "grant_type": "refresh_token",
-        "client_id": client.clientId,
-        "refresh_token": client.refresh,
-    };
-
-    let response = post(tokenUrl, refreshFormData);
-    let jsonResponse = JSON.parse(response.body);
-
-    if (response.status == 200) {
-        // load the data into the client object
-        client.token = jsonResponse["access_token"];
-        client.refresh = jsonResponse["refresh_token"];
-        client.expires = getAbsoluteTime(jsonResponse["expires_in"]);
-
-        // log and record the success
-        refreshTokenSuccessRate.add(1);
-        console.log("Re-authenticated client: " + client.clientId);
-        console.log("Token: " + client.token);
-    }
-    else {
-        console.log("Re-authentication failed with response code " + response.status + ". ");
-        console.log(
-            "clientId=\"" + client.clientId + "\", " +
-            "clientSecret=\"" + client.clientSecret + "\", " +
-            "scopes=\"" + client.scopes + "\", " +
-            "error=\"" + jsonResponse["error"] + ": " + jsonResponse["error_description"] + "\""
-        );
-
-        refreshTokenSuccessRate.add(0);
-        client.token = null;
-
-        console.log("Attempting authentication with new token.")
-
-        // pause before trying to authenticate the client with a new token
-        sleep(1);
-        return authenticateClient(client, tokenUrl);
-    }
-
-    return response.status;
-}
-
-// return an absolute time given the number of seconds until then
-function getAbsoluteTime(seconds) {
-    return Date.now() + seconds * 1000;
 }
