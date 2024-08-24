@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Release.Name }}
+          image: 'image-registry.openshift-image-registry.svc:5000/{{ .Release.Namespace }}/{{ .Release.Name }}:latest'
+          resources:
+            limits:
+              cpu: {{ .Values.deploymentResourceLimitCpu }}
+              memory:  {{ .Values.deploymentResourceLimitMemory }}
+            requests:
+              cpu:  {{ .Values.deploymentResourceRequestCpu }}
+              memory:  {{ .Values.deploymentResourceRequestMemory }}
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+  strategy:
+    type: Recreate
