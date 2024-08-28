@@ -1,5 +1,5 @@
 buildSourceGitUri: https://github.com/bcgov/moh-erx
-buildSourceGitRef: main
+buildSourceGitRef: no-downtime-changes
 buildSourceContextDir: test/pnet-proxy
 
 buildResourceLimitCpu: 1024m
