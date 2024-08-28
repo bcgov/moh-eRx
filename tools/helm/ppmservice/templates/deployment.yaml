@@ -62,9 +62,10 @@ spec:
                   key: {{ $key }}
             {{- end }}                 
           readinessProbe:
+            initialDelaySeconds: 60
             periodSeconds: 20
             timeoutSeconds: 10
-            successThreshold: 1
+            successThreshold: 3
             exec:
               command:
                 - ./health-check.sh
