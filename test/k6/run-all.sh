@@ -11,7 +11,7 @@
 # Substitute VUS for the maximum number of concurrent virtual users. Defaults to 1 if not set. See the confluence documentation for more information about virtual users.
 # Substitute ITERATIONS for the number of iterations to run on each service. Defaults to 1 if not set.
 # Substitute ITERATION_LENGTH for the number of transactions sent in each iteration. Set to -1 to run all available test transactions on every service. Defaults to 1 if not set.
-# Substitute MAX_DURATION for the maximum duration of the test. Defaults to '10m' (10 minutes) if not set.
+# Substitute MAX_DURATION for the maximum duration of the test. Defaults to "10m" (10 minutes) if not set.
 #
 # Author: Arlo Watts
 # Date: 2024-08-14
