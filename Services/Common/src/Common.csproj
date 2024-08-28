@@ -39,6 +39,7 @@
     <Content Include="Swagger\ConfigureSwaggerGenOptions.cs" />
     <Content Include="obj\project.assets.json" />
     <Content Include="Http\HttpRequestExtension.cs" />
+    <Content Include="health-check-common.sh" />
   </ItemGroup>
  <ItemGroup>
     <ProjectReference Include="..\..\HL7-dotnetcore\src\HL7-dotnetcore.csproj" />
