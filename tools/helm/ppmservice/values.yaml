@@ -6,6 +6,8 @@ Application:
     PharmaNet_PharmanetProxy__Username: ${common-secrets}
     PharmaNet_PharmanetProxy__Password: ${common-secrets}
     PharmaNet_PharmanetProxy__ClientCertificatePassword: ${common-secrets}
+    HEALTH_CHECK_CLIENT_ID: ${common-secrets}
+    HEALTH_CHECK_CLIENT_SECRET: ${common-secrets}
   Environment:
     ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT}
 
