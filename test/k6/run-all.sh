@@ -53,6 +53,9 @@ BASEDIR=$(dirname $0)
 mkdir --parents ${BASEDIR}/output/${env}
 rm --force ${BASEDIR}/output/${env}/*
 
+# Create an empty file for the full test summary
+touch ${BASEDIR}/output/${env}/summary.txt
+
 # Set environment variables for docker compose stacks
 export ERX_ENV=${env} ERX_CLIENT=${client} ERX_CLIENT_SECRET=${secret} ERX_VUS=${vus} ERX_ITERATIONS=${iterations} ERX_ITERATION_LENGTH=${iterationLength} ERX_MAX_DURATION=${maxDuration}
 
@@ -70,7 +73,9 @@ for service in "${services[@]}"; do
 
   # Delete the compose stack after the logs are finished
   docker compose --project-name ${service} rm --force
-done
 
-# Grab the summaries from each log file and dump them in a new file
-tail --lines 24 ${BASEDIR}/output/${env}/* > ${BASEDIR}/output/${env}/summary.txt
+  # Append the container test summary to the overall test summary
+  echo "==> ${BASEDIR}/output/${env}/${service}.txt <==" >> ${BASEDIR}/output/${env}/summary.txt
+  sed --silent '/^.\{44\}:/p' ${BASEDIR}/output/${env}/${service}.txt >> ${BASEDIR}/output/${env}/summary.txt
+  echo >> ${BASEDIR}/output/${env}/summary.txt
+done
