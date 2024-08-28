@@ -6,7 +6,6 @@
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include=".vscode\launch.json" />
     <Content Include="health-check.sh" CopyToOutputDirectory="Always" />
   </ItemGroup>
   <ItemGroup>

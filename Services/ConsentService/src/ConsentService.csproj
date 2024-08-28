@@ -3,13 +3,9 @@
   <PropertyGroup>
     <RootNamespace>Health.PharmaNet.ConsentService</RootNamespace>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(MSBuildThisFileName).xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(RunConfiguration)' == 'ConsentService' " />
   <ItemGroup>
-    <Content Include=".vscode\launch.json" />
     <Content Include="health-check.sh" CopyToOutputDirectory="Always" />
   </ItemGroup>
   <ItemGroup>

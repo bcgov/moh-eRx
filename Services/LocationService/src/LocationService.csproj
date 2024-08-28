@@ -5,9 +5,7 @@
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(MSBuildThisFileName).xml</DocumentationFile>
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(RunConfiguration)' == 'LocationService' " />
   <ItemGroup>
-    <Content Include=".vscode\launch.json" />
     <Content Include="health-check.sh" CopyToOutputDirectory="Always" />
   </ItemGroup>
   <ItemGroup>
