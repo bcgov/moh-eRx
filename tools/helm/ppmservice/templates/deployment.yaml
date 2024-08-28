@@ -62,15 +62,12 @@ spec:
                   key: {{ $key }}
             {{- end }}                 
           readinessProbe:
-            failureThreshold: 3
-            httpGet:
-              path: /health
-              port: {{ .Values.Application.Port }}
-              scheme: HTTP
-            initialDelaySeconds: 10
             periodSeconds: 20
+            timeoutSeconds: 10
             successThreshold: 1
-            timeoutSeconds: 4
+            exec:
+              command:
+                - ./health-check.sh
           terminationMessagePath: /{{ include "ppmservice.fullname" . }}/termination-log
           terminationMessagePolicy: File
           volumeMounts:
