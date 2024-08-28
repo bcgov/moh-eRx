@@ -1,7 +1,10 @@
 #!/bin/bash
 
-# get the payload from the first argument
-payload=$1
+# get the api path from the first argument
+apiPath=$1
+
+# get the payload from the second argument
+payload=$2
 
 # select the correct keycloak token url by environment
 if [ $ASPNETCORE_ENVIRONMENT = 'dev' ]; then
@@ -36,7 +39,7 @@ accessToken=$(curl --location --request POST ${tokenEndpoint} \
   --data-urlencode "client_secret=${HEALTH_CHECK_CLIENT_SECRET}" 2> /dev/null | sed 's/.*"access_token":"\([0-9a-zA-Z_\-]*\.[0-9a-zA-Z_\-]*\.[0-9a-zA-Z_\-]*\)".*/\1/')
 
 # submit a transaction to the current service
-curl --silent --request POST 'https://127.0.0.1:8080/' \
+curl --silent --request POST "http://127.0.0.1:8080/api/v1/${apiPath}" \
   --header 'Content-Type: application/json' \
   --header "Authorization: Bearer ${accessToken}" \
   --data "{'resourceType':'DocumentReference','status':'current','date':'$(date --iso-8601=seconds)','content':[{'attachment':{'contentType':'x-application/hl7-v2+er7','data':'${payload}'}}]}"
