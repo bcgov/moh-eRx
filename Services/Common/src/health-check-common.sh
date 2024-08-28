@@ -30,13 +30,14 @@ else
 fi
 
 # request the access token from keycloak
-accessToken=$(curl --location --request POST ${tokenEndpoint} \
+accessToken=$(curl --silent --location --request POST ${tokenEndpoint} \
   --header 'Content-Type: application/x-www-form-urlencoded' \
   --data-urlencode 'grant_type=client_credentials' \
   --data-urlencode "client_id=${HEALTH_CHECK_CLIENT_ID}" \
   --data-urlencode 'audience=pharmanet' \
   --data-urlencode 'scope=openid system/*.write system/*.read system/Claim.read system/Claim.write system/Consent.read system/Consent.write system/Location.read system/Medication.read system/MedicationDispense.read system/MedicationDispense.write system/MedicationRequest.read system/MedicationRequest.write system/MedicationStatement.read system/Patient.read system/Patient.write system/Practitioner.read' \
-  --data-urlencode "client_secret=${HEALTH_CHECK_CLIENT_SECRET}" 2> /dev/null | sed 's/.*"access_token":"\([0-9a-zA-Z_\-]*\.[0-9a-zA-Z_\-]*\.[0-9a-zA-Z_\-]*\)".*/\1/')
+  --data-urlencode "client_secret=${HEALTH_CHECK_CLIENT_SECRET}" \
+  | sed 's/.*"access_token":"\([0-9a-zA-Z_\-]*\.[0-9a-zA-Z_\-]*\.[0-9a-zA-Z_\-]*\)".*/\1/')
 
 # submit a transaction to the current service
 curl --silent --request POST "http://127.0.0.1:8080/api/v1/${apiPath}" \
