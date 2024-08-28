@@ -20,7 +20,7 @@
 export const options = {
     vus: __ENV.ERX_VUS ? __ENV.ERX_VUS : 1,
     iterations: __ENV.ERX_ITERATIONS ? __ENV.ERX_ITERATIONS : 1,
-    maxDuration: __ENV.ERX_MAX_DURATION ? __ENV.ERX_MAX_DURATION : "10m",
+    duration: __ENV.ERX_MAX_DURATION ? __ENV.ERX_MAX_DURATION : "10m",
 };
 
 // the mean time delay in seconds between each transaction
