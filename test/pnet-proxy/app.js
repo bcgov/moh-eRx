@@ -16,7 +16,7 @@ app.post("/submit", function (req, res) {
 
     res.contentType = "application/json";
 
-    res.setTimeout(randomExp(meanDelayMilliseconds), () => { res.send(responseJson); });
+    res.setTimeout(Math.max(randomExp(meanDelayMilliseconds), 1), () => { res.send(responseJson); });
 });
 
 app.get("/", function (req, res) {
@@ -24,7 +24,7 @@ app.get("/", function (req, res) {
 
     res.contentType = "application/json";
 
-    res.setTimeout(randomExp(meanDelayMilliseconds), () => { res.send(responseJson); });
+    res.setTimeout(Math.max(randomExp(meanDelayMilliseconds), 1), () => { res.send(responseJson); });
 });
 
 // Generate a random number, exponentially distributed with the given mean.
