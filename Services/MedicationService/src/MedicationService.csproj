@@ -8,6 +8,7 @@
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'MedicationService' " />
   <ItemGroup>
     <Content Include=".vscode\launch.json" />
+    <Content Include="health-check.sh" CopyToOutputDirectory="Always" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\src\Common.csproj" />
