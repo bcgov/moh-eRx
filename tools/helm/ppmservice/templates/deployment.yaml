@@ -69,6 +69,12 @@ spec:
             exec:
               command:
                 - ./health-check.sh
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - sleep
+                  - 10
           terminationMessagePath: /{{ include "ppmservice.fullname" . }}/termination-log
           terminationMessagePolicy: File
           volumeMounts:
