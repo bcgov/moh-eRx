@@ -61,8 +61,14 @@ spec:
                   name: {{ $secret }}
                   key: {{ $key }}
             {{- end }}                 
+          startupProbe:
+            periodSeconds: 60
+            timeoutSeconds: 10
+            successThreshold: 1
+            exec:
+              command:
+                - './health-check.sh'
           readinessProbe:
-            initialDelaySeconds: 60
             periodSeconds: 20
             timeoutSeconds: 10
             successThreshold: 3
