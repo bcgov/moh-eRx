@@ -68,13 +68,13 @@ spec:
             successThreshold: 3
             exec:
               command:
-                - ./health-check.sh
+                - './health-check.sh'
           lifecycle:
             preStop:
               exec:
                 command:
-                  - sleep
-                  - 10
+                  - 'sleep'
+                  - '10'
           terminationMessagePath: /{{ include "ppmservice.fullname" . }}/termination-log
           terminationMessagePolicy: File
           volumeMounts:
