@@ -43,4 +43,5 @@ accessToken=$(curl --silent --location --request POST ${tokenEndpoint} \
 curl --silent --request POST "http://127.0.0.1:8080/api/v1/${apiPath}" \
   --header 'Content-Type: application/json' \
   --header "Authorization: Bearer ${accessToken}" \
+  --header 'Kong-Request-ID: health-check' \
   --data "{'resourceType':'DocumentReference','status':'current','date':'$(date --iso-8601=seconds)','content':[{'attachment':{'contentType':'x-application/hl7-v2+er7','data':'${payload}'}}]}"
