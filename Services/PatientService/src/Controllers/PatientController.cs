@@ -33,6 +33,9 @@ namespace Health.PharmaNet.Controllers
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
 
+    /// <summary>
+    /// The Patient service controller.
+    /// </summary>
     [ApiVersion("1.0")]
     [ApiController]
     public class PatientController : ServiceBaseController

@@ -28,6 +28,7 @@ namespace Health.PharmaNet.Delegates
     /// The Pharmanet Delegate, which communicates directly to the Pharmanet proxy service.
     /// </summary>
     /// <param name="request">A PharmanetMessageModel instance containing the HL7v2 request message.</param>
+    /// <param name="isHealthCheck">A boolean indicating if this request is a health check or a transaction.</param>
     /// <returns>A PharmanetMessageModel as response.</returns>
     public Task<RequestResult<PharmanetMessageModel>> SubmitRequest(PharmanetMessageModel request, bool isHealthCheck);
   }

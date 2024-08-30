@@ -94,6 +94,7 @@ namespace Health.PharmaNet.Delegates
         /// Submit a PharmanetMessage to Pharmanet System.
         /// </summary>
         /// <param name="request">The PharmanetMessage request containing HL7v2 base 64 payload.</param>
+        /// <param name="isHealthCheck">A boolean indicating if this request is a health check or a transaction.</param>
         /// <returns>A PharmanetMessage response.</returns>
         public async Task<RequestResult<PharmanetMessageModel>> SubmitRequest(PharmanetMessageModel request, bool isHealthCheck)
         {

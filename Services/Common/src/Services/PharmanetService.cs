@@ -57,6 +57,7 @@ namespace Health.PharmaNet.Services
         /// </summary>
         /// <param name="request">The DocumentReference to be submitted.</param>
         /// <param name="traceId">The value used to track messages from API Gateway.</param>
+        /// <param name="isHealthCheck">A boolean indicating if this request is a health check or a transaction.</param>
         /// <returns>Returns a DocumentReference containing the response from PharmaNet.</returns>
         public async Task<RequestResult<DocumentReference>> SubmitRequest(DocumentReference request, string traceId, bool isHealthCheck)
         {
