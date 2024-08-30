@@ -40,6 +40,12 @@ namespace Health.PharmaNet.Models
         public string Endpoint { get; set; } = string.Empty;
 
         /// <summary>
+        /// Gets or sets the endpoint path for the service's health checks.
+        /// </summary>
+        [JsonPropertyName("HealthCheckEndpoint")]
+        public string HealthCheckEndpoint { get; set; } = string.Empty;
+
+        /// <summary>
         /// Gets or sets the username to use for authentication.
         /// </summary>
         [JsonPropertyName("Username")]

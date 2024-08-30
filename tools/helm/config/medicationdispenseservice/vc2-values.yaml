@@ -6,6 +6,9 @@ Application:
     PharmaNet_PharmanetProxy__Username: common-vc2-secrets
     PharmaNet_PharmanetProxy__Password: common-vc2-secrets
     PharmaNet_PharmanetProxy__ClientCertificatePassword: common-vc2-secrets
+    HEALTH_CHECK_CLIENT_ID: common-vc2-secrets
+    HEALTH_CHECK_CLIENT_SECRET: common-vc2-secrets
+    PharmaNet_PharmanetProxy__HealthCheckEndpoint: common-vc2-secrets
 
 OpenShift:
   Environment: vc2

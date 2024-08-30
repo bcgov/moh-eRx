@@ -6,6 +6,9 @@ Application:
     PharmaNet_PharmanetProxy__Username: common-tr1-secrets
     PharmaNet_PharmanetProxy__Password: common-tr1-secrets
     PharmaNet_PharmanetProxy__ClientCertificatePassword: common-tr1-secrets
+    HEALTH_CHECK_CLIENT_ID: common-tr1-secrets
+    HEALTH_CHECK_CLIENT_SECRET: common-tr1-secrets
+    PharmaNet_PharmanetProxy__HealthCheckEndpoint: common-tr1-secrets
 
 OpenShift:
   Environment: tr1

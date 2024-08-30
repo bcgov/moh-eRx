@@ -58,7 +58,7 @@ namespace Health.PharmaNet.Services
         /// <param name="request">The DocumentReference to be submitted.</param>
         /// <param name="traceId">The value used to track messages from API Gateway.</param>
         /// <returns>Returns a DocumentReference containing the response from PharmaNet.</returns>
-        public async Task<RequestResult<DocumentReference>> SubmitRequest(DocumentReference request, string traceId)
+        public async Task<RequestResult<DocumentReference>> SubmitRequest(DocumentReference request, string traceId, bool isHealthCheck)
         {
             Logger.LogInformation(this.logger, $"Trace ID: {traceId}: PharmanetService.SubmitRequest start");
 
@@ -73,7 +73,7 @@ namespace Health.PharmaNet.Services
                 // This log statement logs sensitive health information - use it only for debugging in a development environment
                 // Logger.LogDebug(this.logger, $"Pharmanet Request: {requestMessage.Hl7Message}");
 
-                RequestResult<PharmanetMessageModel> result = await this.pharmanetDelegate.SubmitRequest(requestMessage).ConfigureAwait(true);
+                RequestResult<PharmanetMessageModel> result = await this.pharmanetDelegate.SubmitRequest(requestMessage, isHealthCheck).ConfigureAwait(true);
 
                 response.StatusCode = result.StatusCode;
                 response.ErrorMessage = result.ErrorMessage;

@@ -30,6 +30,6 @@ namespace Health.PharmaNet.Services
         /// <param name="request">An HL7 FHIR DocumentReference request containing HL7v2 payload.</param>
         /// <param name="traceId">The value used to track messages from API Gateway.</param>
         /// <returns>Returns a DocumentReference response.</returns>
-        Task<RequestResult<DocumentReference>> SubmitRequest(DocumentReference request, string traceId);
+        Task<RequestResult<DocumentReference>> SubmitRequest(DocumentReference request, string traceId, bool isHealthCheck);
     }
 }

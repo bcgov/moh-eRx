@@ -111,7 +111,7 @@ namespace Health.PharmaNet.Controllers
         // [ProducesResponseType(StatusCodes.Status200OK)]
         // [Authorize(Policy = FhirScopesPolicy.Access)]
         [Authorize]
-        protected async Task<ActionResult<DocumentReference>> PharmanetRequest()
+        protected async Task<ActionResult<DocumentReference>> PharmanetRequest(bool isHealthCheck = false)
         {
             Logger.LogInformation(this.logger, $"ServiceBaseController.PharmanetRequest start");
 
@@ -154,7 +154,7 @@ namespace Health.PharmaNet.Controllers
             }
             Logger.LogInformation(this.logger, $"Trace ID: {traceId}: ServiceBaseController.PharmanetRequest: Authorization completed. Submitting request...");
 
-            RequestResult<DocumentReference> response = await this.service.SubmitRequest(fhirRequest, traceId + "").ConfigureAwait(true);
+            RequestResult<DocumentReference> response = await this.service.SubmitRequest(fhirRequest, traceId + "", isHealthCheck).ConfigureAwait(true);
             if (response.IsSuccessStatusCode == false)
             {
                 Logger.LogError(this.logger, $"An Error occurred while invoking Pharmanet endpoint: {response.ErrorMessage}");
