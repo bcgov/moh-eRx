@@ -25,4 +25,5 @@ resources:
     cpu: 16m
     memory: 128Mi
 
-replicaCount: 2
+deploymentSpec:
+  replicas: 2
