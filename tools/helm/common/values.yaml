@@ -4,6 +4,9 @@ Secrets:
   PharmaNet_PharmanetProxy__Endpoint: ${endpoint}
   PharmaNet_PharmanetProxy__Password: ${password}
   PharmaNet_PharmanetProxy__Username: ${username}
+  HEALTH_CHECK_CLIENT_ID: # client id used to authenticate health checks
+  HEALTH_CHECK_CLIENT_SECRET: # client secret used to authenticate health checks
+  PharmaNet_PharmanetProxy__HealthCheckEndpoint: # endpoint used for health checks
 
 #Used to load the certificate file into the common config map
 Configuration:

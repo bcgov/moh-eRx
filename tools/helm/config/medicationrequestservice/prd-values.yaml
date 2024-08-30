@@ -6,6 +6,9 @@ Application:
     PharmaNet_PharmanetProxy__Username: common-prd-secrets
     PharmaNet_PharmanetProxy__Password: common-prd-secrets
     PharmaNet_PharmanetProxy__ClientCertificatePassword: common-prd-secrets
+    HEALTH_CHECK_CLIENT_ID: common-prd-secrets
+    HEALTH_CHECK_CLIENT_SECRET: common-prd-secrets
+    PharmaNet_PharmanetProxy__HealthCheckEndpoint: common-prd-secrets
 
 OpenShift:
   Environment: prd
@@ -22,4 +25,5 @@ resources:
     cpu: 60m
     memory: 128Mi
 
-replicaCount: 8
+deploymentSpec:
+  replicas: 8
