@@ -33,11 +33,7 @@ namespace Health.PharmaNet.Controllers
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
 
-    /// <summary>
-    /// The MedicationService controller.
-    /// </summary>
     [ApiVersion("1.0")]
-    [Route("/api/v{version:apiVersion}/Consent/")]
     [ApiController]
     public class ConsentController : ServiceBaseController
     {
@@ -62,11 +58,12 @@ namespace Health.PharmaNet.Controllers
         }
 
         /// <summary>
-        /// The ProtectiveKeyword acts as a lock; only a practitioner with the protective word can unlock the record to view and/or update its contents. ... Access to PharmaNet is strictly controlled.
+        /// Execute a transaction on this service.
         /// </summary>
         /// <returns>A DocumentReference response as Json.</returns>
         /// <response code="200">Returns Ok when the transaction went through.</response>
         /// <response code="401">Authorization error, returns JSON describing the error.</response>
+        [Route("/api/v{version:apiVersion}/Consent/")]
         [HttpPost]
         [Produces("application/fhir+json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -74,6 +71,22 @@ namespace Health.PharmaNet.Controllers
         public async Task<ActionResult<DocumentReference>> Consent()
         {
             return await this.PharmanetRequest().ConfigureAwait(true);
+        }
+
+        /// <summary>
+        /// Execute a health check on this service.
+        /// </summary>
+        /// <returns>A DocumentReference response as Json.</returns>
+        /// <response code="200">Returns Ok when the transaction went through.</response>
+        /// <response code="401">Authorization error, returns JSON describing the error.</response>
+        [Route("/healthz")]
+        [HttpPost]
+        [Produces("application/fhir+json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [Authorize(Policy = FhirScopesPolicy.Access)]
+        public async Task<ActionResult<DocumentReference>> HealthCheck()
+        {
+            return await this.PharmanetRequest(true).ConfigureAwait(true);
         }
     }
 }
