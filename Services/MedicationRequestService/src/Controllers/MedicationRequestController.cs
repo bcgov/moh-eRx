@@ -13,6 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
+
 namespace Health.PharmaNet.Controllers
 {
     using System.Security.Claims;
@@ -33,10 +34,9 @@ namespace Health.PharmaNet.Controllers
     using Microsoft.Extensions.Logging;
 
     /// <summary>
-    /// The MedicationService controller.
+    /// The MedicationRequest service controller.
     /// </summary>
     [ApiVersion("1.0")]
-    [Route("/api/v{version:apiVersion}/MedicationRequest/")]
     [ApiController]
     public class MedicationRequestController : ServiceBaseController
     {
@@ -61,14 +61,12 @@ namespace Health.PharmaNet.Controllers
         }
 
         /// <summary>
-        /// The MedicationRequest is an order or request for both supply of the medication and the instructions for administration of
-        /// the medication to a patient. The resource is called "MedicationRequest" rather than "MedicationPrescription" or "MedicationOrder"
-        /// to generalize the use across inpatient and outpatient settings, including care plans, etc., and to harmonize with workflow patterns.
+        /// Execute a transaction on this service.
         /// </summary>
         /// <returns>A DocumentReference response as Json.</returns>
         /// <response code="200">Returns Ok when the transaction went through.</response>
         /// <response code="401">Authorization error, returns JSON describing the error.</response>
-        /// <response code="500">The service error occurred.</response>
+        [Route("/api/v{version:apiVersion}/MedicationRequest/")]
         [HttpPost]
         [Produces("application/fhir+json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -76,6 +74,22 @@ namespace Health.PharmaNet.Controllers
         public async Task<ActionResult<DocumentReference>> MedicationRequest()
         {
             return await this.PharmanetRequest().ConfigureAwait(true);
+        }
+
+        /// <summary>
+        /// Execute a health check on this service.
+        /// </summary>
+        /// <returns>A DocumentReference response as Json.</returns>
+        /// <response code="200">Returns Ok when the transaction went through.</response>
+        /// <response code="401">Authorization error, returns JSON describing the error.</response>
+        [Route("/healthz")]
+        [HttpPost]
+        [Produces("application/fhir+json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [Authorize(Policy = FhirScopesPolicy.Access)]
+        public async Task<ActionResult<DocumentReference>> HealthCheck()
+        {
+            return await this.PharmanetRequest(true).ConfigureAwait(true);
         }
     }
 }

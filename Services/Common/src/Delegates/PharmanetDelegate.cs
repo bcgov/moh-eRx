@@ -94,8 +94,9 @@ namespace Health.PharmaNet.Delegates
         /// Submit a PharmanetMessage to Pharmanet System.
         /// </summary>
         /// <param name="request">The PharmanetMessage request containing HL7v2 base 64 payload.</param>
+        /// <param name="isHealthCheck">A boolean indicating if this request is a health check or a transaction.</param>
         /// <returns>A PharmanetMessage response.</returns>
-        public async Task<RequestResult<PharmanetMessageModel>> SubmitRequest(PharmanetMessageModel request)
+        public async Task<RequestResult<PharmanetMessageModel>> SubmitRequest(PharmanetMessageModel request, bool isHealthCheck)
         {
             Logger.LogInformation(this.logger, $"Transaction UUID: {request.TransactionId}: PharmanetDelegate.SubmitRequest start");
 
@@ -109,7 +110,7 @@ namespace Health.PharmaNet.Delegates
 
             try
             {
-                Uri delegateUri = new Uri(this.pharmanetDelegateConfig.Endpoint);
+                Uri delegateUri = new Uri(isHealthCheck ? this.pharmanetDelegateConfig.HealthCheckEndpoint : this.pharmanetDelegateConfig.Endpoint);
 
                 Logger.LogInformation(this.logger, $"Transaction UUID: {request.TransactionId}: PharmanetDelegate.SubmitRequest: Sending message to PharmaNet...");
                 // This log statement logs sensitive health information - use it only for debugging in a development environment

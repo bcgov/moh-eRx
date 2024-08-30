@@ -4,7 +4,7 @@ const port = 8080;
 const host = "0.0.0.0";
 const app = express();
 
-const meanDelayMilliseconds = 250;
+const meanDelayMilliseconds = 0;
 
 const responseJson = {
     "transactionUUID": "22c263c9-1903-4cbf-8eb2-c43fa7b9dfa7",
@@ -16,7 +16,7 @@ app.post("/submit", function (req, res) {
 
     res.contentType = "application/json";
 
-    res.setTimeout(randomExp(meanDelayMilliseconds), () => { res.send(responseJson); });
+    res.setTimeout(Math.max(randomExp(meanDelayMilliseconds), 1), () => { res.send(responseJson); });
 });
 
 app.get("/", function (req, res) {
@@ -24,7 +24,7 @@ app.get("/", function (req, res) {
 
     res.contentType = "application/json";
 
-    res.setTimeout(randomExp(meanDelayMilliseconds), () => { res.send(responseJson); });
+    res.setTimeout(Math.max(randomExp(meanDelayMilliseconds), 1), () => { res.send(responseJson); });
 });
 
 // Generate a random number, exponentially distributed with the given mean.

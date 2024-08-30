@@ -34,6 +34,7 @@ Create chart name and version as used by the chart label.
 Common labels
 */}}
 {{- define "ppmservice.labels" -}}
+env: {{ .Values.OpenShift.Environment }}
 helm.sh/chart: {{ include "ppmservice.chart" . }}
 {{ include "ppmservice.selectorLabels" . }}
 {{- end }}
