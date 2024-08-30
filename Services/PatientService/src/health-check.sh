@@ -1,3 +1,3 @@
 #!/bin/bash
 
-./health-check-common.sh 'TVNIfF5+XFwmfHx8fHx8fFpQTnwwfFB8XHJaWlp8VElEXHJaQ0F8fHwwMFxy'
+./health-check-common.sh 'TVNIfF5+XCZ8fHx8fHx8WlBOfDB8UHwNWlpafFRJRA1aQ0F8fHwwMA0K'
