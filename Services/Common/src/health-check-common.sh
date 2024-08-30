@@ -1,10 +1,7 @@
 #!/bin/bash
 
-# get the api path from the first argument
-apiPath=$1
-
-# get the payload from the second argument
-payload=$2
+# get the payload from the script argument
+payload=$1
 
 # select the correct keycloak token url by environment
 if [ $ASPNETCORE_ENVIRONMENT = 'dev' ]; then
@@ -40,7 +37,7 @@ accessToken=$(curl --silent --location --request POST ${tokenEndpoint} \
   | sed 's/.*"access_token":"\([0-9a-zA-Z_\-]*\.[0-9a-zA-Z_\-]*\.[0-9a-zA-Z_\-]*\)".*/\1/')
 
 # submit a transaction to the current service
-curl --silent --request POST "http://127.0.0.1:8080/api/v1/${apiPath}" \
+curl --silent --request POST "http://127.0.0.1:8080/healthz" \
   --header 'Content-Type: application/json' \
   --header "Authorization: Bearer ${accessToken}" \
   --header 'Kong-Request-ID: health-check' \
