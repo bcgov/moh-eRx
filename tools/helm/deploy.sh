@@ -55,7 +55,7 @@ basedir=$(dirname $0)
 services=("claim" "consent" "location" "medicationdispense" "medicationrequest" "medication" "medicationstatement" "patient" "practitioner")
 
 # Deploy the pnet-proxy container used for health checks
-helm $helmCommand -n $namespace pnet-proxy ${basedir}/pnet-proxy/
+helm $helmCommand -n $namespace pnet-proxy-${environment} ${basedir}/pnet-proxy/
 
 # Deploy the common secrets that each PPM API service references
 helm $helmCommand -n $namespace -f ${basedir}/config/common/${environment}-values.yaml common-${environment} ${basedir}/common/
