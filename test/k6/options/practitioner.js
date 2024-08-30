@@ -19,7 +19,8 @@
 // see https://k6.io/docs/using-k6/k6-options/ for more information
 export const options = {
     vus: __ENV.ERX_VUS ? __ENV.ERX_VUS : 1,
-    iterations: __ENV.ERX_ITERATIONS ? __ENV.ERX_ITERATIONS : 1
+    iterations: __ENV.ERX_ITERATIONS ? __ENV.ERX_ITERATIONS : 1,
+    duration: __ENV.ERX_MAX_DURATION ? __ENV.ERX_MAX_DURATION : "10m",
 };
 
 // the mean time delay in seconds between each transaction
