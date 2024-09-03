@@ -70,12 +70,15 @@ spec:
               command:
                 - './health-check.sh'
           readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health
+              port: {{ .Values.Application.Port }}
+              scheme: HTTP
+            initialDelaySeconds: 10
             periodSeconds: 20
-            timeoutSeconds: 10
-            successThreshold: 3
-            exec:
-              command:
-                - './health-check.sh'
+            successThreshold: 1
+            timeoutSeconds: 4
           lifecycle:
             preStop:
               exec:
