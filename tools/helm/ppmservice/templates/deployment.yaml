@@ -62,7 +62,7 @@ spec:
                   key: {{ $key }}
             {{- end }}                 
           startupProbe:
-            periodSeconds: 120
+            periodSeconds: 60
             timeoutSeconds: 10
             successThreshold: 1
             failureThreshold: 10
