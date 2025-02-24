@@ -24,13 +24,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      # Set up the OpenShift CLI tools required. Note, these used to be included with earlier runner images but that is no longer guaranteed so they must be installed.
       - name: Install CLI tools from OpenShift Mirror
         uses: redhat-actions/openshift-tools-installer@v1
         with:
           source: "mirror"
           kam: "latest"
           oc: "4"
-          
+      
       - name: "Checkout source"
         uses: actions/checkout@v3
 
