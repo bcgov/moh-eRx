@@ -40,7 +40,7 @@ jobs:
           docker build -f $GITHUB_WORKSPACE/Services/$APP/src/Dockerfile $RUNNER_TEMP -t $imageName:dev
 
       - name: OpenShift Silver Login
-        uses: redhat-actions/oc-login@v1.1
+        uses: redhat-actions/oc-login@v1.3
         with:
           openshift_server_url: ${{ secrets.SILVER_URI }}
           openshift_token: ${{ secrets.SILVER_TOKEN }}
