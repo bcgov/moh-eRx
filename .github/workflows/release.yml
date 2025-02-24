@@ -50,9 +50,17 @@ jobs:
       matrix: ${{ fromJSON(needs.prepare-matrix.outputs.matrix) }}
 
     steps:
+      # Set up the OpenShift CLI tools required. Note, these used to be included with earlier runner images but that is no longer guaranteed so they must be installed.
+      - name: Install CLI tools from OpenShift Mirror
+        uses: redhat-actions/openshift-tools-installer@v1
+        with:
+          source: "mirror"
+          kam: "latest"
+          oc: "4"
+      
       - name: OpenShift Gold Login
         if: inputs.service == 'all' || inputs.service == matrix.service
-        uses: redhat-actions/oc-login@v1.1
+        uses: redhat-actions/oc-login@v1.3
         with:
           openshift_server_url: ${{ secrets.GOLD_URI }}
           openshift_token: ${{ secrets.GOLD_TOKEN }}
@@ -69,7 +77,7 @@ jobs:
 
       - name: OpenShift Gold DR Login
         if: inputs.service == 'all' || inputs.service == matrix.service
-        uses: redhat-actions/oc-login@v1.1
+        uses: redhat-actions/oc-login@v1.3
         with:
           openshift_server_url: ${{ secrets.GOLDDR_URI }}
           openshift_token: ${{ secrets.GOLDDR_TOKEN }}
