@@ -42,6 +42,20 @@ export const examples = [
             "ZZZ|TDU||319233|P1|nnnnnnnnnn|||||ZZZ1^\r"
     },
     {
+        name: "TACTDU_04_REQUEST-319234",
+        purpose: "Adjudicate a Dispense Claim adjust, reverse, or resubmit an existing claim",
+        version: "PNet-R70",
+        message:
+            "MSH|^~\\&|123456|123456||ERXPP|${{ timestamp }}|userID:192.168.0.1|ZPN|319234|P|2.1||\r" +
+            "ZCA|1|70|04|AR|05|\r" +
+            "ZCB|BC00000I10|140905|319234\r" +
+            "ZCC||||||||||000nnnnnnnnnn|\r" +
+            "ZCD|||N|319234||319234|2063735||100|7|91|nnnnnnnnnn|||||1486||222|||||nnnnnn|912351175\r" +
+            "ZPJ|ZPJ1^^^^^^|ZPJ2^^~ZPJ2^^~ZPJ2^^|ZPJ3^^|ZPJ4^Transaction Trace ID: 319234\r" +
+            "ZZZ|TAC||319234|P1|nnnnnnnnnn|||||ZZZ1^\r" +
+            "ZZZ|TDU||319234|P1|nnnnnnnnnn|||||ZZZ1^\r"
+    },
+    {
         name: "TACTDU_0104_REQUEST-20334 (encrypted)",
         purpose: "Adjudicate a Dispense Claim request message (Encrypted)",
         version: "PNet-R70",
