@@ -88,9 +88,6 @@ namespace Health.PharmaNet.Services
                     ResourceReference reference = PharmanetDelegateAdapter.RelatedToDocumentReference(request);
                     response.Payload = PharmanetDelegateAdapter.ToDocumentReference(message!, reference);
 
-                    // This log statement does not log sensitive health information, even though it looks like it might
-                    this.logger.LogDebug($"FHIR Response: {response!.Payload.ToString()}");
-
                     response.IsSuccessStatusCode = true;
                 }
                 else
