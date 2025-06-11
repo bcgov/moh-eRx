@@ -99,7 +99,7 @@ namespace Health.PharmaNet.Delegates
         /// <returns>A PharmanetMessage response.</returns>
         public async Task<RequestResult<PharmanetMessageModel>> SubmitRequest(PharmanetMessageModel request, string traceId, bool isHealthCheck)
         {
-            // Logger.LogDebug(this.logger, $"Transaction UUID: {request.TransactionId}: PharmanetDelegate.SubmitRequest start");
+            Logger.LogDebug(this.logger, $"Transaction UUID: {request.TransactionId}: PharmanetDelegate.SubmitRequest start");
 
             RequestResult<PharmanetMessageModel> requestResult = new RequestResult<PharmanetMessageModel>();
 
@@ -127,17 +127,14 @@ namespace Health.PharmaNet.Delegates
                 if (!requestResult.IsSuccessStatusCode)
                 {
                     string msg = "PharmanetDelegate Proxy call returned with StatusCode := " + response.StatusCode;
-                    Logger.LogDebug(this.logger, msg);
+                    Logger.LogError(this.logger, msg);
                     requestResult.ErrorMessage = msg;
                     return requestResult;
                 }
                 else
                 {
-                    // Logger.LogDebug(this.logger, $"Transaction UUID: {request.TransactionId}: PharmanetDelegate.SubmitRequest: Response success, extracting response content...");
                     string? result = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
-                    // Logger.LogDebug(this.logger, $"Transaction UUID: {request.TransactionId}: PharmanetDelegate.SubmitRequest: Extracting response content. Deserializing result: {result}");
                     PharmanetMessageModel? responseMessage = JsonSerializer.Deserialize<PharmanetMessageModel>(result);
-                    // Logger.LogDebug(this.logger, $"Transaction UUID: {request.TransactionId}: PharmanetDelegate.SubmitRequest: Deserialized message. Building response...");
 
                     responseMessage!.Hl7Message = TrimBadCharactersInMessage(responseMessage!.Hl7Message); // Workaround stray chars from Delegate
                     requestResult.Payload = responseMessage;
@@ -158,7 +155,7 @@ namespace Health.PharmaNet.Delegates
                 return requestResult;
             }
 
-            // Logger.LogDebug(this.logger, $"Transaction UUID: {request.TransactionId}: PharmanetDelegate.SubmitRequest end ");
+            Logger.LogDebug(this.logger, $"Transaction UUID: {request.TransactionId}: PharmanetDelegate.SubmitRequest end ");
             return requestResult;
         }
     }

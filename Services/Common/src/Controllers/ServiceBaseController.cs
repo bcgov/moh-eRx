@@ -113,7 +113,7 @@ namespace Health.PharmaNet.Controllers
         [Authorize]
         protected async Task<ActionResult<DocumentReference>> PharmanetRequest(bool isHealthCheck = false)
         {
-            // Logger.LogDebug(this.logger, $"ServiceBaseController.PharmanetRequest start");
+            Logger.LogDebug(this.logger, $"ServiceBaseController.PharmanetRequest start");
 
             ClaimsPrincipal? user = this.HttpContext!.User;
 
@@ -121,8 +121,6 @@ namespace Health.PharmaNet.Controllers
             Logger.LogDebug(this.logger, $"Trace ID: {traceId}: ServiceBaseController.PharmanetRequest. Extracted Kong-Request-ID header as the Trace ID.");
 
             string jsonString = await this.Request.GetRawBodyStringAsync().ConfigureAwait(true);
-
-            // Logger.LogDebug(this.logger, $"Trace ID: {traceId}: ServiceBaseController.PharmanetRequest: Got the body from the request.");
 
             DocumentReference fhirRequest;
             Message hl7v2Message;
@@ -143,7 +141,6 @@ namespace Health.PharmaNet.Controllers
             HL7.Dotnetcore.Segment? mshSegment = hl7v2Message.Segments("MSH").FirstOrDefault();
             Logger.LogDebug(this.logger, $"Trace ID: {traceId}: ServiceBaseController.PharmanetRequest: Message MSH: {mshSegment?.Value}");
 
-            // Logger.LogDebug(this.logger, $"Trace ID: {traceId}: ServiceBaseController.PharmanetRequest: Authorizing...");
             AuthorizationResult authResult = await this.authorizationService.AuthorizeAsync(
                     user,
                     hl7v2Message,
@@ -165,7 +162,6 @@ namespace Health.PharmaNet.Controllers
                     ContentType = "application/json",
                 };
             }
-            // Logger.LogDebug(this.logger, $"Trace ID: {traceId}: ServiceBaseController.PharmanetRequest: Request completed.");
 
             DocumentReference? docRef = response.Payload;
 
