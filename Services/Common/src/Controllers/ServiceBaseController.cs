@@ -139,7 +139,7 @@ namespace Health.PharmaNet.Controllers
             }
 
             HL7.Dotnetcore.Segment? mshSegment = hl7v2Message.Segments("MSH").FirstOrDefault();
-            Logger.LogDebug(this.logger, $"Trace ID: {traceId}: ServiceBaseController.PharmanetRequest: Message MSH: {mshSegment?.Value}");
+            Logger.LogInformation(this.logger, $"Trace ID: {traceId}: ServiceBaseController.PharmanetRequest: Message MSH: {mshSegment?.Value}");
 
             AuthorizationResult authResult = await this.authorizationService.AuthorizeAsync(
                     user,
