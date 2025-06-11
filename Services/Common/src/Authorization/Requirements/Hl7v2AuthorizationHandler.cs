@@ -89,14 +89,14 @@ namespace Health.PharmaNet.Authorization
 
                 if (HasCorrectScopes(scopesNeeded, scopes))
                 {
-                    Logger.LogInformation(this.logger, "HL7v2 Authorization Success! Scope(s) provided are correct for the HL7v2 message");
+                    Logger.LogDebug(this.logger, "HL7v2 Authorization Success! Scope(s) provided are correct for the HL7v2 message");
                     context.Succeed(requirement);
                 }
                 else
                 {
                     if (scopesNeeded.Length > 0)
                     {
-                        Logger.LogInformation(this.logger, "HL7v2 Authorization Failed! Scope(s) provided are NOT correct for the HL7v2 MessagType");
+                        Logger.LogError(this.logger, "HL7v2 Authorization Failed! Scope(s) provided are NOT correct for the HL7v2 MessagType");
                     }
                     else
                     {

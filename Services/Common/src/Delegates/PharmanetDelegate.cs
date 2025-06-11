@@ -64,7 +64,7 @@ namespace Health.PharmaNet.Delegates
                 }
                 else
                 {
-                    Logger.LogInformation(this.logger, $"WORKAROUND: Removed {aByte:X4} character from HL7v2 response.");
+                    Logger.LogDebug(this.logger, $"WORKAROUND: Removed {aByte:X4} character from HL7v2 response.");
                 }
             }
             string b64ResultStr = Convert.ToBase64String(newBytes, 0, i);
@@ -94,11 +94,12 @@ namespace Health.PharmaNet.Delegates
         /// Submit a PharmanetMessage to Pharmanet System.
         /// </summary>
         /// <param name="request">The PharmanetMessage request containing HL7v2 base 64 payload.</param>
+        /// <param name="traceId">The value used to track messages from API Gateway.</param>
         /// <param name="isHealthCheck">A boolean indicating if this request is a health check or a transaction.</param>
         /// <returns>A PharmanetMessage response.</returns>
-        public async Task<RequestResult<PharmanetMessageModel>> SubmitRequest(PharmanetMessageModel request, bool isHealthCheck)
+        public async Task<RequestResult<PharmanetMessageModel>> SubmitRequest(PharmanetMessageModel request, string traceId, bool isHealthCheck)
         {
-            Logger.LogInformation(this.logger, $"Transaction UUID: {request.TransactionId}: PharmanetDelegate.SubmitRequest start");
+            // Logger.LogDebug(this.logger, $"Transaction UUID: {request.TransactionId}: PharmanetDelegate.SubmitRequest start");
 
             RequestResult<PharmanetMessageModel> requestResult = new RequestResult<PharmanetMessageModel>();
 
@@ -112,7 +113,7 @@ namespace Health.PharmaNet.Delegates
             {
                 Uri delegateUri = new Uri(isHealthCheck ? this.pharmanetDelegateConfig.HealthCheckEndpoint : this.pharmanetDelegateConfig.Endpoint);
 
-                Logger.LogInformation(this.logger, $"Transaction UUID: {request.TransactionId}: PharmanetDelegate.SubmitRequest: Sending message to PharmaNet...");
+                Logger.LogInformation(this.logger, $"Trace ID: {traceId}: Transaction UUID: {request.TransactionId}: PharmanetDelegate.SubmitRequest: Sending message to PharmaNet: {delegateUri}");
                 // This log statement logs sensitive health information - use it only for debugging in a development environment
                 // Logger.LogDebug(this.logger, $"PharmanetDelegate Proxy POST {delegateUri}. Payload: {jsonOutput}");
 
@@ -132,16 +133,16 @@ namespace Health.PharmaNet.Delegates
                 }
                 else
                 {
-                    Logger.LogInformation(this.logger, $"Transaction UUID: {request.TransactionId}: PharmanetDelegate.SubmitRequest: Response success, extracting response content...");
+                    // Logger.LogDebug(this.logger, $"Transaction UUID: {request.TransactionId}: PharmanetDelegate.SubmitRequest: Response success, extracting response content...");
                     string? result = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
-                    Logger.LogInformation(this.logger, $"Transaction UUID: {request.TransactionId}: PharmanetDelegate.SubmitRequest: Extracting response content. Deserializing message...");
+                    // Logger.LogDebug(this.logger, $"Transaction UUID: {request.TransactionId}: PharmanetDelegate.SubmitRequest: Extracting response content. Deserializing result: {result}");
                     PharmanetMessageModel? responseMessage = JsonSerializer.Deserialize<PharmanetMessageModel>(result);
-                    Logger.LogInformation(this.logger, $"Transaction UUID: {request.TransactionId}: PharmanetDelegate.SubmitRequest: Deserialized message. Building response...");
+                    // Logger.LogDebug(this.logger, $"Transaction UUID: {request.TransactionId}: PharmanetDelegate.SubmitRequest: Deserialized message. Building response...");
 
                     responseMessage!.Hl7Message = TrimBadCharactersInMessage(responseMessage!.Hl7Message); // Workaround stray chars from Delegate
                     requestResult.Payload = responseMessage;
                     // This log statement does not log sensitive health information, even though it looks like it might
-                    Logger.LogDebug(this.logger, $"Transaction UUID: {request.TransactionId}: PharmanetDelegate Proxy Response: {responseMessage}");
+                    Logger.LogDebug(this.logger, $"Transaction UUID: {request.TransactionId}: PharmanetDelegate Proxy Response: {responseMessage.Hl7Message}");
                 }
             }
 #pragma warning disable CA1031 // Do not catch general exception types
@@ -157,7 +158,7 @@ namespace Health.PharmaNet.Delegates
                 return requestResult;
             }
 
-            Logger.LogInformation(this.logger, $"Transaction UUID: {request.TransactionId}: PharmanetDelegate.SubmitRequest end ");
+            // Logger.LogDebug(this.logger, $"Transaction UUID: {request.TransactionId}: PharmanetDelegate.SubmitRequest end ");
             return requestResult;
         }
     }

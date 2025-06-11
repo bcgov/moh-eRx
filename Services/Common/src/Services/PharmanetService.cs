@@ -61,20 +61,20 @@ namespace Health.PharmaNet.Services
         /// <returns>Returns a DocumentReference containing the response from PharmaNet.</returns>
         public async Task<RequestResult<DocumentReference>> SubmitRequest(DocumentReference request, string traceId, bool isHealthCheck)
         {
-            Logger.LogInformation(this.logger, $"Trace ID: {traceId}: PharmanetService.SubmitRequest start");
+            // Logger.LogDebug(this.logger, $"Trace ID: {traceId}: PharmanetService.SubmitRequest start");
 
             RequestResult<DocumentReference> response = new RequestResult<DocumentReference>();
             bool base64Encode = this.configuration.GetSection(PharmanetDelegateConfig.ConfigurationSectionKey).GetValue<bool>("Base64EncodeHl7Message");
-            Logger.LogInformation(this.logger, $"Trace ID: {traceId}: PharmanetService.SubmitRequest: UUID exists in FHIR? {request.MasterIdentifier != null} ");
+            Logger.LogDebug(this.logger, $"Trace ID: {traceId}: PharmanetService.SubmitRequest: UUID exists in FHIR? {request.MasterIdentifier != null} ");
             PharmanetMessageModel requestMessage = PharmanetDelegateAdapter.ToPharmanetMessageModel(request, base64Encode);
-            Logger.LogInformation(this.logger, $"Trace ID: {traceId}: Transaction UUID: {requestMessage.TransactionId}: PharmanetService.SubmitRequest: PharmanetMessageModel created.");
+            // Logger.LogDebug(this.logger, $"Trace ID: {traceId}: Transaction UUID: {requestMessage.TransactionId}: PharmanetService.SubmitRequest: PharmanetMessageModel created.");
 
             try
             {
                 // This log statement logs sensitive health information - use it only for debugging in a development environment
                 // Logger.LogDebug(this.logger, $"Pharmanet Request: {requestMessage.Hl7Message}");
 
-                RequestResult<PharmanetMessageModel> result = await this.pharmanetDelegate.SubmitRequest(requestMessage, isHealthCheck).ConfigureAwait(true);
+                RequestResult<PharmanetMessageModel> result = await this.pharmanetDelegate.SubmitRequest(requestMessage, traceId, isHealthCheck).ConfigureAwait(true);
 
                 response.StatusCode = result.StatusCode;
                 response.ErrorMessage = result.ErrorMessage;
@@ -86,10 +86,10 @@ namespace Health.PharmaNet.Services
                     // This log statement logs sensitive health information - use it only for debugging in a development environment
                     // this.logger.LogDebug($"Pharmanet Response: {message!.Hl7Message}");
 
-                    Logger.LogInformation(this.logger, $"Transaction UUID: {requestMessage.TransactionId}: PharmanetService.SubmitRequest: Building DocumentReference response...");
+                    // Logger.LogDebug(this.logger, $"Transaction UUID: {requestMessage.TransactionId}: PharmanetService.SubmitRequest: Building DocumentReference response...");
                     ResourceReference reference = PharmanetDelegateAdapter.RelatedToDocumentReference(request);
                     response.Payload = PharmanetDelegateAdapter.ToDocumentReference(message!, reference);
-                    Logger.LogInformation(this.logger, $"Transaction UUID: {requestMessage.TransactionId}: PharmanetService.SubmitRequest: DocumentReference response built.");
+                    // Logger.LogDebug(this.logger, $"Transaction UUID: {requestMessage.TransactionId}: PharmanetService.SubmitRequest: DocumentReference response built.");
 
                     // This log statement does not log sensitive health information, even though it looks like it might
                     this.logger.LogDebug($"FHIR Response: {response!.Payload.ToString()}");
@@ -98,7 +98,7 @@ namespace Health.PharmaNet.Services
                 }
                 else
                 {
-                    Logger.LogDebug(this.logger, $"Pharmanet Response Error: {result.ErrorMessage}");
+                    Logger.LogError(this.logger, $"Pharmanet Response Error: {result.ErrorMessage}");
                 }
             }
 #pragma warning disable CA1031 // Do not catch general exception types
@@ -112,7 +112,7 @@ namespace Health.PharmaNet.Services
                 response.ErrorMessage = ex.Message;
             }
 
-            Logger.LogInformation(this.logger, $"Transaction UUID: {requestMessage.TransactionId}: PharmanetService.SubmitRequest end");
+            // Logger.LogDebug(this.logger, $"Transaction UUID: {requestMessage.TransactionId}: PharmanetService.SubmitRequest end");
             return response;
         }
     }
