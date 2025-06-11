@@ -142,7 +142,7 @@ namespace Health.PharmaNet.Delegates
                     responseMessage!.Hl7Message = TrimBadCharactersInMessage(responseMessage!.Hl7Message); // Workaround stray chars from Delegate
                     requestResult.Payload = responseMessage;
                     // This log statement does not log sensitive health information, even though it looks like it might
-                    Logger.LogDebug(this.logger, $"Transaction UUID: {request.TransactionId}: PharmanetDelegate Proxy Response: {responseMessage.Hl7Message}");
+                    Logger.LogDebug(this.logger, $"Transaction UUID: {request.TransactionId}: PharmanetDelegate Proxy Response: {responseMessage}");
                 }
             }
 #pragma warning disable CA1031 // Do not catch general exception types
