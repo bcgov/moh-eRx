@@ -1,5 +1,14 @@
 # moh-eRx
 
+Reminder, the purpose of a README.md:
+
+A README.md gives developers a quick, essential overview of a project’s purpose, architecture, and usage.
+It outlines how to install, configure, and run the code, along with any dependencies or environment requirements.
+It also documents conventions, APIs, and contribution guidelines so other developers can collaborate effectively.
+A solid README reduces onboarding friction and keeps the project maintainable as it grows.
+
+For non-developers looking for high-level overview of the project you are in luck, keep reading.
+
 [![img](https://img.shields.io/badge/Lifecycle-Stable-97ca00)](https://github.com/bcgov/repomountie/blob/master/doc/lifecycle-badges.md)
 
 ## BC Ministry of Health PharmaNet Electronic Prescribing API
