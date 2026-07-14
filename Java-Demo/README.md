@@ -1,4 +1,3 @@
-
 #### get dependencies, save in local folder libs
 mkdir libs
 mvn dependency:copy-dependencies -DoutputDirectory=libs
