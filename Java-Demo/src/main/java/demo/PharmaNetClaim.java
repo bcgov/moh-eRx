@@ -1,8 +1,15 @@
+package demo;
+
+import java.util.Base64;
 import java.net.URI;
+import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.Base64;
+import java.nio.charset.StandardCharsets;
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -12,27 +19,34 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 public class PharmaNetClaim {
 
     public static void main(String[] args) throws Exception {
+        if (args.length < 1) {
+            System.out.println("Usage: java PharmaNetClaim <ClientId>");
+            System.exit(1);
+        }  
 
-        String ClientId = "[your client id]";
-        String ClientSecret = "[your client secret]";
-        String KeycloakUrl = "[your keycloak token endpoint]";
-        String PharmaNetUrl = "[pharmanet endpoint for claim submission]"; // different HL7 message types use different endpoints
-        String Scope = "openid system/Claim.write system/Claim.read"; // different HL7 message types require different scopes
+        String ClientId = args[0];
+        String KeycloakUrl = "https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications/protocol/openid-connect/token";
+        String PharmaNetUrl = "https://pnet-vs1.api.gov.bc.ca/api/v1/Claim"; // different HL7 message types use
+        String keycloak = "https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications/protocol/openid-connect/token";
+                                                                             // different endpoints
+        String Scope = "openid system/Claim.write system/Claim.read"; // different HL7 message types require different
+        String quick = JwtService.quick(ClientId, keycloak);
 
-        HttpClient client = HttpClient.newHttpClient();
-
-        String tokenBody = "client_id=" + ClientId
-                + "&client_secret=" + ClientSecret
+        String tokenRequestBody = "grant_type=client_credentials"
+                + "&client_id=" + URLEncoder.encode(ClientId, StandardCharsets.UTF_8)
                 + "&audience="
-                + "&scope=" + Scope.replace(" ", "%20")
-                + "&grant_type=client_credentials";
+                + "&scope=" + URLEncoder.encode(Scope.replaceAll("^\"|\"$", ""), StandardCharsets.UTF_8)
+                + "&client_assertion_type="
+                + URLEncoder.encode("urn:ietf:params:oauth:client-assertion-type:jwt-bearer", StandardCharsets.UTF_8)
+                + "&client_assertion=" + quick;
 
         HttpRequest tokenRequest = HttpRequest.newBuilder()
                 .uri(URI.create(KeycloakUrl))
                 .header("Content-Type", "application/x-www-form-urlencoded")
-                .POST(HttpRequest.BodyPublishers.ofString(tokenBody))
+                .POST(HttpRequest.BodyPublishers.ofString(tokenRequestBody))
                 .build();
 
+        HttpClient client = HttpClient.newHttpClient();
         HttpResponse<String> tokenResponse = client.send(tokenRequest, HttpResponse.BodyHandlers.ofString());
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -44,16 +58,13 @@ public class PharmaNetClaim {
             System.out.println(tokenResponse.body());
             System.exit(1);
         }
+        // System.out.print("Keycloak access Token: " + accessToken);
 
-		// TDT (Daily Totals Inquiry)
-		// Enter your Vendor IDs (looks like BC00000000), control ID, etc.
-        // MSH|^~\&|sending_app|sending_fac|receiving_app|receiving_fac|timestamp||msg_type|control_id|proc_id|version
-        String hl7 = "MSH|^~&|PHARMACY|BC00000000|PNP|PP||RB:69.11.119.122|ZPN|000000|D|2.1||\n"
-                + "ZZZ|TDT||180736|P1|XXBSK||||\n"
-                + "ZCA|000001|03|30|KC|16|\n"
-                + "ZCB|BC00000000|220823|180736\n"
-                + "ZCC|||||||||||\n"
-                + "ZCF|220823|000000000|999999999";
+        // not a valid HL7 message, but used for testing the FHIR envelope and PharmaNet response
+        String hl7 = "MSH|^~&|DESKTOP|PNET-39999999|PNP|PP||GERRYWASHERE,,WL*E5R:SS0AR|ZPN|631708|P|2.1||\n"
+                + "ZCA|000001|03|00|AR|04\n"
+                + "ZCB|BC00000000|260806|631708\n"
+                + "ZZZ|TDR||631708|P1|07963|||";
 
         String hl7WithCR = hl7.replace("\n", "\r");
         String dataPayload = Base64.getEncoder().encodeToString(hl7WithCR.getBytes("UTF-8"));
@@ -63,18 +74,20 @@ public class PharmaNetClaim {
 
         ObjectNode masterIdentifier = objectMapper.createObjectNode();
         masterIdentifier.put("system", "urn:ietf:rfc:3986");
-        masterIdentifier.put("value", "e7e78a7a-aae8-4c4b-908a-99a6c8c3bf6a"); // Enter your UUID
+        masterIdentifier.put("value", UUID.randomUUID().toString());
         fhirEnvelope.set("masterIdentifier", masterIdentifier);
 
         fhirEnvelope.put("status", "current");
-        fhirEnvelope.put("date", "2026-05-15T10:47:31+00:00"); // Enter your date/time in ISO 8601 format
+        fhirEnvelope.put("date", OffsetDateTime.now().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
 
-        ArrayNode content = objectMapper.createArrayNode();
-        ObjectNode attachment = objectMapper.createObjectNode();
         ObjectNode attachmentDetails = objectMapper.createObjectNode();
         attachmentDetails.put("contentType", "x-application/hl7-v2+er7");
         attachmentDetails.put("data", dataPayload);
+
+        ObjectNode attachment = objectMapper.createObjectNode();
         attachment.set("attachment", attachmentDetails);
+
+        ArrayNode content = objectMapper.createArrayNode();
         content.add(attachment);
         fhirEnvelope.set("content", content);
 
@@ -98,19 +111,5 @@ public class PharmaNetClaim {
 
         String hl7Response = new String(Base64.getDecoder().decode(responseData), "UTF-8");
         System.out.println(hl7Response.replace("\r", "\n"));
-
-        /* 
-        Expected response looks like:
-        MSH|^~&|PHARMACY|BC00000000|PHARMACY|BC00000000||RB:69.11.119.122|ZPN|180736|D|2.1||
-        ZZZ|TDT|0|180736|P1|XXBSK|
-        ZCA|1|3|80|KC|16|
-        ZCB|BC00000000|220823|180736
-        ZCG|220823|180736|80||R|A1|||||||||111111||||
-
-		Notes:
-		    ZZZ field 2 = 0 → success/no error code
-		    ZCA field 3 = 3 (response code indicating success for a TDT inquiry)
-		    ZCG → Daily Totals (date 220823, trace 180736, count 80, status R/A1)
-        */
     }
 }
