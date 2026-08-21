@@ -12,6 +12,10 @@ import java.util.Base64;
 import java.util.UUID;
 
 public class JwtService {
+    public static void main(String[] args) throws Exception {
+        System.out.println(quick(args[0], args[1]));
+    }
+
     public static String quick(String ClientId, String keycloak) throws Exception {
         // Read the PEM file and isolate the Base64-encoded key body.
         String pem = Files.readString(Paths.get(ClientId + ".key"));

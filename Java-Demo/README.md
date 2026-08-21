@@ -31,5 +31,12 @@ To create a deployable Java program, create a `libs` folder and run:
 `mvn dependency:copy-dependencies -DoutputDirectory=libs`
 That will put all the dependencies into the libs folder. Then you can run it with something like:
 ```
+mvn compile package
 java -cp "target\moh-erx-java-1.0.0.jar;./libs/*" demo.PharmaNetClaim PNET-39999999
+```
+
+#### Create a signed JWT and write it to STDOUT
+```
+mvn compile package
+java -cp "target\moh-erx-java-1.0.0.jar;./libs/*" demo.JwtService PNET-39999999 https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications/protocol/openid-connect/token
 ```
