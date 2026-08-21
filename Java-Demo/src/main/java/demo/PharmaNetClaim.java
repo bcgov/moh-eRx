@@ -58,7 +58,7 @@ public class PharmaNetClaim {
             System.out.println(tokenResponse.body());
             System.exit(1);
         }
-        System.out.print("Keycloak access Token: " + accessToken);
+        // System.out.print("Keycloak access Token: " + accessToken);
 
         // not a valid HL7 message, but used for testing the FHIR envelope and PharmaNet response
         String hl7 = "MSH|^~&|DESKTOP|PNET-39999999|PNP|PP||GERRYWASHERE,,WL*E5R:SS0AR|ZPN|631708|P|2.1||\n"

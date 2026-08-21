@@ -19,7 +19,7 @@ public class JwtService {
                 .replace("-----BEGIN PRIVATE KEY-----", "")
                 .replace("-----END PRIVATE KEY-----", "")
                 .replaceAll("\\s", "");
-        System.out.println("Base64 Key: " + base64Key);
+        // System.out.println("Base64 Key: " + base64Key);
 
         byte[] keyBytes = Base64.getDecoder().decode(base64Key);
         PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(keyBytes);
