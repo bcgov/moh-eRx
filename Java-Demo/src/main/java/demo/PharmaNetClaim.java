@@ -19,18 +19,17 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 public class PharmaNetClaim {
 
     public static void main(String[] args) throws Exception {
+        boolean debug = false;
+        String KeycloakUrl = "https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications/protocol/openid-connect/token";
+        String PharmaNetUrl = "https://pnet-vs1.api.gov.bc.ca/api/v1/Claim"; // different HL7 message types use
+
         if (args.length < 1) {
             System.out.println("Usage: java PharmaNetClaim <ClientId>");
             System.exit(1);
         }  
-
         String ClientId = args[0];
-        String KeycloakUrl = "https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications/protocol/openid-connect/token";
-        String PharmaNetUrl = "https://pnet-vs1.api.gov.bc.ca/api/v1/Claim"; // different HL7 message types use
-        String keycloak = "https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications/protocol/openid-connect/token";
-                                                                             // different endpoints
         String Scope = "openid system/Claim.write system/Claim.read"; // different HL7 message types require different
-        String quick = JwtService.quick(ClientId, keycloak);
+        String quick = JwtService.quick(ClientId, KeycloakUrl);
 
         String tokenRequestBody = "grant_type=client_credentials"
                 + "&client_id=" + URLEncoder.encode(ClientId, StandardCharsets.UTF_8)
@@ -58,10 +57,11 @@ public class PharmaNetClaim {
             System.out.println(tokenResponse.body());
             System.exit(1);
         }
-        // System.out.print("Keycloak access Token: " + accessToken);
+        if (debug)
+            System.out.println("Keycloak access Token: " + accessToken);
 
-        // not a valid HL7 message, but used for testing the FHIR envelope and PharmaNet response
-        String hl7 = "MSH|^~&|DESKTOP|PNET-39999999|PNP|PP||GERRYWASHERE,,WL*E5R:SS0AR|ZPN|631708|P|2.1||\n"
+        // not a valid HL7 message
+        String hl7 = "MSH|^~&|DESKTOP|" + ClientId + "|PNP|PP||GERRYWASHERE,,WL*E5R:SS0AR|ZPN|631708|P|2.1||\n"
                 + "ZCA|000001|03|00|AR|04\n"
                 + "ZCB|BC00000000|260806|631708\n"
                 + "ZZZ|TDR||631708|P1|07963|||";
@@ -99,16 +99,15 @@ public class PharmaNetClaim {
                 .build();
 
         HttpResponse<String> claimResponse = client.send(claimRequest, HttpResponse.BodyHandlers.ofString());
-
         JsonNode responseJson = objectMapper.readTree(claimResponse.body());
         String responseData = responseJson.path("content").path(0).path("attachment").path("data").asText();
 
         if (responseData.isEmpty()) {
-            System.out.println("Unexpected response from PharmaNet, no data payload received");
-            System.out.println(claimResponse.body());
-            System.exit(1);
+            System.out.println("HL7v2 Authorization Failed, transaction ignored.");
+            return;
         }
-
+        if (debug)
+            System.out.println(claimResponse.body());
         String hl7Response = new String(Base64.getDecoder().decode(responseData), "UTF-8");
         System.out.println(hl7Response.replace("\r", "\n"));
     }
