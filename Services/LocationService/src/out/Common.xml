@@ -1,0 +1,939 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Common</name>
+    </assembly>
+    <members>
+        <member name="T:Health.PharmaNet.Common.AspNetConfiguration.ConfigurationSections">
+            <summary>
+            The Configuration Sections.
+            </summary>
+        </member>
+        <member name="F:Health.PharmaNet.Common.AspNetConfiguration.ConfigurationSections.OpenIdConnect">
+            <summary>
+            The Configuration Section for OAuth2 OpenIdConnect.
+            </summary>
+        </member>
+        <member name="T:Health.PharmaNet.Common.AspNetConfiguration.ProgramConfiguration">
+            <summary>
+            The program configuration class.
+            </summary>
+        </member>
+        <member name="M:Health.PharmaNet.Common.AspNetConfiguration.ProgramConfiguration.CreateHostBuilder``1(System.String[])">
+            <summary>
+            Creates a IHostBuilder with console logging and Configuration prefixing enabled.
+            </summary>
+            <typeparam name="T">The startup class.</typeparam>
+            <param name="args">The command line arguments.</param>
+            <returns>Returns the configured WebHostBuilder.</returns>
+        </member>
+        <member name="T:Health.PharmaNet.Common.AspNetConfiguration.StartupConfiguration">
+            <summary>
+            The startup configuration class.
+            </summary>
+        </member>
+        <member name="M:Health.PharmaNet.Common.AspNetConfiguration.StartupConfiguration.#ctor(Microsoft.Extensions.Configuration.IConfiguration,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Health.PharmaNet.Common.AspNetConfiguration.StartupConfiguration"/> class.
+            </summary>
+            <param name="config">The configuration provider.</param>
+            <param name="env">The environment variables provider.</param>
+        </member>
+        <member name="M:Health.PharmaNet.Common.AspNetConfiguration.StartupConfiguration.ConfigureHttpServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Configures the http services.
+            </summary>
+            <param name="services">The service collection provider.</param>
+        </member>
+        <member name="M:Health.PharmaNet.Common.AspNetConfiguration.StartupConfiguration.ConfigureAuthServicesForJwtBearer(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Configures the auth services for json web token bearer.
+            </summary>
+            <param name="services">The injected services provider.</param>
+        </member>
+        <member name="M:Health.PharmaNet.Common.AspNetConfiguration.StartupConfiguration.ConfigureSwaggerServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Configures the swagger services.
+            </summary>
+            <param name="services">The service collection provider.</param>
+        </member>
+        <member name="M:Health.PharmaNet.Common.AspNetConfiguration.StartupConfiguration.ConfigureForwardHeaders(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Configures Forward proxies.
+            </summary>
+            <param name="services">The service collection to add forward proxies into.</param>
+        </member>
+        <member name="M:Health.PharmaNet.Common.AspNetConfiguration.StartupConfiguration.UseAuth(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Configures the app to use auth.
+            </summary>
+            <param name="app">The application builder provider.</param>
+        </member>
+        <member name="M:Health.PharmaNet.Common.AspNetConfiguration.StartupConfiguration.UseForwardHeaders(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Configures the app to use x-forwarded-for headers to obtain the real client IP.
+            </summary>
+            <param name="app">The application builder provider.</param>
+        </member>
+        <member name="M:Health.PharmaNet.Common.AspNetConfiguration.StartupConfiguration.UseHttp(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Configures the app to use http.
+            </summary>
+            <param name="app">The application builder provider.</param>
+        </member>
+        <member name="M:Health.PharmaNet.Common.AspNetConfiguration.StartupConfiguration.UseContentSecurityPolicy(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Configures the app to to use content security policies.
+            </summary>
+            <param name="app">The application builder provider.</param>
+        </member>
+        <member name="M:Health.PharmaNet.Common.AspNetConfiguration.StartupConfiguration.UseSwagger(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Configures the app to use swagger.
+            </summary>
+            <param name="app">The application builder provider.</param>
+        </member>
+        <member name="M:Health.PharmaNet.Common.AspNetConfiguration.StartupConfiguration.UseRest(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Configures the app to use Rest services.
+            </summary>
+            <param name="app">The application builder provider.</param>
+        </member>
+        <member name="M:Health.PharmaNet.Common.AspNetConfiguration.StartupConfiguration.OnAuthenticationFailed(Microsoft.AspNetCore.Authentication.JwtBearer.AuthenticationFailedContext)">
+            <summary>
+            Handles authentication failures.
+            </summary>
+            <param name="context">The authentication failed context.</param>
+            <returns>An async task.</returns>
+        </member>
+        <member name="T:Health.PharmaNet.Common.Authorization.Claims.PharmanetAPIClaims">
+            <summary>
+            Claims specific to PharmanetAPI.
+            </summary>
+        </member>
+        <member name="F:Health.PharmaNet.Common.Authorization.Claims.PharmanetAPIClaims.Scope">
+            <summary>
+            Policy claim representing the scopes the user has.
+            </summary>
+        </member>
+        <member name="T:Health.PharmaNet.Common.Authorization.Constants.FhirAccessType">
+            <summary>
+            A class with constants representing the various email template names.
+            </summary>
+        </member>
+        <member name="F:Health.PharmaNet.Common.Authorization.Constants.FhirAccessType.Wildcard">
+            <summary>
+            Wildcard representing all available resources under the given context.
+            </summary>
+        </member>
+        <member name="F:Health.PharmaNet.Common.Authorization.Constants.FhirAccessType.Read">
+            <summary>
+            Allows information to be read from the resource in a way that does not directly modify the resource.
+            These interactions MAY include read, vread, history, search.
+            See capabilities as defined at <a href="https://www.hl7.org/fhir/http.html"/>.
+            </summary>
+        </member>
+        <member name="F:Health.PharmaNet.Common.Authorization.Constants.FhirAccessType.Write">
+            <summary>
+            Allows information to be written to the resource.
+            These interactions MAY include update, patch, delete, create.
+            See capabilities as defined at <a href="https://www.hl7.org/fhir/http.html"/>.
+            </summary>
+        </member>
+        <member name="T:Health.PharmaNet.Common.Authorization.Constants.FhirResource">
+            <summary>
+            A class with constants representing the various resource template names.
+            </summary>
+        </member>
+        <member name="F:Health.PharmaNet.Common.Authorization.Constants.FhirResource.Wildcard">
+            <summary>
+            Wildcard representing all available resources under the given context.
+            </summary>
+        </member>
+        <member name="F:Health.PharmaNet.Common.Authorization.Constants.FhirResource.DocumentReference">
+            <summary>
+            DocumentReference used to carry Hl7-v2 payload among other uses.
+            See <a href="https://www.hl7.org/fhir/documentreference.html"/>.
+            </summary>
+        </member>
+        <member name="T:Health.PharmaNet.Common.Authorization.Constants.FhirResourceLookup">
+            <summary>
+            An enumeration representing the mechanism with which to lookup the fhir resource identifer.
+            </summary>
+        </member>
+        <member name="F:Health.PharmaNet.Common.Authorization.Constants.FhirResourceLookup.Route">
+            <summary>
+            Lookup the identifer via the http route.
+            </summary>
+        </member>
+        <member name="F:Health.PharmaNet.Common.Authorization.Constants.FhirResourceLookup.Parameter">
+            <summary>
+            Lookup the identifer via parameter.
+            </summary>
+        </member>
+        <member name="T:Health.PharmaNet.Common.Authorization.Policy.FhirScopesPolicy">
+            <summary>
+            The set of claims to access Fhir Scope based access to data.
+            </summary>
+        </member>
+        <member name="F:Health.PharmaNet.Common.Authorization.Policy.FhirScopesPolicy.Access">
+            <summary>
+            Policy which allows the access based on configured scopes allowed.
+            </summary>
+        </member>
+        <member name="T:Health.PharmaNet.Common.Authorization.HasScopeHandler">
+            <summary>
+            Authorization scope handler to check for necessary scope claims.
+            </summary>
+        </member>
+        <member name="F:Health.PharmaNet.Common.Authorization.HasScopeHandler.logger">
+            <summary>
+            Gets or sets the Logger Service.
+            </summary>
+        </member>
+        <member name="M:Health.PharmaNet.Common.Authorization.HasScopeHandler.#ctor(Microsoft.Extensions.Logging.ILogger{Health.PharmaNet.Common.Authorization.HasScopeHandler})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Health.PharmaNet.Common.Authorization.HasScopeHandler"/> class.
+            </summary>
+            <param name="logger">Injected Logger Provider.</param>
+        </member>
+        <member name="M:Health.PharmaNet.Common.Authorization.HasScopeHandler.HandleRequirementAsync(Microsoft.AspNetCore.Authorization.AuthorizationHandlerContext,Health.PharmaNet.Common.Authorization.HasScopesRequirement)">
+            <summary>
+            Checks if the user has the appropriate scopes claimed.
+            </summary>
+            <param name="context">The AuthorizationHandler context.</param>
+            <param name="requirement">The authorization requirement being checked.</param>
+            <returns>A context Task.</returns>
+        </member>
+        <member name="T:Health.PharmaNet.Common.Authorization.HasScopesRequirement">
+            <summary>
+            The Authorization Scope Requirement. The user (the jwt) must have at least one of the scopes specified.
+            </summary>
+        </member>
+        <member name="M:Health.PharmaNet.Common.Authorization.HasScopesRequirement.#ctor(System.String[],System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Health.PharmaNet.Common.Authorization.HasScopesRequirement"/> class.
+            </summary>
+            <param name="claimsIssuer">The ClaimsIssuer.</param>
+            <param name="scope">The array of acceptable scopes for this service. User must have at least one of these in JWT.</param>
+        </member>
+        <member name="P:Health.PharmaNet.Common.Authorization.HasScopesRequirement.ClaimsIssuer">
+            <summary>
+            Gets the ClaimsIssuer.
+            </summary>
+        </member>
+        <member name="M:Health.PharmaNet.Common.Authorization.HasScopesRequirement.IsRequiredScope(System.String)">
+            <summary>
+            Returns whether the scope provided is an accepted Scope.
+            </summary>
+            <param name="scope">The scope to be checked.</param>
+            <returns>Returns true if the scope provided is in the array of acceptable scopes.</returns>
+        </member>
+        <member name="T:Health.PharmaNet.Common.Http.HttpRequestExtension">
+            <summary>
+            Extension to HttpRequest to deal with string  data type.
+            </summary>
+        </member>
+        <member name="M:Health.PharmaNet.Common.Http.HttpRequestExtension.GetRawBodyStringAsync(Microsoft.AspNetCore.Http.HttpRequest,System.Text.Encoding,System.IO.Stream)">
+            <summary>
+            Retrieve the raw body as a string from the Request.Body stream.
+            </summary>
+            <param name="request">Request instance to apply to.</param>
+            <param name="encoding">Optional - Encoding, defaults to UTF8.</param>
+            <param name="inputStream">Optional - Pass in the stream to retrieve from. Other Request.Body.</param>
+            <returns>The Request Body as a string.</returns>
+        </member>
+        <member name="T:Health.PharmaNet.Common.Logging.Logger">
+            <summary>
+            The LoggerMessage Extensions for .NET 6 optimized logging.
+            </summary>
+        </member>
+        <member name="M:Health.PharmaNet.Common.Logging.Logger.#cctor">
+            <summary>
+            Initializes static members of the <see cref="T:Health.PharmaNet.Common.Logging.Logger"/> class.
+            </summary>
+        </member>
+        <member name="M:Health.PharmaNet.Common.Logging.Logger.LogInformation(Microsoft.Extensions.Logging.ILogger,System.String)">
+            <summary>
+            Generic Logging Informational level.
+            </summary>
+            <param name="logger">An ILogger instance.</param>
+            <param name="message">The informational message to log.</param>
+        </member>
+        <member name="M:Health.PharmaNet.Common.Logging.Logger.LogDebug(Microsoft.Extensions.Logging.ILogger,System.String)">
+            <summary>
+            Generic Logging Debug level.
+            </summary>
+            <param name="logger">An ILogger instance.</param>
+            <param name="message">The informational message to log.</param>
+        </member>
+        <member name="M:Health.PharmaNet.Common.Logging.Logger.LogError(Microsoft.Extensions.Logging.ILogger,System.String)">
+            <summary>
+            Generic Logging Debug level.
+            </summary>
+            <param name="logger">An ILogger instance.</param>
+            <param name="message">The error message to log.</param>
+        </member>
+        <member name="M:Health.PharmaNet.Common.Logging.Logger.LogException(Microsoft.Extensions.Logging.ILogger,System.String,System.Exception)">
+            <summary>
+            Generic Logging Debug level.
+            </summary>
+            <param name="logger">An ILogger instance.</param>
+            <param name="message">The error message to log.</param>
+            <param name="ex">Optional Exception object.</param>
+        </member>
+        <member name="T:Health.PharmaNet.Common.Swagger.AuthenticationRequirementsOperationFilter">
+            <summary>
+            Swagger filter to add the bearer into each request.
+            </summary>
+        </member>
+        <member name="M:Health.PharmaNet.Common.Swagger.AuthenticationRequirementsOperationFilter.Apply(Microsoft.OpenApi.Models.OpenApiOperation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
+            <summary>
+            Adds the bearer token into each request.
+            </summary>
+            <param name="operation">The swagger operation.</param>
+            <param name="context">The filter context.</param>
+        </member>
+        <member name="T:Health.PharmaNet.Common.Swagger.ConfigureSwaggerGenOptions">
+            <inheritdoc/>
+            <summary>
+            Implementation of IConfigureOptions&lt;SwaggerGenOptions&gt;.
+            </summary>
+        </member>
+        <member name="M:Health.PharmaNet.Common.Swagger.ConfigureSwaggerGenOptions.#ctor(Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider,Microsoft.Extensions.Options.IOptions{Health.PharmaNet.Common.Swagger.SwaggerSettings})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Health.PharmaNet.Common.Swagger.ConfigureSwaggerGenOptions"/> class.
+            </summary>
+            <param name="versionDescriptionProvider">IApiVersionDescriptionProvider.</param>
+            <param name="swaggerSettings">App Settings for Swagger.</param>
+        </member>
+        <member name="M:Health.PharmaNet.Common.Swagger.ConfigureSwaggerGenOptions.Configure(Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Health.PharmaNet.Common.Swagger.ConfigureSwaggerOptions">
+            <inheritdoc/>
+        </member>
+        <member name="M:Health.PharmaNet.Common.Swagger.ConfigureSwaggerOptions.#ctor(Microsoft.Extensions.Options.IOptions{Health.PharmaNet.Common.Swagger.SwaggerSettings})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Health.PharmaNet.Common.Swagger.ConfigureSwaggerOptions"/> class.
+            </summary>
+            <param name="settings">settings.</param>
+        </member>
+        <member name="M:Health.PharmaNet.Common.Swagger.ConfigureSwaggerOptions.Configure(Swashbuckle.AspNetCore.Swagger.SwaggerOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Health.PharmaNet.Common.Swagger.ConfigureSwaggerUiOptions">
+            <inheritdoc cref="T:Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIOptions"/>
+        </member>
+        <member name="M:Health.PharmaNet.Common.Swagger.ConfigureSwaggerUiOptions.#ctor(Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider,Microsoft.Extensions.Options.IOptions{Health.PharmaNet.Common.Swagger.SwaggerSettings})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Health.PharmaNet.Common.Swagger.ConfigureSwaggerUiOptions"/> class.
+            </summary>
+            <param name="versionDescriptionProvider">versionDescriptionProvider.</param>
+            <param name="settings">settings.</param>
+        </member>
+        <member name="M:Health.PharmaNet.Common.Swagger.ConfigureSwaggerUiOptions.Configure(Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIOptions)">
+            <summary>
+            Configure.
+            </summary>
+            <param name="options">options.</param>
+        </member>
+        <member name="T:Health.PharmaNet.Common.Swagger.MiddlewareExtensions">
+            <summary>
+            Extending Swagger services.
+            </summary>
+        </member>
+        <member name="M:Health.PharmaNet.Common.Swagger.MiddlewareExtensions.UseSwaggerDocuments(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Enabling Swagger UI.
+            Excluding from test environment.
+            </summary>
+            <param name="app">IApplicationBuilder.</param>
+        </member>
+        <member name="T:Health.PharmaNet.Common.Swagger.ServicesExtensions">
+            <summary>
+            Service Collection(IServiceCollection) Extensions.
+            </summary>
+        </member>
+        <member name="M:Health.PharmaNet.Common.Swagger.ServicesExtensions.AddApiVersionWithExplorer(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Add AddVersionedApiExplorer and AddApiVersioning middlewares.
+            </summary>
+            <param name="services">services.</param>
+            <returns>IServiceCollection.</returns>
+        </member>
+        <member name="M:Health.PharmaNet.Common.Swagger.ServicesExtensions.AddSwaggerOptions(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Add swagger services.
+            </summary>
+            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/>/>.</param>
+            <returns>IServiceCollection.</returns>
+        </member>
+        <member name="T:Health.PharmaNet.Common.Swagger.SwaggerDefaultValues">
+            <summary>
+            Represents the Swagger/Swashbuckle operation filter used to document the implicit API version parameter.
+            </summary>
+            <remarks>
+            This <see cref="T:Swashbuckle.AspNetCore.SwaggerGen.IOperationFilter"/> is only required due to bugs in the <see cref="T:Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator"/>.
+            Once they are fixed and published, this class can be removed.
+            </remarks>
+        </member>
+        <member name="M:Health.PharmaNet.Common.Swagger.SwaggerDefaultValues.Apply(Microsoft.OpenApi.Models.OpenApiOperation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
+            <summary>
+            Applies the filter to the specified operation using the given context.
+            </summary>
+            <param name="operation">The operation to apply the filter to.</param>
+            <param name="context">The current operation filter context.</param>
+        </member>
+        <member name="T:Health.PharmaNet.Common.Swagger.SwaggerSettings">
+            <summary>
+            Swagger Configuration.
+            </summary>
+        </member>
+        <member name="P:Health.PharmaNet.Common.Swagger.SwaggerSettings.Name">
+            <summary>
+            Gets or sets document Name.
+            </summary>
+        </member>
+        <member name="P:Health.PharmaNet.Common.Swagger.SwaggerSettings.Info">
+            <summary>
+            Gets or sets swagger Info.
+            </summary>
+        </member>
+        <member name="P:Health.PharmaNet.Common.Swagger.SwaggerSettings.RoutePrefix">
+            <summary>
+            Gets or sets RoutePrefix.
+            </summary>
+        </member>
+        <member name="P:Health.PharmaNet.Common.Swagger.SwaggerSettings.RouteTemplatePrefix">
+            <summary>
+            Gets or sets RoutePrefix.
+            </summary>
+        </member>
+        <member name="P:Health.PharmaNet.Common.Swagger.SwaggerSettings.BasePath">
+            <summary>
+            Gets or sets BasePath.
+            </summary>
+        </member>
+        <member name="P:Health.PharmaNet.Common.Swagger.SwaggerSettings.RoutePrefixWithSlash">
+            <summary>
+            Gets Route Prefix with tailing slash.
+            </summary>
+        </member>
+        <member name="T:Health.PharmaNet.Authorization.Policy.Hl7v2ScopesPolicy">
+            <summary>
+            The set of claims to access HL7 Scope based access to data.
+            </summary>
+        </member>
+        <member name="F:Health.PharmaNet.Authorization.Policy.Hl7v2ScopesPolicy.MessageTypeScopeAccess">
+            <summary>
+            Policy which ensures that for a given HL7-v2 message type, the correct FHIR-based scope is present in the claims.
+            </summary>
+        </member>
+        <member name="T:Health.PharmaNet.Authorization.Requirements.Hl7v2AuthorizationConfiguration">
+            <summary>
+            The configuration settings for determining Hl7v2 messages permitted for a given scope(s).
+            </summary>
+        </member>
+        <member name="P:Health.PharmaNet.Authorization.Requirements.Hl7v2AuthorizationConfiguration.Hl7v2Authorization">
+             <summary>
+             Gets or sets the Hl7v2 Hl7v2Authorization configurations.
+             </summary>
+            
+        </member>
+        <member name="T:Health.PharmaNet.Authorization.Requirements.Models.Hl7v2Authorization">
+            <summary>
+            Class representing the array of message authorizations needed for each Pharmanet Transaction.
+            </summary>
+        </member>
+        <member name="P:Health.PharmaNet.Authorization.Requirements.Models.Hl7v2Authorization.LoggableSegments">
+            <summary>
+            Gets the list of segment fields that are allowed to be logged.
+            </summary>
+        </member>
+        <member name="P:Health.PharmaNet.Authorization.Requirements.Models.Hl7v2Authorization.MessageConfig">
+            <summary>
+            Gets the Messages configured.
+            </summary>
+        </member>
+        <member name="T:Health.PharmaNet.Authorization.Requirements.Models.MessageConfig">
+            <summary>
+            Class representing the array of message scope value for each Pharmanet Transaction.
+            </summary>
+        </member>
+        <member name="P:Health.PharmaNet.Authorization.Requirements.Models.MessageConfig.Name">
+            <summary>
+            Gets or sets the HL7v2 Transaction Name.
+            </summary>
+        </member>
+        <member name="P:Health.PharmaNet.Authorization.Requirements.Models.MessageConfig.MessageType">
+            <summary>
+            Gets or sets the MessageType (MSH.9).
+            </summary>
+        </member>
+        <member name="P:Health.PharmaNet.Authorization.Requirements.Models.MessageConfig.MessageSegments">
+            <summary>
+            Gets the segment fields.
+            </summary>
+        </member>
+        <member name="P:Health.PharmaNet.Authorization.Requirements.Models.MessageConfig.Scope">
+            <summary>
+            Gets or sets the scope field.
+            </summary>
+        </member>
+        <member name="T:Health.PharmaNet.Authorization.Requirements.Models.MessageSegment">
+            <summary>
+            Class representing the array of message key entries for each Pharmanet Transaction.
+            </summary>
+        </member>
+        <member name="P:Health.PharmaNet.Authorization.Requirements.Models.MessageSegment.SegmentName">
+            <summary>
+            Gets or sets the name of the segment.field.
+            </summary>
+        </member>
+        <member name="P:Health.PharmaNet.Authorization.Requirements.Models.MessageSegment.SegmentFields">
+            <summary>
+            Gets the List of Segment Fields.
+            </summary>
+        </member>
+        <member name="T:Health.PharmaNet.Authorization.Requirements.Models.SegmentField">
+            <summary>
+            Class representing a segment field signature for a HL7v2 message evaluation.
+            </summary>
+        </member>
+        <member name="P:Health.PharmaNet.Authorization.Requirements.Models.SegmentField.Index">
+            <summary>Gets or sets the SegmentField Index. Set to -1 to match any segment.</summary>
+        </member>
+        <member name="P:Health.PharmaNet.Authorization.Requirements.Models.SegmentField.Value">
+            <summary>Gets or sets the SegmentField Value.</summary>
+        </member>
+        <member name="P:Health.PharmaNet.Authorization.Requirements.Models.SegmentField.ValueMatchType">
+            <summary>Gets or sets whether the SegmentField Value is exact match, or startsWith.</summary>
+        </member>
+        <member name="T:Health.PharmaNet.Authorization.Requirements.Models.MatchType">
+            <summary>Choice of match types for the value in the segment.</summary>
+        </member>
+        <member name="F:Health.PharmaNet.Authorization.Requirements.Models.MatchType.Exact">
+            <summary>When an exact match in the segment is required.</summary>
+        </member>
+        <member name="F:Health.PharmaNet.Authorization.Requirements.Models.MatchType.Contains">
+            <summary>When the value must be contained (found) in the segment is required.</summary>
+        </member>
+        <member name="F:Health.PharmaNet.Authorization.Requirements.Models.MatchType.StartsWith">
+            <summary>When the segment must start with the Value is required.</summary>
+        </member>
+        <member name="T:Health.PharmaNet.Authorization.Hl7v2AuthorizationHandler">
+            <summary>
+            PharmanetAuthorizationHandler resource-based handler to check for necessary scope claims.
+            </summary>
+        </member>
+        <member name="F:Health.PharmaNet.Authorization.Hl7v2AuthorizationHandler.logger">
+            <summary>
+            Gets or sets the Logger Service.
+            </summary>
+        </member>
+        <member name="M:Health.PharmaNet.Authorization.Hl7v2AuthorizationHandler.#ctor(Microsoft.Extensions.Logging.ILogger{Health.PharmaNet.Authorization.Hl7v2AuthorizationHandler})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Health.PharmaNet.Authorization.Hl7v2AuthorizationHandler"/> class.
+            </summary>
+            <param name="logger">Injected Logger Provider.</param>
+        </member>
+        <member name="M:Health.PharmaNet.Authorization.Hl7v2AuthorizationHandler.HandleRequirementAsync(Microsoft.AspNetCore.Authorization.AuthorizationHandlerContext,Health.PharmaNet.Authorization.Hl7v2AuthorizationRequirement,HL7.Dotnetcore.Message)">
+            <summary>
+            Checks if the user has the appropriate scopes claimed for the given HL7-v2 MessageType.
+            </summary>
+            <param name="context">The AuthorizationHandler context.</param>
+            <param name="requirement">The authorization requirement being checked.</param>
+            <param name="resource">The Hl7-v2 Message of the request message.</param>
+            <returns>A context Task.</returns>
+        </member>
+        <member name="M:Health.PharmaNet.Authorization.Hl7v2AuthorizationHandler.HasCorrectScopes(System.String[],System.String[])">
+            <summary>
+            Returns whether any of the scopes provided is an accepted Scope for the given messagetype and optional control id.
+            </summary>
+            <param name="scopesNeeded">The scopes needed. The scopes passed in the JWT must match at least one.</param>
+            <param name="scopes">The scopes claimed by User.</param>
+            <returns>Returns true if the scopes provided matches any of the required scope values.</returns>
+        </member>
+        <member name="T:Health.PharmaNet.Authorization.Hl7v2AuthorizationRequirement">
+            <summary>
+            The Authorization Scope Requirement. The user (the jwt) must have at least one of the scopes specified.
+            </summary>
+        </member>
+        <member name="F:Health.PharmaNet.Authorization.Hl7v2AuthorizationRequirement.ConfigSection">
+            <summary>
+            The Configuration Section for OAuth2 Hl7-v2 Message Scopes by MessageType.
+            </summary>
+        </member>
+        <member name="M:Health.PharmaNet.Authorization.Hl7v2AuthorizationRequirement.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Health.PharmaNet.Authorization.Hl7v2AuthorizationRequirement"/> class.
+            </summary>
+            <param name="configuration">The app setting configuration.</param>
+        </member>
+        <member name="M:Health.PharmaNet.Authorization.Hl7v2AuthorizationRequirement.ScopesNeededForMessage(HL7.Dotnetcore.Message)">
+            <summary>
+            Returns the configured scopes needed for the HL7v2 message passed in.
+            </summary>
+            <param name="message">The Hl7-v2 message to be checked.</param>
+            <returns>Returns a string array of scopes needed, or empty array when the message was unknown/not supported.</returns>
+        </member>
+        <member name="M:Health.PharmaNet.Authorization.Hl7v2AuthorizationRequirement.LoggableSegments">
+            <summary>
+            Returns the list of segment names that are allowed to be logged.
+            </summary>
+            <returns>Returns an IList&lt;string&gt; of segment names, or empty array when the message was unknown/not supported.</returns>
+        </member>
+        <member name="M:Health.PharmaNet.Authorization.Hl7v2AuthorizationRequirement.IsConfiguredMessage(Health.PharmaNet.Authorization.Requirements.Models.MessageConfig,HL7.Dotnetcore.Message)">
+            <summary>
+            Checks that the message passed has all the fields.
+            </summary>
+            <param name="messageConfig">The MessageConfig configuration from app settings.</param>
+            <param name="message">The HL7v2 message being matched.</param>
+            <returns>Returns true when the HL7v2 message was found in the configuration.</returns>
+        </member>
+        <member name="M:Health.PharmaNet.Authorization.Hl7v2AuthorizationRequirement.GetMessageAuthorizationScope(HL7.Dotnetcore.Message)">
+            <summary>
+            Determine the configuration authorization key to use to check authorization.
+            </summary>
+            <param name="message">An HL7v2 message.</param>
+            <returns>Returns the configured authorization scopes, or empty if unknown message.</returns>
+        </member>
+        <member name="T:Health.PharmaNet.Controllers.ServiceBaseController">
+            <summary>
+            The Template controller.
+            </summary>
+        </member>
+        <member name="F:Health.PharmaNet.Controllers.ServiceBaseController.logger">
+            <summary>
+            The Logger Service.
+            </summary>
+        </member>
+        <member name="F:Health.PharmaNet.Controllers.ServiceBaseController.service">
+            <summary>
+            The IPharmanet Service.
+            </summary>
+        </member>
+        <member name="F:Health.PharmaNet.Controllers.ServiceBaseController.httpContextAccessor">
+            <summary>
+            The http context accessor.
+            </summary>
+        </member>
+        <member name="F:Health.PharmaNet.Controllers.ServiceBaseController.authorizationService">
+            <summary>
+            The authorization service.
+            </summary>
+        </member>
+        <member name="F:Health.PharmaNet.Controllers.ServiceBaseController.parser">
+            <summary>
+            The HL7 parser service.
+            </summary>
+        </member>
+        <member name="M:Health.PharmaNet.Controllers.ServiceBaseController.#ctor(Microsoft.Extensions.Logging.ILogger{Health.PharmaNet.Controllers.ServiceBaseController},Health.PharmaNet.Services.IPharmanetService,Health.PharmaNet.Parsers.IHl7Parser,Microsoft.Extensions.Configuration.IConfiguration,Microsoft.AspNetCore.Authorization.IAuthorizationService,Microsoft.AspNetCore.Http.IHttpContextAccessor)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Health.PharmaNet.Controllers.ServiceBaseController"/> class.
+            </summary>
+            <param name="logger">Injected Logger Provider.</param>
+            <param name="service">Injected service.</param>
+            <param name="parser">Injected HL7 message parser.</param>
+            <param name="configuration">Injected iConfiguration service.</param>
+            <param name="authorizationService">Injected authorization service.</param>
+            <param name="httpContextAccessor">The Http Context accessor.</param>
+        </member>
+        <member name="M:Health.PharmaNet.Controllers.ServiceBaseController.PharmanetRequest(System.Boolean)">
+            <summary>
+            Takes request body containing an HL7 FHIR DocumentReference Object containing HL7v2 payload.
+            </summary>
+            <returns>The DocumentReference Response, or error JSON.</returns>
+            <response code="200">Returns Ok when the transaction went through.</response>
+            <response code="401">Authorization error, returns JSON describing the error.</response>
+            <response code="50x">The service is unavailable for use.</response>
+        </member>
+        <member name="T:Health.PharmaNet.Delegates.IPharmanetDelegate">
+            <summary>
+            The Pharmanet Delegate, which communicates directly to the Pharmanet proxy service.
+            </summary>
+        </member>
+        <member name="M:Health.PharmaNet.Delegates.IPharmanetDelegate.SubmitRequest(Health.PharmaNet.Models.PharmanetMessageModel,System.String,System.Boolean)">
+            <summary>
+            The Pharmanet Delegate, which communicates directly to the Pharmanet proxy service.
+            </summary>
+            <param name="request">A PharmanetMessageModel instance containing the HL7v2 request message.</param>
+            <param name="traceId">The value used to track messages from API Gateway.</param>
+            <param name="isHealthCheck">A boolean indicating if this request is a health check or a transaction.</param>
+            <returns>A PharmanetMessageModel as response.</returns>
+        </member>
+        <member name="T:Health.PharmaNet.Delegates.PharmanetDelegate">
+            <summary>
+            The Pharmanet Delegate, which communicates directly to the Pharmanet proxy service.
+            </summary>
+        </member>
+        <member name="M:Health.PharmaNet.Delegates.PharmanetDelegate.#ctor(System.Net.Http.HttpClient,Microsoft.Extensions.Logging.ILogger{Health.PharmaNet.Delegates.PharmanetDelegate},Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Health.PharmaNet.Delegates.PharmanetDelegate"/> class.
+            </summary>
+            <param name="client">The injected HttpClient from service injection.</param>
+            <param name="logger">Injected Logger Provider.</param>
+            <param name="configuration">The injected configuration provider.</param>
+        </member>
+        <member name="M:Health.PharmaNet.Delegates.PharmanetDelegate.SubmitRequest(Health.PharmaNet.Models.PharmanetMessageModel,System.String,System.Boolean)">
+            <summary>
+            Submit a PharmanetMessage to Pharmanet System.
+            </summary>
+            <param name="request">The PharmanetMessage request containing HL7v2 base 64 payload.</param>
+            <param name="traceId">The value used to track messages from API Gateway.</param>
+            <param name="isHealthCheck">A boolean indicating if this request is a health check or a transaction.</param>
+            <returns>A PharmanetMessage response.</returns>
+        </member>
+        <member name="T:Health.PharmaNet.Models.PharmanetDelegateAdapter">
+            <summary>
+            The Pharmanet Adapter to convert from/to message models.
+            </summary>
+        </member>
+        <member name="F:Health.PharmaNet.Models.PharmanetDelegateAdapter.HL7v2ContentType">
+            <summary>
+            The standard ContentType ("Mime Type") for HL7-v2 payload.
+            </summary>
+        </member>
+        <member name="F:Health.PharmaNet.Models.PharmanetDelegateAdapter.MasterIdentifierUrnPrefix">
+            <summary>
+            The standard urn prefix when using UUID/GUID for identifiers in HL7 FHIR.
+            </summary>
+        </member>
+        <member name="F:Health.PharmaNet.Models.PharmanetDelegateAdapter.MasterIdentifierPattern">
+            <summary>
+            The regular expression pattern to use to extract just the UUID from the master identifier.
+            </summary>
+        </member>
+        <member name="F:Health.PharmaNet.Models.PharmanetDelegateAdapter.MasterIdentifierNamespace">
+            <summary>
+            The system value of urn:ietf:rfc:3986 for when the value of the identifier is itself a globally unique URI.
+            </summary>
+        </member>
+        <member name="M:Health.PharmaNet.Models.PharmanetDelegateAdapter.ToDocumentReference(Health.PharmaNet.Models.PharmanetMessageModel,Hl7.Fhir.Model.ResourceReference)">
+            <summary>
+            Converts a PharmanetMessage to an HL7 FHIR DocumentReference model.
+            </summary>
+            <param name="messageModel">The PharmanetMessage to convert from.</param>
+            <param name="related">The optional ResourceReference representing a reference to the request message.</param>
+            <returns>Returns a new DocumentReference from the PharmanetMessage.
+            If the requestDocumentReference is provided, it used that to fill out cross-referenced data.
+            </returns>
+        </member>
+        <member name="M:Health.PharmaNet.Models.PharmanetDelegateAdapter.ToPharmanetMessageModel(Hl7.Fhir.Model.DocumentReference,System.Boolean)">
+            <summary>
+            Converts an HL7 FHIR DocumentReference model to a PharmanetMessage model.
+            </summary>
+            <param name="documentReference">The DocumentReference to convert from.</param>
+            <param name="base64Encode">A value indicating whether to base64 encode the HL7v2.</param>
+            <returns>Returns a new PharmanetMessage mapped from the provided DocumentReference.</returns>
+        </member>
+        <member name="M:Health.PharmaNet.Models.PharmanetDelegateAdapter.RelatedToDocumentReference(Hl7.Fhir.Model.DocumentReference)">
+            <summary>
+            Builds a ResourceReference from a DocumentReference to add to related field in the response.
+            </summary>
+            <param name="documentReference">The DocumentReference to relate to.</param>
+            <returns>Returns a new ResourceReference mapped from the provided DocumentReference.</returns>
+        </member>
+        <member name="T:Health.PharmaNet.Models.PharmanetDelegateConfig">
+            <summary>
+            The configuration settings for connecting to the PharmanetProxy.
+            </summary>
+        </member>
+        <member name="F:Health.PharmaNet.Models.PharmanetDelegateConfig.ConfigurationSectionKey">
+            <summary>
+            The appsettings.json section.
+            </summary>
+        </member>
+        <member name="P:Health.PharmaNet.Models.PharmanetDelegateConfig.Base64EncodeHl7Message">
+            <summary>
+            Gets or sets a value indicating whether to Base64 Encode the Hl7v2 payload.
+            </summary>
+        </member>
+        <member name="P:Health.PharmaNet.Models.PharmanetDelegateConfig.Endpoint">
+            <summary>
+            Gets or sets the endpoint path for the protective word service.
+            </summary>
+        </member>
+        <member name="P:Health.PharmaNet.Models.PharmanetDelegateConfig.HealthCheckEndpoint">
+            <summary>
+            Gets or sets the endpoint path for the service's health checks.
+            </summary>
+        </member>
+        <member name="P:Health.PharmaNet.Models.PharmanetDelegateConfig.Username">
+            <summary>
+            Gets or sets the username to use for authentication.
+            </summary>
+        </member>
+        <member name="P:Health.PharmaNet.Models.PharmanetDelegateConfig.Password">
+            <summary>
+            Gets or sets the password to use for authentication.
+            </summary>
+        </member>
+        <member name="P:Health.PharmaNet.Models.PharmanetDelegateConfig.ClientCertificatePath">
+            <summary>
+            Gets or sets the path to the client certificate (pfx) file to use for client authentication.
+            </summary>
+        </member>
+        <member name="P:Health.PharmaNet.Models.PharmanetDelegateConfig.ClientCertificatePassword">
+            <summary>
+            Gets or sets the path to the client certificate password/secret (for the pfx file) to use for client authentication.
+            </summary>
+        </member>
+        <member name="T:Health.PharmaNet.Models.PharmanetMessageModel">
+            <summary>
+            The Pharmanet proxy message model. This json model is defined in collaboration with the vendor managing PharmaNet.
+            </summary>
+        </member>
+        <member name="P:Health.PharmaNet.Models.PharmanetMessageModel.TransactionId">
+            <summary>
+            Gets or sets the unique transaction identifier.
+            </summary>
+        </member>
+        <member name="P:Health.PharmaNet.Models.PharmanetMessageModel.Hl7Message">
+            <summary>
+            Gets or sets the Base 64 encoded HL7v2 Message.
+            </summary>
+        </member>
+        <member name="T:Health.PharmaNet.Models.RequestResult`1">
+            <summary>
+            Class that represents the result of a request. Contains members for handling pagination and error resolution.
+            </summary>
+            <typeparam name="T">The payload type.</typeparam>
+        </member>
+        <member name="P:Health.PharmaNet.Models.RequestResult`1.Payload">
+            <summary>
+            Gets or sets the result payload.
+            </summary>
+        </member>
+        <member name="P:Health.PharmaNet.Models.RequestResult`1.IsSuccessStatusCode">
+            <summary>
+            Gets or sets a value indicating whether the status code is a success code.
+            </summary>
+        </member>
+        <member name="P:Health.PharmaNet.Models.RequestResult`1.StatusCode">
+            <summary>
+            Gets or sets the status code of the result.
+            </summary>
+        </member>
+        <member name="P:Health.PharmaNet.Models.RequestResult`1.ErrorMessage">
+            <summary>
+            Gets or sets the status message of the result.
+            </summary>
+        </member>
+        <member name="T:Health.PharmaNet.Parsers.Hl7Parser">
+            <summary>
+            The Pharmanet Delegate, which communicates directly to the Pharmanet proxy service.
+            </summary>
+        </member>
+        <member name="M:Health.PharmaNet.Parsers.Hl7Parser.#ctor(Microsoft.Extensions.Logging.ILogger{Health.PharmaNet.Parsers.Hl7Parser})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Health.PharmaNet.Parsers.Hl7Parser"/> class.
+            </summary>
+            <param name="logger">Injected Logger Provider.</param>
+        </member>
+        <member name="M:Health.PharmaNet.Parsers.Hl7Parser.ParseV2String(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Health.PharmaNet.Parsers.Hl7Parser.ParseFhirJson(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Health.PharmaNet.Parsers.IHl7Parser">
+            <summary>
+            The Pharmanet service.
+            </summary>
+        </member>
+        <member name="M:Health.PharmaNet.Parsers.IHl7Parser.ParseV2String(System.String)">
+            <summary>
+            Parse a string containing HL7v2 message.
+            </summary>
+            <param name="messageString">An HL7v2 message as a string.</param>
+            <returns>Returns an HL7v2 Message response.</returns>
+        </member>
+        <member name="M:Health.PharmaNet.Parsers.IHl7Parser.ParseFhirJson(System.String)">
+            <summary>
+            Parse a string containing FHIR message.
+            </summary>
+            <param name="json">An HL7 FHIR message as a string.</param>
+            <returns>Returns a FHIR DocumentReference.</returns>
+        </member>
+        <member name="T:Health.PharmaNet.ServiceBase.Program">
+            <summary>
+            The entry point for the project.
+            </summary>
+        </member>
+        <member name="M:Health.PharmaNet.ServiceBase.Program.Main(System.String[])">
+            <summary>.
+            The entry point for the class.
+            </summary>
+            <param name="args">The command line arguments to be passed in.</param>
+        </member>
+        <member name="M:Health.PharmaNet.ServiceBase.Program.CreateHostBuilder(System.String[])">
+            <summary>.
+            Creates the IWebHostBuilder.
+            </summary>
+            <param name="args">The command line arguments to be passed in.</param>
+            <returns>Returns the configured webhost.</returns>
+        </member>
+        <member name="T:Health.PharmaNet.ServiceBase.Startup">
+            <summary>
+            Configures the application during startup.
+            </summary>
+        </member>
+        <member name="M:Health.PharmaNet.ServiceBase.Startup.#ctor(Microsoft.AspNetCore.Hosting.IWebHostEnvironment,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Health.PharmaNet.ServiceBase.Startup"/> class.
+            </summary>
+            <param name="env">The injected Environment provider.</param>
+            <param name="configuration">The injected configuration provider.</param>
+        </member>
+        <member name="M:Health.PharmaNet.ServiceBase.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            This method gets called by the runtime. Use this method to add services to the container.
+            </summary>
+            <param name="services">The injected services provider.</param>
+        </member>
+        <member name="M:Health.PharmaNet.ServiceBase.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            </summary>
+            <param name="app">The application builder.</param>
+        </member>
+        <member name="T:Health.PharmaNet.Services.IPharmanetService">
+            <summary>
+            The Pharmanet service.
+            </summary>
+        </member>
+        <member name="M:Health.PharmaNet.Services.IPharmanetService.SubmitRequest(Hl7.Fhir.Model.DocumentReference,System.String,System.Boolean)">
+            <summary>
+            Submit request of type DocumentReference containing HL7v2 message to PharmaNet.
+            </summary>
+            <param name="request">An HL7 FHIR DocumentReference request containing HL7v2 payload.</param>
+            <param name="traceId">The value used to track messages from API Gateway.</param>
+            <param name="isHealthCheck">A boolean indicating if this request is a health check or a transaction.</param>
+            <returns>Returns a DocumentReference response.</returns>
+        </member>
+        <member name="T:Health.PharmaNet.Services.PharmanetService">
+            <summary>
+            The PharmanetService.
+            </summary>
+        </member>
+        <member name="M:Health.PharmaNet.Services.PharmanetService.#ctor(Microsoft.Extensions.Logging.ILogger{Health.PharmaNet.Services.PharmanetService},Health.PharmaNet.Delegates.IPharmanetDelegate,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Health.PharmaNet.Services.PharmanetService"/> class.
+            </summary>
+            <param name="logger">Injected Logger Provider.</param>
+            <param name="pharmanetDelegate">Injected delegate.</param>
+            <param name="configuration">Injected configuration.</param>
+        </member>
+        <member name="M:Health.PharmaNet.Services.PharmanetService.SubmitRequest(Hl7.Fhir.Model.DocumentReference,System.String,System.Boolean)">
+            <summary>
+            Submit Request to Pharmanet.
+            </summary>
+            <param name="request">The DocumentReference to be submitted.</param>
+            <param name="traceId">The value used to track messages from API Gateway.</param>
+            <param name="isHealthCheck">A boolean indicating if this request is a health check or a transaction.</param>
+            <returns>Returns a DocumentReference containing the response from PharmaNet.</returns>
+        </member>
+    </members>
+</doc>

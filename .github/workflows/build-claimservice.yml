@@ -37,6 +37,8 @@ jobs:
 
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v2.1.0
+        with:
+          dotnet-version: 10.0.x
 
       - name: Building ${{ env.APP }}
         run: |

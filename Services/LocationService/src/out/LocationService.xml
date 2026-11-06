@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>LocationService</name>
+    </assembly>
+    <members>
+        <member name="T:Health.PharmaNet.Controllers.LocationController">
+            <summary>
+            The Location service controller.
+            </summary>
+        </member>
+        <member name="M:Health.PharmaNet.Controllers.LocationController.#ctor(Microsoft.Extensions.Logging.ILogger{Health.PharmaNet.Controllers.ServiceBaseController},Health.PharmaNet.Services.IPharmanetService,Health.PharmaNet.Parsers.IHl7Parser,Microsoft.Extensions.Configuration.IConfiguration,Microsoft.AspNetCore.Authorization.IAuthorizationService,Microsoft.AspNetCore.Http.IHttpContextAccessor)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Health.PharmaNet.Controllers.LocationController"/> class.
+            </summary>
+            <param name="logger">Injected Logger Provider.</param>
+            <param name="service">Injected service.</param>
+            <param name="parser">Injected HL7 message parser.</param>
+            <param name="configuration">Injected iConfiguration service.</param>
+            <param name="authorizationService">Injected authorization service.</param>
+            <param name="httpContextAccessor">The Http Context accessor.</param>
+        </member>
+        <member name="M:Health.PharmaNet.Controllers.LocationController.Location">
+            <summary>
+            Execute a transaction on this service.
+            </summary>
+            <returns>A DocumentReference response as Json.</returns>
+            <response code="200">Returns Ok when the transaction went through.</response>
+            <response code="401">Authorization error, returns JSON describing the error.</response>
+        </member>
+        <member name="M:Health.PharmaNet.Controllers.LocationController.HealthCheck">
+            <summary>
+            Execute a health check on this service.
+            </summary>
+            <returns>A DocumentReference response as Json.</returns>
+            <response code="200">Returns Ok when the transaction went through.</response>
+            <response code="401">Authorization error, returns JSON describing the error.</response>
+        </member>
+        <member name="T:Health.PharmaNet.LocationService.Program">
+            <summary>
+            The main Program.
+            </summary>
+        </member>
+        <member name="M:Health.PharmaNet.LocationService.Program.Main(System.String[])">
+            <summary>.
+            The entry point for the class.
+            </summary>
+            <param name="args">The command line arguments to be passed in.</param>
+        </member>
+        <member name="M:Health.PharmaNet.LocationService.Program.CreateHostBuilder(System.String[])">
+            <summary>.
+            Creates the IWebHostBuilder.
+            </summary>
+            <param name="args">The command line arguments to be passed in.</param>
+            <returns>Returns the configured webhost.</returns>
+        </member>
+        <member name="T:Health.PharmaNet.LocationService.Startup">
+            <summary>
+            Configures the application during startup.
+            </summary>
+        </member>
+        <member name="M:Health.PharmaNet.LocationService.Startup.#ctor(Microsoft.AspNetCore.Hosting.IWebHostEnvironment,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Health.PharmaNet.LocationService.Startup"/> class.
+            </summary>
+            <param name="env">The injected Environment provider.</param>
+            <param name="configuration">The injected configuration provider.</param>
+        </member>
+    </members>
+</doc>
