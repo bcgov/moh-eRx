@@ -1,0 +1,28 @@
+Before treating this as production-ready: restore surfaced existing dependency vulnerability warnings, 
+including a high-severity warning for Newtonsoft.Json 12.0.2. 
+The build also has certificate-loading obsolescence and nullable-reference warnings. 
+The target-framework migration compiles, but runtime behavior and those dependency issues still need attention.
+
+“Restore surfaced” means NuGet checked the project’s dependency graph against its vulnerability 
+advisories while downloading/resolving packages. It reported vulnerable versions; restore didn’t 
+introduce the vulnerabilities or update those packages.
+
+From the repo root, see which packages are affected and whether they’re direct or transitive:
+
+dotnet list Services\eRXAPI.sln package --vulnerable --include-transitive
+dotnet list Services\eRXAPI.sln package --outdated
+
+Then update the package that brings in each vulnerable dependency to a compatible patched version. 
+For a transitive package, that usually means upgrading its parent package rather than adding an arbitrary 
+direct reference. For a direct package, update its PackageReference—for example, in Common.csproj if 
+that’s where the reference is declared.
+
+Finally, restore and recheck:
+
+dotnet restore Services\eRXAPI.sln
+dotnet list Services\eRXAPI.sln package --vulnerable --include-transitive
+dotnet build Services\eRXAPI.sln
+
+The earlier build reported a high-severity warning for Newtonsoft.Json 12.0.2 and moderate warnings 
+for some identity-token and Swagger packages. Check the report for the dependency paths and patched 
+versions before changing them; blindly upgrading old dependencies can introduce compatibility issues.

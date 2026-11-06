@@ -29,7 +29,7 @@ Edit your `.key` file to include only the key, nothing else.
 ### Optional
 To create a deployable Java program, create a `libs` folder and run:
 `mvn dependency:copy-dependencies -DoutputDirectory=libs`
-That will put all the dependencies into the libs folder. Then you can run it with something like:
+That will put all the dependencies into the libs folder. 
 ```
 mvn compile package
 java -cp "target\moh-erx-java-1.0.0.jar;./libs/*" demo.PharmaNetClaim PNET-39999999

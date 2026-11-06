@@ -1,0 +1,184 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>HL7-dotnetcore</name>
+    </assembly>
+    <members>
+        <member name="P:HL7.Dotnetcore.ComponentCollection.Item(System.Int32)">
+            <summary>
+            Component indexer
+            </summary>
+            <param name="index">The index into this collection</param>
+        </member>
+        <member name="M:HL7.Dotnetcore.ComponentCollection.Add(HL7.Dotnetcore.Component)">
+            <summary>
+            Add Component at next position
+            </summary>
+            <param name="component">Component</param>
+        </member>
+        <member name="M:HL7.Dotnetcore.ComponentCollection.Add(HL7.Dotnetcore.Component,System.Int32)">
+            <summary>
+            Add component at specific position
+            </summary>
+            <param name="component">Component</param>
+            <param name="position">Position</param>
+        </member>
+        <member name="M:HL7.Dotnetcore.FieldCollection.Add(HL7.Dotnetcore.Field)">
+            <summary>
+            add field at next position
+            </summary>
+            <param name="field">Field</param>
+        </member>
+        <member name="M:HL7.Dotnetcore.FieldCollection.Add(HL7.Dotnetcore.Field,System.Int32)">
+            <summary>
+            Add field at specific position
+            </summary>
+            <param name="field">Field</param>
+            <param name="position">position</param>
+        </member>
+        <member name="M:HL7.Dotnetcore.HL7Encoding.Encode(System.String)">
+            <summary>Encoding methods based on https://github.com/elomagic/hl7inspector</summary>
+            <param name="val">The value to encode</param>
+            <returns>The encoded value</returns>
+        </member>
+        <member name="M:HL7.Dotnetcore.Message.ParseMessage">
+            <summary>
+            Parse the HL7 message in text format, throws HL7Exception if error occurs
+            </summary>
+            <returns>boolean</returns>
+        </member>
+        <member name="M:HL7.Dotnetcore.Message.SerializeMessage(System.Boolean)">
+            <summary>
+            Serialize the message in text format
+            </summary>
+            <param name="validate">Validate the message before serializing</param>
+            <returns>string with HL7 message</returns>
+        </member>
+        <member name="M:HL7.Dotnetcore.Message.GetValue(System.String)">
+            <summary>
+            Get the Value of specific Field/Component/SubCpomponent, throws error if field/component index is not valid
+            </summary>
+            <param name="strValueFormat">Field/Component position in format SEGMENTNAME.FieldIndex.ComponentIndex.SubComponentIndex example PID.5.2</param>
+            <returns>Value of specified field/component/subcomponent</returns>
+        </member>
+        <member name="M:HL7.Dotnetcore.Message.SetValue(System.String,System.String)">
+            <summary>
+            Sets the Value of specific Field/Component/SubComponent, throws error if field/component index is not valid
+            </summary>
+            <param name="strValueFormat">Field/Component position in format SEGMENTNAME.FieldIndex.ComponentIndex.SubComponentIndex example PID.5.2</param>
+            <param name="strValue">Value for the specified field/component</param>
+            <returns>boolean</returns>
+        </member>
+        <member name="M:HL7.Dotnetcore.Message.IsComponentized(System.String)">
+            <summary>
+            check if specified field has components
+            </summary>
+            <param name="strValueFormat">Field/Component position in format SEGMENTNAME.FieldIndex.ComponentIndex.SubComponentIndex example PID.5.2</param>
+            <returns>boolean</returns>
+        </member>
+        <member name="M:HL7.Dotnetcore.Message.HasRepetitions(System.String)">
+            <summary>
+            check if specified fields has repetitions.
+            </summary>
+            <param name="strValueFormat">Field/Component position in format SEGMENTNAME.FieldIndex.ComponentIndex.SubComponentIndex example PID.5.2</param>
+            <returns>boolean</returns>
+        </member>
+        <member name="M:HL7.Dotnetcore.Message.IsSubComponentized(System.String)">
+            <summary>
+            check if specified component has sub components
+            </summary>
+            <param name="strValueFormat">Field/Component position in format SEGMENTNAME.FieldIndex.ComponentIndex.SubComponentIndex example PID.5.2</param>
+            <returns>boolean</returns>
+        </member>
+        <member name="M:HL7.Dotnetcore.Message.GetACK">
+            <summary>
+            Builds the acknowledgement message for this message
+            </summary>
+            <returns>An ACK message if success, otherwise null</returns>
+        </member>
+        <member name="M:HL7.Dotnetcore.Message.GetNACK(System.String,System.String)">
+            <summary>
+            Builds a negative ack for this message
+            </summary>
+            <param name="code">ack code like AR, AE</param>
+            <param name="errMsg">Error message to be sent with NACK</param>
+            <returns>A NACK message if success, otherwise null</returns>
+        </member>
+        <member name="M:HL7.Dotnetcore.Message.AddNewSegment(HL7.Dotnetcore.Segment)">
+            <summary>
+            Adds a segemnt to the message
+            </summary>
+            <param name="newSegment">Segment to be appended to the end of the message</param>
+            <returns>True if added successfully, otherwise false</returns>
+        </member>
+        <member name="M:HL7.Dotnetcore.Message.RemoveSegment(System.String,System.Int32)">
+            <summary>
+            Removes a segment from the message
+            </summary>
+            <param name="segmentName">Segment to be removed</param>
+            <param name="index">Zero-based index of the segment to be removed, in case of multiple. Default is 0.</param>
+            <returns>True if found and removed sucessfully, otherwise false</returns>
+        </member>
+        <member name="M:HL7.Dotnetcore.Message.AddSegmentMSH(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Addsthe header segment to a new message
+            </summary>
+            <param name="sendingApplication">Sending application name</param>
+            <param name="sendingFacility">Sending facility name</param>
+            <param name="receivingApplication">Receiving application name</param>
+            <param name="receivingFacility">Receiving facility name</param>
+            <param name="security">Security features. Can be null.</param>
+            <param name="messageType">Message type ^ trigger event</param>
+            <param name="messageControlID">Message control unique ID</param>
+            <param name="processingID">Processing ID ^ processing mode</param>
+            <param name="version">HL7 message version (2.x)</param>
+        </member>
+        <member name="M:HL7.Dotnetcore.Message.GetMLLP(System.Boolean)">
+            <summary>
+            Serialize to MLLP escaped byte array
+            </summary>
+            <param name="validate">Optional. Validate the message before serializing</param>
+            <returns>MLLP escaped byte array</returns>
+        </member>
+        <member name="M:HL7.Dotnetcore.Message.ValidateValueFormat(System.Collections.Generic.IList{System.String})">
+            <summary>
+            Validates the components of a value's position descriptor
+            </summary>
+            <returns>A boolean indicating whether all the components are valid or not</returns>
+        </member>
+        <member name="M:HL7.Dotnetcore.Message.CreateAckMessage(System.String,System.Boolean,System.String)">
+            <summary>
+            Builds an ACK or NACK message for this message
+            </summary>
+            <param name="code">ack code like AA, AR, AE</param>
+            <param name="isNack">true for generating a NACK message, otherwise false</param>
+            <param name="errMsg">error message to be sent with NACK</param>
+            <returns>An ACK or NACK message if success, otherwise null</returns>
+        </member>
+        <member name="M:HL7.Dotnetcore.Message.ValidateMessage">
+            <summary>
+            Validates the HL7 message for basic syntax
+            </summary>
+            <returns>A boolean indicating whether the whole message is valid or not</returns>
+        </member>
+        <member name="M:HL7.Dotnetcore.Message.SerializeField(HL7.Dotnetcore.Field,System.Text.StringBuilder)">
+            <summary>
+            Serializes a field into a string with proper this.Encoding
+            </summary>
+        </member>
+        <member name="M:HL7.Dotnetcore.Message.GetAllSegmentsInOrder">
+            <summary>
+            Get all segments in order as they appear in original message. This the usual order: IN1|1 IN2|1 IN1|2 IN2|2.
+            </summary>
+            <returns>A list of segments in the proper order</returns>
+        </member>
+        <member name="M:HL7.Dotnetcore.MessageHelper.GetMLLP(System.String,System.Text.Encoding)">
+            <summary>
+            Serialize string to MLLP escaped byte array
+            </summary>
+            <param name="message">String to serialize</param>
+            <param name="encoding">Text encoder (optional)</param>
+            <returns>Returns MLLP escaped byte array</returns>
+        </member>
+    </members>
+</doc>
