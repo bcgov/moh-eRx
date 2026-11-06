@@ -22,35 +22,34 @@
 # Examples:
 #
 #   # 1. Build locally
-#   ./pharmanet-deploy.sh build locationservice dotnet10_upgrade
-#   ./pharmanet-deploy.sh build claimservice dotnet10_upgrade
-#   ./pharmanet-deploy.sh build consentservice dotnet10_upgrade
-#   ./pharmanet-deploy.sh build locationservice dotnet10_upgrade
-#   ./pharmanet-deploy.sh build medicationdispenseservice dotnet10_upgrade
-#   ./pharmanet-deploy.sh build medicationrequestservice dotnet10_upgrade
-#   ./pharmanet-deploy.sh build medicationservice dotnet10_upgrade
-#   ./pharmanet-deploy.sh build medicationstatementservice dotnet10_upgrade
-#   ./pharmanet-deploy.sh build patientservice dotnet10_upgrade
-#   ./pharmanet-deploy.sh build practitionerservice dotnet10_upgrade
+#   ./pharmanet-deploy.sh build locationservice dotnet10_upgrade_v2
+#   ./pharmanet-deploy.sh build claimservice dotnet10_upgrade_v2
+#   ./pharmanet-deploy.sh build consentservice dotnet10_upgrade_v2
+#   ./pharmanet-deploy.sh build medicationdispenseservice dotnet10_upgrade_v2
+#   ./pharmanet-deploy.sh build medicationrequestservice dotnet10_upgrade_v2
+#   ./pharmanet-deploy.sh build medicationservice dotnet10_upgrade_v2
+#   ./pharmanet-deploy.sh build medicationstatementservice dotnet10_upgrade_v2
+#   ./pharmanet-deploy.sh build patientservice dotnet10_upgrade_v2
+#   ./pharmanet-deploy.sh build practitionerservice dotnet10_upgrade_v2
 #
-#   # Output: === Registry tag: dotnet10_upgrade-a1b2c3d4e5f6 ===
+#   # Output: === Registry tag: dotnet10_upgrade_v2-a1b2c3d4e5f6 ===
 #
 #   # 2. Push to Silver tools (pre-stage)
-#   ./pharmanet-deploy.sh push silver locationservice dotnet10_upgrade-c14a22eede73
+#   ./pharmanet-deploy.sh push silver locationservice dotnet10_upgrade_v2-c14a22eede73
 #
 #   # 3. Deploy to Silver dev
-#   ./pharmanet-deploy.sh deploy silver-dev dotnet10_upgrade-c14a22eede73 locationservice dev
+#   ./pharmanet-deploy.sh deploy silver-dev dotnet10_upgrade_v2-c14a22eede73 locationservice dev
 #
 #   # 4. Deploy to Silver test (one per subtarget)
-#   ./pharmanet-deploy.sh deploy silver-test dotnet10_upgrade-c14a22eede73 locationservice tr1
-#   ./pharmanet-deploy.sh deploy silver-test dotnet10_upgrade-c14a22eede73 locationservice vc2
-#   ./pharmanet-deploy.sh deploy silver-test dotnet10_upgrade-c14a22eede73 locationservice vs1
+#   ./pharmanet-deploy.sh deploy silver-test dotnet10_upgrade_v2-c14a22eede73 locationservice tr1
+#   ./pharmanet-deploy.sh deploy silver-test dotnet10_upgrade_v2-c14a22eede73 locationservice vc2
+#   ./pharmanet-deploy.sh deploy silver-test dotnet10_upgrade_v2-c14a22eede73 locationservice vs1
 #
 #   # 5. Push to Gold tools (pre-stage before change window)
-#   ./pharmanet-deploy.sh push gold locationservice dotnet10_upgrade-c14a22eede73
+#   ./pharmanet-deploy.sh push gold locationservice dotnet10_upgrade_v2-c14a22eede73
 #
 #   # 6. Change window — deploy to Gold prod
-#   ./pharmanet-deploy.sh deploy gold-prod dotnet10_upgrade-c14a22eede73 locationservice prd
+#   ./pharmanet-deploy.sh deploy gold-prod dotnet10_upgrade_v2-c14a22eede73 locationservice prd
 #
 # Prerequisites: podman, oc, dotnet.exe, git (WSL2)
 # Must be logged into the correct OpenShift cluster before running push or deploy.
